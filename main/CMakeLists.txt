@@ -1,0 +1,25 @@
+idf_component_register(
+    SRCS "main.c"
+         "sheikah_theme.c"
+         "sheikah_ui.c"
+         "page_standby.c"
+         "page_runes.c"
+         "page_compendium.c"
+         "page_quest.c"
+         "page_settings.c"
+         "img/img_sheikah_eye.c"
+         "img/img_rune_bomb.c"
+         "img/img_rune_magnet.c"
+         "img/img_rune_stasis.c"
+         "img/img_rune_cryonis.c"
+         "img/img_rune_camera.c"
+    INCLUDE_DIRS "."
+    REQUIRES bsp
+    PRIV_REQUIRES nvs_flash
+    EMBED_TXTFILES "../assets/data/compendium_creatures.json"
+                   "../assets/data/compendium_monsters.json"
+                   "../assets/data/compendium_materials.json"
+                   "../assets/data/compendium_equipment.json"
+                   "../assets/data/compendium_treasures.json"
+                   "../assets/data/quest_data.json"
+)
