@@ -1,0 +1,22 @@
+[
+  {"title":"Destroy Ganon","type":"Main","desc":"Defeat Calamity Ganon and save Princess Zelda. The ultimate quest awaits at Hyrule Castle."},
+  {"title":"Seek Out Impa","type":"Main","desc":"Find Impa in Kakariko Village to learn about the four Divine Beasts and the path ahead."},
+  {"title":"Free the Divine Beasts","type":"Main","desc":"Liberate the four Divine Beasts from Ganon's control. Each beast holds a champion's spirit."},
+  {"title":"Divine Beast Vah Ruta","type":"Main","desc":"The water-controlling elephant in Zora's Domain. Master Sidon will guide you."},
+  {"title":"Divine Beast Vah Rudania","type":"Main","desc":"The fire-breathing salamander on Death Mountain. The Gorons need your help."},
+  {"title":"Divine Beast Vah Medoh","type":"Main","desc":"The wind-manipulating eagle above Rito Village. Reclaim the skies."},
+  {"title":"Divine Beast Vah Naboris","type":"Main","desc":"The thunder-wielding camel in Gerudo Desert. The sandstorm conceals its path."},
+  {"title":"The Hero's Sword","type":"Main","desc":"Pull the Master Sword from its pedestal in the Korok Forest. Prove your worth."},
+  {"title":"Locked Mementos","type":"Side","desc":"Recover Zelda's research notes scattered across Hyrule. Piece together her story."},
+  {"title":"A Gift from the Monks","type":"Side","desc":"Complete all 120 Shrines and claim the ancient reward from the Forgotten Temple."},
+  {"title":"The Cursed Statue","type":"Side","desc":"Visit the Spring of Power, Wisdom, and Courage to lift the curse upon a mysterious statue."},
+  {"title":"Stalhorse: Pictured!","type":"Side","desc":"Photograph a Stalhorse for the Stable owner near the river. Only appears at night."},
+  {"title":"The Spring of Power","type":"Side","desc":"Offer a Dinraal's scale at the Spring of Power in Eldin to unlock a Shrine."},
+  {"title":"Captured Memories","type":"Memory","desc":"Recover Zelda's lost memories from locations across Hyrule. Each photo holds a piece of the past."},
+  {"title":"Subdued Ceremony","type":"Memory","desc":"Remember the ceremony where Link was appointed as Zelda's knight. At the Temple of Time."},
+  {"title":"Desperate Refuge","type":"Memory","desc":"Recall Zelda's desperate attempt to seal Ganon at Hyrule Castle. The final stand."},
+  {"title":"Silent Princess","type":"Memory","desc":"Remember the quiet moment when Zelda noticed the Silent Princess flower. At Sanidin Park."},
+  {"title":"Blades of the Yiga","type":"Memory","desc":"Recall the Yiga Clan's ambush and Zelda's awakening of power. On Blatchery Plain."},
+  {"title":"Shelter from the Storm","type":"Memory","desc":"Remember taking shelter from the rain with Zelda. Near Lanayru Promenade."},
+  {"title":"Return of the Calamity","type":"Memory","desc":"The final memory of Calamity Ganon's return 100 years ago. At Hyrule Castle."}
+]

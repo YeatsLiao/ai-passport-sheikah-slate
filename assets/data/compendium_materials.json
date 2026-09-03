@@ -1,0 +1,12 @@
+[
+  {"name":"Apple","desc":"A common fruit found throughout Hyrule. Eat raw or cook.","location":"Everywhere"},
+  {"name":"Hydromelon","desc":"A water-rich melon. Great for heat resistance dishes.","location":"Gerudo Desert, Faron"},
+  {"name":"Spicy Pepper","desc":"A hot pepper that grants cold resistance when cooked.","location":"Tabantha, Rito Village"},
+  {"name":"Mighty Banana","desc":"A tropical fruit that boosts attack power.","location":"Faron Grasslands, Eventide Island"},
+  {"name":"Diamond","desc":"A precious gemstone. Sells for a high price.","location":"Eldin Mountains, Death Mountain"},
+  {"name":"Star Fragment","desc":"A fragment of a fallen star. Extremely rare and valuable.","location":"Random sky drops at night"},
+  {"name":"Ancient Core","desc":"A component from Guardians. Used at Kochi Dye Shop and Akkala Lab.","location":"Guardian drops"},
+  {"name":"Luminous Stone","desc":"A glowing ore found in caves. Trade for diamonds at Zora's Domain.","location":"Caves, Zora's Domain"},
+  {"name":"Fireproof Elixir","desc":"An elixir that grants heat resistance for a time.","location":"Goron City shops, Eldin"},
+  {"name":"Monster Extract","desc":"A dubious ingredient. Cooking results are unpredictable.","location":"Kilton's Fang and Bone, Akkala"}
+]

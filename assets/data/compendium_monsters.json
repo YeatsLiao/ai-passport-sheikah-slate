@@ -1,0 +1,12 @@
+[
+  {"name":"Bokoblin","desc":"A primitive goblin that wields crude weapons. Common in plains.","location":"Hyrule Field, Great Plateau"},
+  {"name":"Moblin","desc":"A large, horned monster. Much stronger than Bokoblins.","location":"Eldin, Necluda, Hebra"},
+  {"name":"Lizalfos","desc":"A lizard-like warrior with quick attacks and elemental abilities.","location":"Faron, Eldin, Lanayru"},
+  {"name":"Lynel","desc":"A fearsome centaur warrior. One of the strongest monsters in Hyrule.","location":"Central Hyrule, Hebra, Faron"},
+  {"name":"Guardian","desc":"Ancient Sheikah machine corrupted by Calamity Ganon.","location":"Hyrule Castle, Central Hyrule"},
+  {"name":"Darknut","desc":"An armored knight with powerful sword and shield attacks.","location":"Hyrule Castle, Forgotten Temple"},
+  {"name":"Wizzrobe","desc":"A magical creature that attacks with elemental spells.","location":"Akkala, Hebra, Gerudo Desert"},
+  {"name":"Hinox","desc":"A giant cyclops that sleeps during the day. Extremely powerful.","location":"Necluda, Eldin, Lanayru"},
+  {"name":"Molduga","desc":"A massive sand worm that hunts by sensing vibrations.","location":"Gerudo Desert"},
+  {"name":"Talus","desc":"A living rock creature disguised as a pile of stones.","location":"All regions of Hyrule"}
+]

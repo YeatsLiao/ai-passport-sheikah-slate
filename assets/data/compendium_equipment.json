@@ -1,0 +1,12 @@
+[
+  {"name":"Master Sword","desc":"The sword that seals the darkness. Glows near Malice.","location":"Korok Forest, Lost Woods"},
+  {"name":"Hylian Shield","desc":"The iconic shield of the Hylian royal guard.","location":"Hyrule Castle, Lockup"},
+  {"name":"Traveler's Bow","desc":"A basic bow used by travelers. Low damage but reliable.","location":"Shrines, Hyrule Field"},
+  {"name":"Soldier's Claymore","desc":"A two-handed sword issued to Hyrule's soldiers.","location":"Hyrule Castle, Fort Hateno"},
+  {"name":"Flameblade","desc":"A magical sword wreathed in flames. Deals fire damage.","location":"Eldin, Akkala Ancient Lab"},
+  {"name":"Frostblade","desc":"A sword imbued with ice. Freezes enemies on contact.","location":"Hebra Mountains, Tabantha"},
+  {"name":"Thunderblade","desc":"A sword crackling with electricity. Shocks enemies.","location":"Gerudo Desert, Faron"},
+  {"name":"Ancient Short Sword","desc":"A Sheikah-forged blade effective against Guardians.","location":"Akkala Ancient Tech Lab"},
+  {"name":"Royal Guard's Shield","desc":"A shield bearing the royal family crest.","location":"Hyrule Castle, Sanctum"},
+  {"name":"Climbing Gear Set","desc":"Armor that boosts climbing speed when worn as a set.","location":"Kakariko Village, Hateno Village"}
+]

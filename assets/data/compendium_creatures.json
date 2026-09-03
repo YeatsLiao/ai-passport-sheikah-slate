@@ -1,0 +1,12 @@
+[
+  {"name":"Hyrule Bass","desc":"A freshwater fish found in rivers and lakes across Hyrule.","location":"Hyrule Ridge, Lanayru Wetlands"},
+  {"name":"Hearty Salmon","desc":"A fish that restores hearts when cooked. Found in cold waters.","location":"Hebra Mountains, Tabantha Frontier"},
+  {"name":"Fireproof Lizard","desc":"A lizard resistant to flames. Useful for heatproof elixirs.","location":"Eldin Mountains, Death Mountain"},
+  {"name":"Rugged Rhino Beetle","desc":"A sturdy beetle with a powerful horn. Boosts attack when cooked.","location":"Faron Grasslands, Necluda"},
+  {"name":"Blue Nightshade","desc":"A flower that blooms only at night. Used for stealth elixirs.","location":"West Necluda, Gerudo Highlands"},
+  {"name":"Hot-Footed Frog","desc":"A swift frog that grants a speed boost when cooked.","location":"Lanayru Great Spring, Zora's Domain"},
+  {"name":"Electric Darner","desc":"A dragonfly that crackles with electricity. Grants shock resistance.","location":"Akkala Highlands, Faron"},
+  {"name":"Winterwing Butterfly","desc":"A butterfly that flutters in cold regions. Resists heat when cooked.","location":"Hebra Mountains, Rito Village"},
+  {"name":"Cold-Footed Wolf","desc":"A predatory wolf native to snowy mountains.","location":"Hebra Mountains, Tabantha"},
+  {"name":"Mountain Goat","desc":"A sure-footed goat found on rocky cliffs.","location":"Eldin Canyon, Hebra Peaks"}
+]

@@ -1,0 +1,12 @@
+[
+  {"name":"Shrine Orb","desc":"A Spirit Orb obtained from completing Shrines. Trade for hearts or stamina.","location":"Ancient Shrines"},
+  {"name":"Korok Seed","desc":"A hidden seed from a Korok. Expands weapon/bow/shield inventory.","location":"900 locations across Hyrule"},
+  {"name":"Star Fragment","desc":"A precious fragment from a shooting star. Sells for 300 rupees.","location":"Night sky drops"},
+  {"name":"Dragon Scale","desc":"A scale dropped by a dragon when hit. Used for special upgrades.","location":"Dinraal, Farosh, Naydra"},
+  {"name":"Shard of Farosh's Horn","desc":"A shard from the lightning dragon's horn. Powers up recipes.","location":"Farosh (Lake Hylia, Gerudo)"},
+  {"name":"Shard of Dinraal's Horn","desc":"A shard from the fire dragon's horn. Grants powerful buffs.","location":"Dinraal (Eldin, Tanagar Canyon)"},
+  {"name":"Shard of Naydra's Horn","desc":"A shard from the ice dragon's horn. Used in rare elixirs.","location":"Naydra (Lanayru, Mount Lanayru)"},
+  {"name":"Ancient Saddle","desc":"Special horse gear from the EX quest. Summon your horse anywhere.","location":"Highland Stable (EX Quest)"},
+  {"name":"Phantom Helmet","desc":"Headgear from the phantom armor set. Grants attack boost.","location":"Kolomo Garrison Ruins (EX Quest)"},
+  {"name":"Travel Medallion","desc":"An ancient artifact that sets a custom travel gate for Link.","location":"Akkala Ancient Tech Lab (EX Quest)"}
+]
