@@ -1,0 +1,19 @@
+# Build output
+build/
+
+# ESP-IDF generated
+sdkconfig
+sdkconfig.old
+dependencies.lock
+managed_components/
+
+# Node.js (tools)
+tools/node_modules/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
