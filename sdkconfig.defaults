@@ -20,6 +20,9 @@ CONFIG_LV_FONT_MONTSERRAT_20=y
 CONFIG_LV_FONT_MONTSERRAT_24=y
 # 使用系统堆
 CONFIG_LV_USE_CLIB_MALLOC=y
+# 刷新周期 16ms (上限 60fps):默认 33ms 会把帧率硬限在 30fps,
+# 满帧重绘 (呼吸辉光/转场) 时观感明显卡顿
+CONFIG_LV_DEF_REFR_PERIOD=16
 # 希卡 UI 依赖的组件/绘制能力 (显式声明, 保证全新构建一致):
 #   - 列表/图标/标签/flex 布局 (图鉴与冒险记录列表, 环形轮盘, 图标标签栏)
 #   - RGB565 (石板背景图) + ARGB8888 (带透明通道图标) 软件混合
