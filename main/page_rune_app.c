@@ -282,7 +282,7 @@ static void count_timer_cb(lv_timer_t *t)
     (void)t;
     s_countdown--;
     if (s_countdown > 0) {
-        char buf[8];
+        char buf[16];                            // GCC 无法证明范围, 按最坏 int 宽度给
         snprintf(buf, sizeof(buf), "%d", s_countdown);
         lv_label_set_text(s_count, buf);
         return;
@@ -377,7 +377,7 @@ static void key_cryonis(void)
 
 static void photos_update(void)
 {
-    char buf[16];
+    char buf[24];   // "PHOTOS x" + int 最坏 10 位, 16 不够 (-Werror=format-truncation)
     snprintf(buf, sizeof(buf), "PHOTOS x%d", s_photos);
     lv_label_set_text(s_photo_n, buf);
 }
