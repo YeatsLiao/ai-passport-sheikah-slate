@@ -213,6 +213,47 @@ ESP32-C3 无 SD 卡，8MB Flash 的 factory 分区有 4MB。将图片编译时�
 
 ---
 
+## 阶段 5：视觉全面还原（游戏原版素材 + Hylia 字体 + 环形轮盘）
+
+**目标**：用户反馈初版“完全不像游戏的希卡石板”。本阶段从 `zelda-hyrule-ui` 取全套原版素材，对五个页面做视觉全面还原。方向经用户确认：**全面还原 + 环形符文轮盘 + 只保证代码正确（用户自行构建）**。
+
+### 素材管线（tools/）
+
+| 脚本 | 作用 |
+|---|---|
+| `svg_to_png.mjs` | `@resvg/resvg-js` 按 viewBox 渲染原版 SVG → PNG（正则解析 CSS 变量填充色） |
+| `gen_assets.py` | 生成无 SVG 来源的图标（齿轮/书本等）+ 石板背景（渐变/中心辉光/暗角/扫描线烘焙） |
+| `img_to_c.py` | PNG → LVGL 9 `lv_image_dsc_t` C 数组（ARGB8888 图标 / RGB565 背景，小端） |
+| `gen_font.mjs` | `lv_font_conv` 将 Hylia Serif TTF 转 16/20/28px LVGL C 字体（bpp4, ASCII 0x20–0x7F） |
+
+产物：`main/img/` 19 个图片 C 文件 + `img_all.h`，`main/font/` 3 个 Hylia 字体，共 ~400KB Flash（factory 4MB 充裕）。`main/CMakeLists.txt` 的 `SRCS` 已补齐这 22 个源文件。
+
+### 主题与组件升级（sheikah_theme / sheikah_ui）
+
+- **字体映射**：标题/名称/页脚用 Hylia Serif（`SK_FONT_TITLE/LARGE/CAPS`），正文用 Montserrat（小写可读）。Hylia 无 `LV_SYMBOL_*` 字形，所有页脚提示改为纯 ASCII 文本（如 `UP/DN  BROWSE     OK  DETAILS`）。
+- **背景**：`sk_screen_create()` 铺全屏 `img_slate_bg`（RGB565，扫描线/暗角已烘焙）。
+- **装饰**：`sk_corner_frame(parent, w, h)` 用 `img_corner`（锚定右下角的实心三角）做四角括号，90° 倍数旋转像素无损（TL=180/TR=90/BR=0/BL=270）；标题栏两侧加 `img_ornament_*`。
+- **辉光**：`sk_glow()` 封装 shadow，选中态 = 希卡蓝边框 + 辉光。
+- **列表项**：`sk_list_add_item(list, icon, title, subtitle)` 重构为 `[图标?] [标题/副标题竖直列]`——`lv_list` 按钮本身是 FLEX_ROW，内嵌一个 `flex_grow` 的 FLEX_COLUMN 容器实现两行布局。
+- **图标标签栏**：新增 `sk_icon_tabs_create()`，图鉴页 5 个分类用原版图标代替文字。
+- **弹窗**：`sk_popup_show()` 改为游戏对话框风格（半透明遮罩 + 深蓝面板 + 四角角饰 + Hylia 黄标题 + 分隔线 + 换行正文）。
+
+### 五页重做
+
+- **待机页**：全屏石板背景 + 四角角饰 + 希卡之眼。辉光用【纯色半透明圆盘 + `bg_opa` 呼吸】实现，**不用 LVGL shadow**（见决策 5）。
+- **符文页**：8 符文改为**环形轮盘**（圆心 120,116，半径 70），UP/DOWN 沿环逆/顺时针旋转，选中符文放大（scale 256）+ 全亮 + 辉光盘，中心 hub 显示选中图标 + 名称/描述。**Compendium/Adventure Log/Settings 现在都有真实图标**（不再是文字缩写）。
+- **图鉴页**：文字标签 → 5 个原版分类图标标签；标题大写 `COMPENDIUM`；弹窗游戏化。
+- **冒险记录页**：主线任务左侧加 `img_quest_main` 图标，每行右侧加类型色点；标题 `ADVENTURE LOG`。
+- **设置页**：`BRIGHTNESS` / `RETURN TO STANDBY` 改 Hylia 大写，选中行加边框 + 辉光。
+
+### 本阶段修复的两个 bug
+
+见 坑 11（RGB565 字节序）、坑 12（页面 exit 屏幕泄漏 + 动画空转）。
+
+> **注**：本阶段取代了阶段 3「符文 4×2 网格 + 文字缩写」、决策 3「仅 RGB565」、决策 4「4×2 网格」的早期方案；下文新增决策 5/6 说明取舍。
+
+---
+
 ## 踩坑记录
 
 ### 坑 1：BSP CMakeLists.txt 被误覆盖
@@ -345,6 +386,35 @@ lv_obj_set_style_width(list, 3, LV_PART_SCROLLBAR);
 
 **教训**: LVGL 9 将滚动条样式统一到 part 选择器机制，所有 `scrollbar_*` 专用函数都改为 `bg_*` + `LV_PART_SCROLLBAR`
 
+### 坑 11：RGB565 图片字节序（大端 vs 小端）
+
+**现象**：石板背景图上屏后红蓝错乱/花屏（ARGB8888 图标正常，仅 RGB565 背景异常）。
+
+**根因**：`img_to_c.py` 的 `convert_rgb565()` 用 `struct.pack('>H')`（大端）写像素。但经 LVGL 9 源码链路核实：
+- `bsp_display_lvgl.c` 的 `.swap_bytes = true`，LVGL 输出小端 RGB565；
+- `esp_lvgl_port` flush 时对整块缓冲做 `lv_draw_sw_rgb565_swap` 再送面板；
+- 不透明 RGB565 源图混合时走 `lv_memcpy` 原样拷贝到 native（小端）缓冲。
+
+即：**源图必须以小端存储**，字节交换发生在 flush 阶段而非源数据。
+
+**修复**：`convert_rgb565()` 改用 `struct.pack('<H')`（小端）。重跑后首像素 `0x63,0x08`（= 小端 `0x0863`）与手工计算吻合。
+
+**教训**：LVGL 9 的 `swap_bytes` 是“显示驱动层”的字节交换，不改变源图数据布局；RGB565 源图一律小端。
+
+### 坑 12：页面 exit() 只置 NULL → 屏幕泄漏 + 动画空转
+
+**现象**：每次切页 RAM 下降（屏幕对象未释放）；离开待机页后呼吸动画仍在后台空转。
+
+**根因**：五个页面的 `exit()` 都只写 `s_scr = NULL`，既不 `lv_obj_delete(s_scr)` 释放屏幕，也不 `lv_anim_delete()` 停动画。
+
+**修复**：
+- `exit()` 中先 `lv_anim_delete()` 停掉作用于本页对象的动画（待机页），再 `lv_obj_delete(s_scr)`，最后置 NULL；
+- 弹窗页（图鉴/冒险）先 `sk_popup_close()`（弹窗是 `s_scr` 子对象）再删屏。
+
+**为何删屏安全**：`switch_page()` 是 `exit()` → `enter()` 顺序，`exit()` 删除的是当前活动屏幕。核实 LVGL 源码 `lv_obj_delete()`（`lv_obj_tree.c`）：删除活动屏幕时会把 `disp->act_scr = NULL`；随后 `enter()` 的 `lv_screen_load()` → `load_new_screen()` 显式容忍 `old_scr == NULL`。且整个过程持 `bsp_lvgl_lock`，中途无渲染，故“删旧屏 → 载新屏”安全。
+
+**教训**：LVGL 页面 exit 必须显式释放屏幕对象并停掉绑定其对象的动画；删活动屏幕后 LVGL 会清空 `act_scr`，紧接着载入新屏是安全的。
+
 ---
 
 ## 设计决策记录
@@ -393,11 +463,22 @@ lv_obj_set_style_width(list, 3, LV_PART_SCROLLBAR);
 - 水平滚动在 3 键交互下不直观 (只有 UP/DOWN, 没有 LEFT/RIGHT)
 - UP/DOWN 在网格中循环选择，体验更自然
 
+### 决策 5：辉光用纯色圆盘动画，不用 LVGL shadow（阶段 5）
+
+**选择**：待机页希卡之眼辉光 = 纯色半透明圆盘 + `bg_opa` 呼吸动画。
+
+**理由**：ESP32-C3 无 PSRAM，LVGL 软件 shadow 每帧重算模糊代价高；圆盘填充 + 图片混合仅重绘 ~164×164 区域，约 3ms/帧，呼吸流畅且不饿死其他任务。选中态的静态 `sk_glow` shadow 只在状态变化时重算，可接受。
+
+### 决策 6：图标用 ARGB8888（带透明），背景用 RGB565（阶段 5，取代决策 3）
+
+**选择**：符文/分类/装饰图标用 ARGB8888（保留透明通道，叠在石板背景上边缘干净）；全屏背景用 RGB565（不透明，省一半空间）。
+
+**理由**：初版（决策 3）为省 Flash 把所有图压成 RGB565 + 黑底，但图标黑底方块叠在深蓝背景上很突兀、“不像原版”。ARGB8888 图标共 ~210KB + 背景 150KB，仍远低于 4MB factory 分区，视觉收益远大于 Flash 成本。前提：`CONFIG_LV_DRAW_SW_SUPPORT_ARGB8888=y`（默认开启，已在 sdkconfig 核实）。
+
 ---
 
 ## 后续可玩方向
 
-- **真实符文图标**: 为 Compendium/Quest/Settings 也制作对应的 SVG 图标
 - **音效**: 利用 BSP 的 ES8311 I2S codec 播放简短的希卡音效 (石板激活/页面切换)
 - **休眠省电**: 30s 无操作自动关闭背光, 按键唤醒
 - **电量显示**: 利用 BSP 的 CW2017 电量计在状态栏显示电池百分比
