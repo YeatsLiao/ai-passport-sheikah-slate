@@ -20,6 +20,16 @@ CONFIG_LV_FONT_MONTSERRAT_20=y
 CONFIG_LV_FONT_MONTSERRAT_24=y
 # 使用系统堆
 CONFIG_LV_USE_CLIB_MALLOC=y
+# 希卡 UI 依赖的组件/绘制能力 (显式声明, 保证全新构建一致):
+#   - 列表/图标/标签/flex 布局 (图鉴与冒险记录列表, 环形轮盘, 图标标签栏)
+#   - RGB565 (石板背景图) + ARGB8888 (带透明通道图标) 软件混合
+# Hylia Serif 标题字体由 main/font/*.c 源码编译, 无需 Kconfig 开关。
+CONFIG_LV_USE_LIST=y
+CONFIG_LV_USE_IMAGE=y
+CONFIG_LV_USE_LABEL=y
+CONFIG_LV_USE_FLEX=y
+CONFIG_LV_DRAW_SW_SUPPORT_RGB565=y
+CONFIG_LV_DRAW_SW_SUPPORT_ARGB8888=y
 
 # --- 系统 ---
 CONFIG_FREERTOS_HZ=1000
