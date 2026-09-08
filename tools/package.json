@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
+    "lv_font_conv": "^1.5.3",
     "sharp": "^0.35.4"
   }
 }
