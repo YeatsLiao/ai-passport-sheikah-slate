@@ -254,6 +254,32 @@ ESP32-C3 无 SD 卡，8MB Flash 的 factory 分区有 4MB。将图片编译时�
 
 ---
 
+## 阶段 6：符文能力模拟 + 帧率优化
+
+### 符文能力模拟（新增 `page_rune_app.c`）
+
+5 个游戏符文从纯装饰变为可交互模拟（纯 LVGL 绘制，无新素材，退出均长按 OK）：
+
+| 符文 | 交互 |
+| --- | --- |
+| REMOTE BOMBS | OK 放置炸弹（引信闪烁）→ 再按 OK 引爆（冲击环扩散 + 白闪 + 画面震动） |
+| MAGNESIS | UP/DOWN 移动准星，OK 吸附/释放金属箱（吸附后箱子跟随准星，有距离判定与提示文案） |
+| STASIS | 石块持续左右移动，OK 时停 5 秒（橙色冰封 + 28px 大字倒计时，结束解冻恢复移动） |
+| CRYONIS | OK 从水面升起冰柱（生长动画，最多 3 根，第 4 次融化最早一根） |
+| CAMERA | 取景框 + 对焦环，OK 拍照（白闪 + 底片条缩略图 + SAVED 淡出，防连按重复计数） |
+
+路由：`page_runes.c` 游戏符文 `page_id` 改为 4，新增 `page_runes_get_selected_rune()`；`main.c` 增加 `PAGE_RUNE_APP`，长按 OK 与其他子页一致返回符文页。
+
+### 帧率三件套
+
+| 改动 | 收益 |
+| --- | --- |
+| `BSP_LCD_PCLK_HZ` 40→80MHz | 整帧 SPI 传输 ~31ms→~15ms，第一瓶颈减半 |
+| 20 行单缓冲→双缓冲（+9.6KB 内部 RAM） | 渲染下一带与上一带 SPI 传输重叠（esp_lvgl_port 用 trans_done 中断回调 flush_ready），约快 30-40% |
+| `CONFIG_LV_DEF_REFR_PERIOD` 33→16ms | 默认 33ms 把帧率硬限在 30fps，改为 60fps 上限 |
+
+---
+
 ## 踩坑记录
 
 ### 坑 1：BSP CMakeLists.txt 被误覆盖
@@ -415,6 +441,14 @@ lv_obj_set_style_width(list, 3, LV_PART_SCROLLBAR);
 
 **教训**：LVGL 页面 exit 必须显式释放屏幕对象并停掉绑定其对象的动画；删活动屏幕后 LVGL 会清空 `act_scr`，紧接着载入新屏是安全的。
 
+### 坑 13：LVGL 9 没有 `lv_timer_del`，是 `lv_timer_delete`
+
+**现象**：符文模拟页首次编译即报隐式声明/链接错误。
+
+**根因**：LVGL 8 的 API 名是 `lv_timer_del`，LVGL 9 改名为 `lv_timer_delete`（`lv_anim_del` → `lv_anim_delete` 同理，但项目里原本就没用到旧名）。
+
+**教训**：从旧教程/记忆里写 LVGL API 前先对 `managed_components/lvgl__lvgl/src/misc/lv_timer.h` 核实；本项目 LVGL 9 定时器删除断续续用到，统一用 `lv_timer_delete`。
+
 ---
 
 ## 设计决策记录
@@ -475,6 +509,14 @@ lv_obj_set_style_width(list, 3, LV_PART_SCROLLBAR);
 
 **理由**：初版（决策 3）为省 Flash 把所有图压成 RGB565 + 黑底，但图标黑底方块叠在深蓝背景上很突兀、“不像原版”。ARGB8888 图标共 ~210KB + 背景 150KB，仍远低于 4MB factory 分区，视觉收益远大于 Flash 成本。前提：`CONFIG_LV_DRAW_SW_SUPPORT_ARGB8888=y`（默认开启，已在 sdkconfig 核实）。
 
+### 决策 7：帧率优化只动“传输+调度”，不动渲染算法（阶段 6）
+
+**选择**：SPI 80MHz + 20 行双缓冲 + 16ms 刷新周期，不动页面绘制逻辑。
+
+**理由**：瓶颈定量算过——整帧 153KB 走 40MHz SPI ≈ 31ms，单缓冲下渲染/传输逐带串行；这四项都是配置级改动（~15 行），不动已经验收过的视觉。双缓冲 +9.6KB 内部 RAM 的风险用注释里的回退路径控制（NO_MEM 时改回单缓冲）。
+
+**拒绝方案**：缩小待机呼吸动画区域/降低动画精度——牺牲视觉换不多的帧数，等实机确认 SPI 80MHz 稳定后仍有需要再说。
+
 ---
 
 ## 后续可玩方向
@@ -490,6 +532,12 @@ lv_obj_set_style_width(list, 3, LV_PART_SCROLLBAR);
 ## 提交历史（分步提交记录）
 
 ```
+perf(display): SPI 80MHz + 双缓冲 + 16ms 刷新周期
+feat(runes): 5 个符文能力模拟（炸弹/磁力/静止/制冰/相机）
+feat(pages): 五页视觉重做（环形符文轮盘 + 游戏风格弹窗）
+feat(ui): Hylia 字体与游戏风格主题组件
+feat(assets): 引入游戏原版图标与石板背景素材
+feat(tools): 完善素材管线（背景生成/字体转换/字节序修复）
 docs: 添加开发文档 (docs/README.md + development-log.md)
 feat: 添加游戏原版 SVG 素材和 LVGL 图片转换工具
 feat: 添加海拉鲁图鉴和冒险记录 JSON 数据
