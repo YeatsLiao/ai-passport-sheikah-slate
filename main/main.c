@@ -4,6 +4,8 @@
 //   STANDBY --[OK]--> RUNES
 //   RUNES --[OK on compendium]--> COMPENDIUM
 //   RUNES --[OK on quest]--> QUEST
+//   RUNES --[OK on settings]--> SETTINGS
+//   RUNES --[OK on 游戏符文]--> RUNE_APP (符文能力模拟)
 //   RUNES --[长按OK]--> STANDBY
 //   子页面 --[长按OK]--> RUNES
 
@@ -13,6 +15,7 @@
 #include "bsp_battery.h"
 #include "page_standby.h"
 #include "page_runes.h"
+#include "page_rune_app.h"
 #include "page_compendium.h"
 #include "page_quest.h"
 #include "page_settings.h"
@@ -29,6 +32,7 @@ typedef enum {
     PAGE_COMPENDIUM,
     PAGE_QUEST,
     PAGE_SETTINGS,
+    PAGE_RUNE_APP,
     PAGE_COUNT,
 } page_id_t;
 
@@ -40,6 +44,7 @@ typedef struct {
 
 // 外部函数声明
 extern int  page_runes_get_selected_page(void);
+extern int  page_runes_get_selected_rune(void);
 extern bool page_settings_wants_standby(void);
 
 static const page_ops_t PAGES[PAGE_COUNT] = {
@@ -48,6 +53,7 @@ static const page_ops_t PAGES[PAGE_COUNT] = {
     [PAGE_COMPENDIUM] = { page_compendium_enter, page_compendium_exit, page_compendium_key },
     [PAGE_QUEST]      = { page_quest_enter,     page_quest_exit,      page_quest_key      },
     [PAGE_SETTINGS]   = { page_settings_enter,   page_settings_exit,   page_settings_key   },
+    [PAGE_RUNE_APP]   = { page_rune_app_enter,   page_rune_app_exit,   page_rune_app_key   },
 };
 
 static page_id_t s_current = PAGE_STANDBY;
@@ -95,6 +101,7 @@ static void on_key(bsp_btn_t btn, bsp_btn_ev_t ev, void *user)
         case PAGE_COMPENDIUM:
         case PAGE_QUEST:
         case PAGE_SETTINGS:
+        case PAGE_RUNE_APP:
             PAGES[s_current].key(btn, ev);
             bsp_lvgl_unlock();
             switch_page(PAGE_RUNES);
@@ -121,7 +128,11 @@ static void on_key(bsp_btn_t btn, bsp_btn_ev_t ev, void *user)
         case 1: switch_page(PAGE_COMPENDIUM); return;
         case 2: switch_page(PAGE_QUEST); return;
         case 3: switch_page(PAGE_SETTINGS); return;
-        default: return;  // 无子页面的符文 (炸弹/磁力/静止/制冰/相机)
+        case 4: // 游戏符文 -> 能力模拟页
+            page_rune_app_set_rune(page_runes_get_selected_rune());
+            switch_page(PAGE_RUNE_APP);
+            return;
+        default: return;
         }
     }
 

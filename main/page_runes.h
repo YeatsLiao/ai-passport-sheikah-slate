@@ -6,5 +6,8 @@ void page_runes_enter(void);
 void page_runes_exit(void);
 void page_runes_key(bsp_btn_t btn, bsp_btn_ev_t ev);
 
-// 返回当前选中符文的 page_id (-1 = 无子页面)
+// 返回当前选中符文的 page_id (1-3=子页面, 4=符文能力模拟)
 int page_runes_get_selected_page(void);
+
+// 返回当前选中符文的 RUNES[] 下标 (0-7)
+int page_runes_get_selected_rune(void);

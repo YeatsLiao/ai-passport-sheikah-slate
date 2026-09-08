@@ -23,15 +23,15 @@ typedef struct {
     const char *name;
     const char *desc;
     const lv_image_dsc_t *icon;
-    int page_id;   // 子页面 ID (-1 = 无, 停留本页)
+    int page_id;   // 子页面 ID (1=图鉴 2=冒险 3=设置 4=符文能力模拟, -1 = 无)
 } rune_info_t;
 
 static const rune_info_t RUNES[] = {
-    { "REMOTE BOMBS",  "Create remote-detonated bombs",  &img_rune_bomb,       -1 },
-    { "MAGNESIS",      "Lift and move metal objects",    &img_rune_magnet,     -1 },
-    { "STASIS",        "Freeze objects in time",         &img_rune_stasis,     -1 },
-    { "CRYONIS",       "Create pillars of ice",          &img_rune_cryonis,    -1 },
-    { "CAMERA",        "Capture photos of Hyrule",       &img_rune_camera,     -1 },
+    { "REMOTE BOMBS",  "Create remote-detonated bombs",  &img_rune_bomb,       4 },
+    { "MAGNESIS",      "Lift and move metal objects",    &img_rune_magnet,     4 },
+    { "STASIS",        "Freeze objects in time",         &img_rune_stasis,     4 },
+    { "CRYONIS",       "Create pillars of ice",          &img_rune_cryonis,    4 },
+    { "CAMERA",        "Capture photos of Hyrule",       &img_rune_camera,     4 },
     { "COMPENDIUM",    "Encyclopedia of Hyrule",         &img_rune_compendium,  1 },
     { "ADVENTURE LOG", "Track quests and memories",      &img_rune_quest,       2 },
     { "SETTINGS",      "Brightness & system config",     &img_rune_settings,    3 },
@@ -164,6 +164,11 @@ void page_runes_exit(void)
 int page_runes_get_selected_page(void)
 {
     return RUNES[s_sel].page_id;
+}
+
+int page_runes_get_selected_rune(void)
+{
+    return s_sel;   // RUNES[] 下标 0-7, 0-4 为游戏符文
 }
 
 void page_runes_key(bsp_btn_t btn, bsp_btn_ev_t ev)

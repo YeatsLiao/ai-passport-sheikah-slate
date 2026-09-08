@@ -4,6 +4,7 @@ idf_component_register(
          "sheikah_ui.c"
          "page_standby.c"
          "page_runes.c"
+         "page_rune_app.c"
          "page_compendium.c"
          "page_quest.c"
          "page_settings.c"
