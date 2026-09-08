@@ -19,8 +19,8 @@ typedef struct {
 } setting_item_t;
 
 static setting_item_t S_SETTINGS[] = {
-    { "Brightness", 10, 100, 100 },
-    { "Return to Standby", 0, 0, 0 },
+    { "BRIGHTNESS", 10, 100, 100 },
+    { "RETURN TO STANDBY", 0, 0, 0 },
 };
 #define SETTINGS_COUNT (sizeof(S_SETTINGS) / sizeof(S_SETTINGS[0]))
 
@@ -33,12 +33,13 @@ static void update_selection(void)
 {
     for (int i = 0; i < (int)SETTINGS_COUNT; i++) {
         lv_obj_t *item = s_items[i];
-        if (i == s_sel) {
-            lv_obj_set_style_bg_color(item, lv_color_hex(SK_BLUE), 0);
-            lv_obj_set_style_bg_opa(item, LV_OPA_20, 0);
-        } else {
-            lv_obj_set_style_bg_opa(item, LV_OPA_TRANSP, 0);
-        }
+        bool on = (i == s_sel);
+        lv_obj_set_style_bg_color(item, lv_color_hex(SK_BLUE), 0);
+        lv_obj_set_style_bg_opa(item, on ? LV_OPA_20 : LV_OPA_TRANSP, 0);
+        lv_obj_set_style_border_width(item, on ? 2 : 1, 0);
+        lv_obj_set_style_border_opa(item, on ? LV_OPA_COVER : LV_OPA_30, 0);
+        if (on) sk_glow(item, SK_BLUE_GLOW, 10, LV_OPA_40);
+        else    sk_glow(item, SK_BLUE_GLOW, 0, LV_OPA_TRANSP);
     }
 }
 
@@ -56,7 +57,7 @@ void page_settings_enter(void)
     ESP_LOGI(TAG, "enter settings");
     s_scr = sk_screen_create();
 
-    sk_header_create(s_scr, "Settings");
+    sk_header_create(s_scr, "SETTINGS");
 
     // 设置项列表
     int y = SK_HEADER_H + 12;
@@ -74,7 +75,7 @@ void page_settings_enter(void)
         lv_obj_set_style_pad_all(row, 4, 0);
 
         lv_obj_t *name = sk_label_create(row, S_SETTINGS[i].name,
-                                         &SK_FONT_BODY, SK_TEXT);
+                                         &SK_FONT_CAPS, SK_TEXT);
         lv_obj_align(name, LV_ALIGN_LEFT_MID, 8, 0);
 
         // 值标签 (仅对有范围的项)
@@ -83,7 +84,7 @@ void page_settings_enter(void)
             char buf[16];
             snprintf(buf, sizeof(buf), "%d%%", S_SETTINGS[i].value);
             lv_label_set_text(val, buf);
-            lv_obj_set_style_text_font(val, &SK_FONT_BODY, 0);
+            lv_obj_set_style_text_font(val, &SK_FONT_CAPS, 0);
             lv_obj_set_style_text_color(val, lv_color_hex(SK_YELLOW), 0);
             lv_obj_align(val, LV_ALIGN_RIGHT_MID, -8, 0);
             s_value_labels[i] = val;
@@ -94,8 +95,7 @@ void page_settings_enter(void)
         s_items[i] = row;
     }
 
-    sk_footer_create(s_scr, LV_SYMBOL_UP "/" LV_SYMBOL_DOWN ":Select  "
-                                LV_SYMBOL_OK ":Adjust/Enter");
+    sk_footer_create(s_scr, "UP/DN  ADJUST     OK  ENTER");
 
     update_selection();
     lv_screen_load(s_scr);
@@ -103,6 +103,7 @@ void page_settings_enter(void)
 
 void page_settings_exit(void)
 {
+    if (s_scr) lv_obj_delete(s_scr);   // 删屏修复旧实现的屏幕泄漏
     s_scr = NULL;
     memset(s_items, 0, sizeof(s_items));
     memset(s_value_labels, 0, sizeof(s_value_labels));

@@ -6,6 +6,7 @@
 #include "page_compendium.h"
 #include "sheikah_theme.h"
 #include "sheikah_ui.h"
+#include "img/img_all.h"
 #include "esp_log.h"
 #include <string.h>
 #include <stdlib.h>
@@ -41,6 +42,12 @@ static const cat_data_t CAT_DATA[CAT_COUNT] = {
     { compendium_materials_json_start, compendium_materials_json_end },
     { compendium_equipment_json_start, compendium_equipment_json_end },
     { compendium_treasures_json_start, compendium_treasures_json_end },
+};
+
+// 分类图标 (与 CAT_NAMES/CAT_DATA 顺序一致, 28x28 ARGB8888)
+static const lv_image_dsc_t *CAT_ICONS[CAT_COUNT] = {
+    &img_comp_creatures, &img_comp_monsters, &img_comp_materials,
+    &img_comp_equipment, &img_comp_treasures
 };
 
 // ---- 简易 JSON 解析 ----
@@ -105,7 +112,7 @@ static void parse_category(int cat)
         if (!p) break;
         p++;
     }
-    ESP_LOGI(TAG, "Category %d: %d entries", cat, s_entry_count);
+    ESP_LOGI(TAG, "Category %s: %d entries", CAT_NAMES[cat], s_entry_count);
 }
 
 // ---- UI ----
@@ -125,11 +132,11 @@ static void rebuild_list(void)
 
     parse_category(s_cat_sel);
 
-    s_list = sk_list_create(s_scr, 8, SK_HEADER_H + 36, SK_SCREEN_W - 16,
-                            SK_SCREEN_H - SK_HEADER_H - SK_FOOTER_H - 44);
+    s_list = sk_list_create(s_scr, 8, SK_HEADER_H + 42, SK_SCREEN_W - 16,
+                            SK_SCREEN_H - SK_HEADER_H - SK_FOOTER_H - 50);
 
     for (int i = 0; i < s_entry_count; i++) {
-        sk_list_add_item(s_list, s_entries[i].name, s_entries[i].desc);
+        sk_list_add_item(s_list, NULL, s_entries[i].name, s_entries[i].desc);
     }
 
     // 高亮第一项
@@ -162,21 +169,24 @@ void page_compendium_enter(void)
     ESP_LOGI(TAG, "enter compendium");
     s_scr = sk_screen_create();
 
-    sk_header_create(s_scr, "Hyrule Compendium");
+    sk_header_create(s_scr, "COMPENDIUM");
 
-    // 分类标签
-    s_tabs = sk_tabs_create(s_scr, SK_HEADER_H, CAT_NAMES, CAT_COUNT, &s_cat_sel);
+    // 分类标签 (游戏分类图标, 选中态高亮 + 辉光)
+    s_tabs = sk_icon_tabs_create(s_scr, SK_HEADER_H, CAT_ICONS, CAT_COUNT, &s_cat_sel);
 
     rebuild_list();
 
-    sk_footer_create(s_scr, LV_SYMBOL_UP "/" LV_SYMBOL_DOWN ":Browse  "
-                                LV_SYMBOL_OK ":Details");
+    sk_footer_create(s_scr, "UP/DN  BROWSE     OK  DETAILS");
 
     lv_screen_load(s_scr);
 }
 
 void page_compendium_exit(void)
 {
+    // 先关弹窗 (它是 s_scr 的子对象), 再删屏, 修复旧实现的屏幕泄漏。
+    // 删除活动屏幕后 LVGL 会把 act_scr 置 NULL, 下一页 enter() 载入新屏安全。
+    sk_popup_close();
+    if (s_scr) lv_obj_delete(s_scr);
     s_scr = NULL;
     s_list = NULL;
     s_tabs = NULL;

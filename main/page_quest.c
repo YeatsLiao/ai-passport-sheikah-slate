@@ -5,6 +5,7 @@
 #include "page_quest.h"
 #include "sheikah_theme.h"
 #include "sheikah_ui.h"
+#include "img/img_all.h"
 #include "esp_log.h"
 #include <string.h>
 #include <stdlib.h>
@@ -87,29 +88,30 @@ static void build_list(void)
     parse_quests();
     s_sel = 0;
 
-    s_list = sk_list_create(s_scr, 8, SK_HEADER_H + 4,
+    s_list = sk_list_create(s_scr, 8, SK_HEADER_H + 8,
                             SK_SCREEN_W - 16,
-                            SK_SCREEN_H - SK_HEADER_H - SK_FOOTER_H - 12);
+                            SK_SCREEN_H - SK_HEADER_H - SK_FOOTER_H - 16);
 
     for (int i = 0; i < s_quest_count; i++) {
-        lv_obj_t *btn = sk_list_add_item(s_list, s_quests[i].title, NULL);
+        // 主线任务左侧显示任务图标
+        const lv_image_dsc_t *icon =
+            (strcmp(s_quests[i].type, "Main") == 0) ? &img_quest_main : NULL;
 
-        // 类型标签色块
+        // 副标题: [类型] 描述
+        char sub[160];
+        snprintf(sub, sizeof(sub), "[%s] %s", s_quests[i].type, s_quests[i].desc);
+
+        lv_obj_t *btn = sk_list_add_item(s_list, icon, s_quests[i].title, sub);
+
+        // 右侧类型色点 (btn 是 FLEX_ROW, 内容列已 flex_grow 占满, 色点靠右)
         lv_obj_t *tag = lv_obj_create(btn);
         lv_obj_remove_flag(tag, LV_OBJ_FLAG_SCROLLABLE);
-        lv_obj_set_size(tag, 6, 6);
-        lv_obj_set_style_radius(tag, 3, 0);
+        lv_obj_set_size(tag, 8, 8);
+        lv_obj_set_style_radius(tag, LV_RADIUS_CIRCLE, 0);
         lv_obj_set_style_bg_color(tag, lv_color_hex(type_color(s_quests[i].type)), 0);
+        lv_obj_set_style_bg_opa(tag, LV_OPA_COVER, 0);
         lv_obj_set_style_border_width(tag, 0, 0);
         lv_obj_set_style_pad_all(tag, 0, 0);
-
-        // 描述副标题
-        lv_obj_t *sub = lv_label_create(btn);
-        lv_label_set_text_fmt(sub, "[%s] %s", s_quests[i].type, s_quests[i].desc);
-        lv_obj_set_style_text_font(sub, &SK_FONT_SMALL, 0);
-        lv_obj_set_style_text_color(sub, lv_color_hex(SK_TEXT_MUTED), 0);
-        lv_obj_set_width(sub, lv_pct(100));
-        lv_label_set_long_mode(sub, LV_LABEL_LONG_DOT);
     }
 
     // 高亮第一项
@@ -136,17 +138,19 @@ void page_quest_enter(void)
     ESP_LOGI(TAG, "enter quest");
     s_scr = sk_screen_create();
 
-    sk_header_create(s_scr, "Adventure Log");
+    sk_header_create(s_scr, "ADVENTURE LOG");
     build_list();
 
-    sk_footer_create(s_scr, LV_SYMBOL_UP "/" LV_SYMBOL_DOWN ":Browse  "
-                                LV_SYMBOL_OK ":Details");
+    sk_footer_create(s_scr, "UP/DN  BROWSE     OK  DETAILS");
 
     lv_screen_load(s_scr);
 }
 
 void page_quest_exit(void)
 {
+    // 先关弹窗 (s_scr 子对象) 再删屏, 修复旧实现的屏幕泄漏
+    sk_popup_close();
+    if (s_scr) lv_obj_delete(s_scr);
     s_scr = NULL;
     s_list = NULL;
     s_sel = 0;
