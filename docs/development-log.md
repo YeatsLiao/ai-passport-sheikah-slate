@@ -280,6 +280,20 @@ ESP32-C3 无 SD 卡，8MB Flash 的 factory 分区有 4MB。将图片编译时�
 
 ---
 
+## 阶段 7：音效系统（合成兜底 + 换装管线）
+
+游戏原版音效下载受限，改用纯正弦/噪声合成“希卡味”电子音（版权干净可入库），同时把换装管线建好——以后拿到原版 wav 覆盖 `assets/audio/<id>.wav` 重跑脚本即可。
+
+| 组件 | 说明 |
+| --- | --- |
+| `tools/gen_synth.py` | 合成 8 个音效到 `assets/audio/`（chirp 扫频 + 指数衰减 + 一阶低通噪声，固定种子可复现） |
+| `tools/gen_audio.py` | wav → 16kHz/16bit/mono PCM → `main/audio/sfx_data.{c,h}`（ffmpeg 可选，纯 Python wave 兜底） |
+| `main/audio/sfx.c` | 播放模块：`sfx_play()` 只投队列（按键回调/LVGL 定时器内安全），audio 任务懒初始化 `bsp_audio` 后分块写 I2S |
+
+8 个音效（合计 ~102KB flash）：activate(0.78s)/tick/confirm/bomb_place/bomb_boom(0.9s)/stasis_freeze/stasis_unfreeze/shutter。触发点 11 处：待机激活、轮盘 UP/DOWN、符文选中、进能力页、炸弹放置/引爆、时停冻结/解冻、快门。
+
+---
+
 ## 踩坑记录
 
 ### 坑 1：BSP CMakeLists.txt 被误覆盖
@@ -532,6 +546,10 @@ lv_obj_set_style_width(list, 3, LV_PART_SCROLLBAR);
 ## 提交历史（分步提交记录）
 
 ```
+feat(audio): 挂接 11 处音效触发点 (激活/轮盘/选中/炸弹/时停/快门)
+feat(audio): sfx 播放模块 (audio worker task + 队列, 非阻塞)
+feat(audio): 音效转换管线与合成器 (wav -> 16kHz mono PCM -> C 数组)
+fix(runes): 修复 snprintf 缓冲区过小触发 -Werror=format-truncation
 perf(display): SPI 80MHz + 双缓冲 + 16ms 刷新周期
 feat(runes): 5 个符文能力模拟（炸弹/磁力/静止/制冰/相机）
 feat(pages): 五页视觉重做（环形符文轮盘 + 游戏风格弹窗）
