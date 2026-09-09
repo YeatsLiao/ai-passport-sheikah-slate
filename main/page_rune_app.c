@@ -14,6 +14,7 @@
 #include "page_rune_app.h"
 #include "page_runes.h"
 #include "sheikah_theme.h"
+#include "audio/sfx.h"
 #include "bsp_display.h"
 #include "esp_log.h"
 #include <math.h>
@@ -188,6 +189,7 @@ static void key_bomb(void)
         lv_anim_set_path_cb(&a, lv_anim_path_ease_in_out);
         lv_anim_set_repeat_count(&a, LV_ANIM_REPEAT_INFINITE);
         lv_anim_start(&a);
+        sfx_play(SFX_BOMB_PLACE);
         ESP_LOGI(TAG, "bomb placed");
     } else {
         // 引爆: 停引信动画 -> 删炸弹 -> 冲击环 + 白闪 + 震动
@@ -206,6 +208,7 @@ static void key_bomb(void)
         one_shot_anim(flash, flash_exec, 200, 0, 300, boom_delete_cb);
 
         one_shot_anim(s_area, shake_exec, 0, 100, 340, shake_done_cb);
+        sfx_play(SFX_BOMB_BOOM);
         ESP_LOGI(TAG, "boom!");
     }
 }
@@ -293,6 +296,7 @@ static void count_timer_cb(lv_timer_t *t)
     lv_obj_delete(s_count);   s_count = NULL;
     lv_timer_resume(s_move_timer);
     lv_obj_set_style_border_color(s_stone, lv_color_hex(SK_TAN), 0);
+    sfx_play(SFX_STASIS_UNFREEZE);
 }
 
 static void key_stasis(void)
@@ -319,6 +323,7 @@ static void key_stasis(void)
     lv_label_set_text(s_count, "5");
 
     lv_timer_resume(s_count_timer);
+    sfx_play(SFX_STASIS_FREEZE);
     ESP_LOGI(TAG, "stasis freeze");
 }
 
@@ -422,6 +427,7 @@ static void key_camera(void)
     lv_obj_set_style_bg_color(flash, lv_color_hex(SK_WHITE), 0);
     lv_obj_set_style_bg_opa(flash, LV_OPA_COVER, 0);
     one_shot_anim(flash, flash_exec, LV_OPA_COVER, 0, 180, flash_del_cb);
+    sfx_play(SFX_SHUTTER);
     ESP_LOGI(TAG, "shutter");
 }
 

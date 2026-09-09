@@ -8,6 +8,7 @@
 
 #include "page_runes.h"
 #include "sheikah_theme.h"
+#include "audio/sfx.h"
 #include "bsp_display.h"
 #include "img/img_all.h"
 #include "esp_log.h"
@@ -178,13 +179,16 @@ void page_runes_key(bsp_btn_t btn, bsp_btn_ev_t ev)
     switch (btn) {
     case BSP_BTN_UP:
         s_sel = (s_sel + RUNE_COUNT - 1) % RUNE_COUNT;   // 逆时针
+        sfx_play(SFX_TICK);
         refresh_selection();
         break;
     case BSP_BTN_DOWN:
         s_sel = (s_sel + 1) % RUNE_COUNT;                // 顺时针
+        sfx_play(SFX_TICK);
         refresh_selection();
         break;
     case BSP_BTN_OK:
+        sfx_play(SFX_CONFIRM);   // 选中功能符文 (图鉴/冒险/设置) 也响
         ESP_LOGI(TAG, "Select rune: %s (page=%d)", RUNES[s_sel].name, RUNES[s_sel].page_id);
         break;
     }

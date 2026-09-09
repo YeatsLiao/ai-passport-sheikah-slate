@@ -19,6 +19,7 @@
 #include "page_compendium.h"
 #include "page_quest.h"
 #include "page_settings.h"
+#include "audio/sfx.h"
 #include "sheikah_ui.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
@@ -111,10 +112,11 @@ static void on_key(bsp_btn_t btn, bsp_btn_ev_t ev, void *user)
         }
     }
 
-    // 待机页: OK 进入符文页
+    // 待机页: OK 进入符文页 (石板激活)
     if (s_current == PAGE_STANDBY && btn == BSP_BTN_OK && ev == BSP_BTN_CLICK) {
         PAGES[s_current].key(btn, ev);
         bsp_lvgl_unlock();
+        sfx_play(SFX_ACTIVATE);
         switch_page(PAGE_RUNES);
         return;
     }
@@ -124,6 +126,7 @@ static void on_key(bsp_btn_t btn, bsp_btn_ev_t ev, void *user)
         PAGES[s_current].key(btn, ev);
         int target = page_runes_get_selected_page();
         bsp_lvgl_unlock();
+        if (target == 4) sfx_play(SFX_CONFIRM);   // 选中游戏符文
         switch (target) {
         case 1: switch_page(PAGE_COMPENDIUM); return;
         case 2: switch_page(PAGE_QUEST); return;
@@ -182,6 +185,9 @@ void app_main(void)
         ESP_LOGE(TAG, "Button init failed");
         return;
     }
+
+    // 音效 (worker task + 队列, 首次播放时才初始化 codec)
+    sfx_init();
 
     // 进入待机页
     if (bsp_lvgl_lock(1000)) {
