@@ -8,6 +8,8 @@ idf_component_register(
          "page_compendium.c"
          "page_quest.c"
          "page_settings.c"
+         "audio/sfx.c"
+         "audio/sfx_data.c"
          "font/hylia_serif_16.c"
          "font/hylia_serif_20.c"
          "font/hylia_serif_28.c"
