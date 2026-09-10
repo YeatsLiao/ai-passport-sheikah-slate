@@ -3,7 +3,12 @@
 // 8 个符文沿圆环排列 (对齐 zelda-hyrule-ui quickSelectorScreen 规格):
 //   - UP/DOWN 沿环逆/顺时针旋转选中
 //   - 选中符文放大 (scale 256) + 全亮 + 辉光盘, 未选中缩小 (210) + 半暗
-//   - 轮盘中心 hub 显示选中符文图标, 下方显示名称 (Hylia) + 描述
+//   - 中心 hub 是纯装饰 (游戏风 D-pad 十字), 不重复显示选中图标 ——
+//     否则选中环上底部/顶部符文时放大图标与 hub 内副本挤在一起
+//   - 下方名称 (Hylia) + 描述, 两行即止 (装备状态行冗余, 已移除)
+//   - 轮盘半径加大到 r=78 (选中底部符文时图标距文字仍有余量)
+//   - 扫描线侧边装饰 (CRT 质感; quick-selector 框架件在 240px 小屏上与
+//     r=70 图标环几何重叠, 已移除 —— 素材保留在 assets/images 备用)
 // 全部 8 个符文均有真实图标 (含 Compendium/Adventure Log/Settings)。
 
 #include "page_runes.h"
@@ -41,8 +46,8 @@ static const rune_info_t RUNES[] = {
 
 // ---- 轮盘几何 ----
 #define WHEEL_CX    120
-#define WHEEL_CY    116
-#define WHEEL_R      70
+#define WHEEL_CY    112
+#define WHEEL_R      78     // 环半径加大, 相邻图标间隙更宽松
 #define ICON_HALF    28      // 图标原生 56x56 的一半
 #define SCALE_SEL    256     // 选中: 100%
 #define SCALE_UNSEL  210     // 未选中: ~82%
@@ -51,7 +56,6 @@ static const rune_info_t RUNES[] = {
 static lv_obj_t *s_scr;
 static lv_obj_t *s_icons[RUNE_COUNT];
 static lv_obj_t *s_glow;       // 选中辉光盘
-static lv_obj_t *s_hub_icon;   // 中心选中符文图标
 static lv_obj_t *s_name;
 static lv_obj_t *s_desc;
 static int       s_sel = 0;
@@ -73,10 +77,9 @@ static void refresh_selection(void)
         lv_image_set_scale(s_icons[i], on ? SCALE_SEL : SCALE_UNSEL);
         lv_obj_set_style_image_opa(s_icons[i], on ? LV_OPA_COVER : (lv_opa_t)130, 0);
     }
-    // 辉光盘移到选中符文
+    // 中心 hub 是纯装饰 (D-pad 十字), 不随选中变化
     lv_obj_set_pos(s_glow, s_pos[s_sel][0] - GLOW_HALF, s_pos[s_sel][1] - GLOW_HALF);
-    // 中心 hub 显示选中符文图标 + 名称/描述
-    lv_image_set_src(s_hub_icon, RUNES[s_sel].icon);
+    // 下方名称/描述 (两行即止, 不再有装备状态行)
     lv_label_set_text(s_name, RUNES[s_sel].name);
     lv_label_set_text(s_desc, RUNES[s_sel].desc);
 }
@@ -89,6 +92,18 @@ void page_runes_enter(void)
 
     // 四角角饰
     sk_corner_frame(s_scr, SK_SCREEN_W, SK_SCREEN_H);
+
+    // ---- 扫描线侧边装饰 (CRT 质感, 半透明) ----
+    // 注: quick-selector 框架件 (top/left/right/center) 会与 r=70 的图标环
+    // 重叠 (240px 屏放不下), 实测 UI 错乱, 已移除。
+    lv_obj_t *scan_l = lv_image_create(s_scr);
+    lv_image_set_src(scan_l, &img_scanline_side);
+    lv_obj_set_pos(scan_l, 2, 70);
+    lv_obj_set_style_image_opa(scan_l, LV_OPA_30, 0);
+    lv_obj_t *scan_r = lv_image_create(s_scr);
+    lv_image_set_src(scan_r, &img_scanline_side);
+    lv_obj_set_pos(scan_r, SK_SCREEN_W - 12, 70);
+    lv_obj_set_style_image_opa(scan_r, LV_OPA_30, 0);
 
     // 选中辉光盘 (在图标之下, 无动画 -> 仅在换选时重定位)
     s_glow = lv_obj_create(s_scr);
@@ -109,7 +124,8 @@ void page_runes_enter(void)
         s_icons[i] = img;
     }
 
-    // 中心 hub: 圆环 + 选中符文图标
+    // 中心 hub: 纯装饰圆环 + 游戏风 D-pad 十字 (不放选中图标, 避免与
+    // 环上放大的选中符文重复/重叠)
     lv_obj_t *hub = lv_obj_create(s_scr);
     lv_obj_remove_flag(hub, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_set_size(hub, 64, 64);
@@ -122,29 +138,28 @@ void page_runes_enter(void)
     lv_obj_set_style_border_opa(hub, LV_OPA_70, 0);
     lv_obj_set_style_pad_all(hub, 0, 0);
 
-    s_hub_icon = lv_image_create(hub);
-    lv_image_set_src(s_hub_icon, RUNES[s_sel].icon);
-    lv_image_set_scale(s_hub_icon, 200);   // 56 -> ~44px, 适配 hub
-    lv_image_set_pivot(s_hub_icon, ICON_HALF, ICON_HALF);
-    lv_obj_center(s_hub_icon);
+    lv_obj_t *dpad = lv_image_create(hub);
+    lv_image_set_src(dpad, &img_selector_center);   // 36x36, hub 内居中
+    lv_obj_center(dpad);
+    lv_obj_set_style_image_opa(dpad, LV_OPA_30, 0);
 
-    // 符文名称 (Hylia Serif, 黄)
+    // 符文名称 (Hylia Serif, 黄) —— 环底部图标下缘 y=218, 文字区从 226 起
     s_name = lv_label_create(s_scr);
     lv_obj_set_style_text_font(s_name, &SK_FONT_LARGE, 0);
     lv_obj_set_style_text_color(s_name, lv_color_hex(SK_YELLOW), 0);
     lv_obj_set_width(s_name, SK_SCREEN_W - 24);
     lv_obj_set_style_text_align(s_name, LV_TEXT_ALIGN_CENTER, 0);
     lv_label_set_long_mode(s_name, LV_LABEL_LONG_DOT);
-    lv_obj_align(s_name, LV_ALIGN_TOP_MID, 0, 222);
+    lv_obj_align(s_name, LV_ALIGN_TOP_MID, 0, 226);
 
-    // 符文描述 (Montserrat, 暖白, 换行)
+    // 符文描述 (Montserrat, 暖白, 单行省略)
     s_desc = lv_label_create(s_scr);
     lv_obj_set_style_text_font(s_desc, &SK_FONT_SMALL, 0);
     lv_obj_set_style_text_color(s_desc, lv_color_hex(SK_TEXT), 0);
     lv_obj_set_width(s_desc, SK_SCREEN_W - 32);
     lv_obj_set_style_text_align(s_desc, LV_TEXT_ALIGN_CENTER, 0);
-    lv_label_set_long_mode(s_desc, LV_LABEL_LONG_WRAP);
-    lv_obj_align(s_desc, LV_ALIGN_TOP_MID, 0, 250);
+    lv_label_set_long_mode(s_desc, LV_LABEL_LONG_DOT);
+    lv_obj_align(s_desc, LV_ALIGN_TOP_MID, 0, 256);
 
     // 底部提示
     sk_footer_create(s_scr, "UP/DN  ROTATE     OK  SELECT");
@@ -159,7 +174,7 @@ void page_runes_exit(void)
     if (s_scr) lv_obj_delete(s_scr);
     s_scr = NULL;
     memset(s_icons, 0, sizeof(s_icons));
-    s_glow = s_hub_icon = s_name = s_desc = NULL;
+    s_glow = s_name = s_desc = NULL;
 }
 
 int page_runes_get_selected_page(void)
@@ -188,7 +203,7 @@ void page_runes_key(bsp_btn_t btn, bsp_btn_ev_t ev)
         refresh_selection();
         break;
     case BSP_BTN_OK:
-        sfx_play(SFX_CONFIRM);   // 选中功能符文 (图鉴/冒险/设置) 也响
+        // 音效由 main.c 统一播 (避免与路由处重复响两次)
         ESP_LOGI(TAG, "Select rune: %s (page=%d)", RUNES[s_sel].name, RUNES[s_sel].page_id);
         break;
     }

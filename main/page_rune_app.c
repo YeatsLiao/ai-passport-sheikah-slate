@@ -65,6 +65,8 @@ static int       s_bomb_state;
 static lv_obj_t *s_cross;                    // 准星
 static lv_obj_t *s_objs[MAG_OBJ_COUNT];      // 3 个金属物体
 static lv_obj_t *s_shadows[MAG_OBJ_COUNT];   // 地面阴影
+static int       s_obj_w[MAG_OBJ_COUNT];     // 物体尺寸 (吸附判定/居中用)
+static int       s_obj_h[MAG_OBJ_COUNT];
 static int       s_obj_ground_y[MAG_OBJ_COUNT]; // 各物体地面 Y (释放后落回)
 static lv_obj_t *s_mag_status;
 static int       s_grab_idx;                 // -1 = 未抓取, 0-2 = 抓取下标
@@ -298,8 +300,10 @@ static void mag_update(void)
     int cx = lv_obj_get_x(s_cross) + 14;   // 准星中心
     int cy = lv_obj_get_y(s_cross) + 14;
     if (s_grab_idx >= 0) {
-        // 抓取的物体跟随准星 (抬高 20px)
-        lv_obj_set_pos(s_objs[s_grab_idx], cx - 20, cy - 35);
+        // 抓取的物体居中跟随准星 (抬高 20px)
+        lv_obj_set_pos(s_objs[s_grab_idx],
+                       cx - s_obj_w[s_grab_idx] / 2,
+                       cy - s_obj_h[s_grab_idx] / 2 - 20);
     }
 }
 
@@ -308,7 +312,7 @@ static int mag_nearest(int cross_cy)
 {
     int best = -1, best_d = MAG_GRAB_RANGE + 1;
     for (int i = 0; i < MAG_OBJ_COUNT; i++) {
-        int oy = lv_obj_get_y(s_objs[i]) + 15;
+        int oy = lv_obj_get_y(s_objs[i]) + s_obj_h[i] / 2;   // 物体实际中心
         int d = abs(cross_cy - oy);
         if (d < best_d) { best_d = d; best = i; }
     }
@@ -356,9 +360,10 @@ static void key_magnet(bsp_btn_t btn)
                 mag_status_text("NOT METAL HERE", SK_TEXT_RED);
             }
         } else {
-            // 释放: 物体落回地面
+            // 释放: 物体落回地面, 阴影跟随到物体下方
             int idx = s_grab_idx;
             lv_obj_set_pos(s_objs[idx], lv_obj_get_x(s_objs[idx]), s_obj_ground_y[idx]);
+            lv_obj_set_x(s_shadows[idx], lv_obj_get_x(s_objs[idx]) - 4);
             lv_obj_set_style_bg_opa(s_shadows[idx], LV_OPA_60, 0); // 阴影恢复
             s_grab_idx = -1;
             mag_status_text("RELEASED", SK_TEXT_MUTED);
@@ -493,6 +498,7 @@ static void key_cryonis(void)
     s_pillars[slot] = p;
     s_pillar_h[slot] = PILLAR_MAX_H;
     s_pillar_next = (slot + 1) % 3;
+    sfx_play(SFX_CRYONIS_ACTIVATE);   /* 冰柱生长音 */
 
     // 如果箱子在新柱子范围内, 推上去
     int crate_x = lv_obj_get_x(s_cryo_crate);
@@ -638,6 +644,8 @@ void page_rune_app_enter(void)
         const uint32_t obj_color[MAG_OBJ_COUNT] = { 0x7E8B9C, 0x6B7A8C, 0x9EAAB8 };
         const int ground_y = AREA_H - 46;
         for (int i = 0; i < MAG_OBJ_COUNT; i++) {
+            s_obj_w[i] = obj_w[i];
+            s_obj_h[i] = obj_h[i];
             // 阴影 (地面椭圆)
             s_shadows[i] = plain_obj(s_area);
             lv_obj_set_size(s_shadows[i], obj_w[i] + 8, 8);
@@ -676,6 +684,7 @@ void page_rune_app_enter(void)
         lv_obj_set_y(s_mag_status, AREA_H - 22);
         lv_label_set_text(s_mag_status, "RELEASED");
         s_grab_idx = -1;
+        sfx_play(SFX_MAGNESIS_ACTIVATE);   /* 电磁嗡鸣激活音 */
         break;
     }
 
@@ -719,6 +728,7 @@ void page_rune_app_enter(void)
         lv_obj_set_style_bg_opa(s_cryo_crate, LV_OPA_COVER, 0);
         lv_obj_set_style_border_color(s_cryo_crate, lv_color_hex(SK_TAN), 0);
         lv_obj_set_style_border_width(s_cryo_crate, 2, 0);
+        sfx_play(SFX_CRYONIS_ACTIVATE);   /* 水晶上行激活音 */
         memset(s_pillars, 0, sizeof(s_pillars));
         s_pillar_next = 0;
         break;
