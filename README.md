@@ -2,12 +2,9 @@
 
 > ESP32-C3 上的塞尔达旷野之息希卡石板 UI 模拟器，运行在 [FoloToy AI Passport](https://github.com/nickyc975/ai-passport) 硬件上。
 
-![Sheikah Eye](assets/images/sheikah_eye.png)
-![Rune: Bomb](assets/images/rune_bomb.png)
-![Rune: Magnesis](assets/images/rune_magnet.png)
-![Rune: Stasis](assets/images/rune_stasis.png)
-![Rune: Cryonis](assets/images/rune_cryonis.png)
-![Rune: Camera](assets/images/rune_camera.png)
+![实机演示：符文轮盘](docs/assets/device_rune_wheel.jpg)
+
+> **说明**：受个人技术水平与业余时间所限，本项目对游戏原版的还原度有限——目前更像是一个"希卡石板"交互框架的雏形，视觉与音效尽力靠近但远达不到原版质感。如果你也喜欢这个玩法，欢迎提 Issue / PR 一起优化！
 
 ## 功能
 
