@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # tools/gen_synth.py -- 合成希卡风音效 -> assets/audio/<id>.wav
 #
-# 游戏原版音效下载不到时的兜底。声音设计对齐旷野之息希卡 UI 的三个特征:
+# 对齐旷野之息希卡 UI 音效的四个特征:
 #   1. 玻璃质感: 双振荡器轻微失谐 (chorus), 软攻击, 没有毛刺感
-#   2. 钟形泛音: 选中/激活音用非整数倍分音 (2.4x/2.76x), 像蒙了布的铃
+#   2. 钟形泛音: 选中/激活音用非整数倍分音 (2.4x/2.76x/3.9x), 像蒙了布的铃
 #   3. 神庙混响: Schroeder 混响 (4 comb + 2 allpass), 所有音都有"室内"尾巴
+#   4. 符文专属音色: 每个能力有独特声音签名 (磁力=电磁嗡鸣, 制冰=水晶上行,
+#      时停=金属下滑, 炸弹=低频冲击, 相机=机械快门)
 # 产物走标准管线:
 #   python tools/gen_synth.py   # 合成 wav (版权干净, 可入库)
 #   python tools/gen_audio.py   # wav -> C 数组
@@ -133,22 +135,25 @@ def sheikah_reverb(dry, wet=0.3, tail=0.35):
 
 random.seed(42)   # 固定种子, 产物可复现
 
-# ---- activate: 打开符文轮盘 "wwoop-" 上滑 + 高八度失谐泛音 + 收尾双铃 ----
-s = chirp(250, 950, 0.5, amp=0.6, tau=0.5, atk=0.05)
-mix(s, glass(500, 0.5, amp=0.22, tau=0.4), 0.0)
-mix(s, bell(740, 0.35, amp=0.45, tau=0.12), 0.5)
-mix(s, bell(1108, 0.4, amp=0.38, tau=0.14), 0.62)
-write_wav("activate", normalize(sheikah_reverb(s, wet=0.35)))
+# ---- activate: 打开符文轮盘 -- 游戏原版是明亮的金属 "shwing" ----
+# 快速上滑 + 高八度失谐泛音 + 收尾双铃, 攻击更脆 (tau 缩短), 尾音更长
+s = chirp(280, 1100, 0.45, amp=0.65, tau=0.4, atk=0.03)
+mix(s, glass(560, 0.45, amp=0.25, tau=0.35), 0.0)
+mix(s, bell(880, 0.4, amp=0.5, tau=0.15), 0.42)
+mix(s, bell(1320, 0.5, amp=0.42, tau=0.18), 0.55)
+mix(s, glass(1760, 0.3, amp=0.12, tau=0.1), 0.55)   # 高频空气感
+write_wav("activate", normalize(sheikah_reverb(s, wet=0.38, tail=0.45)))
 
 # ---- tick: 轮盘旋转的轻快玻璃 "嗒" (混响要少, 快速连按不糊) ----
-s = glass(1900, 0.06, amp=0.6, tau=0.014, atk=0.003)
-mix(s, noise_click(0.008, amp=0.15, tau=0.003, lp=0.9), 0.0)
-write_wav("tick", normalize(sheikah_reverb(s, wet=0.12, tail=0.15)))
+s = glass(2100, 0.05, amp=0.55, tau=0.012, atk=0.002)
+mix(s, noise_click(0.006, amp=0.12, tau=0.002, lp=0.92), 0.0)
+write_wav("tick", normalize(sheikah_reverb(s, wet=0.1, tail=0.12)))
 
-# ---- confirm: 选中确认 蒙布双铃 "叮-叮" (纯五度上行) ----
-s = bell(740, 0.22, amp=0.55, tau=0.08)
-mix(s, bell(1108, 0.3, amp=0.55, tau=0.1), 0.11)
-write_wav("confirm", normalize(sheikah_reverb(s, wet=0.3)))
+# ---- confirm: 选中确认 -- 游戏原版是清脆的双铃上行 "叮-叮" ----
+s = bell(880, 0.2, amp=0.55, tau=0.07)
+mix(s, bell(1320, 0.3, amp=0.55, tau=0.09), 0.1)
+mix(s, glass(1760, 0.15, amp=0.1, tau=0.05), 0.1)   # 高频泛音增加明亮度
+write_wav("confirm", normalize(sheikah_reverb(s, wet=0.3, tail=0.3)))
 
 # ---- bomb_place: 放置炸弹 低频下滑 "噗" + 机械咔哒 ----
 s = chirp(170, 90, 0.12, amp=0.7, tau=0.05, atk=0.005)
@@ -161,23 +166,45 @@ mix(s, chirp(90, 38, 0.5, amp=0.8, tau=0.16, atk=0.002), 0.0)
 mix(s, noise_click(0.03, amp=0.9, tau=0.008, lp=0.95), 0.0)
 write_wav("bomb_boom", normalize(sheikah_reverb(s, wet=0.25, tail=0.4)))
 
-# ---- stasis_freeze: 时停冻结 金属感下滑 (基频 + 2.76x 金属分音 + 失谐对) ----
-s = chirp(1400, 350, 0.55, amp=0.5, tau=0.45, atk=0.03)
-mix(s, chirp(1424, 356, 0.55, amp=0.25, tau=0.4, atk=0.03), 0.0)
-mix(s, chirp(3864, 966, 0.55, amp=0.15, tau=0.3, atk=0.03), 0.0)
-write_wav("stasis_freeze", normalize(sheikah_reverb(s, wet=0.35)))
+# ---- magnesis_activate: 磁力激活 -- 游戏原版是低频电磁嗡鸣 + 上升电弧 ----
+# 50Hz 基频嗡鸣 (像变压器) + 失谐对拍 + 快速上滑电弧 "滋"
+s = glass(55, 0.7, amp=0.5, tau=0.5, detune=0.03, atk=0.04)   # 电磁嗡鸣 (大失谐=拍频)
+mix(s, glass(110, 0.6, amp=0.2, tau=0.4, detune=0.02), 0.0)   # 二次谐波
+mix(s, chirp(400, 2800, 0.25, amp=0.35, tau=0.15, atk=0.01), 0.05)  # 电弧上滑
+mix(s, noise_click(0.04, amp=0.25, tau=0.01, lp=0.7), 0.05)   # 电弧噪声
+mix(s, bell(660, 0.3, amp=0.2, tau=0.1), 0.28)                # 收尾铃
+write_wav("magnesis_activate", normalize(sheikah_reverb(s, wet=0.3, tail=0.35)))
 
-# ---- stasis_unfreeze: 解冻 反向上滑 ----
-s = chirp(350, 1400, 0.55, amp=0.5, tau=0.45, atk=0.03)
-mix(s, chirp(356, 1424, 0.55, amp=0.25, tau=0.4, atk=0.03), 0.0)
-mix(s, chirp(966, 3864, 0.55, amp=0.15, tau=0.3, atk=0.03), 0.0)
-write_wav("stasis_unfreeze", normalize(sheikah_reverb(s, wet=0.35)))
+# ---- stasis_freeze: 时停冻结 -- 游戏原版是金属感下滑 + 时间扭曲质感 ----
+# 基频 + 2.76x 金属分音 + 失谐对 + 高频 "冻结" 闪烁
+s = chirp(1500, 320, 0.6, amp=0.5, tau=0.5, atk=0.025)
+mix(s, chirp(1526, 326, 0.6, amp=0.25, tau=0.45, atk=0.025), 0.0)   # 失谐对
+mix(s, chirp(4140, 880, 0.6, amp=0.18, tau=0.35, atk=0.025), 0.0)   # 2.76x 金属分音
+mix(s, glass(3000, 0.3, amp=0.08, tau=0.15, detune=0.01), 0.3)      # 高频冻结闪烁
+write_wav("stasis_freeze", normalize(sheikah_reverb(s, wet=0.38, tail=0.4)))
+
+# ---- stasis_unfreeze: 解冻 反向上滑 + 加速感 ----
+s = chirp(320, 1500, 0.5, amp=0.5, tau=0.4, atk=0.02)
+mix(s, chirp(326, 1526, 0.5, amp=0.25, tau=0.35, atk=0.02), 0.0)
+mix(s, chirp(880, 4140, 0.5, amp=0.18, tau=0.3, atk=0.02), 0.0)
+mix(s, bell(1320, 0.25, amp=0.2, tau=0.08), 0.45)   # 收尾确认铃
+write_wav("stasis_unfreeze", normalize(sheikah_reverb(s, wet=0.35, tail=0.35)))
+
+# ---- cryonis_activate: 制冰激活 -- 游戏原版是水晶上行闪烁 + 冰裂质感 ----
+# 五度上行铃音列 (C5-G5-C6) + 高频冰裂噪声 + 长混响尾巴
+s = bell(523, 0.35, amp=0.45, tau=0.12)                    # C5
+mix(s, bell(784, 0.35, amp=0.4, tau=0.12), 0.12)           # G5
+mix(s, bell(1047, 0.45, amp=0.45, tau=0.15), 0.24)         # C6
+mix(s, glass(2093, 0.3, amp=0.12, tau=0.1, detune=0.008), 0.24)  # C7 空气感
+mix(s, noise_click(0.06, amp=0.2, tau=0.015, lp=0.85), 0.0)      # 冰裂瞬态
+mix(s, noise_click(0.04, amp=0.12, tau=0.01, lp=0.9), 0.28)      # 二次冰裂
+write_wav("cryonis_activate", normalize(sheikah_reverb(s, wet=0.4, tail=0.5)))
 
 # ---- shutter: 快门 双咔哒 (前帘 + 后帘), 基本干声, 只留一点空间感 ----
-s = noise_click(0.02, amp=0.8, tau=0.006, lp=0.85)
-mix(s, glass(1000, 0.03, amp=0.4, tau=0.008, atk=0.002), 0.0)
-mix(s, noise_click(0.02, amp=0.7, tau=0.006, lp=0.85), 0.09)
-mix(s, glass(800, 0.03, amp=0.35, tau=0.008, atk=0.002), 0.09)
-write_wav("shutter", normalize(sheikah_reverb(s, wet=0.1, tail=0.15)))
+s = noise_click(0.018, amp=0.8, tau=0.005, lp=0.88)
+mix(s, glass(1100, 0.025, amp=0.4, tau=0.007, atk=0.002), 0.0)
+mix(s, noise_click(0.018, amp=0.7, tau=0.005, lp=0.88), 0.085)
+mix(s, glass(880, 0.025, amp=0.35, tau=0.007, atk=0.002), 0.085)
+write_wav("shutter", normalize(sheikah_reverb(s, wet=0.08, tail=0.12)))
 
-print("gen_synth: 8 个希卡风音效已写入 assets/audio/")
+print("gen_synth: 10 个希卡风音效已写入 assets/audio/")

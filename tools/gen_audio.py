@@ -23,14 +23,16 @@ SRATE = 16000
 
 # ---- 音效清单 (id 顺序即 SFX_* 枚举值, 换音频不改代码, 只换 assets/audio 下的 wav) ----
 MANIFEST = [
-    ("activate",        "石板激活 (待机 OK 进符文页)"),
-    ("tick",            "符文轮盘旋转 (UP/DOWN)"),
-    ("confirm",         "符文选中 (OK)"),
-    ("bomb_place",      "炸弹放置"),
-    ("bomb_boom",       "炸弹引爆"),
-    ("stasis_freeze",   "时停冻结"),
-    ("stasis_unfreeze", "时停解冻"),
-    ("shutter",         "相机快门"),
+    ("activate",           "石板激活 (待机 OK 进符文页)"),
+    ("tick",               "符文轮盘旋转 (UP/DOWN)"),
+    ("confirm",            "符文选中 (OK)"),
+    ("bomb_place",         "炸弹放置"),
+    ("bomb_boom",          "炸弹引爆"),
+    ("magnesis_activate",  "磁力激活 (电磁嗡鸣)"),
+    ("stasis_freeze",      "时停冻结"),
+    ("stasis_unfreeze",    "时停解冻"),
+    ("cryonis_activate",   "制冰激活 (水晶上行)"),
+    ("shutter",            "相机快门"),
 ]
 
 TRIM_SILENCE_THRESHOLD = 80   # int16 振幅阈值, 首尾裁剪

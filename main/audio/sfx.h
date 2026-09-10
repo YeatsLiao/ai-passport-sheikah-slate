@@ -4,6 +4,7 @@
 // 音效 ID 与数据见 sfx_data.h (tools/gen_audio.py 生成)。
 // 播放在独立 audio 任务里做 bsp_audio_write, 绝不阻塞按键/LVGL 任务。
 #pragma once
+#include <stdbool.h>
 #include "sfx_data.h"
 
 // 创建 audio 任务与播放队列。幂等, 重复调用无害。
@@ -11,3 +12,9 @@ void sfx_init(void);
 
 // 播放一个音效。非阻塞: 队列满/未初始化/条目为空时静默丢弃。
 void sfx_play(int id);
+
+// 设置音量 (0..100)。立即生效。
+void sfx_set_volume(int percent);
+
+// 音效总开关。false 时 sfx_play 静默丢弃。
+void sfx_set_enabled(bool on);

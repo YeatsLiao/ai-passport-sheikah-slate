@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define SFX_COUNT 8
+#define SFX_COUNT 10
 
 typedef struct {
     const int16_t *pcm;    // 16kHz/16bit/mono
@@ -17,6 +17,8 @@ extern const sfx_entry_t SFX[SFX_COUNT];
 #define SFX_CONFIRM          2   // 符文选中 (OK)
 #define SFX_BOMB_PLACE       3   // 炸弹放置
 #define SFX_BOMB_BOOM        4   // 炸弹引爆
-#define SFX_STASIS_FREEZE    5   // 时停冻结
-#define SFX_STASIS_UNFREEZE  6   // 时停解冻
-#define SFX_SHUTTER          7   // 相机快门
+#define SFX_MAGNESIS_ACTIVATE 5   // 磁力激活 (电磁嗡鸣)
+#define SFX_STASIS_FREEZE    6   // 时停冻结
+#define SFX_STASIS_UNFREEZE  7   // 时停解冻
+#define SFX_CRYONIS_ACTIVATE 8   // 制冰激活 (水晶上行)
+#define SFX_SHUTTER          9   // 相机快门

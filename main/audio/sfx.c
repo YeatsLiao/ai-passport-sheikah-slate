@@ -21,6 +21,8 @@ static const char *TAG = "sfx";
 
 static QueueHandle_t s_queue;
 static bool s_audio_ready;
+static int  s_volume = SFX_VOLUME;   // 当前音量 (0..100)
+static bool s_enabled = true;        // 音效总开关
 
 static void audio_task(void *arg)
 {
@@ -39,7 +41,7 @@ static void audio_task(void *arg)
                 vTaskDelay(pdMS_TO_TICKS(1000));    // 别空转刷屏日志
                 continue;
             }
-            bsp_audio_set_volume(SFX_VOLUME);
+            bsp_audio_set_volume(s_volume);
             s_audio_ready = true;
             ESP_LOGI(TAG, "audio ready");
         }
@@ -75,6 +77,21 @@ void sfx_init(void)
 
 void sfx_play(int id)
 {
-    if (!s_queue) return;
+    if (!s_queue || !s_enabled) return;
     xQueueSend(s_queue, &id, 0);    // 不等待, 队列满即丢弃
+}
+
+void sfx_set_volume(int percent)
+{
+    if (percent < 0) percent = 0;
+    if (percent > 100) percent = 100;
+    s_volume = percent;
+    if (s_audio_ready) {
+        bsp_audio_set_volume(s_volume);
+    }
+}
+
+void sfx_set_enabled(bool on)
+{
+    s_enabled = on;
 }
