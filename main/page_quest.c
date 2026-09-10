@@ -71,7 +71,9 @@ static void parse_quests(void)
 // ---- UI ----
 static lv_obj_t *s_scr;
 static lv_obj_t *s_list;
+static lv_obj_t *s_counter;    // "X QUESTS · CURRENT: ..." 计数标签
 static int       s_sel = 0;
+static int       s_current_idx = 0;  // 当前目标任务下标
 
 static void update_sel(void);  // 前向声明
 
@@ -83,14 +85,21 @@ static uint32_t type_color(const char *type)
     return SK_TEXT;
 }
 
+static void update_counter(void)
+{
+    char buf[48];
+    snprintf(buf, sizeof(buf), "%d QUESTS", s_quest_count);
+    lv_label_set_text(s_counter, buf);
+}
+
 static void build_list(void)
 {
     parse_quests();
     s_sel = 0;
 
-    s_list = sk_list_create(s_scr, 8, SK_HEADER_H + 8,
+    s_list = sk_list_create(s_scr, 8, SK_HEADER_H + 28,
                             SK_SCREEN_W - 16,
-                            SK_SCREEN_H - SK_HEADER_H - SK_FOOTER_H - 16);
+                            SK_SCREEN_H - SK_HEADER_H - SK_FOOTER_H - 32);
 
     for (int i = 0; i < s_quest_count; i++) {
         // 主线任务左侧显示任务图标
@@ -103,7 +112,15 @@ static void build_list(void)
 
         lv_obj_t *btn = sk_list_add_item(s_list, icon, s_quests[i].title, sub);
 
-        // 右侧类型色点 (btn 是 FLEX_ROW, 内容列已 flex_grow 占满, 色点靠右)
+        // 当前目标标记: 黄色 "►" 指示器
+        if (i == s_current_idx) {
+            lv_obj_t *arrow = lv_label_create(btn);
+            lv_label_set_text(arrow, LV_SYMBOL_RIGHT);
+            lv_obj_set_style_text_color(arrow, lv_color_hex(SK_YELLOW), 0);
+            lv_obj_set_style_text_font(arrow, &SK_FONT_SMALL, 0);
+        }
+
+        // 右侧类型色点
         lv_obj_t *tag = lv_obj_create(btn);
         lv_obj_remove_flag(tag, LV_OBJ_FLAG_SCROLLABLE);
         lv_obj_set_size(tag, 8, 8);
@@ -116,6 +133,7 @@ static void build_list(void)
 
     // 高亮第一项
     update_sel();
+    update_counter();
 }
 
 static void update_sel(void)
@@ -139,6 +157,15 @@ void page_quest_enter(void)
     s_scr = sk_screen_create();
 
     sk_header_create(s_scr, "ADVENTURE LOG");
+
+    // 计数标签 (标题下方)
+    s_counter = lv_label_create(s_scr);
+    lv_obj_set_style_text_font(s_counter, &SK_FONT_CAPS, 0);
+    lv_obj_set_style_text_color(s_counter, lv_color_hex(SK_TEXT_MUTED), 0);
+    lv_obj_set_width(s_counter, SK_SCREEN_W - 24);
+    lv_obj_set_style_text_align(s_counter, LV_TEXT_ALIGN_CENTER, 0);
+    lv_obj_align(s_counter, LV_ALIGN_TOP_MID, 0, SK_HEADER_H + 6);
+
     build_list();
 
     sk_footer_create(s_scr, "UP/DN  BROWSE     OK  DETAILS");
@@ -153,7 +180,9 @@ void page_quest_exit(void)
     if (s_scr) lv_obj_delete(s_scr);
     s_scr = NULL;
     s_list = NULL;
+    s_counter = NULL;
     s_sel = 0;
+    s_current_idx = 0;
 }
 
 void page_quest_key(bsp_btn_t btn, bsp_btn_ev_t ev)
@@ -175,7 +204,14 @@ void page_quest_key(bsp_btn_t btn, bsp_btn_ev_t ev)
     case BSP_BTN_OK:
         if (s_sel < s_quest_count) {
             quest_entry_t *q = &s_quests[s_sel];
-            sk_popup_show(s_scr, q->title, q->desc);
+            // 只查看详情; 当前目标任务额外显示标记头
+            char body[192];
+            if (s_sel == s_current_idx) {
+                snprintf(body, sizeof(body), "CURRENT OBJECTIVE\n\n%s", q->desc);
+            } else {
+                snprintf(body, sizeof(body), "%s", q->desc);
+            }
+            sk_popup_show(s_scr, q->title, body);
         }
         break;
     }

@@ -126,7 +126,7 @@ static void on_key(bsp_btn_t btn, bsp_btn_ev_t ev, void *user)
         PAGES[s_current].key(btn, ev);
         int target = page_runes_get_selected_page();
         bsp_lvgl_unlock();
-        if (target == 4) sfx_play(SFX_CONFIRM);   // 选中游戏符文
+        if (target >= 1) sfx_play(SFX_CONFIRM);   // 音效只在这里播一次
         switch (target) {
         case 1: switch_page(PAGE_COMPENDIUM); return;
         case 2: switch_page(PAGE_QUEST); return;
@@ -139,14 +139,14 @@ static void on_key(bsp_btn_t btn, bsp_btn_ev_t ev, void *user)
         }
     }
 
-    // 设置页: OK on "Return to Standby"
+    // 设置页: OK (ABOUT 弹窗 / 返回待机)。处理完必须 return —— 否则穿透到
+    // 默认分支会把 key 再调一次, ABOUT 弹窗开了又立即被关掉 (看似按键无用)。
     if (s_current == PAGE_SETTINGS && btn == BSP_BTN_OK && ev == BSP_BTN_CLICK) {
         PAGES[s_current].key(btn, ev);
-        if (page_settings_wants_standby()) {
-            bsp_lvgl_unlock();
-            switch_page(PAGE_STANDBY);
-            return;
-        }
+        bool standby = page_settings_wants_standby();
+        bsp_lvgl_unlock();
+        if (standby) switch_page(PAGE_STANDBY);
+        return;
     }
 
     // 默认: 传递给当前页面

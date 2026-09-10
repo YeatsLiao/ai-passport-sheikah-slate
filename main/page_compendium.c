@@ -6,6 +6,7 @@
 #include "page_compendium.h"
 #include "sheikah_theme.h"
 #include "sheikah_ui.h"
+#include "audio/sfx.h"
 #include "img/img_all.h"
 #include "esp_log.h"
 #include <string.h>
@@ -119,8 +120,27 @@ static void parse_category(int cat)
 static lv_obj_t *s_scr;
 static lv_obj_t *s_tabs;
 static lv_obj_t *s_list;
+static lv_obj_t *s_counter;    // "X / Y DISCOVERED" 计数标签
 static int       s_cat_sel = 0;   // 当前分类
 static int       s_item_sel = 0;  // 当前选中条目
+
+// 解锁状态: s_discovered[cat][entry] = true 表示已发现
+// 初始每分类前 2 项已发现, 其余未发现 (模拟游戏进度)
+static bool s_discovered[CAT_COUNT][MAX_ENTRIES];
+static const int s_initial_unlock[CAT_COUNT] = { 2, 2, 3, 2, 1 };
+
+static void update_list_selection(void);   // rebuild_list 中先调用, 定义在后
+
+static void update_counter(void)
+{
+    int found = 0;
+    for (int i = 0; i < s_entry_count; i++) {
+        if (s_discovered[s_cat_sel][i]) found++;
+    }
+    char buf[32];
+    snprintf(buf, sizeof(buf), "%d / %d DISCOVERED", found, s_entry_count);
+    lv_label_set_text(s_counter, buf);
+}
 
 static void rebuild_list(void)
 {
@@ -128,25 +148,28 @@ static void rebuild_list(void)
     if (s_list) {
         lv_obj_delete(s_list);
     }
-    s_item_sel = 0;
 
     parse_category(s_cat_sel);
 
-    s_list = sk_list_create(s_scr, 8, SK_HEADER_H + 42, SK_SCREEN_W - 16,
-                            SK_SCREEN_H - SK_HEADER_H - SK_FOOTER_H - 50);
+    s_list = sk_list_create(s_scr, 8, SK_HEADER_H + 60, SK_SCREEN_W - 16,
+                            SK_SCREEN_H - SK_HEADER_H - SK_FOOTER_H - 68);
 
     for (int i = 0; i < s_entry_count; i++) {
-        sk_list_add_item(s_list, NULL, s_entries[i].name, s_entries[i].desc);
-    }
-
-    // 高亮第一项
-    if (s_entry_count > 0) {
-        lv_obj_t *first = lv_obj_get_child(s_list, 0);
-        if (first) {
-            lv_obj_set_style_bg_color(first, lv_color_hex(SK_BLUE), 0);
-            lv_obj_set_style_bg_opa(first, LV_OPA_20, 0);
+        if (s_discovered[s_cat_sel][i]) {
+            sk_list_add_item(s_list, NULL, s_entries[i].name, s_entries[i].desc);
+        } else {
+            // 未解锁: 显示 ???, 标题弱化 (子 label 已显式着色, 须直接改它)
+            lv_obj_t *item = sk_list_add_item(s_list, NULL, "???", "");
+            lv_obj_t *col = lv_obj_get_child(item, 0);
+            lv_obj_t *t = lv_obj_get_child(col, 0);
+            lv_obj_set_style_text_color(t, lv_color_hex(SK_TEXT_MUTED), 0);
         }
     }
+
+    // 恢复选中高亮 (保持 s_item_sel, 不重置 —— 解锁后选中不跳回第一项)
+    update_list_selection();
+
+    update_counter();
 }
 
 static void update_list_selection(void)
@@ -171,8 +194,25 @@ void page_compendium_enter(void)
 
     sk_header_create(s_scr, "COMPENDIUM");
 
+    // 初始化解锁状态 (首次进入)
+    static bool s_init = false;
+    if (!s_init) {
+        for (int c = 0; c < CAT_COUNT; c++)
+            for (int i = 0; i < MAX_ENTRIES; i++)
+                s_discovered[c][i] = (i < s_initial_unlock[c]);
+        s_init = true;
+    }
+
     // 分类标签 (游戏分类图标, 选中态高亮 + 辉光)
     s_tabs = sk_icon_tabs_create(s_scr, SK_HEADER_H, CAT_ICONS, CAT_COUNT, &s_cat_sel);
+
+    // 计数标签 (分类图标栏下方, y=86 避开 tabs 底部 84)
+    s_counter = lv_label_create(s_scr);
+    lv_obj_set_style_text_font(s_counter, &SK_FONT_CAPS, 0);
+    lv_obj_set_style_text_color(s_counter, lv_color_hex(SK_TEXT_MUTED), 0);
+    lv_obj_set_width(s_counter, SK_SCREEN_W - 24);
+    lv_obj_set_style_text_align(s_counter, LV_TEXT_ALIGN_CENTER, 0);
+    lv_obj_align(s_counter, LV_ALIGN_TOP_MID, 0, SK_HEADER_H + 42);
 
     rebuild_list();
 
@@ -190,8 +230,10 @@ void page_compendium_exit(void)
     s_scr = NULL;
     s_list = NULL;
     s_tabs = NULL;
+    s_counter = NULL;
     s_cat_sel = 0;
     s_item_sel = 0;
+    // 解锁状态保留 (跨页面切换不清空, 像游戏进度)
 }
 
 void page_compendium_key(bsp_btn_t btn, bsp_btn_ev_t ev)
@@ -210,8 +252,9 @@ void page_compendium_key(bsp_btn_t btn, bsp_btn_ev_t ev)
             s_item_sel--;
             update_list_selection();
         } else {
-            // 切到上一个分类
+            // 切到上一个分类 (选中重置到第一项)
             s_cat_sel = (s_cat_sel + CAT_COUNT - 1) % CAT_COUNT;
+            s_item_sel = 0;
             sk_tabs_update(s_tabs, s_cat_sel);
             rebuild_list();
         }
@@ -222,8 +265,9 @@ void page_compendium_key(bsp_btn_t btn, bsp_btn_ev_t ev)
             s_item_sel++;
             update_list_selection();
         } else {
-            // 切到下一个分类
+            // 切到下一个分类 (选中重置到第一项)
             s_cat_sel = (s_cat_sel + 1) % CAT_COUNT;
+            s_item_sel = 0;
             sk_tabs_update(s_tabs, s_cat_sel);
             rebuild_list();
         }
@@ -232,6 +276,12 @@ void page_compendium_key(bsp_btn_t btn, bsp_btn_ev_t ev)
     case BSP_BTN_OK:
         if (s_item_sel < s_entry_count) {
             entry_t *e = &s_entries[s_item_sel];
+            if (!s_discovered[s_cat_sel][s_item_sel]) {
+                // 发现新条目: 解锁 + 晋示 + 音效, 保持选中不跳
+                s_discovered[s_cat_sel][s_item_sel] = true;
+                sfx_play(SFX_CONFIRM);
+                rebuild_list();
+            }
             char body[200];
             snprintf(body, sizeof(body), "%s\n\nLocation: %s",
                      e->desc, e->location[0] ? e->location : "Unknown");
