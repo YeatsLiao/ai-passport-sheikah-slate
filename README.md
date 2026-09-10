@@ -13,19 +13,24 @@
 
 | 页面 | 说明 |
 |---|---|
-| **待机页** | 希卡之眼 Logo + 呼吸动画，OK 键唤醒 |
-| **符文选择器** | 8 个符文 (4×2 网格) 水平/垂直轮转，选中项希卡蓝发光 |
+| **待机页** | 希卡之眼 Logo + 呼吸动画，扫描线装饰，OK 键唤醒 |
+| **符文选择器** | 8 个符文环形轮盘 (对齐游戏原版 quick-selector)，UP/DOWN 旋转，选中放大 + 辉光 |
+| **符文能力模拟** | 炸弹/磁力/时停/制冰/相机 5 个可玩模拟 (遥控引爆、抓取金属、时停倒计时、冰柱生长、拍照) |
 | **海拉鲁图鉴** | 5 分类标签 (生物/怪物/材料/装备/宝物)，50 条图鉴条目，详情弹窗 |
 | **冒险记录** | 主线/支线/回忆 20 条任务，彩色类型标签，详情弹窗 |
-| **设置页** | 亮度调节 (10%~100%) + 返回待机 |
+| **设置页** | 亮度调节 (编辑模式: OK 进入/确认, UP/DOWN ±10) + ABOUT + 返回待机 |
+
+### 音效 (10 个合成"希卡味"电子音)
+
+纯正弦/噪声合成 + Schroeder 混响，版权干净：石板激活、轮盘旋转、选中确认、炸弹放置/引爆、磁力电磁嗡鸣、时停冻结/解冻、制冰水晶上行、相机快门。ES8311 I2S 播放，按键回调非阻塞 (队列 + worker task)。
 
 ### 按键操作 (3 键)
 
 | 按键 | 功能 |
 |---|---|
-| UP | 上一项 / 亮度减小 |
-| DOWN | 下一项 / 亮度增大 |
-| OK 短按 | 确认 / 进入 |
+| UP | 上一项 / 编辑模式调值 -10 |
+| DOWN | 下一项 / 编辑模式调值 +10 |
+| OK 短按 | 确认 / 进入 (设置页: 进入/退出编辑模式) |
 | OK 长按 | 返回上一级 |
 
 ### 页面路由
@@ -68,8 +73,10 @@ cd ai-passport-sheikah-slate
 . $IDF_PATH/export.sh    # Linux/macOS
 # 或 Windows: %IDF_PATH%\export.bat
 
-# 3. (可选) 重新生成图片 C 数组 (图片已预生成在 main/img/)
-python tools/img_to_c.py
+# 3. (可选) 重新生成素材 (已预生成在 main/img/ 与 main/audio/)
+python tools/gen_synth.py       # 合成 10 个音效 wav
+python tools/gen_audio.py       # wav -> 16kHz mono PCM C 数组
+python tools/img_to_c.py        # PNG -> LVGL C 数组
 
 # 4. 编译
 idf.py build
@@ -106,11 +113,15 @@ ai-passport-sheikah-slate/
 │   ├── main.c                  # 主程序 + 页面路由状态机
 │   ├── sheikah_theme.h/c       # 希卡配色 + 通用样式组件
 │   ├── sheikah_ui.h/c          # 列表/标签栏/弹窗通用组件
-│   ├── page_standby.c          # 待机页: 希卡之眼
-│   ├── page_runes.c            # 符文选择器 (主菜单)
+│   ├── page_standby.c          # 待机页: 希卡之眼 + 扫描线装饰
+│   ├── page_runes.c            # 符文选择器: 8 符文环形轮盘
+│   ├── page_rune_app.c         # 符文能力模拟 (炸弹/磁力/时停/制冰/相机)
 │   ├── page_compendium.c       # 海拉鲁图鉴
 │   ├── page_quest.c            # 冒险记录
-│   ├── page_settings.c         # 设置页
+│   ├── page_settings.c         # 设置页 (编辑模式)
+│   ├── audio/                  # 音效模块
+│   │   ├── sfx.c/h             #   sfx_play() 队列 + audio worker task (非阻塞)
+│   │   └── sfx_data.c/h        #   10 个 16kHz mono PCM 音效 (自动生成)
 │   └── img/                    # 图片 C 数组 (由 img_to_c.py 生成)
 │       ├── img_all.h           #   所有图片声明
 │       ├── img_sheikah_eye.c   #   希卡之眼 120×120
@@ -123,7 +134,9 @@ ai-passport-sheikah-slate/
 │   ├── README.md               # 技术架构文档 (配色/RAM预算/图片管线等)
 │   └── development-log.md      # 开发日志 (方案演进 + 踩坑记录)
 └── tools/
-    ├── img_to_c.py             # PNG → LVGL RGB565 C 数组转换工具
+    ├── gen_synth.py            # 音效合成 (chirp/玻璃音/钟音/噪声 + Schroeder 混响)
+    ├── gen_audio.py            # wav → 16kHz mono PCM C 数组 (ffmpeg 可选, 纯 Python 兜底)
+    ├── img_to_c.py             # PNG → LVGL RGB565/ARGB8888 C 数组转换工具
     ├── svg_to_png.mjs          # SVG → PNG 渲染 (使用 @resvg/resvg-js + sharp)
     └── package.json            # Node.js 依赖 (resvg, sharp)
 ```
@@ -152,9 +165,10 @@ ai-passport-sheikah-slate/
 
 ### 图片资源
 
-- 希卡之眼 + 5 个符文图标: 提取自 [zelda-hyrule-ui](https://github.com/nickyc975/zelda-hyrule-ui) 仓库 SVG 素材 (源自游戏原版资源)，通过 `tools/svg_to_png.mjs` 渲染为 PNG，再由 `tools/img_to_c.py` 转为 LVGL RGB565 C 数组
+- 希卡之眼 + 5 个符文图标 + 轮盘框架/扫描线装饰: 提取自 [zelda-hyrule-ui](https://github.com/nickyc975/zelda-hyrule-ui) 仓库 SVG 素材 (源自游戏原版资源)，通过 `tools/svg_to_png.mjs` 渲染为 PNG，再由 `tools/img_to_c.py` 转为 LVGL C 数组
 - 图鉴数据: 基于 Hyrule Compendium API 精简，每分类 10 条代表性条目
 - 冒险记录: 基于游戏内实际任务线精简
+- 音效: 纯 Python 合成 (固定种子可复现)，音色特征对齐游戏原版；拿到原版 wav 后覆盖 `assets/audio/<id>.wav` 重跑脚本即可换装
 
 ## 技术约束 (ESP32-C3)
 
@@ -163,7 +177,7 @@ ai-passport-sheikah-slate/
 - **屏幕**: 240×320 SPI，16-bit RGB565，swap_bytes=true
 - **无 SD 卡**: 所有资源编译进 Flash (EMBED_TXTFILES for JSON, C arrays for images)
 - **无 WiFi/BLE**: 内存有限，不支持网络功能
-- **无复杂动画**: 仅呼吸闪烁 + 页面切换，无扫描线/辉光
+- **无复杂动画**: 呼吸/辉光用纯色圆盘 + opa 动画代替 shadow 模糊 (无 PSRAM，软件模糊代价高)
 
 ## License
 

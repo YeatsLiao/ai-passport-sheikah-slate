@@ -294,6 +294,35 @@ ESP32-C3 无 SD 卡，8MB Flash 的 factory 分区有 4MB。将图片编译时�
 
 ---
 
+## 阶段 8：游戏原版对齐打磨 + 交互修复
+
+实机验证反馈三类问题：音效不够"原版"、轮盘布局拥挤、设置页按键无用。逐一对齐修复。
+
+### 音效对齐游戏（8 → 10 个）
+
+游戏里每个符文激活都有专属音色，原先只有炸弹/时停/相机有音：
+
+- 新增 `magnesis_activate`：55Hz 电磁嗡鸣（失谐玻璃双振）+ 电弧上扫 + 金属泛音
+- 新增 `cryonis_activate`：C5-G5-C6 水晶上行琶音 + 冰裂噪声
+- 精调全部 8 个现有音：activate 更明亮（增加 880/1320Hz 钟音泛音）、confirm 更清脆、stasis 增加金属分音、tick 更短促、shutter 更紧凑
+
+触发点扩到 14 处（新增：磁力进入、制冰进入、冰柱生长）。
+
+### 轮盘布局对齐游戏原版
+
+- 8 符文环形轮盘（r=78，对齐 quick-selector 规格），相邻图标间隙 ~60px 不拥挤
+- 中心 hub 纯装饰（D-pad 十字）：不放选中图标副本——否则选中环上底部/顶部符文时放大图标与 hub 内副本挤在一起
+- 底部信息两行即止：名称 (Hylia) + 描述；装备状态行与符文名重复，删除
+- 快速选配框架件（quick-selector top/left/right SVG）在 240px 小屏与 r=78 图标环几何重叠，实测移除；扫描线侧边装饰保留（待机/轮盘页）
+
+### 设置页交互修复
+
+- 根因：`main.c` 设置页 OK 处理完后事件穿透到默认分支再调一次 `page_settings_key()`，ABOUT 弹窗开了又立即被关（看似按键无用）
+- 交互重构为游戏式编辑模式：OK 进入调值（行框变黄），UP/DOWN ±10，OK 确认；不再依赖 1.5s 长按
+- `page_compendium.c` 补 `update_list_selection()` 前向声明（与坑 9 同类）
+
+---
+
 ## 踩坑记录
 
 ### 坑 1：BSP CMakeLists.txt 被误覆盖
@@ -463,6 +492,16 @@ lv_obj_set_style_width(list, 3, LV_PART_SCROLLBAR);
 
 **教训**：从旧教程/记忆里写 LVGL API 前先对 `managed_components/lvgl__lvgl/src/misc/lv_timer.h` 核实；本项目 LVGL 9 定时器删除断续续用到，统一用 `lv_timer_delete`。
 
+### 坑 14：按键事件穿透 —— 处理完必须 return
+
+**现象**：设置页按 OK 打开 ABOUT 弹窗后弹窗立即消失，表现为"按键无用"。
+
+**根因**：`main.c` 的按键分发里，设置页 OK 分支处理后没有 `return`，事件穿透到后面的默认分支又调了一次 `page_settings_key()`——第二次调用把刚打开的弹窗关掉了。
+
+**修复**：分支处理完后显式 `return`（需要先解锁 LVGL 锁再返回）。
+
+**教训**：按键分发器的每个专属分支处理完必须终止传播；穿透型 bug 的表现往往不是"多响应"而是"相互抵消"，很难从现象直接定位。
+
 ---
 
 ## 设计决策记录
@@ -535,7 +574,6 @@ lv_obj_set_style_width(list, 3, LV_PART_SCROLLBAR);
 
 ## 后续可玩方向
 
-- **音效**: 利用 BSP 的 ES8311 I2S codec 播放简短的希卡音效 (石板激活/页面切换)
 - **休眠省电**: 30s 无操作自动关闭背光, 按键唤醒
 - **电量显示**: 利用 BSP 的 CW2017 电量计在状态栏显示电池百分比
 - **BLE 连接**: 虽然不做 HID，但可以用 BLE 做一个简单的"手机同步冒险记录"功能
@@ -546,6 +584,11 @@ lv_obj_set_style_width(list, 3, LV_PART_SCROLLBAR);
 ## 提交历史（分步提交记录）
 
 ```
+docs: 同步 README 与开发日志（音效清单/轮盘布局/设置编辑模式）
+fix(ui): 设置页事件穿透修复 + 编辑模式重构 + 前向声明补齐
+feat(runes): 轮盘对齐游戏原版布局 + 能力页专属音效触发
+feat(assets): 游戏原版 quick-selector/扫描线素材入管线 (10 图片)
+feat(audio): 磁力/制冰专属音效 + 全部音色精调 (8 → 10 sfx)
 feat(audio): 挂接 11 处音效触发点 (激活/轮盘/选中/炸弹/时停/快门)
 feat(audio): sfx 播放模块 (audio worker task + 队列, 非阻塞)
 feat(audio): 音效转换管线与合成器 (wav -> 16kHz mono PCM -> C 数组)

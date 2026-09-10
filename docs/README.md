@@ -10,19 +10,20 @@ Sheikah Slate - AI Passport Edition 是基于 FoloToy AI Passport (ESP32-C3) 硬
 
 | 页面 | 说明 |
 |---|---|
-| **待机页** | 希卡之眼 Logo + 呼吸动画 (opa 40↔255, 1.5s ease_in_out)，OK 键唤醒 |
-| **符文选择器** | 8 个符文 (4×2 网格) 轮转，选中项放大 (44→56px) + 希卡蓝发光边框 + shadow |
+| **待机页** | 希卡之眼 Logo + 呼吸动画 (opa 40↔255, 1.5s ease_in_out) + 扫描线装饰，OK 键唤酸 |
+| **符文选择器** | 8 个符文环形轮盘 (r=78, 对齐游戏原版 quick-selector)，UP/DOWN 旋转，选中放大 + 辉光盘 |
+| **符文能力模拟** | 炸弹/磁力/时停/制冰/相机 5 个可玩模拟 (page_rune_app.c)，含专属激活音效 |
 | **海拉鲁图鉴** | 5 分类标签 (生物/怪物/材料/装备/宝物)，每分类 10 条，详情弹窗 |
 | **冒险记录** | 主线 8 + 支线 5 + 回忆 7 = 20 条任务，彩色类型标签，详情弹窗 |
-| **设置页** | 亮度调节 (10%~100%) + 返回待机 |
+| **设置页** | 亮度调节 (编辑模式: OK 进入/确认, UP/DOWN ±10) + ABOUT + 返回待机 |
 
 ### 按键操作
 
 | 按键 | 事件 | 功能 |
 |---|---|---|
-| UP | 单击 | 上一项 / 亮度+ |
-| DOWN | 单击 | 下一项 / 亮度- |
-| OK | 单击 | 确认 / 进入子页面 |
+| UP | 单击 | 上一项 / 编辑模式调值 -10 |
+| DOWN | 单击 | 下一项 / 编辑模式调值 +10 |
+| OK | 单击 | 确认 / 进入子页面 (设置页: 进入/退出编辑模式) |
 | OK | 长按 | 返回上一级 (子页面→符文, 符文→待机) |
 
 ### 页面路由状态机
@@ -56,11 +57,13 @@ typedef enum { PAGE_STANDBY=0, PAGE_RUNES, PAGE_COMPENDIUM, PAGE_QUEST, PAGE_SET
 │  main.c          主程序 + 页面路由状态机 + 按键分发            │
 │  sheikah_theme   希卡配色 (RGB565) + 全局样式组件              │
 │  sheikah_ui      通用组件 (列表/标签栏/弹窗)                   │
-│  page_standby    待机页: 希卡之眼图片 + 呼吸动画               │
-│  page_runes      符文选择器: 8 符文轮转 + 图标                 │
-│  page_compendium 海拉鲁图鉴: 5 分类 + JSON 解析                │
-│  page_quest      冒险记录: 20 任务 + 详情弹窗                  │
-│  page_settings   设置: 亮度调节                                │
+│  page_standby    待机页: 希卡之眼图片 + 呼吸动画              │
+│  page_runes      符文选择器: 8 符文环形轮盘 + 图标             │
+│  page_rune_app   符文能力模拟 (炸弹/磁力/时停/制冰/相机)      │
+│  page_compendium 海拉鲁图鉴: 5 分类 + JSON 解析               │
+│  page_quest      冒险记录: 20 任务 + 详情弹窗                 │
+│  page_settings   设置: 亮度编辑模式                           │
+│  audio/sfx       音效播放: sfx_play() 队列 + worker task      │
 │  img/            图片 C 数组 (img_to_c.py 生成)               │
 ├──────────────────────────────────────────────────────────────┤
 │                    components/bsp/                            │
@@ -84,16 +87,16 @@ typedef enum { PAGE_STANDBY=0, PAGE_RUNES, PAGE_COMPENDIUM, PAGE_QUEST, PAGE_SET
   - 电压窗口: UP ≈ 1.2V, DOWN ≈ 0.6V, OK ≈ 0V
 - **bsp_i2c**: I2C 总线 (SDA=GPIO10, SCL=GPIO7)
 - **bsp_battery**: CW2017 电量计 (I2C)
-- **bsp_audio**: ES8311 I2S codec (本项目未使用)
+- **bsp_audio**: ES8311 I2S codec (音效播放, 由 main/audio/sfx.c 封装)
 
 ### 显示层 (LVGL 9)
 
 LVGL 9.x 配置要点：
 
 - **色深**: 16-bit RGB565 (`CONFIG_LV_COLOR_DEPTH_16=y`)
-- **缓冲**: 单缓冲 20 行 (~9.6KB)，通过 `bsp_lvgl_lock/unlock()` 保证线程安全
-- **字体**: Montserrat 14/16/20/24 (在 `sdkconfig.defaults` 中启用)
-- **图片**: 预转换为 RGB565 C 数组，`lv_image_dsc_t` 描述符直接引用
+- **缓冲**: 双缓冲 2×20 行 (~19.2KB)，通过 `bsp_lvgl_lock/unlock()` 保证线程安全
+- **字体**: Montserrat 14/16/20 + 自定义 Hylia Serif 16/20 (游戏原版风, `main/font/`)
+- **图片**: 预转换为 C 数组 (背景 RGB565 小端 + 图标 ARGB8888 带透明)，`lv_image_dsc_t` 描述符直接引用
 
 ### 数据层 (JSON 嵌入)
 
@@ -122,20 +125,27 @@ ai-passport-sheikah-slate/
 │   ├── main.c                  # 主程序 + 状态机路由
 │   ├── sheikah_theme.h/c       # 配色常量 + 屏幕/标题/面板样式函数
 │   ├── sheikah_ui.h/c          # sk_list / sk_tabs / sk_popup 组件
-│   ├── page_standby.c/h        # 待机页: 希卡之眼 + 呼吸
-│   ├── page_runes.c/h          # 符文选择器 (主菜单)
+│   ├── page_standby.c/h        # 待机页: 希卡之眼 + 呼吸 + 扫描线
+│   ├── page_runes.c/h          # 符文选择器: 环形轮盘 (主菜单)
+│   ├── page_rune_app.c         # 符文能力模拟 (5 个能力)
 │   ├── page_compendium.c/h     # 海拉鲁图鉴 (5 分类)
 │   ├── page_quest.c/h          # 冒险记录 (20 任务)
-│   ├── page_settings.c/h       # 设置 (亮度)
+│   ├── page_settings.c/h       # 设置 (亮度编辑模式)
+│   ├── audio/                  # 音效模块
+│   │   ├── sfx.c/h             #   sfx_play() 队列 + audio worker task
+│   │   └── sfx_data.c/h        #   10 个 16kHz mono PCM (gen_audio.py 生成)
 │   └── img/                    # 图片 C 数组 (自动生成)
 │       ├── img_all.h           #   所有图片 extern 声明
 │       ├── img_sheikah_eye.c   #   希卡之眼 120×120 RGB565
-│       └── img_rune_*.c        #   5 个符文 48×48 RGB565
+│       ├── img_rune_*.c        #   5 个符文 56×56 ARGB8888
+│       └── img_*.c             #   轮盘框架/扫描线/背景等装饰素材
 ├── assets/
 │   ├── images/                 # 源 PNG (从 SVG 渲染)
 │   └── data/                   # JSON 数据 (6 个文件, 嵌入 Flash)
 ├── tools/
-│   ├── img_to_c.py             # PNG → LVGL RGB565 C 数组
+│   ├── gen_synth.py            # 音效合成 (chirp/玻璃音/钟音 + Schroeder 混响)
+│   ├── gen_audio.py            # wav → 16kHz mono PCM C 数组
+│   ├── img_to_c.py             # PNG → LVGL RGB565/ARGB8888 C 数组
 │   └── svg_to_png.mjs          # SVG → PNG (resvg-js + sharp)
 └── docs/
     ├── README.md               # 本文档
@@ -162,12 +172,12 @@ ai-passport-sheikah-slate/
 
 | 项目 | 占用 | 说明 |
 |---|---|---|
-| LVGL 单缓冲 | 9.6 KB | 20 行 × 240px × 2B (DMA) |
+| LVGL 双缓冲 | 19.2 KB | 2×20 行 × 240px × 2B (DMA) |
 | LVGL 对象 | ~30 KB | 5 个页面同时存在的对象树 |
-| 图片 C 数组 | ~50 KB | 希卡之眼 28.8KB + 5 符文 × 4.5KB |
-| JSON 数据 | ~15 KB | 6 个 JSON 文件 (嵌入 Flash, 不占 RAM) |
-| FreeRTOS 栈 | ~8 KB | 主任务 + button 任务 |
-| **总计** | **~113 KB** | 远低于 400KB SRAM 上限 |
+| FreeRTOS 栈 | ~10 KB | 主任务 + button 任务 + audio 任务 |
+| **SRAM 总计** | **~60 KB** | 远低于 400KB 片上 SRAM 上限 |
+
+Flash 占用（8MB factory 4MB，充裕）：图片 C 数组 ~210KB (背景 RGB565 + 图标/装饰 ARGB8888) + 音效 PCM ~110KB (10 个 16kHz mono) + JSON ~15KB。
 
 > JSON 数据通过 `EMBED_TXTFILES` 嵌入 Flash 的 `.rodata` 段，运行时通过指针访问，解析时使用局部缓冲（~256B），不额外占用堆内存。
 
@@ -206,6 +216,44 @@ zelda-hyrule-ui SVG 素材
 | 相机符文 | `ability-camera.svg` | 96×96 | 48×48 | 4,608 B |
 
 > 源 PNG 以 4x 超采样渲染后缩小，确保抗锯齿质量。C 数组目标尺寸匹配屏幕实际显示大小。
+
+## 音效管线
+
+```
+tools/gen_synth.py (纯 Python, 固定种子可复现)
+chirp 扫频 / 失谐玻璃双振 / 钟形泛音 / 一阶低通噪声
++ Schroeder 混响 (4 comb + 2 allpass)
+       │
+       ▼
+  assets/audio/*.wav (10 个)
+       │
+       ▼
+tools/gen_audio.py (ffmpeg 可选, 纯 Python wave 兜底)
+wav → 16kHz/16bit/mono PCM → main/audio/sfx_data.{c,h}
+(SFX_* 宏按 MANIFEST 顺序自动生成)
+       │
+       ▼
+main/audio/sfx.c: sfx_play() 只投 FreeRTOS 队列
+audio worker task 懒初始化 bsp_audio 后分块写 I2S
+(按键回调/LVGL 定时器内安全, 队列满丢弃不阻塞)
+```
+
+### 音效清单 (10 个)
+
+| ID | 音色特征 | 触发点 |
+|---|---|---|
+| activate | 金属 shwing + 钟音泛音 | 待机 OK 进符文页 |
+| tick | 短玻璃嗒 | 轮盘 UP/DOWN 旋转 |
+| confirm | 双钟音 | 符文选中 |
+| bomb_place | 低噪咔嗒 | 炸弹放置 |
+| bomb_boom | 低频轰鸣 + 噪声 | 炸弹引爆 |
+| magnesis_activate | 55Hz 电磁嗡鸣 + 电弧上扫 | 磁力符文进入 |
+| stasis_freeze | 三层下滑扫频 | 时停冻结 |
+| stasis_unfreeze | 上滑扫频 + 钟音 | 时停解冻 |
+| cryonis_activate | C5-G5-C6 水晶上行 + 冰裂 | 制冰进入/冰柱生长 |
+| shutter | 双段快门咔嗒 | 相机拍照 |
+
+> 拿到游戏原版 wav 后覆盖 `assets/audio/<id>.wav` 重跑 `gen_audio.py` 即可换装，代码无需改动。
 
 ## 构建与烧录
 
