@@ -32,6 +32,11 @@ idf_component_register(
          "img/img_comp_equipment.c"
          "img/img_comp_treasures.c"
          "img/img_quest_main.c"
+         "img/img_selector_center.c"
+         "img/img_selector_top.c"
+         "img/img_selector_left.c"
+         "img/img_selector_right.c"
+         "img/img_scanline_side.c"
     INCLUDE_DIRS "."
     REQUIRES bsp
     PRIV_REQUIRES nvs_flash

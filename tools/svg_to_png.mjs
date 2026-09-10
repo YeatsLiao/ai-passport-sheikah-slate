@@ -47,6 +47,13 @@ const conversions = [
     ['title-ornament-left.svg',  'ornament_left.png',   24,  22, null],
     ['title-ornament-right.svg', 'ornament_right.png',  24,  22, null],
     ['item-corner.svg',          'corner.png',          12,  12, null],
+    // ---- 游戏原版符文轮盘框架装饰 (希卡青) ----
+    ['quick-selector-center.svg','selector_center.png', 36,  36, '#3CD3FC'],
+    ['quick-selector-top.svg',   'selector_top.png',    30,  30, '#3CD3FC'],
+    ['quick-selector-left.svg',  'selector_left.png',   22,  26, '#3CD3FC'],
+    ['quick-selector-right.svg', 'selector_right.png',  26,  26, '#3CD3FC'],
+    // ---- 扫描线侧边装饰 (半透明青) ----
+    ['scanline.svg',             'scanline_side.png',   10, 180, '#3CD3FC'],
 ];
 
 const SCALE = 6; // supersampling factor for crisp downscale

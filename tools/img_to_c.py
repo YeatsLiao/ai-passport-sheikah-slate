@@ -64,6 +64,13 @@ IMAGES = [
     ("ornament_left.png",     "img_ornament_left",   24,  22, 'a'),
     ("ornament_right.png",    "img_ornament_right",  24,  22, 'a'),
     ("corner.png",            "img_corner",          12,  12, 'a'),
+    # ---- 游戏原版轮盘框架装饰 (希卡青) ----
+    ("selector_center.png",   "img_selector_center", 36,  36, 'a'),
+    ("selector_top.png",      "img_selector_top",    30,  30, 'a'),
+    ("selector_left.png",     "img_selector_left",   22,  26, 'a'),
+    ("selector_right.png",    "img_selector_right",  26,  26, 'a'),
+    # ---- 扫描线侧边装饰 ----
+    ("scanline_side.png",     "img_scanline_side",   10, 180, 'a'),
     # ---- 背景 (240x320, RGB565) ----
     ("slate_bg.png",          "img_slate_bg",       240, 320, 'r'),
 ]

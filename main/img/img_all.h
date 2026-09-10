@@ -20,4 +20,9 @@ extern const lv_image_dsc_t img_quest_main;  // 24x24
 extern const lv_image_dsc_t img_ornament_left;  // 24x22
 extern const lv_image_dsc_t img_ornament_right;  // 24x22
 extern const lv_image_dsc_t img_corner;  // 12x12
+extern const lv_image_dsc_t img_selector_center;  // 36x36
+extern const lv_image_dsc_t img_selector_top;  // 30x30
+extern const lv_image_dsc_t img_selector_left;  // 22x26
+extern const lv_image_dsc_t img_selector_right;  // 26x26
+extern const lv_image_dsc_t img_scanline_side;  // 10x180
 extern const lv_image_dsc_t img_slate_bg;  // 240x320
