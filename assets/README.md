@@ -4,7 +4,7 @@
 
 ```
 assets/
-├── raw/         ① 上游原料：只给生成脚本读，不进构建；2026-10-28 起按游戏内容分类
+├── raw/         ① 上游原料：通常由生成脚本读，不进固件；地图原图评审直接读取 maps；2026-10-28 起按游戏内容分类
 │   ├── 01_runes/        16  符文与能力：7 枚符文图标、Gallery 实机截图 6、符文基底
 │   ├── 02_ui/           93  界面件：按键18、分类图5+5、字形17、希卡文字42、纹章、参考条5
 │   ├── 03_compendium/  505  图鉴内容：BOTW 图标390、大师模式5、掉落材料34、模型18、艺术图9、截图与参考31、变体18
@@ -36,7 +36,7 @@ assets/
 | `raw/02_ui/` | `build_real_assets.py`（希卡之眼与 5 张分类图）；按键/字形/希卡文字暂未集成 | 否 | 否 |
 | `raw/03_compendium/` | `build_real_assets.py`（模型剪影）；390 张 BOTW 图标暂无读者 | 否 | 否 |
 | `raw/04_equipment/` | `import_compendium_assets.py`（starter 24 张、林克立绘、背包 SVG） | 可从本地来源再导入，原件保留 | 否 |
-| `raw/05_world/` | `crop_botw_maps.py`（地图）、`build_real_assets.py`（石板） | 否 | 否 |
+| `raw/05_world/` | Web 地图页读取 4 张截图并裁出中部地图；`crop_botw_maps.py`（地图）、`build_real_assets.py`（石板） | 否 | 否 |
 | `raw/06_audio/`、`raw/07_fonts/` | `import_compendium_assets.py` 导入到 `audio/prototype/`、`prototype/fonts/` | 是（从 starter 原件导出） | 否 |
 | `raw/99_archive/` | 无读者，纯溯源留档（TOTK/大师模式/他作/仓库说明） | 否 | 否 |
 | `raw/_index/` | 人工查阅；`verify_assets.py` 读 `import_manifest.json` | manifest 是（`--archive` 模式） | 否 |
@@ -67,7 +67,7 @@ python tools/verify_assets.py --source-root D:/Project # 可选：与本地来�
 
 约定：
 
-- `gen/prototype/` 原则上只提交原型真正引用的图。两张旧 `sil_*.png` 目前仍留存，但地图已改用原色模型，不再加载它们。
+- `gen/prototype/` 原则上只提交原型真正引用的图。两张旧 `sil_*.png` 目前仍留存；地图从 `raw/05_world/maps/` 读取游戏截图，仅裁取中部地图，不再使用剪影或模型贴片。
 - 新增固件图必须同时进 `manifest.json`，否则 `img_to_c.py` 会漏掉它。
 - 原图全部在 `raw/`，并按游戏内容分为 01_runes…07_fonts 七类，非目标内容（TOTK/大师模式/他作）与各仓库说明统一放在 `99_archive/`。
   2026-10-28 的搬迁旧→新逐文件映射（含 SHA-256）在 `raw/_index/content_map.csv`；字节完全相同的 11 个副本
@@ -87,4 +87,4 @@ python tools/verify_assets.py --source-root D:/Project # 可选：与本地来�
 
 本次原图替换：7张符文图（含圆/方炸弹及未开放的amiibo）、5张图鉴分类图、希卡之眼，以及12张原色模型贴片。11张图标逐字节复制，时停/制冰仅将纯白背景转透明；模型仅处理留白、等比缩小及石板原图的纯色外背景，不重绘主体、不改原色。具体对应关系（已按新结构指向 `raw/01_runes/icons/`、`raw/02_ui/`、`raw/03_compendium/models/`、`raw/05_world/slate/`）在 `build_real_assets.py` 的 `ORIGINAL_ICONS` / `ORIGINAL_CUTS`。
 
-Web不再引用固件绘制的符文与眼形图；无对应图的MAP/LOG/SYSTEM顶部入口使用文字。原目录缺少地图、箱子、闸门、冰柱、炸弹实体及爆炸帧，这些仍保留既有占位，不冒称完成全原版替换。装备图、CODEX照片、相机交互与固件均不变；截图中的完整布局和边框待后续逐步调整。
+Web不再引用固件绘制的符文与眼形图；无对应图的MAP/LOG/SYSTEM顶部入口使用文字。地图页从 4 张游戏截图中裁出中部地图，放入原有 320×240 石板的地图区域，切图控件也在屏幕内；截图外框、上下菜单与边缘 HUD 不参与显示，原文件不变。地名及中央提示仍属于截图内容，不宣称为可交互控件，详见 `docs/prototype/pages.md`。箱子、闸门、冰柱、炸弹实体及爆炸帧仍保留既有占位，不冒称完成全原版替换；装备图、CODEX照片、相机交互与固件均不变。

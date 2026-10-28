@@ -27,7 +27,7 @@ const state = {
   stasis: { frozen: false, hits: 0, remaining: 10, done: false },
   cryonis: { count: 0, done: false },
   camera: { sel: 0, shots: [false, false, false, false, false], done: false },
-  map: { sel: null, pinned: false, legend: false },
+  map: { index: 0, zoom: 1, x: 0, y: 0 },
   compCat: 'creatures',
   inventory: {
     category: 'weapons', pages: { weapons: 0, shields: 0, armors: 0 }, selected: {},
@@ -71,7 +71,7 @@ function beep(kind) {
 
 
 /* ---------------- routing ---------------- */
-const routeHash = () => (location.hash && !['#', '#/'].includes(location.hash) ? location.hash : '#/inventory');
+const routeHash = () => (location.hash && !['#', '#/'].includes(location.hash) ? location.hash : '#/map');
 const routeParts = () => routeHash().replace(/^#\//, '').split('/');
 
 function go(hash) {
@@ -325,70 +325,73 @@ function viewCamera(rune) {
 }
 
 /* ---------------- map ---------------- */
-const MAP_PINS = [
-  { id: 'shrine', label: 'GREAT PLATEAU SHRINE', sub: 'SHRINE · 120 m', x: 27, y: 31, kind: 'shrine' },
-  { id: 'tower',  label: 'CENTRAL TOWER',        sub: 'SHEIKAH TOWER · 1.2 km', x: 64, y: 24, kind: 'tower' },
-  { id: 'stable', label: 'OUTSKIRT STABLE',      sub: 'STABLE · 640 m', x: 41, y: 69, kind: 'stable' },
-  { id: 'player', label: 'CURRENT POSITION',     sub: 'GREAT PLATEAU · 12:40', x: 57, y: 52, kind: 'player' }
+/* 只截取游戏截图中部地图；裁切框排除石质边框、上下菜单与边缘 HUD。
+   size 为原图尺寸，crop 为原图像素坐标 [x, y, 宽, 高]；raw 文件保持不变。 */
+const MAP_IMAGES = [
+  { file: 'botw_map_great_plateau.jpg', name: '初始台地', label: 'GREAT PLATEAU', size: [1800, 1013], crop: [210, 120, 1320, 780] },
+  { file: 'botw_map_ui_full.jpg', name: '海拉鲁平原', label: 'HYRULE FIELD', size: [1920, 1080], crop: [230, 170, 1420, 700] },
+  { file: 'botw_map_central.jpg', name: '中央海拉鲁', label: 'CENTRAL HYRULE', size: [1110, 624], crop: [135, 100, 820, 380] },
+  { file: 'botw_map_northeast.jpg', name: '阿卡莱', label: 'AKKALA', size: [1280, 720], crop: [180, 100, 920, 480] }
 ];
+const mapImageURL = image => `../assets/raw/05_world/maps/${image.file}`;
 
 function viewMap() {
-  const m = state.map;
-  const pin = m.sel !== null ? MAP_PINS[m.sel] : null;
+  const image = MAP_IMAGES[state.map.index];
   return topbar('map') + `<div class="body map-body">
-    <svg class="map-art" viewBox="0 0 320 198" preserveAspectRatio="none" aria-hidden="true">
-      <defs>
-        <radialGradient id="mapGlow" cx="52%" cy="42%" r="72%">
-          <stop offset="0" stop-color="#0d3038"/><stop offset="1" stop-color="#041014"/>
-        </radialGradient>
-        <linearGradient id="mapWater" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#0b4150"/><stop offset="1" stop-color="#062430"/>
-        </linearGradient>
-      </defs>
-      <rect width="320" height="198" fill="url(#mapGlow)"/>
-      <g stroke="rgba(126,232,255,.07)" stroke-width=".5">
-        <path d="M0 40H320M0 80H320M0 120H320M0 160H320M40 0V198M80 0V198M120 0V198M160 0V198M200 0V198M240 0V198M280 0V198"/>
-      </g>
-      <g fill="none" stroke="rgba(126,232,255,.15)" stroke-width=".7">
-        <path d="M-10 62C40 40 70 78 110 58S180 20 230 46S300 70 334 50"/>
-        <path d="M-10 78C40 56 74 92 112 72S182 36 232 62S302 84 334 64"/>
-        <path d="M-10 110C50 94 90 124 140 106S220 78 270 100S314 116 334 108"/>
-      </g>
-      <path d="M0 118C44 106 66 128 96 124S150 104 190 116S258 148 320 132V198H0Z" fill="rgba(9,41,48,.5)"/>
-      <path d="M196 112C210 104 238 110 246 126C254 142 238 156 218 154C198 152 184 126 196 112Z" fill="url(#mapWater)" stroke="rgba(126,232,255,.35)" stroke-width=".8"/>
-      <path d="M0 96C30 92 52 100 72 96S110 86 132 92" fill="none" stroke="#0d4a58" stroke-width="3" opacity=".8"/>
-      <path d="M28 198C36 160 52 140 88 128S150 116 176 96" fill="none" stroke="rgba(230,197,131,.3)" stroke-width="1.2" stroke-dasharray="3 4"/>
-      <path d="M320 96C270 92 240 80 216 62" fill="none" stroke="rgba(230,197,131,.22)" stroke-width="1.2" stroke-dasharray="3 4"/>
-      <g font-family="Georgia,serif" font-size="4.6" letter-spacing="1.4" fill="#4e7d87">
-        <text x="18" y="30">HYRULE FIELD</text>
-        <text x="104" y="128">GREAT PLATEAU</text>
-        <text x="208" y="126">LAKE HYLIA</text>
-      </g>
-      <g fill="rgba(127,233,255,.45)">
-        <circle cx="34" cy="170" r=".9"/><circle cx="150" cy="44" r=".9"/><circle cx="286" cy="150" r=".9"/>
-      </g>
-    </svg>
-    <img class="puppet far drift map-pup" src="${IMG('cut_skywatcher.png')}" alt="" style="left:232px;top:26px;width:78px">
-    <img class="puppet far map-pup" src="${IMG('cut_guardian_big.png')}" alt="" style="left:26px;top:92px;width:62px;opacity:.24">
-    <div class="map-hud"><span>CENTRAL HYRULE</span><span>12:40 · CLEAR</span></div>
-    ${m.legend ? `<div class="map-legend">
-      <div><i class="lg-shrine"></i>SHRINE</div>
-      <div><i class="lg-tower"></i>TOWER</div>
-      <div><i class="lg-stable"></i>STABLE</div>
-      <div><i class="lg-you"></i>YOU</div>
-    </div>` : ''}
-    ${MAP_PINS.map((p, i) => `
-      <button class="map-pin ${p.kind} ${m.sel === i ? 'on' : ''}" data-action="map:sel:${i}" data-focus style="left:${p.x}%;top:${p.y}%" aria-label="${p.label}"><i></i></button>`).join('')}
-    ${m.pinned ? '<div class="map-waypoint" style="left:57%;top:52%"><span>◆</span></div>' : ''}
-    <div class="map-info ${pin ? '' : 'hint'}">
-      ${pin ? `<span><b>${pin.label}</b><em>${pin.sub}</em></span><button class="chip mini" data-action="map:pin" data-focus>${m.pinned ? 'TRACKED' : 'TRACK'}</button>` : '<span>选择一个标记查看详情</span>'}
+    <div class="map-viewport" id="mapViewport" role="region" aria-label="${image.name}地图">
+      <div class="map-crop" id="mapCrop">
+        <img class="map-image" id="mapImage" src="${mapImageURL(image)}" alt="《旷野之息》${image.name}中部地图" draggable="false">
+      </div>
+      <p class="map-error" id="mapError" role="alert" hidden>地图加载失败，请刷新页面。</p>
     </div>
-    <div class="chiprow">
-      <button class="chip ${m.pinned ? 'on' : ''}" data-action="map:pin" data-focus data-start>${m.pinned ? '已设标记' : '设标记'}</button>
-      <button class="chip" data-action="map:clear" data-focus>清除</button>
-      <button class="chip ${m.legend ? 'on' : ''}" data-action="map:legend" data-focus>图例</button>
+    <div class="map-hud"><span id="mapCaption" aria-live="polite"></span><output id="mapZoom" aria-label="地图序号与缩放倍率"></output></div>
+    <div class="map-controls" aria-label="地图操作">
+      <button class="chip" data-action="map:step:-1" data-focus title="上一张（←）">◀ 上一张</button>
+      <button class="chip" data-action="map:step:1" data-focus data-start title="下一张（→）">下一张 ▶</button>
+      <button class="chip" data-action="map:zoom:-0.5" data-focus aria-label="缩小地图">− 缩小</button>
+      <button class="chip" data-action="map:zoom:0.5" data-focus aria-label="放大地图">＋ 放大</button>
+      <button class="chip" data-action="map:reset" data-focus title="恢复裁切全图（0）">复位</button>
     </div>
-  </div>` + footer('<b>▲▼</b> 目标　<b>OK</b> 查看');
+  </div>` + footer('<b>▲▼</b> 选择　<b>OK</b> 确认', '←→ 切图 · 长按 OK 返回');
+}
+
+function updateMapView() {
+  const m = state.map;
+  const image = MAP_IMAGES[m.index];
+  const img = document.getElementById('mapImage');
+  if (!img) return;
+  if (img.getAttribute('src') !== mapImageURL(image)) {
+    document.getElementById('mapError').hidden = true;
+    img.src = mapImageURL(image);
+    img.alt = `《旷野之息》${image.name}中部地图`;
+  }
+  /* 地图限定在原有 body 内。先裁掉截图外框，再等比铺满；拖动也不能露出裁切外内容。 */
+  const viewport = document.getElementById('mapViewport');
+  const width = viewport.clientWidth;
+  const height = viewport.clientHeight;
+  const [x, y, cropWidth, cropHeight] = image.crop;
+  const scale = Math.max(width / cropWidth, height / cropHeight);
+  const w = cropWidth * scale, h = cropHeight * scale;
+  const maxX = Math.max(0, (w * m.zoom - width) / 2);
+  const maxY = Math.max(0, (h * m.zoom - height) / 2);
+  m.x = Math.max(-maxX, Math.min(maxX, m.x));
+  m.y = Math.max(-maxY, Math.min(maxY, m.y));
+  const crop = document.getElementById('mapCrop');
+  crop.style.width = `${w}px`;
+  crop.style.height = `${h}px`;
+  crop.style.left = `${(width - w) / 2}px`;
+  crop.style.top = `${(height - h) / 2}px`;
+  crop.style.transform = `translate(${m.x}px, ${m.y}px) scale(${m.zoom})`;
+  img.style.width = `${image.size[0] * scale}px`;
+  img.style.height = `${image.size[1] * scale}px`;
+  img.style.left = `${-x * scale}px`;
+  img.style.top = `${-y * scale}px`;
+  viewport.classList.toggle('zoomed', m.zoom > 1);
+  viewport.setAttribute('aria-label', `${image.name}地图`);
+  document.getElementById('mapCaption').textContent = `${image.name} · ${image.label}`;
+  document.getElementById('mapZoom').textContent = `${m.index + 1}/${MAP_IMAGES.length} · ${Math.round(m.zoom * 100)}%`;
+  screenEl.querySelector('[data-action="map:zoom:-0.5"]').disabled = m.zoom <= 1;
+  screenEl.querySelector('[data-action="map:zoom:0.5"]').disabled = m.zoom >= 4;
 }
 
 /* ---------------- inventory ---------------- */
@@ -738,6 +741,9 @@ function render() {
   const p = routeParts();
   const hash = routeHash();
   const sameRoute = prevHash === hash;
+  const isMap = p[0] === 'map';
+  if (mapDrag) endMapDrag({ pointerId: mapDrag.id });
+  document.body.classList.toggle('map-mode', isMap);
   let html = '';
   switch (p[0]) {
     case 'runes': html = viewRunes(); break;
@@ -757,6 +763,7 @@ function render() {
   }
   screenEl.innerHTML = html + '<div class="focus-frame" id="focusFrame"></div><div class="wipe" id="wipe"></div>';
   screenEl.style.filter = `brightness(${(0.55 + state.settings.brightness * 0.09).toFixed(3)})`;
+  if (isMap) updateMapView();
   document.body.classList.toggle('no-scan', !state.settings.scanlines);
   /* 同一页内重绘（调亮度、切换目标等）时把选中位置留在原处，不要跳回顶部。 */
   initFocus(sameRoute ? focusKey : null);
@@ -1036,13 +1043,25 @@ function cameraAction(kind, arg) {
   }
 }
 
-function mapAction(kind, arg) {
+function mapAction(kind, arg, silent = false) {
+  if (mapDrag) endMapDrag({ pointerId: mapDrag.id });
   const m = state.map;
-  if (kind === 'sel') m.sel = Number(arg);
-  else if (kind === 'pin') m.pinned = !m.pinned;
-  else if (kind === 'clear') { m.sel = null; m.pinned = false; }
-  else if (kind === 'legend') m.legend = !m.legend;
-  render(); beep('ok');
+  if (kind === 'step') {
+    const index = (m.index + Number(arg) + MAP_IMAGES.length) % MAP_IMAGES.length;
+    if (!Number.isInteger(index) || !MAP_IMAGES[index]) return;
+    m.index = index;
+    m.zoom = 1; m.x = 0; m.y = 0;
+  } else if (kind === 'zoom') {
+    const zoom = Math.max(1, Math.min(4, m.zoom + Number(arg)));
+    if (!Number.isFinite(zoom)) return;
+    m.x *= zoom / m.zoom; m.y *= zoom / m.zoom;
+    m.zoom = zoom;
+  } else if (kind === 'reset') {
+    m.zoom = 1; m.x = 0; m.y = 0;
+  } else return;
+  updateMapView();
+  initFocus(focusKey);
+  if (!silent) beep(kind === 'step' ? 'move' : 'ok');
 }
 
 function sysAction(kind) {
@@ -1087,6 +1106,40 @@ function toast(text, kind) {
 }
 
 /* ---------------- input ---------------- */
+let mapDrag = null;
+screenEl.addEventListener('error', e => {
+  if (e.target.id === 'mapImage') document.getElementById('mapError').hidden = false;
+}, true);
+screenEl.addEventListener('load', e => {
+  if (e.target.id === 'mapImage') document.getElementById('mapError').hidden = true;
+}, true);
+screenEl.addEventListener('wheel', e => {
+  if (!e.target.closest('#mapViewport') || e.ctrlKey || !e.deltaY) return;
+  e.preventDefault();
+  mapAction('zoom', e.deltaY < 0 ? 0.25 : -0.25, true);
+}, { passive: false });
+screenEl.addEventListener('pointerdown', e => {
+  if (!e.target.closest('#mapViewport') || state.map.zoom <= 1 || e.button !== 0 || !e.isPrimary) return;
+  e.preventDefault();
+  mapDrag = { id: e.pointerId, x: e.clientX, y: e.clientY, panX: state.map.x, panY: state.map.y };
+  screenEl.setPointerCapture(e.pointerId);
+  screenEl.classList.add('map-dragging');
+});
+screenEl.addEventListener('pointermove', e => {
+  if (!mapDrag || e.pointerId !== mapDrag.id) return;
+  const scale = screenEl.getBoundingClientRect().width / 320;
+  state.map.x = mapDrag.panX + (e.clientX - mapDrag.x) / scale;
+  state.map.y = mapDrag.panY + (e.clientY - mapDrag.y) / scale;
+  updateMapView();
+});
+function endMapDrag(e) {
+  if (mapDrag && e.pointerId !== mapDrag.id) return;
+  mapDrag = null;
+  screenEl.classList.remove('map-dragging');
+  if (screenEl.hasPointerCapture(e.pointerId)) screenEl.releasePointerCapture(e.pointerId);
+}
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach(type => screenEl.addEventListener(type, endMapDrag));
+
 /* 鼠标悬停也跟随选择：评审时移上去就能看到选中态，不必先点一下。 */
 let hoverRAF = 0;
 let lastHoverSound = 0;
@@ -1188,7 +1241,13 @@ function stopNav() {
 }
 
 document.addEventListener('keydown', e => {
-  if (e.repeat) return;
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key === 'Enter' && e.target.closest('.rail a, #resetBtn')) return;
+  if (routeParts()[0] === 'map') {
+    const actions = { ArrowLeft: ['step', -1], ArrowRight: ['step', 1], '+': ['zoom', 0.5], '=': ['zoom', 0.5], '-': ['zoom', -0.5], '0': ['reset'] };
+    if (actions[e.key]) { e.preventDefault(); if (!e.repeat) mapAction(...actions[e.key]); return; }
+  }
+  if (e.repeat) { if (['ArrowUp', 'ArrowDown', 'Enter'].includes(e.key)) e.preventDefault(); return; }
   if (e.key === 'ArrowUp') { e.preventDefault(); startNav(-1); }
   else if (e.key === 'ArrowDown') { e.preventDefault(); startNav(1); }
   else if (e.key === 'Enter') { e.preventDefault(); okDown(); }
@@ -1196,7 +1255,13 @@ document.addEventListener('keydown', e => {
 });
 document.addEventListener('keyup', e => {
   if (e.key === 'ArrowUp' || e.key === 'ArrowDown') stopNav();
-  if (e.key === 'Enter') { e.preventDefault(); okUp(); }
+  if (e.key === 'Enter' && holdTimer !== null) { e.preventDefault(); okUp(); }
+});
+window.addEventListener('blur', () => {
+  stopNav();
+  clearTimeout(holdTimer); holdTimer = null; longFired = true;
+  stopHoldBar();
+  if (mapDrag) endMapDrag({ pointerId: mapDrag.id });
 });
 
 document.querySelectorAll('.key').forEach(btn => {
