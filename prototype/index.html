@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sheikah Slate · AI Passport 原型</title>
+<link rel="stylesheet" href="css/slate.css">
+<link rel="icon" href="../assets/gen/prototype/eye.png">
+</head>
+<body>
+  <div class="stage">
+    <aside class="rail">
+      <div class="rail-head">
+        <img src="../assets/gen/prototype/eye.png" alt="">
+        <div>
+          <strong>SHEIKAH SLATE</strong>
+          <span>AI PASSPORT · CLICKABLE PROTOTYPE</span>
+        </div>
+      </div>
+      <nav id="railNav" class="rail-nav"></nav>
+      <div class="rail-foot">
+        <p>↑ ↓ 选择 · Enter 确认<br>长按 Enter / Esc 返回</p>
+        <p class="rail-tip">按住 ▲▼ 连续移动<br>参考仓库：react-sheikah-ui · zelda-botw-starter</p>
+        <button id="resetBtn" class="rail-reset">重置原型状态</button>
+      </div>
+    </aside>
+
+    <main class="device-wrap">
+      <div class="device" id="device">
+        <div class="device-top">
+          <span>AI PASSPORT</span>
+          <i class="led"></i>
+          <span class="device-code">SKS-02</span>
+        </div>
+        <div class="screen-shell" id="screenShell">
+          <div class="screen" id="screen"></div>
+          <div class="scanlines" id="scanlines"></div>
+          <div class="glass"></div>
+        </div>
+        <div class="keys">
+          <button class="key" data-key="UP" aria-label="UP">▲</button>
+          <button class="key ok" data-key="OK" aria-label="OK">OK<span class="hold"></span></button>
+          <button class="key" data-key="DOWN" aria-label="DOWN">▼</button>
+          <span class="key-hint">原型三键 · 也可用键盘</span>
+        </div>
+      </div>
+      <p class="stage-note">320 × 240 · 横屏 · 01 装备 / 换装 · 本地素材与示例进度，仅用于原型评审</p>
+    </main>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/inventory-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
