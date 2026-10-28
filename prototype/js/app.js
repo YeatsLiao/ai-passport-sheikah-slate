@@ -35,7 +35,6 @@ const state = {
     textId: null, textPage: 0
   },
   logTab: 'main',
-  logPages: {},
   albumOpen: null,
   albumDeleted: [],
   albumShots: [],
@@ -144,7 +143,7 @@ function viewRunes() {
   const r = RUNES[state.runeIndex];
   return topbar('runes') + `<div class="body runes-body">
     <div class="rune-left">
-      <div class="section-label">RUNE SELECT <em>06</em></div>
+      <div class="section-label">RUNE SELECT <em>${String(RUNES.length).padStart(2, '0')}</em></div>
       <div class="rune-grid">${RUNES.map((x, i) => `
         <button class="rune-tile ${i === state.runeIndex ? 'sel' : ''}" data-action="pick:${i}" data-focus ${i === state.runeIndex ? 'data-start' : ''}>
           <span class="num">0${i + 1}</span>
@@ -174,8 +173,29 @@ function viewRune(id) {
     case 'stasis': return viewStasis(rune);
     case 'cryonis': return viewCryonis(rune);
     case 'camera': return viewCamera(rune);
+    case 'cycle':
+    case 'amiibo':
+    case 'sensor': return viewRuneInfo(rune);
     default: return viewRunes();
   }
+}
+
+/* 大师摩托 / amiibo / 希卡感应器：原型暂未做试炼玩法，用场景图 + 信息卡占位。 */
+function viewRuneInfo(rune) {
+  return topbar('runes') + `<div class="body story-body scene-body">
+    <div class="scene" style="background-image:url(${IMG(rune.scene)})"></div>
+    <div class="scene-shade"></div>
+    <div class="story-meta"><span>RUNE ${rune.short}</span><span>原型占位 · 无试炼玩法</span></div>
+    <h2>${rune.label}</h2>
+    <div class="story-subtitle">${rune.cn}</div>
+    <article class="story-page">
+      <p>${rune.desc}</p>
+      <p style="color:#a8cdd4;margin-top:6px">此符文在本原型中暂无试炼玩法，仅作界面演示。选中后回到符文页。</p>
+    </article>
+    <div class="story-controls">
+      <button data-action="back" data-start>返回符文页</button>
+    </div>
+  </div>` + footer('<b>OK</b> 返回', `${rune.short} · 原型占位`);
 }
 
 function viewBomb(rune) {
@@ -184,7 +204,7 @@ function viewBomb(rune) {
   if (b.type !== rune.kind) { b.type = rune.kind; b.placed = false; b.done = false; }
   const bombImg = b.type === 'ROUND' ? 'bomb_round.png' : 'bomb_cube.png';
   return `<div class="body scene-body">
-    <div class="scene" id="scene" style="background-image:url(${IMG('bg_abbey.png')})"></div>
+    <div class="scene" id="scene" style="background-image:url(${IMG('rune_scene_bomb.png')})"></div>
     <div class="scene-shade"></div>
     <img class="puppet far drift slow" src="${IMG('cut_decayed.png')}" alt="" style="right:12px;bottom:110px;width:46px">
     <img class="puppet mid drift" src="${IMG('cut_bokoblin.png')}" alt="" style="left:130px;bottom:46px;width:68px">
@@ -210,7 +230,7 @@ function viewMagnet(rune) {
   const crateLeft = (m.done || m.moved) ? 98 : 244;
   const crateBottom = m.done ? 66 : m.moved ? 96 : 58;
   return `<div class="body scene-body">
-    <div class="scene" id="scene" style="background-image:url(${IMG('bg_shrine.png')})"></div>
+    <div class="scene" id="scene" style="background-image:url(${IMG('rune_scene_magnet.png')})"></div>
     <div class="scene-shade"></div>
     <img class="puppet far drift slow" src="${IMG('cut_keese.png')}" alt="" style="right:8px;top:42px;width:56px">
     <img class="puppet mid drift" src="${IMG('cut_lizalfos_big.png')}" alt="" style="right:50px;bottom:40px;width:94px">
@@ -236,7 +256,7 @@ function viewStasis(rune) {
   const s = state.stasis;
   const pips = Array.from({ length: 6 }, (_, i) => `<i class="${i < s.hits ? 'on' : ''}"></i>`).join('');
   return `<div class="body scene-body">
-    <div class="scene ${s.frozen ? 'frozen-scene' : ''}" id="scene" style="background-image:url(${IMG('bg_destroyed.png')})"></div>
+    <div class="scene ${s.frozen ? 'frozen-scene' : ''}" id="scene" style="background-image:url(${IMG('rune_scene_stasis.png')})"></div>
     <div class="scene-shade"></div>
     <img class="puppet far drift slow" src="${IMG('cut_decayed.png')}" alt="" style="right:6px;bottom:112px;width:44px">
     <img class="puppet mid drift slow" src="${IMG('cut_lynel.png')}" alt="" style="right:96px;bottom:58px;width:86px">
@@ -262,7 +282,7 @@ const ICE_SLOTS = [52, 110, 168];
 function viewCryonis(rune) {
   const c = state.cryonis;
   return `<div class="body scene-body">
-    <div class="scene" id="scene" style="background-image:url(${IMG('bg_ancient.png')});background-position:center 62%"></div>
+    <div class="scene" id="scene" style="background-image:url(${IMG('rune_scene_cryonis.png')});background-position:center 62%"></div>
     <div class="scene-shade"></div>
     <div class="waterline"></div>
     <img class="puppet mid drift" src="${IMG('cut_wizzrobe.png')}" alt="" style="left:4px;bottom:58px;width:66px">
@@ -297,7 +317,7 @@ function viewCamera(rune) {
   const c = state.camera;
   const got = c.shots.filter(Boolean).length;
   return `<div class="body scene-body">
-    <div class="scene" id="scene" style="background-image:url(${IMG('bg_scope.png')})"></div>
+    <div class="scene" id="scene" style="background-image:url(${IMG('rune_scene_camera.png')})"></div>
     <div class="scene-shade"></div>
     ${sceneTop(rune, `REGISTERED ${got}/5`)}
     ${c.done ? '<div class="badge-done">TRIAL COMPLETE</div>' : ''}
@@ -473,7 +493,6 @@ function viewInventory(category, id) {
   const selected = visible.find(item => item.id === inv.selected[category]) || visible[0];
   inv.selected[category] = selected.id;
   return topbar('inventory') + `<div class="body inventory-body">
-    <div class="inv-heading"><b>01 · INVENTORY</b><span>${INV_CATS.find(cat => cat.id === category).label} · ${items.length}</span></div>
     <div class="inv-columns"><section class="inv-storage">
       <nav class="inv-categories" aria-label="装备分类">${INV_CATS.map(cat => `<button class="${category === cat.id ? 'on' : ''}"
         data-action="go:#/inventory/${cat.id}" data-focus title="${cat.label}" aria-label="${cat.label}" aria-pressed="${category === cat.id}"><img src="${IMG(cat.icon)}" alt=""></button>`).join('')}</nav>
@@ -488,6 +507,7 @@ function viewInventory(category, id) {
     </section><aside class="inv-character" aria-label="林克与装备说明">
       <img class="inv-link" src="${IMG('inventory/bg.png')}?v=link-original" alt="林克立绘（固定外观）">
       <div class="inv-stamina" aria-hidden="true"></div>
+      <div class="inv-hearts" aria-hidden="true"><img src="${IMG('heart_icon.png')}" alt=""><img src="${IMG('heart_icon.png')}" alt=""><img src="${IMG('heart_icon.png')}" alt=""></div>
       <section class="inv-preview" id="inventoryPreview">${inventoryPreview(selected)}</section>
     </aside></div>
     ${inventorySummary()}
@@ -562,60 +582,70 @@ function viewCompendiumCat(catId) {
       <button class="entry-row" data-action="entry:${cat.id}:${i}" data-focus ${i === 0 ? 'data-start' : ''}>
         <span class="no">#${e.no}</span>
         ${e.got ? `<img src="${IMG(e.thumb || e.img)}" alt="">` : `<span class="unknown"><img src="${IMG(cat.art)}" alt=""></span>`}
-        <span class="name"><b>${e.got ? e.name : '???'}</b><span>${e.got ? e.cn : '未记录'}</span></span>
+        <span class="name"><b>${e.got ? e.name : '???'}${e.mm ? `<i class="mm-dot">M</i>` : ''}</b><span>${e.got ? e.cn : '未记录'}</span></span>
         <span class="state ${e.got ? 'ok' : ''}">${e.got ? '✓ 已登记' : '— 未发现'}</span>
       </button>`).join('')}</div>
     <div class="comp-foot">
       <div class="row"><span>RECORDED</span><b>${cat.have} / ${cat.total}</b></div>
       <div class="bar"><i style="width:${Math.round(cat.have / cat.total * 100)}%"></i></div>
-      <p>用相机符文对准目标即可登记条目 · 原型仅收录代表性条目</p>
+      <p>全量条目 · ${cat.cn}共 ${cat.total} 条${cat.id === 'monsters' ? ' · 含大师模式金色怪' : ''}</p>
     </div>
   </div>` + footer('<b>◀</b> 返回分类　<b>OK</b> 查看条目');
 }
 
 function viewEntry(catId, idx) {
   const cat = COMP_CATS.find(c => c.id === catId) || COMP_CATS[0];
-  const e = (COMP_ENTRIES[cat.id] || [])[idx] || (COMP_ENTRIES[cat.id] || [])[0];
+  const list = COMP_ENTRIES[cat.id] || [];
+  const e = list[idx] || list[0];
   if (!e) return viewCompendiumCat(cat.id);
+  const i = list.indexOf(e);
+  const prev = list[i - 1];
+  const next = list[i + 1];
+  const seq = String(i + 1).padStart(2, '0');
+  const total = String(list.length);
   return topbar('compendium') + `<div class="body comp-body">
-    <div class="comp-head"><h3>ENTRY #${e.no}</h3><span>${cat.label}</span></div>
+    <div class="comp-head"><h3>ENTRY #${e.no}</h3><span>${cat.label} · ${seq}/${total}</span></div>
     <div class="entry-detail">
       <div class="entry-art ${e.got ? '' : 'unknown'}"><img src="${IMG(e.got ? e.img : cat.art)}" alt=""></div>
       <div class="entry-info">
-        <h2>${e.got ? e.name : '???'}</h2>
+        <h2>${e.got ? e.name : '???'}${e.mm ? `<i class="mm-badge">MASTER</i>` : ''}</h2>
         <div class="cn">${e.got ? e.cn : 'UNRECORDED'}</div>
         <p>${e.desc}</p>
         ${e.got && e.meta ? `<div class="entry-fact"><span>${e.meta[0]}</span><b>${e.meta[1]}</b></div>` : ''}
         <div class="entry-meta">
           <span class="stamp ${e.got ? '' : 'miss'}">${e.got ? 'REGISTERED' : 'NOT FOUND'}</span>
+          ${e.mm ? `<span class="mm-stamp">MASTER MODE</span>` : ''}
           ${e.stat ? `<span class="entry-stat">${e.thumb ? `<img src="${IMG(e.thumb)}" alt="">` : ''}<b>${e.stat[0]}</b> ${e.stat[1]}</span>` : ''}
         </div>
       </div>
     </div>
     <div class="chiprow">
-      <button class="chip" data-action="back" data-focus data-start>◀ 返回列表</button>
+      <button class="chip" data-action="entry:${cat.id}:${i - 1}" data-focus ${prev ? '' : 'disabled'} aria-label="上一个条目">◀ 上一个</button>
+      <button class="chip" data-action="back" data-focus data-start>返回列表</button>
       <button class="chip" data-action="comp:${cat.id}" data-focus>分类总览</button>
+      <button class="chip" data-action="entry:${cat.id}:${i + 1}" data-focus ${next ? '' : 'disabled'} aria-label="下一个条目">下一个 ▶</button>
     </div>
-  </div>` + footer('<b>OK</b> 返回');
+  </div>` + footer('<b>◀▶</b> 切换条目　<b>OK</b> 返回', `${seq} / ${total}`);
 }
 
 /* ---------------- adventure log ---------------- */
 function viewLog() {
   const tab = state.logTab === 'side' ? 'side' : 'main';
   const list = QUESTS[tab];
+  const total = String(list.length);
   return topbar('log') + `<div class="body log-body">
     <div class="log-tabs">
-      ${[['main', '主线故事 · MAIN'], ['side', '支线故事 · SIDE']].map(([id, label]) => `
+      ${[['main', '主线 · MAIN'], ['side', '支线 · SIDE']].map(([id, label]) => `
         <button class="log-tab ${tab === id ? 'on' : ''}" data-action="logtab:${id}" data-focus aria-pressed="${tab === id}" ${tab === id ? 'data-start' : ''}>${label}</button>`).join('')}
     </div>
-    <div class="story-intro"><b>BREATH OF THE WILD</b><span>${tab === 'main' ? '四章主线梗概' : '四则支线精选'} · 含剧透</span></div>
-    ${list.map((q, i) => `
+    <div class="story-intro"><b>ADVENTURE LOG</b><span>${tab === 'main' ? '主线任务 ' + total + ' 条' : '迷你挑战 ' + total + ' 条'} · 含剧透</span></div>
+    <div class="quest-list">${list.map((q, i) => `
       <button class="quest-row" data-action="quest:${tab}:${q.id}" data-focus>
         <span class="q-number">${String(i + 1).padStart(2, '0')}</span>
         <span class="q-main"><b>${esc(q.cn)}</b><span>${esc(q.title)}</span></span>
-        <span class="q-pages">${q.pages.length} 页</span>
-      </button>`).join('')}
-  </div>` + footer('<b>▲▼</b> 故事　<b>OK</b> 阅读', '自写剧情梗概');
+        <span class="q-pages">${esc(q.loc)}</span>
+      </button>`).join('')}</div>
+  </div>` + footer('<b>▲▼</b> 选择　<b>OK</b> 查看', '完整任务清单 · 自写梗概');
 }
 
 function viewQuest(tabId, id) {
@@ -624,35 +654,26 @@ function viewQuest(tabId, id) {
   const q = list.find(x => x.id === id) || list[0];
   if (tabId !== tab || id !== q.id) history.replaceState(null, '', `#/log/${tab}/${q.id}`);
   state.logTab = tab;
-  const page = Math.max(0, Math.min(state.logPages[q.id] || 0, q.pages.length - 1));
-  state.logPages[q.id] = page;
-  const part = q.pages[page];
+  const idx = list.indexOf(q);
+  const prev = list[idx - 1];
+  const next = list[idx + 1];
+  const prevId = prev ? prev.id : '';
+  const nextId = next ? next.id : '';
+  const seq = String(idx + 1).padStart(2, '0');
+  const total = String(list.length);
   return topbar('log') + `<div class="body story-body">
-    <div class="story-meta"><span>${tab === 'main' ? '主线' : '支线'} ${String(list.indexOf(q) + 1).padStart(2, '0')} / 04</span><span>剧情梗概 · 含剧透</span></div>
+    <div class="story-meta"><span>${tab === 'main' ? '主线' : '迷你挑战'} ${seq} / ${total}</span><span>${esc(q.loc)} · 剧情梗概</span></div>
     <h2>${esc(q.cn)}</h2>
     <div class="story-subtitle">${esc(q.title)}</div>
-    <article class="story-page" aria-label="${esc(part.heading)}">
-      <h3>${esc(part.heading)}</h3>
-      <p>${esc(part.text)}</p>
+    <article class="story-page" aria-label="${esc(q.cn)}">
+      <p>${esc(q.desc)}</p>
     </article>
     <div class="story-controls">
-      <button data-action="storypage:-1" ${page === 0 ? 'disabled' : ''} aria-label="故事上一页">上一页</button>
-      <button data-action="back" ${page === q.pages.length - 1 ? 'data-start' : ''}>返回目录</button>
-      <button data-action="storypage:1" ${page === q.pages.length - 1 ? 'disabled' : 'data-start'} aria-label="故事下一页">下一页</button>
+      <button data-action="quest:${tab}:${prevId}" ${prev ? '' : 'disabled'} aria-label="上一个任务">上一个</button>
+      <button data-action="back" data-start>返回目录</button>
+      <button data-action="quest:${tab}:${nextId}" ${next ? '' : 'disabled'} aria-label="下一个任务">下一个</button>
     </div>
-  </div>` + footer('<b>▲▼</b> 选择　<b>OK</b> 确认', `${page + 1} / ${q.pages.length} 页 · 长按返回`);
-}
-
-function storyPageAction(direction) {
-  const [route, tab, id] = routeParts();
-  if (route !== 'log' || !['main', 'side'].includes(tab)) return;
-  const q = QUESTS[tab].find(item => item.id === id);
-  const delta = Number(direction);
-  if (!q || ![-1, 1].includes(delta)) return;
-  const next = (state.logPages[q.id] || 0) + delta;
-  if (next < 0 || next >= q.pages.length) return;
-  state.logPages[q.id] = next;
-  render(); beep('move');
+  </div>` + footer('<b>▲▼</b> 选择　<b>OK</b> 确认', `${seq} / ${total} · 长按返回`);
 }
 
 /* ---------------- system ---------------- */
@@ -663,7 +684,7 @@ function meter(level, max) {
 function viewSystem() {
   const s = state.settings;
   return topbar('system') + `<div class="body sys-body">
-    <div class="sys-title"><h2>SYSTEM</h2><span>v0.9.0 · PROTOTYPE</span></div>
+    <div class="sys-title"><h2>SYSTEM</h2></div>
     <button class="sys-row" data-action="set:brightness" data-focus data-start>
       <span class="lab">亮度</span>${meter(s.brightness, 5)}<span class="val">${s.brightness * 20}%</span>
     </button>
@@ -683,7 +704,7 @@ function viewSystem() {
       <button class="chip" data-action="sys:about" data-focus>关于</button>
       <button class="chip" data-action="go:#/standby" data-focus>待机</button>
     </div>
-    <div class="sys-meta">电量 <b>99%</b> · 运行 <b>01:24</b> · 存储 <b>2.1 / 8 MB</b><br>以上数值均为原型假数据，不会写入设备。</div>
+    <div class="sys-meta">电量 <b>99%</b> · 运行 <b>01:24</b> · 存储 <b>2.1 / 8 MB</b></div>
   </div>` + footer('<b>OK</b> 调整 / 切换');
 }
 
@@ -814,6 +835,8 @@ function paintFocus(pop = true) {
   state.focus = (state.focus + els.length) % els.length;
   focusKey = els[state.focus].dataset.action || null;
   syncInventoryPreview();
+  const el = els[state.focus];
+  if (el && el.scrollIntoView) el.scrollIntoView({ block: 'nearest' });
   placeFocus(pop);
 }
 
@@ -893,7 +916,6 @@ function run(action) {
     case 'map': mapAction(rest[0], rest[1]); break;
     case 'logtab': state.logTab = rest[0] === 'side' ? 'side' : 'main'; render(); beep('ok'); break;
     case 'quest': go(`#/log/${rest[0]}/${rest[1]}`); break;
-    case 'storypage': storyPageAction(rest[0]); break;
 
     case 'set': sysAction(rest[0]); break;
     case 'sys': about(); break;
@@ -1074,7 +1096,7 @@ function sysAction(kind) {
 }
 
 function about() {
-  toast('Sheikah Slate v0.9 · 假数据原型 · 无网络请求');
+  toast('AI Passport · Sheikah Slate');
   beep('ok');
 }
 
