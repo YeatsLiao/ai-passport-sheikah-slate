@@ -11,8 +11,6 @@
 | 音频 | ES8311 I2S codec |
 | 电量计 | CW2017 I2C |
 
-实机照片：[device_rune_wheel.jpg](device_rune_wheel.jpg)。
-
 ## 构建
 
 前置：ESP-IDF v5.5.x、Python 3.10+、Pillow（仅资源生成需要）。

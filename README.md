@@ -50,7 +50,6 @@ python tools/assets/verify_assets.py      # 素材只读校验（脚本待恢复
 | [docs/prototype/trials.md](docs/prototype/trials.md) | 五关规则、图鉴与相册、进度存储 |
 | [docs/assets/pipeline.md](docs/assets/pipeline.md) | 素材四层、脚本读写、重生成顺序 |
 | [docs/assets/provenance.md](docs/assets/provenance.md) | 来源与许可边界、图鉴数据出处 |
-| [docs/specs/](docs/specs/) | 需求清单、设计稿 |
 | [docs/development-log.md](docs/development-log.md) | 决策与执行记录 |
 | [assets/README.md](assets/README.md) | 资产地图：分层、谁读、能否重生成 |
 

@@ -32,7 +32,7 @@ tools/
 ├── assets/                入库与校验（当前 5 个脚本待恢复）
 ├── gen/                   gen_assets、img_to_c、gen_synth、gen_audio
 └── web/                   gen_font、svg_to_png（Node）
-docs/                      README、architecture、hardware/、prototype/、assets/、specs/、development-log
+docs/                      README、architecture、hardware/、prototype/、assets/、development-log
 ```
 
 ## 边界规则
@@ -62,7 +62,7 @@ python tools/assets/verify_assets.py # 素材只读校验（脚本待恢复）
 | 固件下沉 | `CMakeLists.txt`、`sdkconfig*`、`partitions.csv`、`dependencies.lock`、`main/`、`components/` → `firmware/`；`managed_components/`、`build/` 一并迁入（均为生成物） |
 | tools 分组 | `gen_assets.py`、`img_to_c.py`、`gen_synth.py`、`gen_audio.py` → `tools/gen/`；`gen_font.mjs`、`svg_to_png.mjs`、`package*.json` → `tools/web/` |
 | 脚本路径 | `img_to_c.py`：读 `assets/gen/firmware`、写 `firmware/main/img`；`gen_assets.py`：写 `assets/gen/firmware`；`gen_audio.py`：写 `firmware/main/audio`；`gen_synth.py`：读 `assets/audio`；`gen_font.mjs`：写 `firmware/main/font` |
-| 文档 | 根 README 瘦身为导航；新增本文件与 `hardware/`、`prototype/`、`assets/` 三组；`docs/superpowers/specs/` 与根目录中文清单并入 `docs/specs/`（后者改名 `feature-checklist.md`） |
+| 文档 | 根 README 瘦身为导航；新增本文件与 `hardware/`、`prototype/`、`assets/` 三组；`docs/superpowers/specs/` 与根目录中文清单并入 `docs/specs/`（后者改名 `feature-checklist.md`，该目录已于 2026-10-28 删除，见决策 22） |
 | 未做 | 固件未编译（用户要求原型阶段不跑构建）；`tools/assets/` 5 个脚本与 `tests/` 仍缺失，恢复后按上表落位 |
 
 旧根 `build/` 的 CMake 缓存记录的是旧绝对路径，首次在 `firmware/` 重建前直接删除 `firmware/build/` 更省事。

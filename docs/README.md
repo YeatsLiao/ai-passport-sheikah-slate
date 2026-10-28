@@ -8,8 +8,7 @@
 | [prototype/trials.md](prototype/trials.md) | 五个试炼的通关/失败规则、图鉴与相册规则 |
 | [assets/provenance.md](assets/provenance.md) | 素材来源、许可边界、图鉴数据出处 |
 | [assets/pipeline.md](assets/pipeline.md) | 素材四层、生成顺序、脚本读写关系 |
-| [specs/](specs/) | 需求清单与设计稿（`feature-checklist.md`、`2026-09-07-…-design.md`） |
-| [development-log.md](development-log.md) | 决策与执行记录（决策 1–17，含未复验项） |
+| [development-log.md](development-log.md) | 决策与执行记录（决策 1–22，含未复验项） |
 
 ## 约定
 

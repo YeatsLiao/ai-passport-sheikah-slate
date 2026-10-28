@@ -6,6 +6,8 @@
 两张场景底图由 ImageGen 生成后离线缩放到 320×240。固件素材**不是游戏解包素材**。
 
 玩法音效为 Python 合成（`tools/gen/gen_synth.py` 产出 wav，`tools/gen/gen_audio.py` 转成 C 数组），不是原版音频。
+14 段合成 wav 已在 2026-10-28 作为生成物移出库（`build/_trash/2026-10-28-audio-synth/`），
+需要时重跑 `gen_synth.py` 即可重建；固件里已转好的 `sfx_data.c` 保留不变。
 Hylia Serif 字体与希卡之眼沿用此前仓库，其来源声明不能证明为原版解包。
 
 ## Web 原型素材
@@ -24,7 +26,8 @@ Hylia Serif 字体与希卡之眼沿用此前仓库，其来源声明不能证�
 - 菜单用的 `select.mp3` / `action.mp3` 来自 starter，该仓库没有提供独立作者、游戏提取出处或授权说明，
   因此只标为「第三方现成音效」，不冒称已核实的原版音频。
 - Calamity HUD 字体同样来自 starter（未声明许可），运行副本位于 `prototype/fonts/`，未编译进固件。
-- `assets/raw/04_equipment/_variants/zeldawiki/`（16 张）是同一批装备的非 starter 版本，留作备用。
+- `assets/raw/03_compendium/variants/`：16 张是同一批装备的非 starter 版本（144px），另 2 张是
+  Chuchu 的 Model_2/Model_3，均留作备用。
 - 字节重复的副本未重复保存，见 `assets/raw/_index/content_map.csv` 中 `action=byte-identical` 的 12 行。
 
 ## 图鉴数据

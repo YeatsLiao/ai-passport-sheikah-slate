@@ -48,7 +48,8 @@ python -m http.server 8124          # 在仓库根执行
 - **选中框**：覆盖层 `.focus-frame`（1px 暖白边 + 四角三角 + 内嵌青边），坐标按
   `(元素 rect − 屏幕 rect) ÷ --scale` 换算，缩放后仍贴合；换焦点整块 0.1s 平移并弹一下。
 - **音效**：菜单移动/返回用 `assets/audio/prototype/select.mp3`，确认/装备/入口激活用 `action.mp3`，
-  从 starter 归档逐字节导出，不变调；其他玩法仍用 `assets/audio/*.wav`，音量跟随 SYSTEM 页档位。
+  从 starter 归档逐字节导出，不变调；玩法音效原为 `gen_synth.py` 合成的 wav，2026-10-28 已整体移出库
+  （见决策 20），当前 `app.js` 里 11 处 `.wav` 请求会 404 静音；音量跟随 SYSTEM 页档位。
 - **换页**：路由变化叠一层扫光 `.wipe`；从符文列表进入场景再叠 `.boot-flash`。
 - **长按**：按住 OK 650 ms 返回，键底有进度条；方向键按住 380 ms 后每 96 ms 连发一格。
 - **提示**：不满足前置的按钮统一置灰；需要解释时用底部 `.toast`（警告金色、1.7 s 消失）。

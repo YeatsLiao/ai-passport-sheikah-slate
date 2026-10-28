@@ -826,6 +826,132 @@ lv_obj_set_style_width(list, 3, LV_PART_SCROLLBAR);
 
 ---
 
+## 决策 19：03_compendium 二次拍平（2026-10-28）
+
+**用户要求**：`_reference`、`_variants`、`materials`、`monsters` 这四个目录整合一下，有点乱；沿用 `04_equipment` 的思路，尽量少层级。
+
+**诊断**：4 个目录里装了 7 类东西，且有两层嵌套与下划线前缀：
+
+| 旧路径 | 内容 | 数量 |
+|---|---|---|
+| `materials/drops/` | 材料掉落图标（`BotW_Amber_Icon.png`） | 34 |
+| `monsters/models/` | 怪物 3D 模型渲染 | 18 |
+| `monsters/artwork/` | 官方艺术与概念图 | 9 |
+| `monsters/_screens/` | 游戏内截图 | 12 |
+| `_reference/compendium/` | 图鉴界面截图 | 19 |
+| `_variants/zeldawiki/` | 144px 装备图标 | 16 |
+| `monsters/_variants/` | Chuchu Model_2/3 | 2 |
+
+**目标结构**：7 个同级用途目录，不再有下划线前缀与双层嵌套 —— `BOTW`(390) / `master_mode-BOTW`(5) / `drops`(34) / `models`(18) / `artwork`(9) / `screens`(31) / `variants`(18)，共 505 个文件。
+
+**执行方式**：`build/_reorg_03.py`（`--dry-run` / `--execute`），逐文件 `shutil.move`，目标重名直接报错；映射与哈希写入 `assets/raw/_index/compendium_map.csv`（110 行）。
+
+**校验**：干跑 `files=110 conflicts=0`；执行后 **哈希 110/110 一致**；7 个空目录删除，`maxdepth=2`、`emptydirs=0`、`total=505`。
+
+**同期由用户手动完成的部分**（本轮未代劳，仅记录）：`icons/` 与 `master_mode/` 被删除，保留 `BOTW/` 与 `master_mode-BOTW/` 命名，此前 42.4 MB 的逐字节副本问题随之消失；`04_equipment/_variants` 16 张并入 `03_compendium/variants/`；`04_equipment/_ui/arrow-no-curve.png`（SVG 的位图双份）删除，`04_equipment` 从 52 降到 35 个文件。
+
+**文档同步**：`assets/README.md`（目录树与约定）、`assets/raw/_index/README.md`（目录表 + `compendium_map.csv` 说明 + 待办）、`docs/assets/pipeline.md`（25 张输入路径）、`docs/assets/provenance.md`（变体去向）。`docs/development-log.md` 与 `content_map.csv` 里的旧路径属历史记录，保留原样。
+
+**未做**：`BOTW/` 390 张仍未按图鉴五类（生物/材料/怪物/装备/宝物）细分，缺离线分类清单；`04_equipment` 的 `starter/{weapons,shields,armors}` 三层还没拍平。
+
+---
+
+## 决策 20：只保留非合成的音频（2026-10-28）
+
+**用户要求**：搞清楚现在哪些音频是真的、哪些是生成的，把生成的去掉，只留真的。
+
+**盘点**：三分类，逐个验哈希。
+
+| 类别 | 文件 | 依据 | 处理 |
+|---|---|---|---|
+| 程序合成 | `assets/audio/*.wav` 14 段 | `gen_synth.py` 的产物，文件头即由 `gen_audio.py` 写入 | 移出库 |
+| 第三方现成 | `assets/audio/prototype/{select,action}.mp3` 2 段 | 与 `D:\Project\zelda-botw-starter\src\assets\sounds\` 逐字节相同，未重编码 | 保留 |
+| 游戏原版 | 无 | 仓库里没有任何可确认为游戏解包的音频 | — |
+
+`select.mp3` / `action.mp3` 也与 `assets/raw/06_audio/` 的两份归档逐字节相同，三处同源。
+
+**处理**：14 段 wav 移入 `build/_trash/2026-10-28-audio-synth/`（保留文件名），`assets/audio/` 只余
+`prototype/` 两段 MP3。选择移出而不是删除，因为 wav 是 `gen_synth.py` 的输出、可零成本重建，
+但也属于“生成物不该入库”；两者并不矛盾，留在 trash 只是给自己留一次后悔余地。
+
+**影响**：
+
+- 固件：`firmware/main/audio/sfx_data.{c,h}` 是 wav 转成的 C 数组，已经随固件保留，不重跑 `gen_audio.py`
+  就不受影响；将来重跑必须先跑 `gen_synth.py`，否则它会因缺 wav 直接失败。
+- 原型：`prototype/js/app.js` 的 `SFX_FILES` 仍指向 11 段 wav，删后这些音效会 404 并静音，
+  只剩 `move/ok/back/activate` 四类走 MP3。本轮**未改** `app.js`。
+
+**文档同步**：`assets/README.md`（音频层与表格行）、`docs/assets/pipeline.md`（重生成顺序补
+`gen_synth.py`、说明缺 wav 会失败）、`docs/assets/provenance.md`（合成音频去向）。
+
+---
+
+## 决策 21：docs 清点，只删真冗余（2026-10-28）
+
+**用户疑问**：docs 是不是很多没用的，删掉。
+
+**清点**：12 个文件，逐个查引用（根 `README.md`、`docs/README.md`、`prototype/README.md` 与代码内链接）。
+结论：不是“很多没用”，只有 1 个纯冗余。
+
+| 文件 | 行数 | 读者 | 处理 |
+|---|---|---|---|
+| `README.md` | 16 | 人 | 留（索引） |
+| `architecture.md` | 55 | 根 README | 留 |
+| `hardware/hardware.md` + 实机图 | 67 + 273 KB | 根 README、hardware 引用 jpg | 留 |
+| `prototype/pages.md` | 51 | 根 README、`prototype/README.md` | 留 |
+| `prototype/trials.md` | 23 | 同上 | 留 |
+| `assets/pipeline.md` | 60 | 根 README | 留 |
+| `assets/provenance.md` | 38 | 根 README | 留（许可边界） |
+| `specs/feature-checklist.md` | 177 | `docs/README.md` | 留，加过时备注 |
+| `specs/2026-09-07-…-design.md` | 93 | `docs/README.md` | 留（设计决策来源） |
+| `development-log.md` | 595 | 全部文档的单一事实 | 留 |
+| `archive/legacy-architecture.md` | 231 | **无引用** | **已删** |
+
+删 `archive/legacy-architecture.md` 的理由：它是决策 18 里从 `git show HEAD:docs/README.md` 转存的旧架构文档，
+内容已被 `architecture.md` + `hardware.md` 等覆盖，且 git 历史里永远可取回。同时移除空的 `docs/archive/`。
+
+**顺手修的两处过时**：
+
+1. `docs/README.md` 写“决策 1–17”，改为 1–20。
+2. `specs/feature-checklist.md` 开头声明“只做 UI 模拟，无游戏魔法”，与现状（炸弹/磁力/时停/制冰/相机均可玩）
+   矛盾，已在原文上方加备注，保留原文作为需求来源而不删。
+
+**结果**：docs 从 12 个文件降为 11 个，无空目录、无悬空链接。
+
+---
+
+## 决策 22：删除 docs/specs 两份过时规格（2026-10-28）
+
+**用户要求**：docs 里过时或者不用的去掉。
+
+**判定**：`specs/` 两份都是 2026-09 的早期文档，且与现状直接矛盾：
+
+| 文件 | 已过时的部分 | 与现状矛盾之处 |
+|---|---|---|
+| `feature-checklist.md`（177 行） | “只做 UI 模拟，无游戏魔法”；SD 卡读 json、禁止编译进 Flash；分辨率 240×240 以内；Amiibo/大师摩托仅 UI | 固件已有五关可玩；实际无 SD 卡、全部编进 Flash；屏幕 320×240 |
+| `2026-09-07-…-design.md`（93 行） | 通篇在描述“完全不像游戏”的四个问题 | 四个问题均已解决，且路径还写着旧的 `main/font/`、`main/img/` |
+
+**仍有效但已别处覆盖的信息**：硬件规格与资源约束→`hardware/hardware.md`；三键语义与长按→`hardware.md`
+“三键输入在固件侧的实现”与 `prototype/pages.md`；五关规则→`prototype/trials.md`；配色 token（`#3CD3FC`
+希卡蓝、`#FFE460` 希卡黄、`#E9E1D1` 暖白、`#0A1428` 面板、`#66645D` 底层）→`sheikah_theme.c`；
+设计决策（环形 8 格轮盘、Hylia 16/20/28、图标 ARGB8888 带透明、扫描线/角饰/辉光）→已在决策 1–14 与代码里。
+
+**只在旧清单里、删了就丢的“放弃方案”**（值得留一句）：
+
+- SD 卡外置全部图片与图鉴 json、分类懒加载 —— 板上没有 SD 卡，方案作废，现为编译进 Flash。
+- 瓦片式滑动缩放地图、大图解码、耐力轮盘/心之容器动画 —— 因 400KB SRAM 无 PSRAM 直接放弃。
+- WiFi（MQTT）与全套石板 UI 同时跑 —— 内存不够，二选一。
+- SPI 屏分辨率 240×240 以内 —— 实际用 320×240 横屏，这条已被推翻。
+
+**处理**：删除 `docs/specs/`（2 个文件）与 `docs/archive/legacy-architecture.md`，同步去掉 `docs/README.md`
+与根 `README.md` 里的索引行；`docs/hardware/device_rune_wheel.jpg`（273 KB 实机照）按用户要求一并删除，
+`hardware.md` 里的图片链接改为纯文字。两份规格原文在 `b6c69db` 里可取回：
+`git show b6c69db:docs/specs/feature-checklist.md`。
+
+**结果**：docs 从 12 个文件降为 8 个（7 份 Markdown + 无二进制），目录只剩 `assets/`、`hardware/`、`prototype/`。
+
+---
+
 ## 后续可玩方向
 
 - **休眠省电**: 30s 无操作自动关闭背光, 按键唤醒

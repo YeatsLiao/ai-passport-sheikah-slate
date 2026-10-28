@@ -12,7 +12,7 @@ assets/
 │   ├── firmware/  28 张 320×240 / 小物件 PNG，tools/gen/img_to_c.py 的输入
 │   └── prototype/ 110 项 Web 导出素材（103 PNG + 7 SVG，含两张停用旧剪影）
 ├── data/          数据源 JSON（固件只编生成好的 catalog.c）
-└── audio/         16 kHz wav；prototype/ 为 Web 专用现成 MP3
+└── audio/         prototype/ 两段现成 MP3；合成 wav 不入库（gen_synth.py 可重建）
 ```
 
 `manifest.json` 是固件图源清单，`README.md` 是资产地图（分层、谁读、能否重生成）。
@@ -26,7 +26,7 @@ assets/
 | 7 | 符文图标 | `raw/01_runes/icons/` |
 | 1 | 希卡之眼纹章 | `raw/02_ui/crest/` |
 | 5 | 图鉴分类图 | `raw/02_ui/categories/` |
-| 11 | 怪物模型渲染 | `raw/03_compendium/monsters/models/` |
+| 11 | 怪物模型渲染 | `raw/03_compendium/models/` |
 | 1 | 石板渲染 | `raw/05_world/slate/` |
 
 ## 脚本读写
@@ -35,8 +35,8 @@ assets/
 |---|---|---|
 | `tools/gen/gen_assets.py` | 无（程序绘制） | `assets/gen/firmware/` |
 | `tools/gen/img_to_c.py` | `assets/gen/firmware/` | `firmware/main/img/*.c` + `img_all.h` |
-| `tools/gen/gen_synth.py` | 无（合成） | `assets/audio/*.wav` |
-| `tools/gen/gen_audio.py` | `assets/audio/*.wav` | `firmware/main/audio/sfx_data.{c,h}` |
+| `tools/gen/gen_synth.py` | 无（合成） | `assets/audio/*.wav`（不入库） |
+| `tools/gen/gen_audio.py` | `assets/audio/*.wav` | `firmware/main/audio/sfx_data.{c,h}`（需先跑 gen_synth） |
 | `tools/web/gen_font.mjs` | Hylia Serif TTF | `firmware/main/font/hylia_serif_{16,20,28}.c` |
 | `tools/assets/build_real_assets.py` | 25 张管线输入 | `assets/gen/prototype/` |
 | `tools/assets/import_compendium_assets.py` | `assets/raw/`、`assets/data/` | `assets/gen/prototype`、`assets/data`、`prototype/js/inventory-data.js` |
@@ -52,13 +52,15 @@ python tools/gen/gen_assets.py           # 程序绘制 -> assets/gen/firmware
 python tools/assets/build_real_assets.py --originals-only   # 只用 25 张输入覆盖，不改背景/照片
 python tools/assets/import_compendium_assets.py             # 图鉴/装备数据与原型素材
 python tools/gen/gen_catalog.py          # assets/data/trial_subjects.json -> firmware/main/game/catalog.c
+python tools/gen/gen_synth.py            # 合成 14 段玩法 wav -> assets/audio（不入库）
 python tools/gen/gen_audio.py            # wav -> firmware/main/audio/sfx_data.c
 node   tools/web/gen_font.mjs            # 字体（先 npm --prefix tools/web install）
 python tools/gen/img_to_c.py             # assets/gen/firmware -> firmware/main/img/*.c
 python tools/assets/verify_assets.py     # 只读校验
 ```
 
-`img_to_c.py` 缺素材直接报错；`gen_audio.py` 缺 wav 也直接失败，不生成全 NULL 的静音表。
+`img_to_c.py` 缺素材直接报错；`gen_audio.py` 缺 wav 也直接失败，不生成全 NULL 的静音表；
+所以 2026-10-28 把合成 wav 移出库后，重跑必须先 `gen_synth.py`。
 `svg_to_png.mjs` 仍是硬编码旧路径的留档脚本，未纳入管线。
 
 ## 校验与测试
