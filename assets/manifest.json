@@ -1,0 +1,204 @@
+{
+  "version": 1,
+  "art_direction": "BotW固定视角二维适配，非原版解包",
+  "assets": [
+    {
+      "name": "shrine",
+      "width": 320,
+      "height": 240,
+      "format": "r",
+      "source": "generated-background"
+    },
+    {
+      "name": "field",
+      "width": 320,
+      "height": 240,
+      "format": "r",
+      "source": "generated-background"
+    },
+    {
+      "name": "slate_bg",
+      "width": 320,
+      "height": 240,
+      "format": "r",
+      "source": "procedural"
+    },
+    {
+      "name": "rune_bomb",
+      "width": 40,
+      "height": 40,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "rune_cube",
+      "width": 40,
+      "height": 40,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "rune_magnet",
+      "width": 40,
+      "height": 40,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "rune_stasis",
+      "width": 40,
+      "height": 40,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "rune_cryonis",
+      "width": 40,
+      "height": 40,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "rune_camera",
+      "width": 40,
+      "height": 40,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "stone",
+      "width": 48,
+      "height": 48,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "wall",
+      "width": 66,
+      "height": 94,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "metal",
+      "width": 88,
+      "height": 36,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "gate",
+      "width": 72,
+      "height": 100,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "ice",
+      "width": 48,
+      "height": 76,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "gap",
+      "width": 200,
+      "height": 56,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "crate",
+      "width": 44,
+      "height": 42,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "bomb_round",
+      "width": 28,
+      "height": 28,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "bomb_cube",
+      "width": 28,
+      "height": 28,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "subject_fish",
+      "width": 44,
+      "height": 36,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "subject_mushroom",
+      "width": 40,
+      "height": 44,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "subject_chuchu",
+      "width": 44,
+      "height": 44,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "subject_sword",
+      "width": 44,
+      "height": 54,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "subject_ore",
+      "width": 46,
+      "height": 44,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "blast_0",
+      "width": 96,
+      "height": 96,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "blast_1",
+      "width": 96,
+      "height": 96,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "blast_2",
+      "width": 96,
+      "height": 96,
+      "format": "a",
+      "source": "procedural"
+    },
+    {
+      "name": "blast_3",
+      "width": 96,
+      "height": 96,
+      "format": "a",
+      "source": "procedural"
+    }
+  ],
+  "backgrounds": {
+    "shrine": "ImageGen bec14b71-2929-48b8-bb94-039a4afe5e51",
+    "field": "ImageGen 8c3d4dad-90a0-48cf-9ed0-2ea53f742094"
+  },
+  "references": [
+    "https://www.piggyback.com/online-guide/the-legend-of-zelda/en/",
+    "https://interfaceingame.com/games/the-legend-of-zelda-breath-of-the-wild/"
+  ],
+  "legacy": "现有Hylia字体与希卡之眼来自此前仓库，来源声明未证明其为原版解包；Nintendo相关权利不包含在代码MIT许可中。"
+}

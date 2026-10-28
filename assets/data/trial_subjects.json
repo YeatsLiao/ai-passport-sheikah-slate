@@ -1,0 +1,7 @@
+[
+  {"id":0,"name":"Hyrule Bass","category":"Creatures","image":"subject_fish","description":"A freshwater fish found in rivers and lakes across Hyrule.","location":"Hyrule Field"},
+  {"id":1,"name":"Hylian Shroom","category":"Materials","image":"subject_mushroom","description":"A common mushroom growing near trees. A useful cooking ingredient.","location":"Hyrule Field"},
+  {"id":2,"name":"Chuchu","category":"Monsters","image":"subject_chuchu","description":"A small jelly-like monster. Watch its movement before taking a photo.","location":"Hyrule Field"},
+  {"id":3,"name":"Rusty Broadsword","category":"Equipment","image":"subject_sword","description":"An old one-handed sword, worn down by years of exposure.","location":"Forgotten ruins"},
+  {"id":4,"name":"Ore Deposit","category":"Treasures","image":"subject_ore","description":"A mineral deposit. Its dark stone contains useful ore.","location":"Rocky hillsides"}
+]
