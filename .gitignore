@@ -1,5 +1,8 @@
 # Build output
 build/
+build-host/
+.build-tools/
+__pycache__/
 
 # ESP-IDF generated
 sdkconfig
@@ -17,3 +20,6 @@ Thumbs.db
 # Editor
 .vscode/
 .idea/
+
+# 本地自备美术（原版素材不入库）
+assets/raw/imagegen/import/

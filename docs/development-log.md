@@ -570,6 +570,260 @@ lv_obj_set_style_width(list, 3, LV_PART_SCROLLBAR);
 
 **拒绝方案**：缩小待机呼吸动画区域/降低动画精度——牺牲视觉换不多的帧数，等实机确认 SPI 80MHz 稳定后仍有需要再说。
 
+### 决策 8：图鉴封面用「分类代表照片 + 官方分类图标」（Web 原型）
+
+**选择**：五个分类卡的底图换成该分类的代表性图鉴实拍图（马 / 波克布林 / 苹果 / 大师之剑 / 宝物箱），右上角贴 72×55 的官方分类图标；条目按游戏内图鉴编号与分类重排，照片全部换成图鉴实拍图：
+
+| 分类 | 封面 | 条目（原版编号） | 总数 |
+|---|---|---|---|
+| 生物 | 马 | 马 001 / 蓝雀 032 / 亮胸鸭 041 / 海拉鲁鲈鱼 048 / 耐火蜥蜴 083 | 83 |
+| 怪物 | 波克布林 | 波克布林 103 / 莫力布林 108 / 蜥蜴战士 113 / 莱尼尔 121 / 西诺克斯 147 | 81 |
+| 材料 | 苹果 | 苹果 165 / 野莓 167 / 榴莲 168 / 海拉鲁蘑菇 174 / 蓝色夜光草 198 | 36 |
+| 装备 | 大师之剑 | 大师之剑 201 / 士兵的阔剑 208 / 古代短剑 218 / 王族双手剑 257 / 海利亚盾 354 | 185 |
+| 宝物 | 宝箱 | 宝箱 386 / 矿床 387 / 稀有矿床 388 / 夜光矿床 389 | 4 |
+
+**理由**：此前封面是随机背景截图、右上角贴的是怪物抠图（生物卡配丘丘、材料卡配西诺克斯），与分类内容不对应，也不像游戏内图鉴。实拍图 + 官方分类图标既保证“封面=内容”，也保留了原版 UI 的识别符号；头部进度改为按真实总数动态计算（52 / 389 · 13%），不再写死 34 / 90。
+
+**素材来源**：见 README「图鉴素材来源（Web 原型）」——Hyrule-Compendium-API（MIT，图鉴照片与编号）、hyrule-compendium（ISC，五个分类图标）、zelda-botw-starter（未声明许可，装备透明图标）；react-sheikah-ui 只作 UI 参考，无游戏素材。导入脚本 `tools/import_compendium_assets.py` 输出 33 个 `cp_*`/`cat_*`/`eq_*` 资产。
+
+**权衡**：图鉴照片是游戏内实拍图（偏灰绿、带环境背景），不是宣传插画；在深色 UI 上用 0.95 不透明度 + 底部渐变压暗保证文字可读，不做额外调色，以免偏离原图。宝物分类原版只有 4 条，按实际条数展示，不凑成 5 条。
+
+### 决策 9：手感层用「覆盖层 + 真实 wav + 置灰」，不动 DOM 结构（Web 原型）
+
+**选择**：选中框改成绝对定位的覆盖层 `.focus-frame`；音效直接播 `assets/audio/*.wav`；交互前置条件用 `disabled` 表达；换页加扫光、长按加进度条、悬停跟随焦点。
+
+**理由**：
+- `:focus` 样式要写进每个控件，还会和 `.comp-tile::after`、`.map-pin::before` 这些既有伪元素抢图层；覆盖层只有一份 CSS，坐标按 `(元素 rect − 屏幕 rect) ÷ --scale` 现算，缩放后仍然贴合，还能整体做 0.1s 平移动画。
+- 音效复用固件同一批 16 kHz 单声道 wav，按动作语义分配音色（放置=机械落位、冻结=金属下滑、碎冰=玻璃碎裂），原型与实机能听到同一套反馈，评审结论才可迁移。
+- 按钮置灰比“点了弹提示”更接近游戏：一眼就能看出「引爆」要先放炸弹；toast 只留给需要解释的情况（未登记条目、封印符文）。
+- 相机快门写入 `state.albumShots`，相册页与「相册 N」计数同步，是原型里唯一一条跨页数据流，用来验证“拍照 → 图鉴/相册”这条设计是否成立。
+
+**拒绝方案**：
+- 引入 React / 构建链重写原型——现在四个静态文件双击就能开，接固件前不值得多一层依赖。
+- 直接引用 `react-sheikah-ui` 的组件代码——它是 styled-components + framer-motion，与“无依赖、无构建”的前提冲突；只借设计语言即可。
+- 用 Web Audio 振荡器现合成提示音——音色单薄，且与固件听到的不是同一批素材。
+
+**权衡**：Calamity 只覆盖拉丁字母与数字，中文仍走系统字体，混排时字重略有差异；选中框是覆盖层，截图前要等字体 `ready`，所以 `build/shots.ps1` 的 `--virtual-time-budget` 从 2200 ms 提到 3600 ms，否则会截在淡入动画中途。
+
+---
+
+## 决策 10：assets 按「管线阶段」分四层，而不是按图片内容
+
+**选择**：`assets/` 拆成 `raw/`（上游原图，只给生成脚本读）、`gen/firmware`（固件 C 数组的图源）、`gen/prototype`（Web 原型贴片）、`data/`、`audio/`；根目录新增 `assets/README.md` 当资产地图，`manifest.json` 留在根与 `gen/firmware` 配套。
+
+**理由**：整理前 assets 约 79 MB、330+ 文件，混了四种生命周期完全不同的东西——不可再生的下载原图、可随时重跑的脚本产物、只给固件编译的图源、只给原型读的贴片，中间还夹着一个下载临时目录。按内容分类（背景/怪物/材料）解决不了「哪张能删」；按管线阶段分类则一眼能判断：`raw/` 删了要去 Zelda Wiki 重下，`gen/` 删了跑脚本即可。
+
+**落地**：`images/*.png` 45 张里只留 `images.cmake` 实际编译的 28 张进 `gen/firmware`，17 张旧五页 UI 素材连同对应的 `main/img/img_*.c` 一起删除；`images/real` 142 张只留原型真实引用的 75 张进 `gen/prototype`；`zeldawiki-extra → raw/zeldawiki`，`zeldawiki-runes`/`maps`/`source` 一并归入 `raw/`。原型 `IMG()` 基址改为 `gen/prototype`，另加 `FW()` 读固件图源（炸弹墙、磁力闸门与木箱三处道具仍借固件图）。删完后 `main/img` 只剩 28 个 `.c`，与 `img_all.h` 的 28 条 extern 一一对应。
+
+**拒绝方案**：
+- 按图片内容建 `bg/`/`monster/`/`material/` 目录——仍要逐张查引用，而且同一张图可能既是固件图源又是原型贴片。
+- 保留 `assets/images` 不动、只加一份 README——文件名与用途继续错位，下次仍会问「这个还在用吗」。
+
+**权衡**：路径变更要同步 5 处 CSS/HTML、71 个 `IMG()` 引用和 6 个生成脚本；验收靠两件事——脚本断言「所有引用都能解析到文件」，再跑 53 张截图回归。`gen/prototype` 只提交在用的 75 张，其余依赖 `build_real_assets.py` 重生成，所以换机器后先跑脚本再截图。
+
+---
+
+## 决策 11：全量素材库、离线装备数据与01换装首屏
+
+**范围**：本批次只调整素材管线和Web原型，不推进历史固件计划，不改main/BSP/分区，不提交Git或部署。CODEX保留24条示例，拍照与相册规则不变。
+
+**归档**：三个来源共968个文件，约100.07 MiB；全部保留原路径及文件名，包括跨游戏同名图、撇号、加号和大师模式目录。
+
+| 来源 | 归档内容 | 当前选用 |
+|---|---|---|
+| [Hyrule-Compendium-API](https://github.com/gadhagod/Hyrule-Compendium-API) | 907项：images全目录及说明/许可；BOTW 390、TOTK 509、大师模式5张PNG | 24张BOTW图鉴照片 |
+| [hyrule-compendium](https://github.com/arjunkahlon/hyrule-compendium) | 14项：12张辅助图片及README/package.json | 5张分类图标 |
+| [zelda-botw-starter](https://github.com/flagrede/zelda-botw-starter) | 47项：public/items、src/assets、静态装备数据及说明文件 | 24件装备、背景、7个SVG、2个字体、2段菜单音效 |
+
+**管线**：`python tools/import_compendium_assets.py --archive`只归档，来源默认同级目录，可用`--source-root`或`BOTW_ASSET_ROOT`指定；预检通过再复制，同内容跳过、异内容冲突失败，不修改或清理来源。独立清单`assets/raw/import_manifest.json`记录仓库URL/版本、路径、字节数、SHA-256、尺寸和所属游戏；不取代固件manifest。
+
+日常运行`python tools/import_compendium_assets.py`只读项目内raw，生成24张cp、5张cat、24张eq、装备背景和7个SVG，以及`assets/data/inventory.json`与`prototype/js/inventory-data.js`。装备静态数据不执行外部TypeScript；ID显式映射，透明图缩到64×64，避免Alpha二次相乘。原型图片共103项（96 PNG + 7 SVG），不是把全部原图都加载进页面。
+
+**装备交互**：3×2网格与每类独立分页/选中位置，右侧预览、完整说明分页，装备/卸下覆盖武器、盾牌、头部、身体、腿部五槽；同槽替换，防御只加三个防具槽。沿用哈希路由、焦点覆盖层及三键输入，无持久化、购买、战斗或真实角色模型换装。
+
+**最新用户调整**：装备/换装作为`01`默认首屏及首个导航；其后依次为02符文、03地图、04图鉴、05记录、06系统，07待机保留在末尾。使用现成素材优先：分类图、效果water/mountain/fire和翻页arrow直接复用starter的SVG，字体从归档导出至`prototype/fonts/`。
+
+**音效**：starter的`src/assets/sounds/select.mp3`用于移动/返回，`action.mp3`用于确认/装备/入口激活；原件在raw，运行副本在`assets/audio/prototype/`，不重编码或变调。当前本地来源只提供这两段菜单音效，没有爆炸/制冰等专属原版音源；其他玩法保留既有合成wav，尚未完成全原版音效替换，固件音效不变。用户随后明确“稍后再做”，补齐其他玩法原版音源已移出本轮执行范围；未下载新的音频或安装外部插件。
+
+**来源边界**：API代码MIT；hyrule-compendium仅package.json标注ISC；starter未声明许可，其README没有两段音效的独立出处或授权说明。以上代码许可均不视为Nintendo图片/音效授权；“第三方现成素材”不冒称已核实的游戏原版。
+
+**执行记录**：最新首屏/音效修改前，968项来源对照及哈希校验、10项Python测试、Chrome的114项检查已通过；旧截图保存在`build/inventory-browser/`。随后用户要求不走自动化测试，本次不再运行测试或截图测试脚本，只执行离线素材生成；现有测试保留为可选工具，旧报告不证明新修改通过。浏览器工具连接超时，当前调整待人工预览。
+
+---
+
+## 决策 12：先替换用户提供的真实图标，界面分步推进
+
+**用户调整**：不再要求浏览器预览或截图验收，只需保持本地服务启动；继续不运行自动化测试。当前一步先使用 `assets/zeldawiki-original/`，参考用户提供的游戏图鉴截图，整体布局和边框留待后续。
+
+**素材接入**：保留原目录33张原件，不下载、不移动、不修改。`build_real_assets.py --originals-only` 导出13张图标（7符文、5分类、希卡之眼）及12张原色模型；11张图标逐字节复制，时停/制冰仅清除纯白背景，石板模型仅清除边缘连通的纯色底，缩放不二次乘Alpha。法师概念设计是带说明文字的整张设定稿，未用它替换已有的透明电法师模型。
+
+**页面接入**：符文列表、场景标题、顶部入口、侧栏眼形图改用原图；圆/方炸弹切换时标题图标同步。未开放格显示amiibo原图但不增加玩法。图鉴未记录占位使用所属分类图，地图装饰改用原色模型；MAP/LOG/SYSTEM没有对应原图时只保留文字入口。装备01、24条CODEX、相机和相册交互不变。
+
+**重建约束**：完整素材生成最后应用用户原图；装备导入脚本也优先读取用户提供的分类图，避免后续重建覆盖。可选校验脚本同步符文图片的Web路径，但本次没有执行它。两张旧剪影已无运行时引用，文件暂留；原目录缺少的地图、箱子、闸门、冰柱、炸弹实体和爆炸帧继续作为既有占位，未宣称全素材或完整界面达到原版。
+
+**执行记录**：已运行离线导出并直接查看图标/贴片文件，未操作浏览器、未截图、未运行自动化测试。现有Python服务在127.0.0.1:8124监听并服务当前工作区，继续复用；未改固件、计划文件、音频或装备数据，未提交或部署。
+
+---
+
+## 决策 13：素材按“管线输入 / 未集成归档”拆开，去重后再推进页面
+
+**用户调整**：新增下载的一批 UI 素材直接堆在 `assets/zeldawiki-original/`，感到重复且杂乱，要求先整理素材再继续做页面。这改写了决策 12 中“原目录只读、不移动”的约束：只读仍适用于文件内容，但目录结构按本次要求重组。
+
+**审计结果**：该目录当时 140 个文件，其中 74 个与 `assets/raw/` 或 `assets/gen/` 已归档文件逐字节相同（SHA-256 对比）；真正被脚本读取的只有 25 张（`build_real_assets.py` 的 13 图标 + 12 模型，其中 5 张分类图另供 `import_compendium_assets.py` 使用）。`equipment/` 24 张是 starter 装备图之外的第二套渲染，与页面无引用。
+
+**拆分方式**：`zeldawiki-original/` 只留 25 张管线输入，目录层级不变，因此两个生成脚本无需改路径；未集成的 UI 素材（按键、分类、希卡文字、实机参考、游戏内分类字形、备用装备图标）移入新建的 `assets/raw/zeldawiki-ui-pack/`，共 104 个文件，符合 raw 作为上游原料层的约定。11 个纯重复副本移入 `build/_trash/2026-10-28-zeldawiki-original-dedup/` 待用户确认后删除，未直接永久删除。
+
+**防复发**：`tools/download_botw_ui_icons.py` 的输出目录改为 `assets/raw/zeldawiki-ui-pack/`，不会再写回管线输入区；清单中删去希卡族纹章一条，因为它已是 `zeldawiki-original/ui/` 的管线输入，重复下载只会再造一份副本。两处 README 分别记录“谁是输入、谁是备用、哪些已去重、哪些真缺失”。
+
+**执行记录**：拆分后重新校验 25 张必需输入全在（`missing 0`），未运行自动化测试、未操作浏览器；未改 `prototype/`、`assets/gen/`、固件或计划文件，未提交或部署。
+
+**校验防回退**：`tools/verify_assets.py` 新增两项硬约束——25 张管线输入缺一即报错，`zeldawiki-original/` 与 `raw/zeldawiki-ui-pack/` 内不得再出现逐字节相同的文件；另提供 `--duplicates` 列出 `assets/` 全树同字节分组供人工判断。自测：向包内复制一份同名图，校验如实报 1 个问题并 exit 1；移除后恢复 `exit 0`（输出：归档 968 / 固件 28 / 原型 110 / 装备 24 / 管线输入 25 / 未集成素材 104）。
+
+---
+
+## 决策 14：圆/方炸弹拆成两个符文入口，符文页六格全部可玩
+
+**对齐规范**：Spec 要求「圆炸弹与方炸弹分别显示，共六个能力入口；两种炸弹共用同一个玩法模块」。原实现把两种形态塞进一个入口、在场景里用「圆 / 方」按钮切换，与规范和 README 已写的「六个入口」不一致。
+
+**实现方式**：`data.js` 的 `RUNES` 增加 `bomb_cube`（`kind: 'CUBE'`，图标 `rune_cube.png`），`viewRune` 让 `bomb` 与 `bomb_cube` 共用 `viewBomb`；形态由符文页入口决定，进入另一形态时清空放置/完成状态，场景内的切换按钮删除。符文页去掉一直不可玩的 amiibo「SEALED」占位格，3×2 网格正好放下六个入口；侧栏与哈希路由补 `#/rune/bomb_cube`。
+
+**验证**：`node --check` 通过 `prototype/js/app.js`、`prototype/js/data.js`；`python tools/verify_assets.py` 返回 `exit 0`（归档 968 / 固件 28 / 原型 110 / 装备 24 / 管线输入 25 / 未集成素材 104）。按用户要求未运行自动化测试、未操作浏览器；符文页新布局待人工预览。
+
+---
+
+## 决策 15：zeldawiki-original 合并进 raw，管线输入不再单设目录
+
+**用户要求**：把 `assets/zeldawiki-original/` 这个文件夹合并掉。决策 13 把它保留为 25 张管线输入的“输入契约”，但它与 `raw/` 已有归档逐字节相同，等于同一批图存了两份。
+
+**合并前证据**：用一次性探针（`build/_merge_probe.py`，只在 build 下，未入库）对 25 张逐个算 SHA-256，再在 `assets/raw/` 全树找同字节文件——25 张全部命中，缺失 0 张。映射关系：7 张符文图标 → `raw/zeldawiki-runes/icons/`；希卡之眼 → `raw/zeldawiki/sheikahtext/BotW_Crest_of_the_Sheikah_Symbol.png`；5 张分类图标 → `raw/hyrule-compendium/images/icons/`；11 张怪物模型 → `raw/zeldawiki/monsters/`；石板渲染 → `raw/zeldawiki/slate/BotW_Sheikah_Slate_Render.png`。
+
+**脚本改动**：`build_real_assets.py` 新增 `RAW = assets/raw`、删除 `ORIGINAL`，`ORIGINAL_ICONS` 的值改为 raw 相对路径，`ORIGINAL_CUTS` 改为带子目录的 raw 路径（`monsters/*`、`slate/*`），`prepare_original_assets` 与 `export_original_assets` 统一从 `RAW` 拼路径；`import_compendium_assets.py` 删掉 originals 分支，分类图固定读 `raw/hyrule-compendium/images/icons/`；`verify_assets.py` 第 7 节改为从 `RAW` 解析 25 张，第 8 节只对 `raw/zeldawiki-ui-pack/` 检查自重复（raw 内部跨子树同字节属历史归档，不报错）。
+
+**执行记录**：`prepare_original_assets()` 干跑成功（25 张全部可打开）；`python tools/build_real_assets.py --originals-only` 输出「13 张真实图标（2 张仅去白底）、12 张原色模型贴片」，13 张图标输出 SHA-256 变化数为 0，说明改路径没有改动产物；原目录整体移入 `build/_trash/2026-10-28-zeldawiki-original-merged/`（26 个文件），`Test-Path assets/zeldawiki-original` 为 False；`python tools/verify_assets.py` 返回 `exit 0`（归档 968 / 固件 28 / 原型 110 / 装备 24 / 管线输入 25 / 未集成素材 104）。未运行自动化测试、未操作浏览器，未改 `prototype/` 产物与固件。
+
+> 同日后续：`raw/` 又被按游戏内容重排（决策 17），本节里的 raw 子目录路径已不再适用；文件名一个未改，可对名匹配。
+
+**拒绝方案**：继续留 25 张当“输入契约”——用户已要求合并，且 raw 内有同字节副本，两份只会再次产生“哪份才算数”的歧义；把未集成 UI 包也塞进同一个目录——会把“管线输入”和“未集成归档”重新混在一起，违反决策 13 的分层。
+
+**回滚**：`build/_trash/2026-10-28-zeldawiki-original-merged/` 保留原目录结构与文件名，需要时可整体移回 `assets/`；确认无用后与前面 11 个副本一并删除即可。
+
+---
+
+## 当前批次完成审计（2026-10-28）
+
+逐条对照本节批次的交付项，证据全部取自当前工作区，不靠之前的记忆：
+
+- **全量归档**：`assets/raw/import_manifest.json` 记录 968 个文件，来源为 hyrule-compendium-api / hyrule-compendium / zelda-botw-starter 三个仓库；`tools/verify_assets.py` 的文件集合与哈希校验通过。
+- **离线重生成**：默认模式只读 `assets/raw/`；`assets/data/inventory.json`、`prototype/js/inventory-data.js` 与图片一一对应（24 件：8 武器 / 4 盾牌 / 12 防具，ID 唯一、槽位合法，由 `validate_inventory` 强制）。
+- **装备页**：`#/inventory` 三分类各有独立页码与选中项，右侧预览、装备/卸下覆盖五槽、说明分页、长按返回；状态仅存内存，刷新或重置即复原。
+- **素材整理**：管线输入 25 张已合并进 `assets/raw/`（决策 15，原目录移入 `build/_trash/2026-10-28-zeldawiki-original-merged/`），未集成 UI 素材 104 个，11 个同字节副本在 `build/_trash/2026-10-28-zeldawiki-original-dedup/` 待确认；`--duplicates` 可复查全树分组。
+- **页面回归（静态）**：图鉴 24 条未扩成全量；原型 JS/CSS/HTML 无外部 URL，无 TOTK 或大师模式条目；符文页六个入口全部可玩。
+- **未执行**：浏览器交互验收、自动化测试（用户明确要求不做）；`main/`、BSP、分区、固件图源未在本批次修改。
+
+**待用户确认**：符文页 3×2 新布局与装备页/林克比例；`build/_trash` 里两批可回滚目录（11 个副本 + 已合并的原目录）何时删除。管线输入改读 `raw/` 一项已按用户要求完成（决策 15）。这两项定下来后，才进入计划的下一步（横屏固件与五关实机验收）。
+
+---
+
+## 决策 16：固件批次逐条对照（2026-10-28，未编译复验）
+
+计划的历史固件部分（横屏、三键、五关、图鉴/相册、NVS、音效）已在代码中落地，本节只记录“哪条要求由哪段代码兑现”，不把静态阅读当成编译或实机结论。
+
+| 计划要求 | 现状与证据 |
+|---|---|
+| 横屏 320×240、单一方向开关、硬件 swap/mirror | `bsp_display_lvgl.c` 的 `.rotation={.swap_xy=true,.mirror_x=BSP_LCD_CLOCKWISE,.mirror_y=!BSP_LCD_CLOCKWISE}`，一处宏切换另一横向方向；`bsp_display.c` 的 `esp_lcd_panel_mirror(false,false)` 保留了硬件基线 |
+| 三键按下/抬起 + 长按消费短按 | `bsp_button.c` 同时注册 `BUTTON_PRESS_DOWN`/`PRESS_UP`；`main.c` 用有界队列（满则丢最旧）+ `input_edge`/`input_poll` 按实际按住时间判定，页面切换按 generation 清手势 |
+| 五关模型与统一接口（进入/输入/推进/重置/快照） | `main/game/` 十个文件；`game_init/game_input/game_step/game_reset` + `camera_snapshot`；`GAME_MAX_STEP_MS=100` 限制追赶步数 |
+| 每关规则（炸弹落点、磁力对位、时停蓄力方向、冰柱先进先出、取景识别） | `bomb.c` 圆弹滚动/方弹停留、单弹冷却；`magnet.c` 仅金属可抓、落位误差判定、越界回位；`stasis.c` 10s/6 次/>4 次且方向正确；`cryonis.c` 三根上限、第四根顶掉最早一根、仅闸门下方通关；`camera.c` 遮挡与取景框判定 |
+| 暂停菜单三项、暂停停表 | `page_rune_app.c` 的 `pause_panel` 三行（继续/重开/返回符文），`game_step` 在 `paused` 时直接返回，恢复时重置 `last_tick` |
+| 图鉴只由拍照解锁、只显示五条 | `page_compendium.c` 用 `store_progress.discovered` 判可见，未登记时弹窗提示去相机；`catalog.c` 由 `tools/gen_catalog.py` 从 `assets/data/trial_subjects.json` 生成静态数组 |
+| 相册最多 8 张、存快照而非整屏位图 | `progress.h` 的 `PHOTO_CAPACITY=8` 与 `photo_t`（取景中心/缩放/目标/五个目标坐标）；`game_view_photo()` 用 Flash 素材重建 |
+| 五关目标与完成状态 | `page_quest.c` 逐条列出 `game_title()` 与 `completed` 位 |
+| 版本化 NVS、只在事件点提交、损坏安全回退 | `progress.c` 的 `SKS2` 头+版本 1+FNV 校验+字段范围检查，失败回默认值；`store.c` 只负责读写；提交点是 `GE_SAVE`、设置项保存与设置页退出 |
+| 新增敲击/碎裂/识别/完成音，关键音抢占 | `sfx_data.h` 14 条（新增 `SFX_HIT/SHATTER/FOUND/COMPLETE`）；`sfx.c` 对爆炸/解冻/碎裂/完成先 `xQueueReset` 清掉排队音；`slate_open()` 在旧页面退出前调 `sfx_cancel()` |
+| 主机 C 测试覆盖五关成功/失败/重试、冷却重入、时停上限与方向、磁力边界、冰柱先进先出、空拍/重复拍摄、相册满、NVS 损坏、三键连按/长按后抬起 | `tests/test_game.c` 七个用例逐条对应；由 `tests/CMakeLists.txt` 只编译 `main/game/` |
+| 固件图源只编译实际使用的 | `main/CMakeLists.txt` 的 `images.cmake` 共 28 项；本轮脚本比对 `main/` 中所有 `img_*` 引用与 `img_all.h` 声明，29 处引用全部可解析，无声明缺 `.c` |
+
+**未完成/未复验**（不宣称通过）：
+
+- 本轮没有重新编译。工具链情况已核实：ESP-IDF v5.5.5 装在 `D:\Software\Espressif`（虚拟环境是 `idf5.5_py3.11_env`，需用 `IDF_PYTHON_ENV_PATH` 覆盖 export.ps1 默认的 py3.12 路径）；但 `idf.py build` 在这个受限终端里启动后长时间无输出（README 已记录该现象），且用户明确表示仍在原型阶段、不跑编译。因此 `idf.py build` / `idf.py size` 未完成，当前固件源码是否可编译仍未验证；README 里的 1,993,776 B / 52% 剩余是更早一次固件源码的记录。
+- 宿主侧仍无 gcc/clang，`tests/test_game.c` 可以写、可以静态审查，但本机无法编成可执行文件运行。
+- 计划要求的主机 LVGL 无头渲染截图（六入口、五关关键状态、图鉴登记、通关/重试）尚未建立：它需要宿主编译与截图管线，本轮不做。
+- 实机验收（横屏方向/颜色/音画、五关人工试玩、连续切换 100 次的内存与看门狗）未做，一律标记“待实机验收”。
+
+---
+
+## 决策 17：raw 按游戏内容重排（2026-10-28）
+
+**用户要求**：`assets/raw` 里素材很多重复，不要按项目分类，改按游戏中的内容分类；先给建议，用户拍板三条：TOTK 移进归档、目录带数字前缀、装备图标以 starter 那套为准、另一套进 `_variants`。
+
+**诊断（先说清“重复”是什么）**：1215 个文件、186 MB 里，字节完全相同的只有 12 组 24 个文件、0.96 MB。真正造成“很乱”的是四件事：
+
+| 现象 | 体量 | 处理 |
+|---|---|---|
+| TOTK 与大师模式整树 | 510 + 5 张、57 MB | 本项目固定 BotW，移入 `99_archive/` |
+| BOTW 与 TOTK 同名文件 | 299 组 | 移走 TOTK 后歧义自然消失 |
+| 同一怪物多版本 | 90 个文件 / 81 个主题 | 主体留在 `monsters/models/`，`_Model_2/3` 进 `_variants/` |
+| 装备图标两套 | starter 24 / ui-pack 24，仅 7 张同字节 | starter 为准，其余进 `04_equipment/_variants/zeldawiki/` |
+| ui-pack 目录多套一层（`ui/buttons/buttons`） | 39 个文件 | 重排时拍平 |
+
+**目标结构**：`01_runes`(16) / `02_ui`(93) / `03_compendium`(484) / `04_equipment`(52) / `05_world`(23) / `06_audio`(2) / `07_fonts`(4) / `99_archive`(528) / `_index`。按“游戏里是什么”分，不再出现 `zeldawiki-*`、`hyrule-compendium-api` 这类来源名；来源信息保留在 `99_archive/sources/`、`_index/import_manifest.json` 与 `_index/content_map.csv`。
+
+**执行方式**：一次性脚本 `build/_reorg_raw.py`（支持 `--dry-run`），逐文件映射后 `shutil.move`，不改任何字节；同 sha256 归为一组，按「非 `_variants` / 非 `misc` / 文件名与目标一致」优先保留一份，其余 12 个副本移入 `build/_trash/2026-10-28-raw-dedup/`（保留原目录层级）。
+
+**校验**：
+
+- 干跑：`files=1215 mapped=1215 keep=1203 trash=12 unmapped=0`。
+- 执行后按 `content_map.csv` 逐条回读 SHA-256：**1215/1215 全部一致，0 例外**；`raw/` 内同字节重复组从 12 组降为 **0**；旧顶层目录已清空删除。
+- 回滚干跑：`build/_rollback_raw.py --dry-run` → `rows=1215 plan=1215 missing=0 conflicts=0`。
+- 未跑：`verify_assets.py`（脚本在同日清理中丢失，见决策 16 的说明）。
+
+**留下的尾巴**：
+
+1. `03_compendium/icons/` 的 390 张 BOTW 图标还没按图鉴五类（生物/材料/怪物/装备/宝物）细分——离线没有可用的分类清单，不靠文件名猜；需要补一份清单后再拆。
+2. 三个管线脚本（`build_real_assets.py`、`import_compendium_assets.py`、`verify_assets.py`）目前缺失，恢复时要按 `content_map.csv` 把路径改到新目录；25 张管线输入文件名未改，可对名匹配。
+3. `99_archive/` 与 `04_equipment/_variants/` 是“留着但不读”的目录，确认不再需要后可整体删除或清出仓库。
+
+**回滚**：`python build/_rollback_raw.py`，按映射表反向移动，不改字节。
+
+---
+
+## 决策 18：五域架构重排（2026-10-28）
+
+**用户要求**：整理架构，粗分为「硬件开发、模拟页面开发、素材、文档」四类，不用管真实构建，先给建议。用户拍板四点：
+
+1. 固件整体下沉到 `firmware/`；
+2. `tools/` 保留在根，内部分 `assets`（素材加工）/ `gen`（生成 C 源）/ `web`（Node 侧字体、SVG）；
+3. 根 `README.md` 瘦身为导航 + 快速开始，细节移入 `docs/`；
+4. 根目录中文清单挪进 `docs/specs/`。
+
+**新顶层**（`firmware / prototype / assets / tools / docs` 五域）：
+
+| 目录 | 职责 | 谁读 |
+|---|---|---|
+| `firmware/` | ESP-IDF 工程：`main/`、`components/bsp/`、`CMakeLists.txt`、`sdkconfig.defaults`、`partitions.csv` | 只读 `assets/gen/firmware` 与生成好的 C 源 |
+| `prototype/` | 纯静态 320×240 原型（`index.html` + `js/` + `css/`） | 浏览器，相对路径 `../assets/gen/prototype/` |
+| `assets/` | `raw`（上游原件）/ `gen`（生成物）/ `data`（JSON）/ `audio` | `tools/` 与两个前端 |
+| `tools/` | `assets` / `gen` / `web` 三组脚本 | 人手动跑 |
+| `docs/` | `architecture.md`、`hardware/`、`prototype/`、`assets/`、`specs/`、`archive/`、`development-log.md` | 人 |
+
+依赖保持单向：`assets/raw → tools/assets → assets/gen → firmware/main/img` 与 `prototype/`。
+
+**具体迁移**：
+
+- 固件：`CMakeLists.txt`、`sdkconfig`、`sdkconfig.defaults`、`partitions.csv`、`dependencies.lock`、`main/`、`components/`、`managed_components/`、旧 `build/` 全部移入 `firmware/`。旧 `build/`（509 MB CMake 缓存）随迁而非删除，其绝对路径已失效，**首次构建前建议直接删掉 `firmware/build/`**。生成物仍不入库：`git check-ignore` 已确认 `firmware/build`、`firmware/sdkconfig`、`firmware/managed_components`、`firmware/dependencies.lock` 均命中，`.gitignore` 无前缀规则在任意层级生效，无需改动。
+- tools：`gen_assets.py`、`gen_audio.py`、`gen_synth.py`、`img_to_c.py` → `tools/gen/`；`gen_font.mjs`、`svg_to_png.mjs`、`package.json`、`package-lock.json` → `tools/web/`。五个脚本的路径常量按新深度改（`parents[2]` / `../..`），`gen_audio.py` 与 `gen_synth.py` 的注释、生成文件头也同步为 `tools/gen/...`；`firmware/main/audio/sfx_data.{c,h}` 首行随之更新，避免下次重跑产生无意义 diff。
+- 文档：原 341 行 `docs/README.md` 拆成 `docs/README.md`（16 行索引）+ `architecture.md` + `hardware/hardware.md` + `prototype/{pages,trials}.md` + `assets/{provenance,pipeline}.md`；旧内容完整转存 `docs/archive/legacy-architecture.md`（加过时说明头），不丢信息；`docs/superpowers/specs/` 改为 `docs/specs/`，根目录「ESP32‑C3｜希卡石板 功能+UI完整清单.md」改为 `docs/specs/feature-checklist.md`；`device_rune_wheel.jpg` 移入 `docs/hardware/`。
+- 根 `README.md`：309 → 约 70 行，只留定位、五关表、目录表、快速开始、文档索引、当前状态。
+
+**校验**：
+
+- 根顶层只剩 `.build-tools`(本地工具链) `assets` `build`(未入库) `docs` `firmware` `prototype` `tools` `.gitignore` `README.md`。
+- `firmware/main/img` 仍为 28 个 `.c`；4 个 Python 脚本 `py_compile` 退出码 0；2 个 mjs `node --check` 退出码 0。
+- `tools/` 下再无 `tools/gen_audio.py` 之类旧平铺路径引用（grep 0 命中）；`docs/development-log.md`、`docs/archive/` 中的旧路径属历史记录，按“文档单一事实”保留原样。
+- `/prototype/` 仍返回 200（2059 字节），原型未受迁移影响。
+
+**未做 / 待办**：`tools/assets/` 下 5 个脚本与 `tools/gen/gen_catalog.py` 仍是缺失状态（见决策 16），恢复时直接落到新分组；`firmware/tests/`（`test_asset_import.py`）同样待恢复。按用户要求本轮**不编译**，新工程路径下的首次 `idf.py -C firmware build` 尚未验证。
+
 ---
 
 ## 后续可玩方向
