@@ -5,7 +5,7 @@ const SINGLE_KEY_RUNES=new Set(['cryonis','cycle','amiibo','sensor']);
 const CYCLE_CONTACT={height:22,wheelY:13,wheelRadius:8,axle:18,rockSize:20,rockGround:9,rockRadius:7};
 const ICE_SURFACES={shore:112,pillar:80,footOffset:17};
 const easeRune=t=>{t=gameClamp(t,0,1);return t*t*(3-2*t);};
-function cycleJump(e) {e.jumpBuffer=.14;}
+function cycleJump(e) {e.jumpBuffer=.2;}
 
 const ICE_SITES=[88,120,152,184,216];
 const CYCLE_GAPS=[[350,402],[745,797]];
@@ -163,7 +163,7 @@ function stepExtra(g,dt) {
   } else if(g.id==='cycle' && g.phase==='riding') {
     e.brake=Math.max(0,e.brake-dt);e.jumpBuffer=Math.max(0,e.jumpBuffer-dt);
     e.speed+=((e.brake>0?58:82)-e.speed)*Math.min(1,dt*5);
-    if(e.jumpBuffer>0 && (e.grounded || (e.canCoyote && e.airTime<.1))) {e.rideVY=-120;e.grounded=false;e.canCoyote=false;e.jumpBuffer=0;e.airTime=0;}
+    if(e.jumpBuffer>0 && (e.grounded || (e.canCoyote && e.airTime<.14))) {e.rideVY=-120;e.grounded=false;e.canCoyote=false;e.jumpBuffer=0;e.airTime=0;}
     e.rideX+=e.speed*dt;
     const floor=cycleFloor(e.rideX)-CYCLE_CONTACT.height;
     if(e.grounded && cycleGap(e.rideX)) {e.grounded=false;e.canCoyote=true;e.airTime=0;e.rideVY=0;}
@@ -226,7 +226,7 @@ function viewAdditionalRuneGame(id) {
   const titles={bomb_cube:['平台爆破','PLATFORM DEMOLITION'],cryonis:['水上通路','ICE CROSSING'],camera:['野外摄影','FIELD PHOTOGRAPHY'],cycle:['原野骑行','CROSS-COUNTRY RIDE'],amiibo:['召唤补给','SUMMON SUPPLIES'],sensor:['探索寻踪','FOLLOW THE SIGNAL']};
   const goals={bomb_cube:['用平台运送方弹，在岩石旁引爆','Carry the cube bomb on the platform'],cryonis:['五个落点，选三处造冰搭通路','Pick three of five sites to build a path'],camera:['平移取景，清晰识别后拍摄','Pan and frame a clear subject'],cycle:['自动骑行，看准时机按 OK 跳跃','Auto-ride. Time your OK jumps'],amiibo:['选角色、读取、开箱，全程单键确认','Select, scan and open with single presses'],sensor:['选一条信号更强的路，自动前进','Choose the stronger signal and follow the path']};
   const background=r.scene||'rune_scene_'+(id==='bomb_cube'?'bomb':id)+'.png';
-  const secondary=id==='camera'?'<button class="chip" data-focus data-action="game:camera-tools">'+L('缩放','ZOOM')+'</button>':'';
+  const secondary='';
   return topbar('runes')+`<div class="body scene-body rune-game extra-game" data-game="${id}"><div class="scene" style="${runeSceneStyle(id)}"></div><div class="scene-shade"></div>${sceneTop(r,'')}<div class="game-goal"><b>${L(...titles[id])}</b><span>${L(...goals[id])}</span></div><div class="extra-arena">${extraArt(g)}</div><div id="extraMessage" class="game-message"></div><div class="game-controls"><button class="chip" data-focus data-action="game:primary" id="extraPrimary"></button>${secondary}<button class="chip" data-focus data-action="game:pause">${L('暂停','PAUSE')}</button></div></div>`+footer('<span id="extraHint"></span>',L('长按 OK 暂停','HOLD OK PAUSE'))+extraDialog(g);
 }
 function paintExtra(g) {

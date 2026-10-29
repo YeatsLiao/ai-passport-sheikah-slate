@@ -31,7 +31,10 @@ function getRuneGame(id) {
 function resetRuneGame(id) { runeGames.delete(id); runeGameDirection=0; render(); }
 function pauseRuneGame() {
   const id=currentRuneGame(); if(!id) return;
-  const g=getRuneGame(id); g.paused=!g.paused; g.tool=false; runeGameDirection=0;
+  const g=getRuneGame(id);
+  if(g.tool){g.tool=false;g.paused=false;if(id==='camera'){const e=initExtra(g);e.preview=null;g.phase='ready';}}
+  else g.paused=!g.paused;
+  runeGameDirection=0;
   render(); beep('back');
 }
 function gameInputActive() {
@@ -94,7 +97,7 @@ function runeGameAction(action) {
   if(action==='pause'||action==='resume') {pauseRuneGame();return;}
   if(action==='retry') {resetRuneGame(id);return;}
   if(action==='exit') {runeGameDirection=0;go('#/runes');return;}
-  if(action==='release' && id==='stasis' && !g.paused && g.phase==='frozen') {gameReleaseStasis(g);paintRuneGame(g);return;}
+  if(action==='release' && id==='stasis' && g.phase==='frozen') {g.paused=false;gameReleaseStasis(g);render();return;}
   if(id==='magnet' && action==='tools-close') {g.tool=false;render();return;}
   if(id==='magnet' && action==='axis-x' && g.held) {g.axis='x';g.tool=false;render();return;}
   if(id==='magnet' && action==='axis-y' && g.held) {g.axis='y';g.lifting=false;g.tool=false;render();return;}
@@ -200,7 +203,7 @@ function viewRuneGame(id) {
     ${id==='stasis'?'<div id="gameDistance" class="game-distance"></div><div id="gameMilestones" class="game-milestones">'+[0,50,100,150,200,250,300].map(m=>'<span style="left:'+(m*6)+'px">'+m+' m</span>').join('')+'</div>':''}
     <div id="gameForce" class="game-force"><i></i></div><div id="gameBlast" class="ability-sprite game-blast" style="background-position:100% 100%"></div>
     <div id="gameResult" class="game-result"></div>
-    </div><div class="game-message" id="gameMessage"></div><div class="game-controls"><button class="chip" data-action="game:primary" data-focus id="gamePrimary"></button>${id==='stasis'?'<button class="chip" data-action="game:release" data-focus id="gameRelease">'+L('提前解除','RELEASE EARLY')+'</button>':''}<button class="chip" data-action="game:pause" data-focus>${L('暂停','PAUSE')}</button></div></div>`+footer('<span id="gameHint"></span>',L('长按 OK 暂停','HOLD OK PAUSE'))+(g.paused?`<div class="game-pause" role="dialog" aria-modal="true" aria-label="${L('暂停','Paused')}"><div class="game-pause-card"><h2>${L('已暂停','PAUSED')}</h2><button class="chip" data-focus data-start data-action="game:resume">${L('继续','RESUME')}</button><button class="chip" data-focus data-action="game:retry">${L('重新开始','RESTART')}</button><button class="chip" data-focus data-action="game:exit">${L('返回符文','RUNES')}</button></div></div>`:'')+(g.tool?magnetTools(g):'');
+    </div><div class="game-message" id="gameMessage"></div><div class="game-controls"><button class="chip" data-action="game:primary" data-focus id="gamePrimary"></button><button class="chip" data-action="game:pause" data-focus>${L('暂停','PAUSE')}</button></div></div>`+footer('<span id="gameHint"></span>',L('长按 OK 暂停','HOLD OK PAUSE'))+(g.paused?`<div class="game-pause" role="dialog" aria-modal="true" aria-label="${L('暂停','Paused')}"><div class="game-pause-card"><h2>${L('已暂停','PAUSED')}</h2><button class="chip" data-focus data-start data-action="game:resume">${L('继续','RESUME')}</button>${g.id==='stasis'&&g.phase==='frozen'?'<button class="chip" data-action="game:release">'+L('提前解除','RELEASE EARLY')+'</button>':''}<button class="chip" data-focus data-action="game:retry">${L('重新开始','RESTART')}</button><button class="chip" data-focus data-action="game:exit">${L('返回符文','RUNES')}</button></div></div>`:'')+(g.tool?magnetTools(g):'');
 }
 function magnetTools(g) {
   const next=magnetContact(g).both?'drop':g.axis==='x'?'axis-y':'axis-x';
