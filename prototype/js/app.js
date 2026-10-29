@@ -63,7 +63,6 @@ const LANG = {
     comp_foot_l: '分类　OK 打开', comp_prev: '◀ 上一个', comp_next: '下一个 ▶', comp_list: '返回列表', comp_overview: '分类总览',
     comp_cat_foot: '◀ 返回分类　OK 查看条目', comp_entry_foot: '◀▶ 切换条目　OK 返回',
     not_recorded: '未记录', unrecorded: '未记录',
-    log_foot_r: '完整任务清单 · 自写梗概',
     quest_prev: '上一个', quest_next: '下一个', quest_list: '返回目录', quest_foot: '选择　OK 确认', hold_back_short: '长按返回',
     log_title: '冒险日志', log_main: '主线', log_side: '支线', log_foot_l: '▲▼ 选择　OK 查看',
     album_title: '相册', album_new: '新',
@@ -118,7 +117,6 @@ const LANG = {
     comp_foot_l: 'SELECT　OK OPEN', comp_prev: '◀ PREV', comp_next: 'NEXT ▶', comp_list: 'LIST', comp_overview: 'OVERVIEW',
     comp_cat_foot: '◀ BACK TO CATEGORY　OK VIEW', comp_entry_foot: '◀▶ SWITCH ENTRY　OK BACK',
     not_recorded: 'UNRECORDED', unrecorded: 'UNRECORDED',
-    log_foot_r: 'FULL QUEST LIST · SELF-WRITTEN',
     quest_prev: 'PREV', quest_next: 'NEXT', quest_list: 'BACK TO LIST', quest_foot: 'SELECT　OK CONFIRM', hold_back_short: 'HOLD BACK',
     log_title: 'ADVENTURE LOG', log_main: 'MAIN', log_side: 'SIDE', log_foot_l: '▲▼ SELECT　OK VIEW',
     album_title: 'ALBUM', album_new: 'NEW',
@@ -891,7 +889,7 @@ function viewLog() {
         <span class="q-main"><b>${esc(state.lang === 'cn' ? q.cn : q.title)}</b>${state.lang === 'cn' ? '' : `<span>${esc(q.cn)}</span>`}</span>
         <span class="q-pages">${esc(state.lang === 'cn' ? q.loc : (q.loc_en || ''))}</span>
       </button>`).join('')}</div>
-  </div>` + footer(t('log_foot_l'), t('log_foot_r'));
+  </div>` + footer(t('log_foot_l'), '');
 }
 
 function viewQuest(tabId, id) {
