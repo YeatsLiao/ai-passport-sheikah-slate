@@ -31,7 +31,7 @@ const state = {
   cycle: { phase: 'idle', speed: 0, dist: 0 },
   amiibo: { sel: 0, phase: 'idle', got: null },
   sensor: { phase: 'idle', d: 120, done: false },
-  map: { index: 0, zoom: 1, x: 0, y: 0 },
+  map: { zoom: 1, x: 0, y: 0, selection: 'StartPoint', region: 'plateau', filter: 'all', mode: 'browse', follow: false, pinned: null, discovered: ['StartPoint','Tower07'] },
   compCat: 'creatures',
   inventory: {
     category: 'weapons', pages: { weapons: 0, shields: 0, armors: 0 }, selected: {},
@@ -49,6 +49,7 @@ const state = {
 /* 全局中英切换：UI 静态文案走 LANG 字典（t()），数据侧名称/描述按字段取双语。 */
 const LANG = {
   cn: {
+    recorded: '已登记',
     tab_inventory: '装备', tab_runes: '符文', tab_map: '地图', tab_compendium: '图鉴', tab_log: '日志', tab_system: '系统',
     hold_back: '长按 OK 返回',
     press_ok: '按 OK 启动',
@@ -64,7 +65,7 @@ const LANG = {
     comp_cat_foot: '◀ 返回分类　OK 查看条目', comp_entry_foot: '◀▶ 切换条目　OK 返回',
     not_recorded: '未记录', unrecorded: '未记录',
     quest_prev: '上一个', quest_next: '下一个', quest_list: '返回目录', quest_foot: '选择　OK 确认', hold_back_short: '长按返回',
-    log_title: '冒险日志', log_main: '主线', log_side: '支线', log_foot_l: '▲▼ 选择　OK 查看',
+    log_title: '冒险日志', log_main: '主线', log_shrine: '神庙挑战', log_side: '迷你挑战', log_foot_l: '▲▼ 选择　OK 查看',
     album_title: '相册', album_new: '新',
     album_foot: '照片　OK 查看', photo_no: '编号', photo_time: '时间', photo_place: '地点', photo_close: '关闭', photo_delete: '删除',
     equip: '装备', unequip: '卸下', equipped: '已装备', unequipped: '已卸下',
@@ -80,7 +81,7 @@ const LANG = {
     scene_hold: '长按 OK 返回',
     photo_title: '照片', about_toast: 'AI Passport · Sheikah Slate',
     rune_placeholder: '原型占位 · 无试炼玩法', rune_placeholder_note: '此符文在本原型中暂无试炼玩法，仅作界面演示。选中后回到符文页。', back_to_runes: '返回符文页',
-    trial_complete: '试炼完成',
+    trial_complete: '已登记全部目标',
     bomb_done: '岩石已破坏，通往神庙的道路开启。', bomb_placed: '炸弹已放置。再按「引爆」即可起爆。', bomb_idle: '先「放置炸弹」，再「引爆」破坏岩石。',
     magnet_done: '压力板被压住，闸门开启。', magnet_moved: '金属箱悬在压力板上方，按「放下」。', magnet_grabbed: '金属箱已锁定。按「移动」把它带到压力板上方。', magnet_idle: '用磁力抓住右侧金属箱，把它放到压力板上。',
     stasis_done: '势能释放，岩石巨人撞开了堵路的墙。', stasis_frozen: '已冻结。按「击打」积蓄势能（最多 6 次），或直接「释放」。', stasis_idle: '先冻结岩石巨人，再击打积蓄势能，最后释放。',
@@ -103,6 +104,7 @@ const LANG = {
     sensor_done: '发现神庙！感应器试炼完成。'
   },
   en: {
+    recorded: 'RECORDED',
     tab_inventory: 'EQUIP', tab_runes: 'RUNES', tab_map: 'MAP', tab_compendium: 'COMPENDIUM', tab_log: 'LOG', tab_system: 'SYSTEM',
     hold_back: 'HOLD OK TO GO BACK',
     press_ok: 'PRESS OK TO ACTIVATE',
@@ -118,7 +120,7 @@ const LANG = {
     comp_cat_foot: '◀ BACK TO CATEGORY　OK VIEW', comp_entry_foot: '◀▶ SWITCH ENTRY　OK BACK',
     not_recorded: 'UNRECORDED', unrecorded: 'UNRECORDED',
     quest_prev: 'PREV', quest_next: 'NEXT', quest_list: 'BACK TO LIST', quest_foot: 'SELECT　OK CONFIRM', hold_back_short: 'HOLD BACK',
-    log_title: 'ADVENTURE LOG', log_main: 'MAIN', log_side: 'SIDE', log_foot_l: '▲▼ SELECT　OK VIEW',
+    log_title: 'ADVENTURE LOG', log_main: 'MAIN', log_shrine: 'SHRINE', log_side: 'SIDE', log_foot_l: '▲▼ SELECT　OK VIEW',
     album_title: 'ALBUM', album_new: 'NEW',
     album_foot: 'PHOTO　OK VIEW', photo_no: 'NO', photo_time: 'TIME', photo_place: 'PLACE', photo_close: 'CLOSE', photo_delete: 'DELETE',
     equip: 'EQUIP', unequip: 'UNEQUIP', equipped: 'EQUIPPED', unequipped: 'UNEQUIPPED',
@@ -134,7 +136,7 @@ const LANG = {
     scene_hold: 'HOLD OK TO GO BACK',
     photo_title: 'PHOTO', about_toast: 'AI Passport · Sheikah Slate',
     rune_placeholder: 'PLACEHOLDER · NO TRIAL', rune_placeholder_note: 'This rune has no interactive trial in the prototype — display only. Select to return to the rune list.', back_to_runes: 'BACK TO RUNES',
-    trial_complete: 'TRIAL COMPLETE',
+    trial_complete: 'ALL SUBJECTS REGISTERED',
     bomb_done: 'The rocks are destroyed — the path to the shrine is open.', bomb_placed: 'Bomb placed. Press DETONATE to blow it up.', bomb_idle: 'Place a bomb, then detonate it to break the rocks.',
     magnet_done: 'The pressure plate is pressed — the gate is open.', magnet_moved: 'The metal crate hovers above the plate. Press DROP.', magnet_grabbed: 'Crate locked. Press MOVE to bring it over the plate.', magnet_idle: 'Grab the metal crate on the right and set it on the pressure plate.',
     stasis_done: 'Energy released — the rock giant smashed the blocked wall.', stasis_frozen: 'Frozen. Hit to store energy (up to 6), or release it.', stasis_idle: 'Freeze the rock giant, hit it to build energy, then release.',
@@ -198,6 +200,8 @@ function go(hash) {
 
 function back() {
   const p = routeParts();
+  if (p[0] === 'map') return go('#/runes');
+  if (p[0] === 'rune' && RUNE_GAMES.has(p[1])) return pauseRuneGame();
   if (p[0] === 'rune') return go('#/runes');
   if (p[0] === 'inventory') return go(p[2] ? '#/inventory/' + state.inventory.category : '#/runes');
   if (p[0] === 'compendium') {
@@ -205,7 +209,7 @@ function back() {
     if (p[1]) return go('#/compendium');
     return go('#/standby');
   }
-  if (p[0] === 'log') return go(p[1] ? '#/log' : '#/standby');
+  if (p[0] === 'log') return go(p[2] ? `#/log/${logTabId(p[1])}` : '#/standby');
   if (p[0] === 'album') return go(p[1] ? '#/album' : '#/system');
   if (p[0] === 'system' || p[0] === 'runes') return go('#/standby');
   return go('#/runes');
@@ -237,7 +241,7 @@ function footer(left, right = t('hold_back')) {
 function sceneTop(rune, stat) {
   return `<div class="scene-top">
     <button class="back-tab" data-action="back" data-focus>◀ ${t('back')}</button>
-    <div class="rune-tag"><img src="${IMG(rune.icon)}" alt=""><b>${state.lang === 'cn' ? rune.cn : rune.label}</b></div>
+    <div class="rune-tag"><img src="${IMG(rune.id==='sensor'?'eye.png':rune.icon)}" alt=""><b>${state.lang === 'cn' ? rune.cn : rune.label}</b></div>
     <span class="scene-stat">${stat}</span>
   </div>`;
 }
@@ -247,10 +251,11 @@ function viewStandby() {
   return `<div class="standby">
     <img class="sb-puppet a" src="${IMG('cut_skywatcher.png')}" alt="">
     <img class="sb-slate" src="${IMG('cut_slate.png')}" alt="">
+    <img class="sb-title ${state.lang === 'cn' ? 'cn' : 'en'}" src="../assets/raw/02_ui/${state.lang === 'cn' ? 'BotW_Simplified_Chinese_Logo.png' : 'BotW_English_Logo.png'}" alt="${state.lang === 'cn' ? '塞尔达传说 旷野之息' : 'The Legend of Zelda: Breath of the Wild'}">
     <img class="sb-eye" src="${IMG('eye.png')}" alt="">
     <div class="sb-clock">09:41</div>
     <div class="sb-date">${state.lang === 'cn' ? '周六 · 10.26 · 海拉鲁' : 'SAT · 10.26 · HYRULE'}</div>
-    <div class="sb-battery"><span class="batt"><i style="width:99%"></i></span>99%</div>
+    <div class="sb-battery" role="img" aria-label="${t('sys_battery')} 99%"><span class="sb-battery-art" aria-hidden="true"></span><span aria-hidden="true">99%</span></div>
     <button class="sb-prompt" data-action="go:#/runes" data-focus data-start>${t('press_ok')}</button>
     <div class="sb-brand">AI PASSPORT · SHEIKAH SLATE</div>
   </div>`;
@@ -265,7 +270,7 @@ function viewRunes() {
       <div class="rune-grid">${RUNES.map((x, i) => `
         <button class="rune-tile ${i === state.runeIndex ? 'sel' : ''}" data-action="pick:${i}" data-focus ${i === state.runeIndex ? 'data-start' : ''}>
           <span class="num">0${i + 1}</span>
-          <img src="${IMG(x.icon)}" alt="">
+          ${x.id==='sensor'?`<span class="rune-select-art" style="${runeSpriteStyle(15,32)}"></span>`:`<img src="${IMG(x.icon)}" alt="">`}
           <b>${state.lang === 'cn' ? (RUNE_TILE_CN[x.short] || x.short) : x.short}</b>
         </button>`).join('')}</div>
     </div>
@@ -282,241 +287,10 @@ function viewRunes() {
 
 /* ---------------- rune scenes ---------------- */
 function viewRune(id) {
-  const rune = RUNE_BY_ID[id] || RUNE_BY_ID.bomb;
-  switch (rune.id) {
-    case 'bomb':
-    case 'bomb_cube': return viewBomb(rune);
-    case 'magnet': return viewMagnet(rune);
-    case 'stasis': return viewStasis(rune);
-    case 'cryonis': return viewCryonis(rune);
-    case 'camera': return viewCamera(rune);
-    case 'cycle': return viewCycle(rune);
-    case 'amiibo': return viewAmiibo(rune);
-    case 'sensor': return viewSensor(rune);
-    default: return viewRunes();
-  }
+  return viewAbility(id);
 }
 
-/* 大师摩托 / amiibo / 希卡感应器：原型暂未做试炼玩法，用场景图 + 信息卡占位。 */
-function viewRuneInfo(rune) {
-  return topbar('runes') + `<div class="body story-body scene-body">
-    <div class="scene" style="background-image:url(${IMG(rune.scene)})"></div>
-    <div class="scene-shade"></div>
-    <div class="story-meta"><span>RUNE ${rune.short}</span><span>${t('rune_placeholder')}</span></div>
-    <h2>${rune.label}</h2>
-    <div class="story-subtitle">${rune.cn}</div>
-    <article class="story-page">
-      <p>${rune.desc}</p>
-      <p style="color:#a8cdd4;margin-top:6px">${t('rune_placeholder_note')}</p>
-    </article>
-    <div class="story-controls">
-      <button data-action="back" data-start>${t('back_to_runes')}</button>
-    </div>
-  </div>` + footer(`<b>OK</b> ${t('back')}`, `${rune.short} · ${t('rune_placeholder')}`);
-}
-
-/* 大师摩托：召唤 → 骑乘加速 → 冲到终点。 */
-function viewCycle(rune) {
-  const c = state.cycle;
-  const riding = c.phase === 'ride' || c.phase === 'done';
-  return `<div class="body scene-body">
-    <div class="scene" id="scene" style="background-image:url(${IMG(rune.scene)})"></div>
-    <div class="scene-shade"></div>
-    <img class="puppet far drift slow" src="${IMG('cut_lynel.png')}" alt="" style="right:10px;bottom:96px;width:52px">
-    <img class="puppet mid drift" src="${IMG('cut_guardian_big.png')}" alt="" style="left:120px;bottom:44px;width:62px">
-    ${sceneTop(rune, c.phase === 'done' ? (state.lang === 'cn' ? '试炼完成' : 'TRIAL CLEAR')
-      : riding ? (state.lang === 'cn' ? `骑行 ${c.dist}%` : `RIDE ${c.dist}%`)
-        : (state.lang === 'cn' ? '待命' : 'STANDBY'))}
-    ${c.phase === 'done' ? `<div class="badge-done">${t('trial_complete')}</div>` : ''}
-    <img class="cycle-bike ${c.phase === 'summon' ? 'in' : ''} ${riding ? 'riding' : ''}" src="${IMG(rune.icon)}" alt="" style="${riding ? `left:${(30 + c.dist * 0.5).toFixed(0)}px;bottom:32px` : ''}">
-    ${c.phase === 'summon' || riding ? '<div class="cycle-dust"></div>' : ''}
-    <div class="msg">${c.phase === 'done' ? t('cycle_done')
-      : c.phase === 'ride' ? t('cycle_riding')
-        : t('cycle_idle')}</div>
-    ${riding ? `<div class="cycle-gauges">
-      <div class="gauge"><span>${t('cycle_speed')}</span><div class="bar"><i style="width:${c.speed}%"></i></div><b>${c.speed}</b></div>
-      <div class="gauge"><span>${t('cycle_dist')}</span><div class="bar"><i style="width:${c.dist}%"></i></div><b>${c.dist}%</b></div>
-    </div>` : ''}
-    <div class="chiprow">
-      <button class="chip" data-action="${c.phase === 'done' ? 'cycle:reset' : 'cycle:summon'}" data-focus data-start ${c.phase === 'ride' ? 'disabled' : ''}>${c.phase === 'done' ? t('scene_retry') : t('cycle_summon')}</button>
-      <button class="chip" data-action="cycle:accel" data-focus ${c.phase === 'ride' ? '' : 'disabled'}>${t('cycle_accel')}</button>
-    </div>
-  </div>` + footer(t('scene_foot'));
-}
-
-const AMIIBO_FIGURES = [
-  { icon: 'cp_master_sword.png', cn: '大师之剑 amiibo', en: 'MASTER SWORD' },
-  { icon: 'cp_hylian_shield.png', cn: '海利亚盾 amiibo', en: 'HYLIAN SHIELD' },
-  { icon: 'cp_bokoblin.png', cn: '波克布林 amiibo', en: 'BOKOBLIN' }
-];
-const AMIIBO_DROPS = [
-  { icon: 'cp_apple.png', cn: '苹果 ×3', en: 'APPLE ×3' },
-  { icon: 'cp_hylian_shroom.png', cn: '海利亚蘑菇 ×5', en: 'HYLIAN SHROOM ×5' },
-  { icon: 'cp_wildberry.png', cn: '野莓 ×4', en: 'WILD BERRY ×4' },
-  { icon: 'cp_hearty_durian.png', cn: '生命榴莲 ×2', en: 'HEARTY DURIAN ×2' },
-  { icon: 'cp_royal_claymore.png', cn: '王族双手剑 ×1', en: 'ROYAL CLAYMORE ×1' }
-];
-/* amiibo：选择角色 → 读取光柱 → 随机掉落。 */
-function viewAmiibo(rune) {
-  const a = state.amiibo;
-  const fig = AMIIBO_FIGURES[a.sel];
-  const drop = a.got;
-  return `<div class="body scene-body">
-    <div class="scene" id="scene" style="background-image:url(${IMG(rune.scene)})"></div>
-    <div class="scene-shade"></div>
-    <img class="puppet far drift slow" src="${IMG('cut_keese.png')}" alt="" style="left:6px;top:30px;width:54px">
-    <img class="puppet mid drift" src="${IMG('cut_lizalfos_big.png')}" alt="" style="right:40px;bottom:46px;width:84px">
-    ${sceneTop(rune, a.phase === 'done' ? (state.lang === 'cn' ? '读取完成' : 'SCAN COMPLETE')
-      : a.phase === 'scan' ? (state.lang === 'cn' ? '读取中…' : 'SCANNING…')
-        : (state.lang === 'cn' ? '待命' : 'STANDBY'))}
-    <div class="amiibo-base"><img src="${IMG(fig.icon)}" alt=""></div>
-    ${a.phase === 'scan' ? '<div class="beam"></div>' : ''}
-    ${a.phase === 'done' && drop ? `<div class="drop-item"><img src="${IMG(drop.icon)}" alt=""><b>${state.lang === 'cn' ? drop.cn : drop.en}</b></div>` : ''}
-    <div class="msg">${a.phase === 'done' ? t('amiibo_done')
-      : a.phase === 'scan' ? t('amiibo_scanning')
-        : t('amiibo_select')}</div>
-    <div class="chiprow">
-      <button class="chip" data-action="amiibo:prev" data-focus ${a.phase === 'scan' || a.phase === 'done' ? 'disabled' : ''}>◀ ${state.lang === 'cn' ? '上一个' : 'PREV'}</button>
-      <button class="chip" data-action="${a.phase === 'done' ? 'amiibo:again' : 'amiibo:scan'}" data-focus data-start ${a.phase === 'scan' ? 'disabled' : ''}>${a.phase === 'done' ? t('amiibo_again') : t('amiibo_scan')}</button>
-      <button class="chip" data-action="amiibo:next" data-focus ${a.phase === 'scan' || a.phase === 'done' ? 'disabled' : ''}>${state.lang === 'cn' ? '下一个' : 'NEXT'} ▶</button>
-    </div>
-  </div>` + footer(t('scene_foot'));
-}
-
-const SENSOR_BEARINGS = [
-  { cn: '东北', en: 'NE' }, { cn: '东南', en: 'SE' }, { cn: '西南', en: 'SW' }, { cn: '西北', en: 'NW' }
-];
-/* 希卡感应器：扫描定位神庙 → 步步逼近 → 发现。 */
-function viewSensor(rune) {
-  const s = state.sensor;
-  const bearing = SENSOR_BEARINGS[s.b];
-  return `<div class="body scene-body">
-    <div class="scene" id="scene" style="background-image:url(${IMG(rune.scene)})"></div>
-    <div class="scene-shade"></div>
-    <img class="puppet mid drift" src="${IMG('cut_skywatcher.png')}" alt="" style="right:14px;bottom:64px;width:68px">
-    ${sceneTop(rune, s.done ? (state.lang === 'cn' ? '发现神庙' : 'SHRINE FOUND')
-      : s.phase === 'scan' ? (state.lang === 'cn' ? `${bearing.cn} · ${s.d}m` : `${bearing.en} · ${s.d}m`)
-        : (state.lang === 'cn' ? '待命' : 'STANDBY'))}
-    ${s.done ? `<div class="badge-done">${t('trial_complete')}</div>` : ''}
-    <div class="sensor-ring ${s.phase === 'scan' ? 'on' : ''}"><i></i><i></i><i></i><i></i></div>
-    ${s.phase === 'scan' && !s.done ? `<div class="sensor-arrow">${state.lang === 'cn' ? bearing.cn : bearing.en}</div>` : ''}
-    <div class="msg">${s.done ? t('sensor_done')
-      : s.phase === 'scan' ? (s.d <= 40 ? t('sensor_near') : t('sensor_found'))
-        : t('sensor_idle')}</div>
-    <div class="chiprow">
-      <button class="chip" data-action="${s.done ? 'sensor:reset' : 'sensor:scan'}" data-focus data-start ${s.phase === 'scan' && !s.done ? 'disabled' : ''}>${s.done ? t('scene_retry') : t('sensor_scan')}</button>
-      <button class="chip" data-action="sensor:advance" data-focus ${s.phase === 'scan' && !s.done ? '' : 'disabled'}>${t('sensor_advance')}</button>
-    </div>
-  </div>` + footer(t('scene_foot'));
-}
-
-function viewBomb(rune) {
-  const b = state.bomb;
-  /* 圆/方炸弹是两个符文入口，但共用这套玩法；换形态时清掉上一次的放置与完成状态。 */
-  if (b.type !== rune.kind) { b.type = rune.kind; b.placed = false; b.done = false; }
-  const bombImg = b.type === 'ROUND' ? 'bomb_round.png' : 'bomb_cube.png';
-  return `<div class="body scene-body">
-    <div class="scene" id="scene" style="background-image:url(${IMG('rune_scene_bomb.png')})"></div>
-    <div class="scene-shade"></div>
-    <img class="puppet far drift slow" src="${IMG('cut_decayed.png')}" alt="" style="right:12px;bottom:110px;width:46px">
-    <img class="puppet mid drift" src="${IMG('cut_bokoblin.png')}" alt="" style="left:130px;bottom:46px;width:68px">
-    <img class="puppet near drift slow" src="${IMG('cut_moblin_big.png')}" alt="" style="left:-50px;bottom:-4px;width:158px">
-    ${sceneTop(rune, b.done ? (state.lang === 'cn' ? '试炼完成' : 'TRIAL CLEAR') : b.placed ? (state.lang === 'cn' ? '已就位' : 'ARMED') : (state.lang === 'cn' ? '待命' : 'STANDBY'))}
-    ${b.done ? `<div class="badge-done">${t('trial_complete')}</div>` : ''}
-    <img class="actor wall ${b.done ? 'gone' : ''}" src="${FW('wall.png')}" alt="" style="right:26px;bottom:44px">
-    <div class="aim ${b.done ? 'hidden' : 'hot'}" style="right:34px;bottom:42px"></div>
-    <img class="actor bomb ${b.placed ? 'in' : ''} ${b.type === 'ROUND' && b.placed && !b.done ? 'roll' : ''}" src="${FW(bombImg)}" alt="" style="right:90px;bottom:50px">
-    <div id="blastLayer"></div>
-    <div class="msg">${b.done ? t('bomb_done')
-      : b.placed ? t('bomb_placed')
-        : t('bomb_idle')}</div>
-    <div class="chiprow">
-      <button class="chip ${b.placed ? 'on' : ''}" data-action="${b.done ? 'bomb:reset' : 'bomb:place'}" data-focus data-start ${b.placed ? 'disabled' : ''}>${b.done ? t('scene_retry') : t('scene_place_bomb')}</button>
-      <button class="chip" data-action="bomb:blast" data-focus ${b.placed ? '' : 'disabled'}>${t('scene_detonate')}</button>
-    </div>
-  </div>` + footer(t('scene_foot'));
-}
-
-function viewMagnet(rune) {
-  const m = state.magnet;
-  const crateLeft = (m.done || m.moved) ? 98 : 244;
-  const crateBottom = m.done ? 66 : m.moved ? 96 : 58;
-  return `<div class="body scene-body">
-    <div class="scene" id="scene" style="background-image:url(${IMG('rune_scene_magnet.png')})"></div>
-    <div class="scene-shade"></div>
-    <img class="puppet far drift slow" src="${IMG('cut_keese.png')}" alt="" style="right:8px;top:42px;width:56px">
-    <img class="puppet mid drift" src="${IMG('cut_lizalfos_big.png')}" alt="" style="right:50px;bottom:40px;width:94px">
-    <img class="puppet near drift slow" src="${IMG('cut_bokoblin.png')}" alt="" style="left:-66px;bottom:-4px;width:156px">
-    ${sceneTop(rune, m.done ? (state.lang === 'cn' ? '试炼完成' : 'TRIAL CLEAR') : m.grabbed ? (state.lang === 'cn' ? '已锁定' : 'LOCKED ON') : (state.lang === 'cn' ? '待命' : 'STANDBY'))}
-    ${m.done ? `<div class="badge-done">${t('trial_complete')}</div>` : ''}
-    <img class="actor gate" src="${FW('gate.png')}" alt="" style="left:14px;bottom:58px;${m.done ? 'transform:translateY(-34px);opacity:.4' : ''}">
-    <div class="plate-mark" style="left:92px;bottom:56px"></div>
-    <img class="actor crate ${m.grabbed && !m.done ? 'in' : ''}" src="${FW('crate.png')}" alt="" style="left:${crateLeft}px;bottom:${crateBottom}px;${m.grabbed && !m.done ? 'filter:drop-shadow(0 0 9px rgba(127,233,255,.9))' : ''}">
-    <div class="msg">${m.done ? t('magnet_done')
-      : m.moved ? t('magnet_moved')
-        : m.grabbed ? t('magnet_grabbed')
-          : t('magnet_idle')}</div>
-    <div class="chiprow">
-      <button class="chip ${m.grabbed ? 'on' : ''}" data-action="${m.done ? 'magnet:reset' : 'magnet:grab'}" data-focus data-start>${m.done ? t('scene_retry') : t('scene_grab')}</button>
-      <button class="chip ${m.moved ? 'on' : ''}" data-action="magnet:move" data-focus ${m.grabbed && !m.done ? '' : 'disabled'}>${t('scene_move')}</button>
-      <button class="chip" data-action="magnet:drop" data-focus ${m.moved && !m.done ? '' : 'disabled'}>${t('scene_drop')}</button>
-    </div>
-  </div>` + footer(t('scene_foot'));
-}
-
-function viewStasis(rune) {
-  const s = state.stasis;
-  const pips = Array.from({ length: 6 }, (_, i) => `<i class="${i < s.hits ? 'on' : ''}"></i>`).join('');
-  return `<div class="body scene-body">
-    <div class="scene ${s.frozen ? 'frozen-scene' : ''}" id="scene" style="background-image:url(${IMG('rune_scene_stasis.png')})"></div>
-    <div class="scene-shade"></div>
-    <img class="puppet far drift slow" src="${IMG('cut_decayed.png')}" alt="" style="right:6px;bottom:112px;width:44px">
-    <img class="puppet mid drift slow" src="${IMG('cut_lynel.png')}" alt="" style="right:96px;bottom:58px;width:86px">
-    <img class="puppet near drift slow" src="${IMG('cut_hinox.png')}" alt="" style="left:-62px;bottom:-6px;width:152px">
-    ${sceneTop(rune, s.done ? (state.lang === 'cn' ? '试炼完成' : 'TRIAL CLEAR') : s.frozen ? (state.lang === 'cn' ? '时停中' : 'TIME LOCKED') : (state.lang === 'cn' ? '待命' : 'STANDBY'))}
-    ${s.frozen ? `<div class="stasis-timer"><div class="bar"><i id="stasisBar" style="width:${s.remaining * 10}%"></i></div><span id="stasisTime">${s.remaining.toFixed(1)} s</span></div>
-      <div class="pips">${pips}</div>` : ''}
-    ${s.done ? `<div class="badge-done">${t('trial_complete')}</div>` : ''}
-    <div class="aim ${s.done ? 'hidden' : ''}" style="right:54px;bottom:44px"></div>
-    <img class="actor boulder ${s.frozen ? 'frozen' : ''}" src="${IMG('cut_talus.png')}" alt="" style="right:46px;bottom:44px;${s.done ? 'transform:translateX(40px) rotate(18deg);opacity:.45' : ''}">
-    <div class="msg">${s.done ? t('stasis_done')
-      : s.frozen ? t('stasis_frozen')
-        : t('stasis_idle')}</div>
-    <div class="chiprow">
-      <button class="chip ${s.frozen ? 'on' : ''}" data-action="${s.done ? 'stasis:reset' : 'stasis:freeze'}" data-focus data-start ${s.frozen ? 'disabled' : ''}>${s.done ? t('scene_retry') : t('scene_freeze')}</button>
-      <button class="chip" data-action="stasis:hit" data-focus ${s.frozen ? '' : 'disabled'}>${t('scene_hit')}</button>
-      <button class="chip" data-action="stasis:release" data-focus ${s.frozen ? '' : 'disabled'}>${t('scene_release')}</button>
-    </div>
-  </div>` + footer(t('scene_foot'));
-}
-
-const ICE_SLOTS = [52, 110, 168];
-function viewCryonis(rune) {
-  const c = state.cryonis;
-  return `<div class="body scene-body">
-    <div class="scene" id="scene" style="background-image:url(${IMG('rune_scene_cryonis.png')});background-position:center 62%"></div>
-    <div class="scene-shade"></div>
-    <div class="waterline"></div>
-    <img class="puppet mid drift" src="${IMG('cut_wizzrobe.png')}" alt="" style="left:4px;bottom:58px;width:66px">
-    <img class="puppet far drift slow" src="${IMG('cut_skywatcher.png')}" alt="" style="right:-16px;bottom:102px;width:96px">
-    <img class="puppet near drift slow" src="${IMG('cut_keese.png')}" alt="" style="left:-52px;top:8px;width:146px">
-    ${sceneTop(rune, c.done ? (state.lang === 'cn' ? '试炼完成' : 'TRIAL CLEAR') : (state.lang === 'cn' ? `冰柱 ${c.count}/3` : `PILLARS ${c.count}/3`))}
-    ${c.done ? `<div class="badge-done">${t('trial_complete')}</div>` : ''}
-    ${ICE_SLOTS.map((x, i) => `
-      <div class="slot" style="left:${x}px;bottom:56px"></div>
-      ${i < c.count ? `<div class="pillar" style="left:${x}px;bottom:56px"></div>` : ''}`).join('')}
-    <div class="msg">${c.done ? t('cryonis_done')
-      : c.count >= 3 ? t('cryonis_full')
-        : t('cryonis_idle')}</div>
-    <div class="chiprow">
-      <button class="chip" data-action="${c.done ? 'cryonis:reset' : 'cryonis:create'}" data-focus data-start ${c.count >= 3 && !c.done ? 'disabled' : ''}>${c.done ? t('scene_retry') : t('scene_ice')}</button>
-      <button class="chip" data-action="cryonis:break" data-focus ${c.count === 0 || c.done ? 'disabled' : ''}>${t('scene_break')}</button>
-      <button class="chip" data-action="cryonis:cross" data-focus ${c.count >= 3 && !c.done ? '' : 'disabled'}>${t('scene_cross')}</button>
-    </div>
-  </div>` + footer(t('scene_foot'));
-}
-
-/* 取景框里的缩略图是 96px；big 是写进相册后详情页用的 280px 图，没大图就回落。 */
+/* 相机示例目标；拍照同时更新图鉴登记与相册。 */
 const CAM_TARGETS = [
   { x: 26, y: 30, img: 'pic_nightshade.png', big: 'cp_blue_nightshade.png', name: 'BLUE NIGHTSHADE', cn: '蓝夜光草' },
   { x: 112, y: 12, img: 'pic_bass.png', big: 'cp_hyrule_bass.png', name: 'HYLIAN BASS', cn: '海拉鲁鲈鱼' },
@@ -556,76 +330,6 @@ function viewCamera(rune) {
   </div>` + footer(t('camera_foot'));
 }
 
-/* ---------------- map ---------------- */
-/* 只截取游戏截图中部地图；裁切框排除石质边框、上下菜单与边缘 HUD。
-   size 为原图尺寸，crop 为原图像素坐标 [x, y, 宽, 高]；raw 文件保持不变。 */
-const MAP_IMAGES = [
-  { file: 'botw_map_great_plateau.jpg', name: '初始台地', label: 'GREAT PLATEAU', size: [1800, 1013], crop: [210, 120, 1320, 780] },
-  { file: 'botw_map_ui_full.jpg', name: '海拉鲁平原', label: 'HYRULE FIELD', size: [1920, 1080], crop: [230, 170, 1420, 700] },
-  { file: 'botw_map_central.jpg', name: '中央海拉鲁', label: 'CENTRAL HYRULE', size: [1110, 624], crop: [135, 100, 820, 380] },
-  { file: 'botw_map_northeast.jpg', name: '阿卡莱', label: 'AKKALA', size: [1280, 720], crop: [180, 100, 920, 480] }
-];
-const mapImageURL = image => `../assets/raw/05_world/maps/${image.file}`;
-
-function viewMap() {
-  const image = MAP_IMAGES[state.map.index];
-  return topbar('map') + `<div class="body map-body">
-    <div class="map-viewport" id="mapViewport" role="region" aria-label="${image.name}地图">
-      <div class="map-crop" id="mapCrop">
-        <img class="map-image" id="mapImage" src="${mapImageURL(image)}" alt="《旷野之息》${image.name}中部地图" draggable="false">
-      </div>
-      <p class="map-error" id="mapError" role="alert" hidden>${t('map_error')}</p>
-    </div>
-    <div class="map-hud"><span id="mapCaption" aria-live="polite"></span><output id="mapZoom" aria-label="地图序号与缩放倍率"></output></div>
-    <div class="map-controls" aria-label="地图操作">
-      <button class="chip" data-action="map:step:-1" data-focus title="上一张（←）">${t('map_prev')}</button>
-      <button class="chip" data-action="map:step:1" data-focus data-start title="下一张（→）">${t('map_next')}</button>
-      <button class="chip" data-action="map:zoom:-0.5" data-focus aria-label="缩小地图">${t('map_zoom_out')}</button>
-      <button class="chip" data-action="map:zoom:0.5" data-focus aria-label="放大地图">${t('map_zoom_in')}</button>
-      <button class="chip" data-action="map:reset" data-focus title="恢复裁切全图（0）">${t('map_reset')}</button>
-    </div>
-  </div>` + footer(t('map_foot_l'), t('map_foot_r'));
-}
-
-function updateMapView() {
-  const m = state.map;
-  const image = MAP_IMAGES[m.index];
-  const img = document.getElementById('mapImage');
-  if (!img) return;
-  if (img.getAttribute('src') !== mapImageURL(image)) {
-    document.getElementById('mapError').hidden = true;
-    img.src = mapImageURL(image);
-    img.alt = `《旷野之息》${image.name}中部地图`;
-  }
-  /* 地图限定在原有 body 内。先裁掉截图外框，再等比铺满；拖动也不能露出裁切外内容。 */
-  const viewport = document.getElementById('mapViewport');
-  const width = viewport.clientWidth;
-  const height = viewport.clientHeight;
-  const [x, y, cropWidth, cropHeight] = image.crop;
-  const scale = Math.max(width / cropWidth, height / cropHeight);
-  const w = cropWidth * scale, h = cropHeight * scale;
-  const maxX = Math.max(0, (w * m.zoom - width) / 2);
-  const maxY = Math.max(0, (h * m.zoom - height) / 2);
-  m.x = Math.max(-maxX, Math.min(maxX, m.x));
-  m.y = Math.max(-maxY, Math.min(maxY, m.y));
-  const crop = document.getElementById('mapCrop');
-  crop.style.width = `${w}px`;
-  crop.style.height = `${h}px`;
-  crop.style.left = `${(width - w) / 2}px`;
-  crop.style.top = `${(height - h) / 2}px`;
-  crop.style.transform = `translate(${m.x}px, ${m.y}px) scale(${m.zoom})`;
-  img.style.width = `${image.size[0] * scale}px`;
-  img.style.height = `${image.size[1] * scale}px`;
-  img.style.left = `${-x * scale}px`;
-  img.style.top = `${-y * scale}px`;
-  viewport.classList.toggle('zoomed', m.zoom > 1);
-  viewport.setAttribute('aria-label', `${image.name}地图`);
-  document.getElementById('mapCaption').textContent = state.lang === 'cn' ? image.name : image.label;
-  document.getElementById('mapZoom').textContent = `${m.index + 1}/${MAP_IMAGES.length} · ${Math.round(m.zoom * 100)}%`;
-  screenEl.querySelector('[data-action="map:zoom:-0.5"]').disabled = m.zoom <= 1;
-  screenEl.querySelector('[data-action="map:zoom:0.5"]').disabled = m.zoom >= 4;
-}
-
 /* ---------------- inventory ---------------- */
 const INV_CATS = [
   { id: 'weapons', label: 'WEAPONS', icon: 'inventory/sword.svg' },
@@ -638,7 +342,7 @@ const INV_BONUS = { normal: 'NO SPECIAL EFFECT', swimming: 'SWIM SPEED UP', clim
 const INV_BONUS_ICONS = { swimming: 'inventory/water.svg', climbing: 'inventory/mountain.svg', fire: 'inventory/fire.svg' };
 const INV_SLOT = { weapon: 'WEAPON', shield: 'SHIELD', head: 'HEAD', body: 'BODY', legs: 'LEGS' };
 const RUNE_STAT_CN = { TYPE: '类型', COOLDOWN: '冷却', RANGE: '范围', TARGET: '目标', LIMIT: '上限', 'MAX HIT': '最多击打', ALBUM: '相册', SOURCE: '来源', USE: '使用' };
-const RUNE_STAT_VAL_CN = { ROUND: '圆形', CUBE: '方形', METAL: '金属', '1 / DAY': '每日 1 次', FIGURE: '手办', ANYWHERE: '任意地点', SHRINE: '神庙' };
+const RUNE_STAT_VAL_CN = { ROUND: '圆形', CUBE: '方形', METAL: '金属', '1 / DAY': '每日 1 次', FIGURE: '手办', ANYWHERE: '任意地点', SUMMON: '召唤', SHRINE: '神庙' };
 const RUNE_TILE_CN = { 'ROUND BOMB': '圆炸弹', 'CUBE BOMB': '方炸弹', MAGNET: '磁力抓取', STASIS: '静止器', CRYONIS: '制冰器', CAMERA: '照相机', 'MASTER CYCLE': '大师摩托', AMIIBO: 'amiibo 读取', SENSOR: '希卡感应器' };
 const PLACE_CN = {
   'Hyrule Field': '海拉鲁平原', 'Satori Mountain': '萨托利山', 'Hebra Mountains': '海布拉山脉', 'Greater Hyrule': '海拉鲁全境',
@@ -743,7 +447,7 @@ function viewInventory(category, id) {
       <div class="inv-grid">${visible.map(item => `<button class="inv-cell ${isEquipped(item) ? 'equipped' : ''} ${selected.id === item.id ? 'sel' : ''}"
         data-action="inv:equip:${item.id}" data-item="${item.id}" data-focus ${selected.id === item.id ? 'data-start' : ''}
         title="${esc(invName(item))} · ${isEquipped(item) ? t('unequip') : t('equip')}" aria-pressed="${isEquipped(item)}" aria-label="${esc(invName(item))} · ${isEquipped(item) ? t('unequip') : t('equip')}">
-        <img class="inv-item-art" src="${IMG(item.img)}" alt="">${INV_BONUS_ICONS[item.bonus] ? `<img class="inv-cell-bonus" src="${IMG(INV_BONUS_ICONS[item.bonus])}" alt="${INV_BONUS[item.bonus]}">` : ''}<b>${item.value}</b>
+        <img class="inv-item-art" src="${IMG(item.img)}" alt="">${state.inventory.rewards?.[item.id] ? `<span class="inv-reward">+${state.inventory.rewards[item.id]}</span>` : ''}${INV_BONUS_ICONS[item.bonus] ? `<img class="inv-cell-bonus" src="${IMG(INV_BONUS_ICONS[item.bonus])}" alt="${INV_BONUS[item.bonus]}">` : ''}<b>${item.value}</b>
       </button>`).join('')}${Array.from({ length: INV_PAGE_SIZE - visible.length }, () => '<span class="inv-cell empty" aria-hidden="true"></span>').join('')}</div>
       <div class="inv-pager"><button data-action="inv:page:-1" ${page === 0 ? 'disabled' : ''} aria-label="${t('inv_page_prev')}"><img class="inv-page-arrow previous" src="${IMG('inventory/arrow.svg')}" alt=""></button>
         <span>${String(page + 1).padStart(2, '0')} / ${String(pageCount).padStart(2, '0')}</span>
@@ -810,7 +514,7 @@ function viewCompendium() {
         <img class="cover" src="${IMG(c.cover)}" alt="">
         <img class="art" src="${IMG(c.art)}" alt="">
         <b>${state.lang === 'cn' ? c.cn : c.label}</b>
-        <span>${state.lang === 'cn' ? `${c.have}/${c.total}` : `${c.cn} · ${c.have}/${c.total}`}</span>
+        <span>${state.lang === 'cn' ? `${c.have}/${c.total}` : `${c.have}/${c.total}`}</span>
         <div class="bar"><i style="width:${Math.round(c.have / c.total * 100)}%"></i></div>
       </button>`).join('')}</div>
   </div>` + footer(t('comp_foot_l'));
@@ -820,17 +524,17 @@ function viewCompendiumCat(catId) {
   const cat = COMP_CATS.find(c => c.id === catId) || COMP_CATS[0];
   state.compCat = cat.id;
   const entries = COMP_ENTRIES[cat.id] || [];
-  return topbar('compendium') + `<div class="body comp-body">
-    <div class="comp-head"><span class="head-left"><button class="back-tab" data-action="back" data-focus>◀ ${t('back')}</button><img class="cat-mark" src="${IMG(cat.art)}" alt=""><h3>${state.lang === 'cn' ? cat.cn : cat.label}</h3></span><span>${cat.have}/${cat.total} RECORDED</span></div>
+  return topbar('compendium') + `<div class="body comp-body comp-category">
+    <div class="comp-head"><span class="head-left"><button class="back-tab" data-action="back" data-focus>◀ ${t('back')}</button><img class="cat-mark" src="${IMG(cat.art)}" alt=""><h3>${state.lang === 'cn' ? cat.cn : cat.label}</h3></span><span>${cat.have}/${cat.total} ${t('recorded')}</span></div>
     <div class="entry-list">${entries.map((e, i) => `
       <button class="entry-row" data-action="entry:${cat.id}:${i}" data-focus ${i === 0 ? 'data-start' : ''}>
         <span class="no">#${e.no}</span>
         ${e.got ? `<img src="${IMG(e.thumb || e.img)}" alt="">` : `<span class="unknown"><img src="${IMG(cat.art)}" alt=""></span>`}
-        <span class="name"><b>${e.got ? (state.lang === 'cn' ? e.cn : e.name) : '???'}${e.mm ? `<i class="mm-dot">M</i>` : ''}</b>${e.got ? `<span>${state.lang === 'cn' ? '' : e.cn}</span>` : `<span>${t('not_recorded')}</span>`}</span>
+        <span class="name"><b>${e.got ? (state.lang === 'cn' ? e.cn : e.name) : '???'}${e.mm ? `<i class="mm-dot">M</i>` : ''}</b>${e.got ? `<span></span>` : `<span>${t('not_recorded')}</span>`}</span>
         <span class="state ${e.got ? 'ok' : ''}">${e.got ? (state.lang === 'cn' ? '✓ 已登记' : '✓ RECORDED') : (state.lang === 'cn' ? '— 未发现' : '— NOT FOUND')}</span>
       </button>`).join('')}</div>
     <div class="comp-foot">
-      <div class="row"><span>RECORDED</span><b>${cat.have} / ${cat.total}</b></div>
+      <div class="row"><span>${t('recorded')}</span><b>${cat.have} / ${cat.total}</b></div>
       <div class="bar"><i style="width:${Math.round(cat.have / cat.total * 100)}%"></i></div>
       <p>${state.lang === 'cn' ? ('全量条目 · ' + cat.cn + ' 共 ' + cat.total + ' 条' + (cat.id === 'monsters' ? ' · 含大师模式金色怪' : '')) : ('ALL ENTRIES · ' + cat.total + (cat.id === 'monsters' ? ' · INCL. MASTER MODE GOLD' : ''))}</p>
     </div>
@@ -873,27 +577,29 @@ function viewEntry(catId, idx) {
 }
 
 /* ---------------- adventure log ---------------- */
+const LOG_TABS = ['main', 'shrine', 'side'];
+const logTabId = id => LOG_TABS.includes(id) ? id : 'main';
+
 function viewLog() {
-  const tab = state.logTab === 'side' ? 'side' : 'main';
+  const tab = logTabId(state.logTab);
   const list = QUESTS[tab];
-  const total = String(list.length);
   return topbar('log') + `<div class="body log-body">
     <div class="log-tabs">
-      ${[['main', 'log_main'], ['side', 'log_side']].map(([id, key]) => `
-        <button class="log-tab ${tab === id ? 'on' : ''}" data-action="logtab:${id}" data-focus aria-pressed="${tab === id}" ${tab === id ? 'data-start' : ''}>${t(key)}</button>`).join('')}
+      ${LOG_TABS.map(id => `
+        <button class="log-tab ${tab === id ? 'on' : ''}" data-action="logtab:${id}" data-focus aria-pressed="${tab === id}" ${tab === id ? 'data-start' : ''}>${t(`log_${id}`)} ${QUESTS[id].length}</button>`).join('')}
     </div>
     <div class="story-intro"><b>${t('log_title')}</b></div>
     <div class="quest-list">${list.map((q, i) => `
       <button class="quest-row" data-action="quest:${tab}:${q.id}" data-focus>
         <span class="q-number">${String(i + 1).padStart(2, '0')}</span>
-        <span class="q-main"><b>${esc(state.lang === 'cn' ? q.cn : q.title)}</b>${state.lang === 'cn' ? '' : `<span>${esc(q.cn)}</span>`}</span>
+        <span class="q-main"><b>${esc(state.lang === 'cn' ? q.cn : q.title)}</b></span>
         <span class="q-pages">${esc(state.lang === 'cn' ? q.loc : (q.loc_en || ''))}</span>
       </button>`).join('')}</div>
   </div>` + footer(t('log_foot_l'), '');
 }
 
 function viewQuest(tabId, id) {
-  const tab = tabId === 'side' ? 'side' : 'main';
+  const tab = logTabId(tabId);
   const list = QUESTS[tab];
   const q = list.find(x => x.id === id) || list[0];
   if (tabId !== tab || id !== q.id) history.replaceState(null, '', `#/log/${tab}/${q.id}`);
@@ -906,11 +612,11 @@ function viewQuest(tabId, id) {
   const seq = String(idx + 1).padStart(2, '0');
   const total = String(list.length);
   return topbar('log') + `<div class="body story-body">
-    <div class="story-meta"><span>${tab === 'main' ? (state.lang === 'cn' ? '主线' : 'MAIN') : (state.lang === 'cn' ? '迷你挑战' : 'SIDE')} ${seq} / ${total}</span><span>${esc(state.lang === 'cn' ? q.loc : (q.loc_en || q.title))} · ${state.lang === 'cn' ? '剧情梗概' : 'SUMMARY'}</span></div>
+    <div class="story-meta"><span>${t(`log_${tab}`)} ${seq} / ${total}</span><span>${esc(state.lang === 'cn' ? q.loc : (q.loc_en || q.title))} · ${state.lang === 'cn' ? '剧情梗概' : 'SUMMARY'}</span></div>
     <h2>${esc(state.lang === 'cn' ? q.cn : q.title)}</h2>
-    ${state.lang === 'cn' ? '' : `<div class="story-subtitle">${esc(q.cn)}</div>`}
+
     <article class="story-page" aria-label="${esc(state.lang === 'cn' ? q.cn : q.title)}">
-      <p>${esc(state.lang === 'cn' ? q.desc : (q.en_desc || q.desc))}</p>
+      <p>${esc(state.lang === 'cn' ? q.desc : q.en_desc)}</p>
     </article>
     <div class="story-controls">
       <button data-action="quest:${tab}:${prevId}" ${prev ? '' : 'disabled'} aria-label="${t('quest_prev')}">${t('quest_prev')}</button>
@@ -988,7 +694,7 @@ function viewAlbumModal() {
     <div class="big"><img class="bg" src="${IMG(a.big)}" alt=""></div>
     <div class="info">
       <h3>${state.lang === 'cn' ? a.cn : a.title}</h3>
-      <div class="cn">${state.lang === 'cn' ? '' : a.cn}</div>
+      <div class="cn"></div>
       <dl>
         <dt>${t('photo_no')}</dt><dd>${a.no}</dd>
         <dt>${t('photo_time')}</dt><dd>${a.time}</dd>
@@ -1003,10 +709,13 @@ function viewAlbumModal() {
 }
 
 /* ---------------- render ---------------- */
+let railLanguage = null;
 let prevHash = null;
 let focusKey = null;
 function render() {
-  clearStasisClock();
+  buildRail();
+  document.getElementById('languageBtn').textContent = state.lang === 'cn' ? '语言 · 简体中文' : 'LANGUAGE · ENGLISH';
+  document.documentElement.lang = state.lang === 'cn' ? 'zh-CN' : 'en';
   const p = routeParts();
   const hash = routeHash();
   const sameRoute = prevHash === hash;
@@ -1022,7 +731,13 @@ function render() {
     case 'compendium':
       html = p[2] !== undefined ? viewEntry(p[1], Number(p[2])) : p[1] ? viewCompendiumCat(p[1]) : viewCompendium();
       break;
-    case 'log': html = p[2] ? viewQuest(p[1], p[2]) : viewLog(); break;
+    case 'log':
+      if (p[1]) {
+        state.logTab = logTabId(p[1]);
+        if (!p[2] && p[1] !== state.logTab) history.replaceState(null, '', `#/log/${state.logTab}`);
+      }
+      html = p[2] ? viewQuest(p[1], p[2]) : viewLog();
+      break;
     case 'system': html = viewSystem(); break;
     case 'album':
       state.albumOpen = p[1] || null;
@@ -1037,7 +752,8 @@ function render() {
   /* 同一页内重绘（调亮度、切换目标等）时把选中位置留在原处，不要跳回顶部。 */
   initFocus(sameRoute ? focusKey : null);
   updateRail();
-  if (p[0] === 'rune' && p[1] === 'stasis' && state.stasis.frozen) startStasisClock();
+  document.body.classList.toggle('rune-playing', Boolean(gameInputActive()));
+  syncRuneGame();
 
   /* 换页：只有哈希真的变了才扫光；从别的页面进入符文时额外闪一次光圈。 */
   if (prevHash !== null && prevHash !== hash) {
@@ -1065,7 +781,7 @@ function flashBoot() {
 
 function focusables() {
   /* 照片详情是盖在上面的弹层：打开时焦点只在弹层里循环，不能落到被盖住的列表上。 */
-  const scope = screenEl.querySelector('.photo-modal') || screenEl;
+  const scope = screenEl.querySelector('.map-dialog') || screenEl.querySelector('.game-pause') || screenEl.querySelector('.photo-modal') || screenEl;
   return [...scope.querySelectorAll('[data-action]:not([disabled])')];
 }
 
@@ -1127,16 +843,22 @@ function activateFocused() {
 
 function updateRail() {
   const h = routeHash();
-  [...railEl.querySelectorAll('a')].forEach(a => {
-    const target = a.getAttribute('href');
-    const on = h === target || (target !== '#/runes' && target !== '#/standby' && h.startsWith(target + '/'));
-    a.classList.toggle('on', on);
+  const matches = ROUTES.filter(r=>h===r.hash || h.startsWith(r.hash+'/')).sort((a,b)=>b.hash.length-a.hash.length);
+  const selected = matches[0];
+  railEl.querySelectorAll('a').forEach(a=>{
+    const on = selected && a.getAttribute('href') === selected.hash;
+    a.classList.toggle('on', Boolean(on));
+    a.classList.toggle('branch', Boolean(selected && a.getAttribute('href')===selected.parent));
+    if (on) { a.setAttribute('aria-current','page'); a.scrollIntoView({block:'nearest'}); }
+    else a.removeAttribute('aria-current');
   });
 }
 
 /* ---------------- actions ---------------- */
 function run(action) {
   const [verb, ...rest] = action.split(':');
+  if (verb === 'game') { runeGameAction(rest[0]); return; }
+  if (verb === 'ability') { abilityAction(rest[0], rest[1]); return; }
   switch (verb) {
     case 'go': {
       const target = rest.join(':');
@@ -1152,20 +874,15 @@ function run(action) {
     case 'enter-rune':
       go('#/rune/' + RUNES[state.runeIndex].id); beep('activate'); break;
 
-    case 'bomb': bombAction(rest[0], rest[1]); break;
-    case 'magnet': magnetAction(rest[0]); break;
-    case 'stasis': stasisAction(rest[0]); break;
-    case 'cryonis': cryonisAction(rest[0]); break;
     case 'camera': cameraAction(rest[0], rest[1]); break;
-    case 'cycle': cycleAction(rest[0]); break;
-    case 'amiibo': amiiboAction(rest[0]); break;
-    case 'sensor': sensorAction(rest[0]); break;
 
     case 'inv': inventoryAction(rest[0], rest[1]); break;
     case 'comp': go('#/compendium/' + rest.join(':')); break;
     case 'entry': go(`#/compendium/${rest[0]}/${rest[1]}`); break;
     case 'map': mapAction(rest[0], rest[1]); break;
-    case 'logtab': state.logTab = rest[0] === 'side' ? 'side' : 'main'; render(); beep('ok'); break;
+    case 'logtab':
+      state.logTab = logTabId(rest[0]);
+      go(`#/log/${state.logTab}`); beep('ok'); break;
     case 'quest': go(`#/log/${rest[0]}/${rest[1]}`); break;
 
     case 'set': sysAction(rest[0]); break;
@@ -1174,112 +891,6 @@ function run(action) {
 
     case 'album': albumAction(rest[0], rest[1]); break;
     default: break;
-  }
-}
-
-function bombAction(kind, arg) {
-  const b = state.bomb;
-  if (kind === 'place') {
-    if (b.placed || b.done) return;
-    b.placed = true; render(); beep('place');
-  } else if (kind === 'reset') {
-    b.placed = false; b.done = false; render(); beep('back');
-  } else if (kind === 'blast') {
-    if (b.done) return;
-    if (!b.placed) { toast('先把炸弹放下。', 'warn'); beep('back'); return; }
-    b.placed = false; b.done = true;
-    render();
-    playBlast();
-    beep('boom');
-    setTimeout(() => beep('complete'), 420);
-  }
-}
-
-function playBlast() {
-  const layer = screenEl.querySelector('#blastLayer');
-  const scene = screenEl.querySelector('#scene');
-  if (!layer) return;
-  scene && scene.classList.add('shake');
-  shellEl.animate(
-    [{ transform: 'translate(0,0)' }, { transform: 'translate(-2px,1px)' }, { transform: 'translate(2px,-1px)' }, { transform: 'translate(0,0)' }],
-    { duration: 280, easing: 'ease-out' }
-  );
-  [0, 1, 2, 3].forEach((f, i) => setTimeout(() => {
-    layer.innerHTML = `<img class="blast" src="${FW('blast_' + f + '.png')}" alt="" style="right:52px;bottom:16px">`;
-  }, i * 80));
-  setTimeout(() => { layer.innerHTML = ''; }, 520);
-}
-
-function magnetAction(kind) {
-  const m = state.magnet;
-  if (kind === 'reset') { m.grabbed = false; m.moved = false; m.done = false; render(); beep('back'); return; }
-  if (m.done) return;
-  if (kind === 'grab') {
-    if (!m.grabbed) { m.grabbed = true; m.moved = false; render(); beep('magnet'); }
-  } else if (kind === 'move') {
-    if (!m.grabbed) return toast('先抓取金属箱。', 'warn');
-    m.moved = true; render(); beep('ok');
-  } else if (kind === 'drop') {
-    if (!m.grabbed) return toast('先抓取金属箱。', 'warn');
-    if (!m.moved) return toast('先把它移动到压力板上方。', 'warn');
-    m.done = true; render(); beep('complete');
-  }
-}
-
-function stasisAction(kind) {
-  const s = state.stasis;
-  if (kind === 'reset') {
-    clearStasisClock(); s.frozen = false; s.hits = 0; s.remaining = 10; s.done = false;
-    render(); beep('back'); return;
-  }
-  if (s.done) return;
-  if (kind === 'freeze') {
-    if (s.frozen) return;
-    s.frozen = true; s.hits = 0; s.remaining = 10;
-    render(); beep('freeze');
-  } else if (kind === 'hit') {
-    if (!s.frozen) return toast('先冻结岩石。', 'warn');
-    if (s.hits >= 6) return toast('势能已满，按「释放」。', 'warn');
-    s.hits += 1; render(); beep('hit');
-  } else if (kind === 'release') {
-    if (!s.frozen) return toast('先冻结岩石。', 'warn');
-    s.frozen = false; s.done = true;
-    render(); beep('boom');
-    setTimeout(() => beep('complete'), 420);
-    const scene = screenEl.querySelector('#scene');
-    scene && scene.classList.add('shake');
-  }
-}
-
-let stasisTimer = null;
-function startStasisClock() {
-  clearStasisClock();
-  stasisTimer = setInterval(() => {
-    const s = state.stasis;
-    if (!s.frozen) return clearStasisClock();
-    s.remaining = Math.max(0, s.remaining - 0.1);
-    const bar = document.getElementById('stasisBar');
-    const label = document.getElementById('stasisTime');
-    if (bar) bar.style.width = (s.remaining * 10) + '%';
-    if (label) label.textContent = s.remaining.toFixed(1) + ' s';
-    if (s.remaining <= 0) { s.frozen = false; clearStasisClock(); render(); beep('unfreeze'); }
-  }, 100);
-}
-function clearStasisClock() { if (stasisTimer) { clearInterval(stasisTimer); stasisTimer = null; } }
-
-function cryonisAction(kind) {
-  const c = state.cryonis;
-  if (kind === 'reset') { c.count = 0; c.done = false; render(); beep('back'); return; }
-  if (c.done) return;
-  if (kind === 'create') {
-    if (c.count >= 3) return;
-    c.count += 1; render(); beep('cryonis');
-  } else if (kind === 'break') {
-    if (c.count <= 0) return;
-    c.count -= 1; render(); beep('shatter');
-  } else if (kind === 'cross') {
-    if (c.count < 3) return toast('需要三根冰柱才能跨过去。', 'warn');
-    c.done = true; render(); beep('complete');
   }
 }
 
@@ -1295,7 +906,7 @@ function cameraAction(kind, arg) {
   if (kind === 'shoot') {
     const idx = c.sel;
     const t = CAM_TARGETS[idx];
-    if (c.shots[idx]) { toast('这个目标已经登记过了。', 'warn'); beep('back'); return; }
+    if (c.shots[idx]) { toast(L('这个目标已经登记过了。', 'This subject is already registered.'), 'warn'); beep('back'); return; }
     c.shots[idx] = true;
     c.done = c.shots.every(Boolean);
     /* 拍完自动切到下一个未登记目标，连着拍不用来回切换。 */
@@ -1306,7 +917,7 @@ function cameraAction(kind, arg) {
     /* 快门会把照片写进相册，相机符文与相册因此是同一个数据流。 */
     state.albumShots.unshift({
       id: 'shot' + idx, no: 'NEW', img: t.img, big: t.big || t.img,
-      title: t.name, cn: 'CAMERA RUNE · 新登记', time: 'NOW', place: 'GREAT PLATEAU', fresh: true
+      title: t.name, cn: t.cn, time: 'NOW', place: 'GREAT PLATEAU', fresh: true
     });
     render(); beep('shutter');
     const flash = document.createElement('div');
@@ -1317,78 +928,6 @@ function cameraAction(kind, arg) {
   }
 }
 
-function cycleAction(kind) {
-  const c = state.cycle;
-  if (kind === 'reset') { c.phase = 'idle'; c.speed = 0; c.dist = 0; render(); beep('back'); return; }
-  if (kind === 'summon' && c.phase === 'idle') {
-    c.phase = 'summon'; render(); beep('ok');
-    setTimeout(() => {
-      if (state.cycle.phase === 'summon') { state.cycle.phase = 'ride'; render(); beep('ok'); }
-    }, 950);
-    return;
-  }
-  if (kind === 'accel' && c.phase === 'ride') {
-    c.speed = Math.min(100, c.speed + 30);
-    c.dist = Math.min(100, c.dist + c.speed / 4);
-    beep('hit');
-    if (c.dist >= 100) { c.phase = 'done'; beep('complete'); }
-    render();
-  }
-}
-
-function amiiboAction(kind) {
-  const a = state.amiibo;
-  if (kind === 'prev' && a.phase === 'idle') { a.sel = (a.sel + AMIIBO_FIGURES.length - 1) % AMIIBO_FIGURES.length; render(); beep('move'); return; }
-  if (kind === 'next' && a.phase === 'idle') { a.sel = (a.sel + 1) % AMIIBO_FIGURES.length; render(); beep('move'); return; }
-  if (kind === 'scan' && a.phase === 'idle') {
-    a.phase = 'scan'; a.got = null; render(); beep('ok');
-    setTimeout(() => {
-      if (state.amiibo.phase === 'scan') {
-        state.amiibo.got = AMIIBO_DROPS[Math.floor(Math.random() * AMIIBO_DROPS.length)];
-        state.amiibo.phase = 'done'; render(); beep('complete');
-      }
-    }, 1100);
-    return;
-  }
-  if (kind === 'again' && a.phase === 'done') { a.phase = 'idle'; a.got = null; render(); beep('back'); }
-}
-
-function sensorAction(kind) {
-  const s = state.sensor;
-  if (kind === 'scan' && s.phase === 'idle') {
-    s.phase = 'scan'; s.b = Math.floor(Math.random() * SENSOR_BEARINGS.length); s.d = 120; s.done = false;
-    render(); beep('ok'); return;
-  }
-  if (kind === 'advance' && s.phase === 'scan' && !s.done) {
-    s.d = Math.max(0, s.d - 40);
-    beep('hit');
-    if (s.d <= 0) { s.done = true; beep('complete'); }
-    render();
-    return;
-  }
-  if (kind === 'reset') { s.phase = 'idle'; s.d = 120; s.done = false; render(); beep('back'); }
-}
-
-function mapAction(kind, arg, silent = false) {
-  if (mapDrag) endMapDrag({ pointerId: mapDrag.id });
-  const m = state.map;
-  if (kind === 'step') {
-    const index = (m.index + Number(arg) + MAP_IMAGES.length) % MAP_IMAGES.length;
-    if (!Number.isInteger(index) || !MAP_IMAGES[index]) return;
-    m.index = index;
-    m.zoom = 1; m.x = 0; m.y = 0;
-  } else if (kind === 'zoom') {
-    const zoom = Math.max(1, Math.min(4, m.zoom + Number(arg)));
-    if (!Number.isFinite(zoom)) return;
-    m.x *= zoom / m.zoom; m.y *= zoom / m.zoom;
-    m.zoom = zoom;
-  } else if (kind === 'reset') {
-    m.zoom = 1; m.x = 0; m.y = 0;
-  } else return;
-  updateMapView();
-  initFocus(focusKey);
-  if (!silent) beep(kind === 'step' ? 'move' : 'ok');
-}
 
 function toggleLang() {
   state.lang = state.lang === 'cn' ? 'en' : 'cn';
@@ -1451,7 +990,7 @@ screenEl.addEventListener('wheel', e => {
   mapAction('zoom', e.deltaY < 0 ? 0.25 : -0.25, true);
 }, { passive: false });
 screenEl.addEventListener('pointerdown', e => {
-  if (!e.target.closest('#mapViewport') || state.map.zoom <= 1 || e.button !== 0 || !e.isPrimary) return;
+  if (!e.target.closest('#mapViewport') || e.target.closest('.map-marker') || !mapBrowseActive() || state.map.zoom <= 1 || e.button !== 0 || !e.isPrimary) return;
   e.preventDefault();
   mapDrag = { id: e.pointerId, x: e.clientX, y: e.clientY, panX: state.map.x, panY: state.map.y };
   screenEl.setPointerCapture(e.pointerId);
@@ -1460,6 +999,8 @@ screenEl.addEventListener('pointerdown', e => {
 screenEl.addEventListener('pointermove', e => {
   if (!mapDrag || e.pointerId !== mapDrag.id) return;
   const scale = screenEl.getBoundingClientRect().width / 320;
+  state.map.follow = false;
+  state.map.pickNearest = true;
   state.map.x = mapDrag.panX + (e.clientX - mapDrag.x) / scale;
   state.map.y = mapDrag.panY + (e.clientY - mapDrag.y) / scale;
   updateMapView();
@@ -1542,16 +1083,18 @@ function stopHoldBar() {
 }
 
 function okDown() {
+  if (holdTimer !== null) return;
   longFired = false;
   clearTimeout(holdTimer);
   startHoldBar();
   holdTimer = setTimeout(() => { longFired = true; stopHoldBar(); back(); beep('back'); }, HOLD_MS);
 }
 function okUp() {
+  if (holdTimer === null) return;
   clearTimeout(holdTimer);
   holdTimer = null;
   stopHoldBar();
-  if (!longFired) activateFocused();
+  if (!longFired) { if (mapBrowseActive()) mapAction('zoom'); else if (gameInputActive()) gamePrimary(); else activateFocused(); }
   longFired = false;
 }
 
@@ -1559,13 +1102,18 @@ function okUp() {
 let navDelay = null;
 let navTimer = null;
 function startNav(dir) {
-  moveFocus(dir);
   stopNav();
+  document.querySelector(`[data-key="${dir < 0 ? 'UP' : 'DOWN'}"]`).classList.add('pressed');
+  if (mapBrowseActive()) { mapNavigate(dir); return; }
+  if (gameInputActive()) { gameSetDirection(dir); return; }
+  moveFocus(dir);
   navDelay = setTimeout(() => {
     navTimer = setInterval(() => moveFocus(dir, true), 96);
   }, 380);
 }
 function stopNav() {
+  gameSetDirection(0);
+  document.querySelectorAll('.key.pressed').forEach(k => k.classList.remove('pressed'));
   clearTimeout(navDelay);
   clearInterval(navTimer);
   navDelay = null;
@@ -1574,7 +1122,7 @@ function stopNav() {
 
 document.addEventListener('keydown', e => {
   if (e.ctrlKey || e.metaKey || e.altKey) return;
-  if (e.key === 'Enter' && e.target.closest('.rail a, #resetBtn')) return;
+  if (e.key === 'Enter' && e.target.closest('.rail')) return;
   if (routeParts()[0] === 'map') {
     const actions = { ArrowLeft: ['step', -1], ArrowRight: ['step', 1], '+': ['zoom', 0.5], '=': ['zoom', 0.5], '-': ['zoom', -0.5], '0': ['reset'] };
     if (actions[e.key]) { e.preventDefault(); if (!e.repeat) mapAction(...actions[e.key]); return; }
@@ -1594,36 +1142,63 @@ window.addEventListener('blur', () => {
   clearTimeout(holdTimer); holdTimer = null; longFired = true;
   stopHoldBar();
   if (mapDrag) endMapDrag({ pointerId: mapDrag.id });
+  if (gameInputActive()) pauseRuneGame();
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && gameInputActive()) { stopNav(); pauseRuneGame(); }
 });
 
 document.querySelectorAll('.key').forEach(btn => {
   const key = btn.dataset.key;
   if (key === 'OK') {
-    btn.addEventListener('pointerdown', okDown);
+    btn.addEventListener('pointerdown', e => { e.preventDefault(); btn.setPointerCapture(e.pointerId); okDown(); });
     btn.addEventListener('pointerup', okUp);
-    btn.addEventListener('pointerleave', () => { clearTimeout(holdTimer); holdTimer = null; stopHoldBar(); });
+
     btn.addEventListener('pointercancel', () => { clearTimeout(holdTimer); holdTimer = null; stopHoldBar(); });
   } else {
     const dir = key === 'UP' ? -1 : 1;
-    btn.addEventListener('pointerdown', () => startNav(dir));
+    btn.addEventListener('pointerdown', e => { e.preventDefault(); btn.setPointerCapture(e.pointerId); startNav(dir); });
     btn.addEventListener('pointerup', stopNav);
-    btn.addEventListener('pointerleave', stopNav);
+
     btn.addEventListener('pointercancel', stopNav);
   }
 });
 
 /* ---------------- boot ---------------- */
 function buildRail() {
-  railEl.innerHTML = ROUTES.map(r => `<a href="${r.hash}"><span>${r.label}</span><em>${r.note}</em></a>`).join('');
+  if (railLanguage === state.lang) return;
+  railLanguage = state.lang;
+  const link = r => `<a href="${r.hash}"><span>${r.number ? r.number+' · ' : ''}${state.lang === 'cn' ? r.cn : r.label}</span></a>`;
+  railEl.innerHTML = '<ul class="rail-list">'+ROUTES.filter(r=>!r.parent).map(r=>{
+    const children = ROUTES.filter(c=>c.parent===r.hash);
+    return '<li>'+link(r)+(children.length?'<ul class="rail-children">'+children.map(c=>'<li>'+link(c)+'</li>').join('')+'</ul>':'')+'</li>';
+  }).join('')+'</ul>';
+  document.querySelector('.rail-foot p').textContent = state.lang === 'cn' ? '↑ ↓ 选择 · Enter 确认 · 长按 Enter 返回' : '↑ ↓ SELECT · ENTER CONFIRM · HOLD ENTER BACK';
+  document.getElementById('resetBtn').textContent = state.lang === 'cn' ? '重置原型状态' : 'RESET PROTOTYPE';
 }
+
+railEl.addEventListener('click', e => {
+  const link = e.target.closest('a');
+  if (link) link.blur();
+});
+document.getElementById('languageBtn').addEventListener('click', toggleLang);
 document.getElementById('resetBtn').addEventListener('click', () => location.reload());
 
 function fit() {
-  const rail = window.innerWidth > 1000 ? 300 : 30;
-  const maxW = Math.min(window.innerWidth - rail, 320 * 2.2);
-  const maxH = window.innerHeight - 200;
-  const s = Math.max(0.8, Math.min(2.2, maxW / 320, maxH / 240));
-  document.documentElement.style.setProperty('--scale', s.toFixed(3));
+  const device = document.getElementById('device');
+  const stage = getComputedStyle(document.querySelector('.stage'));
+  const rail = document.querySelector('.rail');
+  const railWidth = getComputedStyle(rail).display === 'none' ? 0 : rail.getBoundingClientRect().width;
+  const shell = document.getElementById('screenShell');
+  const chromeW = device.offsetWidth - shell.offsetWidth;
+  const chromeH = device.offsetHeight - shell.offsetHeight;
+  const maxW = window.innerWidth - parseFloat(stage.paddingLeft) - parseFloat(stage.paddingRight) - chromeW - railWidth - (railWidth ? parseFloat(stage.gap) : 0);
+  const maxH = window.innerHeight - parseFloat(stage.paddingTop) - parseFloat(stage.paddingBottom) - chromeH;
+  const scale = Math.max(.4, Math.min(maxW / 320, maxH / 240));
+  document.documentElement.style.setProperty('--scale', scale.toFixed(3));
+  document.documentElement.style.setProperty('--device-height', device.getBoundingClientRect().height + 'px');
+  placeFocus(false);
 }
 
 window.addEventListener('hashchange', render);

@@ -2,16 +2,16 @@
 
 const RUNES = [
   { id: 'bomb',      short: 'ROUND BOMB', label: 'REMOTE BOMB', cn: '远程炸弹 · 圆形', icon: 'rune_bomb.png',  kind: 'ROUND',
-    desc: '圆炸弹会顺坡滚动，适合投进洞口或敌群。放置后再次确认即可引爆。',
-    en_desc: 'Rolls with slopes, ideal for tossing into caves or crowds. Place, then confirm again to detonate.',
+    desc: '调整投掷力度后抛出圆弹，观察落地滚动，在岩石附近遥控引爆。',
+    en_desc: 'Adjust the throw, watch the bomb roll down the slope, then detonate near the rocks.',
     stats: [['TYPE', 'ROUND'], ['COOLDOWN', '2.5 s']] },
   { id: 'bomb_cube', short: 'CUBE BOMB',  label: 'REMOTE BOMB', cn: '远程炸弹 · 方形', icon: 'rune_cube.png', kind: 'CUBE',
-    desc: '方炸弹落地后停在原地，适合精确炸开裂纹石墙。与圆炸弹共用同一套操作。',
-    en_desc: 'Stays where it lands, perfect for precisely blasting cracked stone walls. Same controls as the round bomb.',
+    desc: '方炸弹停在落点，放到移动平台上可随平台运送，在高处岩石旁遥控引爆。',
+    en_desc: 'Stays where placed. Ride a moving platform to detonate beside the raised rocks.',
     stats: [['TYPE', 'CUBE'], ['COOLDOWN', '2.5 s']] },
   { id: 'magnet',  short: 'MAGNET',   label: 'MAGNESIS',     cn: '磁力抓取',       icon: 'rune_magnet.png',  kind: 'METAL',
-    desc: '抓住并移动金属物体。举高后可越过障碍，放下时可压住压力板。',
-    en_desc: 'Grab and move metallic objects. Lift to clear obstacles; drop to press pressure plates.',
+    desc: '抓住金属铁板，搬到断口上方，让两端搭稳桥台形成通路。',
+    en_desc: 'Grab the metal slab and bridge the gap, resting both ends securely on the banks.',
     stats: [['RANGE', '12 m'], ['TARGET', 'METAL']] },
   { id: 'stasis',  short: 'STASIS',   label: 'STASIS',       cn: '静止器',         icon: 'rune_stasis.png',  kind: 'FREEZE',
     desc: '让物体短暂静止。冻结期间连续击打可积蓄势能，解除时一次释放。',
@@ -22,20 +22,20 @@ const RUNES = [
     en_desc: 'Raises ice pillars from water — stepstones or gate lifts. Up to three at once.',
     stats: [['LIMIT', '3'], ['COOLDOWN', '0.8 s']] },
   { id: 'camera',  short: 'CAMERA',   label: 'CAMERA',       cn: '照相机 · 图鉴',   icon: 'rune_camera.png',  kind: 'LENS',
-    desc: '拍下生物、怪物与素材，登记进海拉鲁图鉴。已拍目标会打上标记。',
-    en_desc: 'Photograph creatures, monsters and materials to register them in the Hyrule Compendium. Marked targets are tracked.',
+    desc: '平移与缩放取景，避开遮挡后拍摄识别目标。本轮仅临时预览，相册后续讨论。',
+    en_desc: 'Pan and zoom to photograph unobstructed subjects. Temporary preview only; album work is deferred.',
     stats: [['ALBUM', '8 / 8'], ['TARGET', '5']] },
-  { id: 'cycle',  short: 'MASTER CYCLE', label: 'MASTER CYCLE ZERO', cn: '大师摩托', icon: 'rune_master_cycle_zero.png', kind: 'CYCLE', scene: 'rune_scene_cycle.jpg',
+  { id: 'cycle',  short: 'MASTER CYCLE', label: 'MASTER CYCLE ZERO', cn: '大师摩托 Zero', icon: 'rune_master_cycle_zero.png', kind: 'CYCLE', scene: 'rune_scene_cycle.jpg',
     desc: '英杰所赠的希卡科技摩托车，可在平原与坡地高速穿行。',
     en_desc: 'A Sheikah motorcycle gifted by the Champions — swift travel across plains and slopes.',
-    stats: [['SOURCE', 'DLC'], ['USE', 'ANYWHERE']] },
+    stats: [['SOURCE', 'DLC'], ['USE', 'SUMMON']] },
   { id: 'amiibo', short: 'AMIIBO', label: 'AMIIBO', cn: 'amiibo 读取', icon: 'rune_amiibo.png', kind: 'AMIIBO', scene: 'rune_scene_amiibo.png',
     desc: '读取 amiibo，召唤材料、装备与宝藏。每日每只限用一次。',
     en_desc: 'Scan amiibo to summon materials, gear and treasure. Once per figure per day.',
     stats: [['LIMIT', '1 / DAY'], ['TYPE', 'FIGURE']] },
-  { id: 'sensor', short: 'SENSOR', label: 'SHEIKAH SENSOR', cn: '希卡感应器 · 访问神庙', icon: 'rune_sheikah_sensor.png', kind: 'SENSOR', scene: 'rune_scene_sensor.png',
-    desc: '探测附近未被发现的神庙。靠近目标时，感应器发出声音并指出方向。',
-    en_desc: 'Detects undiscovered shrines nearby. Chimes and points toward targets as you approach.',
+  { id: 'sensor', short: 'SENSOR', label: 'SHEIKAH SENSOR', cn: '希卡感应器', icon: 'rune_sheikah_sensor.png', kind: 'SENSOR', scene: 'rune_scene_sensor.png',
+    desc: '探测附近未被发现的神庙。靠近目标时，感应器以信号强弱提示接近方向。',
+    en_desc: 'Detects undiscovered shrines nearby. Signals strengthen as you move toward the target.',
     stats: [['RANGE', '100 m'], ['TARGET', 'SHRINE']] }
 ];
 
@@ -61,22 +61,179 @@ const ALBUM = [
 ];
 
 const ROUTES = [
-  { hash: '#/inventory',         label: '01 · EQUIP',       note: '装备 / 换装' },
-  { hash: '#/runes',             label: '02 · RUNES',       note: '符文' },
-  { hash: '#/rune/bomb',         label: '  · ROUND BOMB',    note: '圆炸弹' },
-  { hash: '#/rune/bomb_cube',    label: '  · CUBE BOMB',     note: '方炸弹' },
-  { hash: '#/rune/magnet',       label: '  · MAGNESIS',      note: '磁力' },
-  { hash: '#/rune/stasis',       label: '  · STASIS',        note: '静止' },
-  { hash: '#/rune/cryonis',      label: '  · CRYONIS',       note: '制冰' },
-  { hash: '#/rune/camera',       label: '  · CAMERA',        note: '相机' },
-  { hash: '#/rune/cycle',        label: '  · CYCLE',         note: '大师摩托' },
-  { hash: '#/rune/amiibo',       label: '  · AMIIBO',        note: 'amiibo' },
-  { hash: '#/rune/sensor',       label: '  · SENSOR',        note: '希卡感应器' },
-  { hash: '#/map',               label: '03 · MAP',         note: '地图' },
-  { hash: '#/compendium',        label: '04 · COMPENDIUM',  note: '海拉鲁图鉴' },
-  { hash: '#/compendium/creatures', label: '  · CREATURES', note: '生物' },
-  { hash: '#/log',               label: '05 · LOG',         note: '旷野故事' },
-  { hash: '#/system',            label: '06 · SYSTEM',      note: '系统' },
-  { hash: '#/album',             label: '  · ALBUM',         note: '相册' },
-  { hash: '#/standby',           label: '07 · STANDBY',     note: '待机' }
+  {
+    "hash": "#/inventory",
+    "cn": "装备",
+    "label": "EQUIP",
+    "number": "01",
+    "parent": null
+  },
+  {
+    "hash": "#/inventory/weapons",
+    "cn": "武器",
+    "label": "WEAPONS",
+    "parent": "#/inventory"
+  },
+  {
+    "hash": "#/inventory/shields",
+    "cn": "盾牌",
+    "label": "SHIELDS",
+    "parent": "#/inventory"
+  },
+  {
+    "hash": "#/inventory/armors",
+    "cn": "防具",
+    "label": "ARMOR",
+    "parent": "#/inventory"
+  },
+  {
+    "hash": "#/runes",
+    "cn": "符文",
+    "label": "RUNES",
+    "number": "02",
+    "parent": null
+  },
+  {
+    "hash": "#/rune/bomb",
+    "cn": "圆形炸弹",
+    "label": "ROUND BOMB",
+    "parent": "#/runes"
+  },
+  {
+    "hash": "#/rune/bomb_cube",
+    "cn": "方形炸弹",
+    "label": "CUBE BOMB",
+    "parent": "#/runes"
+  },
+  {
+    "hash": "#/rune/magnet",
+    "cn": "磁力抓取",
+    "label": "MAGNESIS",
+    "parent": "#/runes"
+  },
+  {
+    "hash": "#/rune/stasis",
+    "cn": "静止器",
+    "label": "STASIS",
+    "parent": "#/runes"
+  },
+  {
+    "hash": "#/rune/cryonis",
+    "cn": "制冰器",
+    "label": "CRYONIS",
+    "parent": "#/runes"
+  },
+  {
+    "hash": "#/rune/camera",
+    "cn": "照相机",
+    "label": "CAMERA",
+    "parent": "#/runes"
+  },
+  {
+    "hash": "#/rune/cycle",
+    "cn": "大师摩托 Zero",
+    "label": "MASTER CYCLE ZERO",
+    "parent": "#/runes"
+  },
+  {
+    "hash": "#/rune/amiibo",
+    "cn": "amiibo",
+    "label": "amiibo",
+    "parent": "#/runes"
+  },
+  {
+    "hash": "#/rune/sensor",
+    "cn": "希卡感应器",
+    "label": "SHEIKAH SENSOR",
+    "parent": "#/runes"
+  },
+  {
+    "hash": "#/map",
+    "cn": "地图",
+    "label": "MAP",
+    "number": "03",
+    "parent": null
+  },
+  {
+    "hash": "#/compendium",
+    "cn": "海拉鲁图鉴",
+    "label": "COMPENDIUM",
+    "number": "04",
+    "parent": null
+  },
+  {
+    "hash": "#/compendium/creatures",
+    "cn": "生物",
+    "label": "CREATURES",
+    "parent": "#/compendium"
+  },
+  {
+    "hash": "#/compendium/monsters",
+    "cn": "怪物",
+    "label": "MONSTERS",
+    "parent": "#/compendium"
+  },
+  {
+    "hash": "#/compendium/materials",
+    "cn": "材料",
+    "label": "MATERIALS",
+    "parent": "#/compendium"
+  },
+  {
+    "hash": "#/compendium/equipment",
+    "cn": "装备",
+    "label": "EQUIPMENT",
+    "parent": "#/compendium"
+  },
+  {
+    "hash": "#/compendium/treasures",
+    "cn": "宝物",
+    "label": "TREASURE",
+    "parent": "#/compendium"
+  },
+  {
+    "hash": "#/log",
+    "cn": "冒险日志",
+    "label": "LOG",
+    "number": "05",
+    "parent": null
+  },
+  {
+    "hash": "#/log/main",
+    "cn": "主线",
+    "label": "MAIN",
+    "parent": "#/log"
+  },
+  {
+    "hash": "#/log/shrine",
+    "cn": "神庙挑战",
+    "label": "SHRINE",
+    "parent": "#/log"
+  },
+  {
+    "hash": "#/log/side",
+    "cn": "迷你挑战",
+    "label": "SIDE",
+    "parent": "#/log"
+  },
+  {
+    "hash": "#/system",
+    "cn": "系统",
+    "label": "SYSTEM",
+    "number": "06",
+    "parent": null
+  },
+  {
+    "hash": "#/album",
+    "cn": "相册",
+    "label": "ALBUM",
+    "parent": "#/system"
+  },
+  {
+    "hash": "#/standby",
+    "cn": "待机",
+    "label": "STANDBY",
+    "number": "07",
+    "parent": null
+  }
 ];

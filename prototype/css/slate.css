@@ -1,5 +1,5 @@
-/* Hylia Serif：粉丝依据 BotW 提取的同款 UI 衬线体（覆盖拉丁字母），
-   中文回落到系统黑体（微软雅黑），全局只保留这一套主字体。 */
+/* 英文沿用 Hylia Serif；中文统一使用本地思源黑体 Medium，贴近 BotW 正文黑体观感。
+   思源黑体为风格替代，并非实机提取字库；来源与许可见 docs/assets/provenance.md。 */
 @font-face{
   font-family:"Hylia Serif";
   src:url(../fonts/HyliaSerifBeta-Regular.ttf) format("truetype");
@@ -9,6 +9,13 @@
   font-family:"Hylia Serif";
   src:url(../fonts/HyliaSerifBeta-Regular.ttf) format("truetype");
   font-weight:600;font-style:normal;font-display:swap;
+}
+
+@font-face{
+  font-family:"Slate Chinese";
+  src:url(../../assets/raw/07_fonts/SourceHanSansSC-Medium.otf) format("opentype");
+  /* 中文各处统一为 Medium 字面，避免按标题/正文请求合成粗体。 */
+  font-weight:400 600;font-style:normal;font-display:swap;
 }
 
 :root{
@@ -24,9 +31,9 @@
   --red:#ff6f6f;
   --text:#dcebee;
   --muted:#7f9ba3;
-  --font-display:"Hylia Serif","Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
-  --font-ui:"Hylia Serif","Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
-  --font-num:"Hylia Serif","Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  --font-ui:"Hylia Serif","Slate Chinese",sans-serif;
+  --font-display:var(--font-ui);
+  --font-num:var(--font-ui);
   --scale:2;
 }
 
@@ -234,9 +241,14 @@ body.no-scan .scanlines{display:none}
 @keyframes eyePulse{0%,100%{opacity:.82;transform:scale(1)}50%{opacity:1;transform:scale(1.035)}}
 .sb-clock{position:relative;z-index:2;margin-top:6px;font-family:var(--font-display);font-size:30px;letter-spacing:.1em;color:#eafcff;text-shadow:0 0 18px rgba(127,233,255,.5),0 2px 6px rgba(0,0,0,.8)}
 .sb-date{position:relative;z-index:2;margin-top:1px;font-size:6.5px;letter-spacing:.36em;color:#8fc3cd;text-shadow:0 1px 3px #000}
-.sb-battery{position:absolute;z-index:3;right:9px;top:8px;display:flex;align-items:center;gap:4px;font-size:6px;letter-spacing:.1em;color:#a9d3db}
-.batt{width:22px;height:9px;border:1px solid rgba(126,232,255,.5);border-radius:1px;padding:1px;display:block}
-.batt i{display:block;height:100%;background:linear-gradient(90deg,#4fd4ea,#a9f4ff);box-shadow:0 0 6px rgba(127,233,255,.5)}
+.sb-battery{position:absolute;z-index:3;right:10px;top:9px;display:flex;align-items:center;gap:4px;font-size:5.5px;letter-spacing:.04em;color:#c4c7b6;opacity:.9}
+/* Actual TotK HUD frame from the archived 640 × 249 reference, displayed without redrawing. */
+.sb-battery-art{display:block;width:24px;height:15px;background:url(../../assets/raw/02_ui/totk_battery_hud_reference.jpg) -52px -64.73px/232.73px 90.55px no-repeat}
+.sb-title{position:absolute;z-index:2;left:50%;transform:translateX(-50%);object-fit:contain;pointer-events:none}
+.sb-title.cn{top:24px;width:154px;height:55px}
+.sb-title.en{top:13px;width:90px;height:71px}
+.standby .sb-eye{width:36px;height:36px;margin-top:88px}
+
 .sb-prompt{
   position:relative;z-index:3;margin-top:auto;margin-bottom:34px;padding:5px 12px;
   font-family:var(--font-display);font-size:7px;letter-spacing:.3em;color:#c8f2fb;
@@ -461,7 +473,7 @@ body.no-scan .scanlines{display:none}
 .map-controls .chip{flex:1;min-width:0;font-size:6px;background:rgba(2,12,16,.55)}
 
 /* ---------------- compendium ---------------- */
-.comp-body{padding:7px 6px 4px;position:relative}
+.comp-body{padding:7px 6px 4px}
 .cat-mark{width:20px;height:auto;opacity:.92;filter:drop-shadow(0 1px 3px rgba(0,0,0,.75))}
 .comp-body > .comp-head,.comp-body > .entry-list,.comp-body > .comp-foot,.comp-body > .entry-detail{position:relative;z-index:1}
 .comp-grid{display:grid;grid-template-columns:repeat(3,96px);grid-auto-rows:74px;gap:5px;margin-top:6px}
@@ -490,7 +502,7 @@ body.no-scan .scanlines{display:none}
 .entry-list{display:flex;flex-direction:column;gap:2px;margin-top:5px;overflow-y:auto;scrollbar-width:none;max-height:130px}
 .entry-list::-webkit-scrollbar{display:none}
 .entry-row{
-  display:flex;align-items:center;gap:5px;height:26px;width:100%;padding:0 4px;text-align:left;
+  display:flex;align-items:center;gap:5px;flex-shrink:0;height:26px;width:100%;padding:0 4px;text-align:left;
   border:1px solid rgba(126,232,255,.14);background:rgba(6,22,29,.55);
 }
 .entry-row img{width:22px;height:22px;object-fit:cover;border:1px solid rgba(126,232,255,.2);background:#04121a;filter:drop-shadow(0 1px 2px #000)}
@@ -534,7 +546,10 @@ body.no-scan .scanlines{display:none}
 .mm-badge{display:inline-block;margin-left:4px;padding:1px 4px;border:1px solid #e8c987;border-radius:1px;font-style:normal;font-size:4.5px;letter-spacing:.18em;line-height:9px;color:var(--gold);background:rgba(230,197,131,.1);vertical-align:2px}
 .mm-stamp{border-color:#e8c987;color:var(--gold);background:rgba(230,197,131,.08)}
 
-.comp-foot{position:absolute;left:8px;right:8px;bottom:7px;padding-top:5px;border-top:1px solid rgba(126,232,255,.14)}
+.comp-foot{left:auto;right:auto;bottom:auto;padding-top:5px;border-top:1px solid rgba(126,232,255,.14)}
+.comp-category{display:flex;flex-direction:column}
+.comp-category > .comp-head,.comp-category > .comp-foot{flex-shrink:0}
+.comp-category > .entry-list{flex:1;min-height:0;max-height:none;margin-bottom:5px}
 .comp-foot .row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:3px;font-size:5.5px;letter-spacing:.16em;color:#5f8d97}
 .comp-foot b{font-family:var(--font-display);font-size:9px;font-weight:400;color:#cfeeff}
 .comp-foot .bar{height:2px;background:rgba(126,232,255,.12)}
@@ -545,7 +560,7 @@ body.no-scan .scanlines{display:none}
 .log-body{padding:7px 6px 4px}
 .log-tabs{display:flex;gap:4px;margin-bottom:6px}
 .log-tab{
-  flex:1;height:18px;border:1px solid rgba(126,232,255,.18);
+  flex:1;min-width:0;height:18px;border:1px solid rgba(126,232,255,.18);
   font-size:7px;letter-spacing:.08em;color:#7ea4ad;
   background:rgba(6,22,29,.55);
 }
@@ -558,11 +573,11 @@ body.no-scan .scanlines{display:none}
   display:flex;align-items:center;gap:7px;height:31px;width:100%;margin-bottom:3px;padding:0 7px;text-align:left;
   border:1px solid rgba(126,232,255,.14);background:linear-gradient(90deg,rgba(7,26,34,.55),rgba(4,16,21,.55));
 }
-.quest-row .q-number{width:21px;font-size:13px;color:#7ca9b3;font-weight:400}
+.quest-row .q-number{flex-shrink:0;width:21px;font-size:13px;color:#7ca9b3;font-weight:400}
 .quest-row .q-main{flex:1;min-width:0}
-.quest-row .q-main b{display:block;font-size:9px;font-weight:400;line-height:14px;color:#d8f3f8}
+.quest-row .q-main b{display:block;font-size:9px;font-weight:400;line-height:14px;color:#d8f3f8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .quest-row .q-main span{display:block;font-size:5px;letter-spacing:.08em;color:#7da1aa}
-.quest-row .q-pages{font-size:6px;color:#9eb3b3;white-space:nowrap}
+.quest-row .q-pages{max-width:32%;font-size:6px;color:#9eb3b3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .story-body{display:flex;flex-direction:column;padding:7px 10px 6px;background:linear-gradient(150deg,rgba(8,27,35,.55),rgba(3,11,16,.55))}
 .story-meta{display:flex;justify-content:space-between;flex-shrink:0;font-size:5.5px;line-height:9px;letter-spacing:.08em;color:#96b2b9}
 .story-body h2{flex-shrink:0;margin:4px 0 2px;font-size:12px;line-height:17px;font-weight:400;letter-spacing:.04em;color:#e9f7f5}
@@ -729,3 +744,134 @@ body.no-scan .scanlines{display:none}
   .stage{padding:10px}
 }
 
+
+/* Desktop sizing and input feedback only; retain original visual design. */
+.rail{height:var(--device-height, auto);max-height:calc(100vh - 48px);display:flex;flex-direction:column}
+.rail-head,.rail-foot{flex-shrink:0}
+.rail-nav{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#31525d transparent}
+.rail-list,.rail-children{list-style:none;padding:0;margin:0}
+.rail-children{margin-left:10px;border-left:1px solid rgba(126,232,255,.12);padding-left:4px}
+.rail-children a{font-size:9px;letter-spacing:.04em}
+.rail-nav a.branch{color:var(--cyan)}
+.rail-language{margin-bottom:6px}
+.key{touch-action:none;user-select:none}
+.key.pressed,.key.holding{color:#eafcff;border-color:var(--cyan);transform:translateY(1px);box-shadow:0 0 12px rgba(126,232,255,.25) inset}
+.rail-nav a:focus-visible,.rail-reset:focus-visible,.key:focus-visible{outline:1px solid var(--cyan);outline-offset:2px}
+.ability-sprite{position:absolute;z-index:4;display:block;background-image:url('../../assets/gen/prototype/ability-atlas-v1.png');background-size:400% 200%;background-repeat:no-repeat;pointer-events:none;transition:left .25s,bottom .25s,filter .2s}
+.ability-controls .chip{flex:1;min-width:0;font-size:6px;letter-spacing:.02em;padding:4px 2px;white-space:nowrap}
+@media(max-width:1000px){.rail{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* Direct-control rune trials: original scenes, bitmap actors, compact game HUD. */
+.rune-game .scene{filter:blur(.3px) saturate(.75) brightness(.72)}
+.rune-game .scene-top .rune-tag b{letter-spacing:.04em}
+.rune-game .scene-stat{letter-spacing:0;font-size:5.5px}
+.game-goal{position:absolute;left:8px;right:8px;top:25px;z-index:6;display:flex;gap:5px;align-items:baseline;text-shadow:0 1px 3px #000}
+.game-goal b{font-size:7px;color:var(--gold);font-weight:400;white-space:nowrap}
+.game-goal span{font-size:5.5px;color:#cedcda;letter-spacing:0}
+.game-arena{position:absolute;inset:0;pointer-events:none}
+.game-ground{position:absolute;left:18px;right:16px;top:151px;height:1px;background:rgba(211,219,196,.3)}
+.game-ground.sloped{left:25px;right:14px;top:121px;transform:rotate(8deg);transform-origin:left center}
+.game-actor{width:36px;height:36px;transition:none;will-change:left,top,transform}
+.game-actor.locked{filter:sepia(.4) saturate(1.8) drop-shadow(0 0 5px #7fe9ff)}
+.game-actor.frozen{filter:sepia(1) saturate(3) drop-shadow(0 0 5px #f5d25c)}
+.game-obstacle{width:48px;height:48px;left:233px;top:100px;transition:opacity .3s,transform .3s}
+.game-obstacle.broken{opacity:.12;transform:translate(14px,8px) rotate(20deg)}
+.game-force{position:absolute;height:2px;background:#f3cd59;z-index:5;transform-origin:left center;box-shadow:0 0 3px #f3cd5980}
+.game-force::after{content:"";position:absolute;right:-1px;top:-3px;border-left:6px solid #f3cd59;border-top:4px solid transparent;border-bottom:4px solid transparent}
+.game-blast{width:74px;height:74px;transition:none;z-index:7}
+.game-pad{position:absolute;left:61px;top:134px;width:42px;height:10px;background:rgba(230,197,131,.2);border:1px solid rgba(230,197,131,.7);transform:skew(-18deg);box-shadow:0 0 7px #e6c58333}
+.game-pad span{position:absolute;top:-17px;left:15px;font-size:12px;color:var(--gold)}
+.game-treasure{position:absolute;left:20px;top:110px;width:28px;height:28px;object-fit:contain;opacity:.8}
+.game-result{position:absolute;left:65px;right:65px;top:72px;text-align:center;z-index:8;font-size:12px;color:#e9d4b4;text-shadow:0 2px 5px #000}
+.game-result.success{color:var(--gold)}
+.game-message{position:absolute;left:8px;right:8px;top:153px;height:19px;font-size:6px;line-height:9px;letter-spacing:0;text-align:center;color:#d1e1df;text-shadow:0 1px 3px #000;overflow:hidden}
+.game-controls{position:absolute;left:8px;right:8px;bottom:4px;height:18px;display:flex;gap:5px;z-index:9}
+.game-controls .chip{letter-spacing:.04em}
+.rune-playing .focus-frame{display:none}
+.game-pause{position:absolute;inset:0;z-index:28;display:grid;place-items:center;background:rgba(1,8,12,.82)}
+.game-pause-card{width:160px;padding:12px;border:1px solid rgba(126,232,255,.35);background:rgba(5,19,26,.96);display:flex;flex-direction:column;gap:7px}
+.game-pause h2{font-size:12px;font-weight:400;letter-spacing:.15em;text-align:center;color:var(--gold);margin:0 0 6px}
+.game-pause .chip{flex:none;height:23px;font-size:7px}
+.rune-game [hidden]{display:none}
+
+/* Magnesis bridge: raster slab referenced from the game's shrine plate. */
+.game-actor.game-bridge{position:absolute;display:block;pointer-events:none;width:148px;height:34px;background-image:url(../../assets/gen/prototype/magnesis-bridge-v1.png);background-size:108% auto;background-repeat:no-repeat;background-position:center;z-index:5}
+.rune-game[data-game="magnet"] .game-ground{display:none}
+.bridge-bank{position:absolute;top:128px;height:25px;background:linear-gradient(rgba(8,20,25,.3),rgba(2,9,14,.8)),url(../../assets/gen/prototype/bg_shrine.png) center/320px auto;border-top:2px solid #a0a89b;z-index:2}
+.bridge-bank.left{left:8px;width:104px}.bridge-bank.right{left:208px;width:104px}
+.bridge-gap{position:absolute;left:112px;top:128px;width:96px;height:26px;background:linear-gradient(#01060988,#010609);border-left:1px solid #718d8b55;border-right:1px solid #718d8b55;z-index:2}
+.bridge-walker{position:absolute;left:26px;top:88px;width:19px;height:40px;object-fit:contain;z-index:6;transition:left .1s linear;filter:drop-shadow(0 2px 2px #000)}
+.game-distance{position:absolute;right:10px;top:47px;font-size:11px;color:var(--gold);text-shadow:0 1px 3px #000;z-index:6}
+.game-milestones{position:absolute;left:0;right:0;top:137px;height:12px;z-index:3;pointer-events:none}
+.game-milestones span{position:absolute;top:0;border-left:1px solid #c8d6c780;padding-left:3px;font-size:5px;white-space:nowrap;color:#bfcebf;text-shadow:0 1px 2px #000}
+
+.bridge-bank.supported{border-top-color:var(--cyan);box-shadow:0 -2px 6px rgba(127,233,255,.35)}
+
+/* Six additional rune experiences; existing bitmap scenery and item sprites. */
+.extra-arena{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.extra-prop{position:absolute;display:block;transition:none;z-index:4}
+.extra-game .game-goal{top:24px;gap:4px}.extra-game .game-goal b{font-size:6.5px}.extra-game .game-goal span{font-size:5px}
+.extra-game .game-message{font-size:5.5px}.extra-game .scene-stat{font-size:5px}
+.cube-platform{position:absolute;background:url(../../assets/gen/prototype/magnesis-bridge-v1.png) center/110% auto no-repeat;z-index:3}
+.extra-game[data-game="bomb_cube"] .extra-arena::before{content:"";position:absolute;left:242px;top:108px;width:43px;height:31px;background:url(../../assets/gen/prototype/bg_shrine.png) center/320px auto;border-top:1px solid #9ca69a;opacity:.85}
+.ice-water{position:absolute;left:45px;right:27px;top:134px;height:15px;border-top:1px solid #9fefff66;background:#2b8a9b33}
+.ice-shore{position:absolute;top:112px;width:42px;height:36px;background:url(../../assets/gen/prototype/bg_shrine.png) center/320px auto;border-top:1px solid #a8b5a4}
+.ice-shore.left{left:12px}.ice-shore.right{right:12px}
+.extra-link{position:absolute;object-fit:contain;z-index:6}
+.ice-gate{position:absolute;left:205px;top:56px;width:18px;height:79px;background:repeating-linear-gradient(90deg,#6c7771 0 2px,#07141999 2px 5px);border:2px solid #6c7771;transition:transform .45s;z-index:5}
+.extra-viewfinder{position:absolute;left:21px;right:21px;top:46px;bottom:49px;border:1px solid #b9d6cf44;background:linear-gradient(90deg,transparent 33%,#c5e1d422 33%,#c5e1d422 33.5%,transparent 33.5%,transparent 66%,#c5e1d422 66%,#c5e1d422 66.5%,transparent 66.5%);z-index:1}
+.camera-subject{position:absolute;object-fit:contain;z-index:2;filter:drop-shadow(0 2px 3px #000)}
+.camera-lock{position:absolute;z-index:6;border:1px solid #a3ecff;box-shadow:0 0 5px #7fe9ff55}
+.camera-reticle{position:absolute;left:154px;top:84px;color:#e4f8ec;font-size:12px;z-index:5}
+.extra-photo .game-pause-card{width:170px;gap:5px;padding:8px}.extra-photo h2{font-size:8px;margin:0;letter-spacing:.02em}.extra-photo img{width:90px;height:75px;object-fit:contain;align-self:center}.extra-photo p{font-size:5.5px;line-height:8px;color:var(--muted);margin:0;text-align:center}
+.cycle-terrain{position:absolute;height:18px;transform-origin:left top;background:url(../../assets/gen/prototype/bg_shrine.png) center/320px auto;border-top:1px solid #aab5a1;z-index:2}
+.cycle-player{z-index:6;transform-origin:center}.cycle-finish{position:absolute;color:var(--gold);font-size:18px;text-shadow:0 0 4px #000;z-index:3}
+.amiibo-figure-art{position:absolute;object-fit:contain;filter:drop-shadow(0 0 5px #7fe9ff44);z-index:3}
+.amiibo-reward-art{position:absolute;object-fit:contain;z-index:6;filter:drop-shadow(0 0 8px #d7c38977)}
+.amiibo-scan-beam{position:absolute;background:linear-gradient(0deg,#7fe9ff77,transparent);box-shadow:0 0 12px #7fe9ff33;z-index:3}
+.extra-caption{position:absolute;left:15px;right:15px;top:135px;text-align:center;font-size:6px;color:#d7e6df;text-shadow:0 1px 3px #000;z-index:6}
+.sensor-explore{position:absolute;inset:0}.sensor-trail{position:absolute;left:62px;top:54px;width:188px;height:82px;border:1px solid #9db8ac33;background:repeating-linear-gradient(0deg,transparent 0 18px,#c4d8cc11 18px 19px),repeating-linear-gradient(90deg,transparent 0 18px,#c4d8cc11 18px 19px)}
+.sensor-player{position:absolute;color:#e9f5db;font-size:12px;z-index:5;line-height:13px;transform-origin:center}
+.sensor-goal{position:absolute;object-fit:contain;z-index:3;filter:drop-shadow(0 0 5px #7fe9ff)}
+.sensor-signal{position:absolute;right:17px;top:60px;color:var(--cyan);font-size:10px;letter-spacing:2px;z-index:6;text-shadow:0 1px 3px #000}
+.inv-reward{position:absolute;left:1px;top:1px;color:var(--gold);font-size:5px;z-index:3;text-shadow:0 1px 2px #000}
+
+.cycle-progress{position:absolute;left:12px;top:48px;font-size:6px;color:var(--gold);text-shadow:0 1px 3px #000;z-index:6}
+.amiibo-food{position:absolute;object-fit:contain;z-index:5}
+
+/* Referenced art v2 replaces screenshot collages, opaque thumbnails and UI icons used as props. */
+.rune-game .scene{filter:saturate(.94) brightness(.9);background-repeat:no-repeat}
+.rune-game .scene-shade{background:linear-gradient(180deg,#02090fd9,transparent 36%,transparent 65%,#02090fe6)}
+.rune-game .ability-sprite{background-image:url(../../assets/gen/prototype/rune-sprites-v2.png);background-size:400% 400%;filter:drop-shadow(0 2px 2px #0005)}
+.game-blast,#cubeBlast{background-image:none!important;background:radial-gradient(circle,#dffcffdd,rgba(107,234,255,.65) 28%,rgba(50,160,230,.2) 60%,transparent 72%);border-radius:50%;filter:blur(1px);box-shadow:0 0 12px #7fe9ff44}
+.bridge-walker,.extra-link,.camera-subject,.amiibo-figure-art,.amiibo-food,.sensor-temple,.preview-subject{display:block;background-repeat:no-repeat}
+.bridge-walker{width:40px;height:40px;top:88px;transition:left .1s linear;filter:drop-shadow(0 2px 2px #0005)}
+.extra-photo .preview-subject{width:90px;height:90px;align-self:center;filter:drop-shadow(0 3px 4px #0006)}
+.sensor-temple{position:absolute;z-index:4;filter:drop-shadow(0 0 7px #60c5e555);transition:opacity .15s}
+.sensor-bearing{position:absolute;left:0;right:0;top:52px;text-align:center;font-size:5px;letter-spacing:.15em;color:#b7cec4;z-index:6;text-shadow:0 1px 3px #000}
+.extra-game[data-game="sensor"] .extra-caption{top:139px;font-size:5.5px}
+.extra-game[data-game="sensor"] .sensor-signal{top:70px;right:13px;font-size:7px;letter-spacing:1px}
+.extra-game[data-game="amiibo"] .extra-caption{left:204px;right:8px;top:129px;text-align:left;font-size:6px}
+.extra-game[data-game="amiibo"] .amiibo-figure-art{filter:drop-shadow(0 2px 2px #0005)}
+.extra-game[data-game="amiibo"] .amiibo-reward-art{background:#04121a88;border:1px solid #e6c58355;padding:2px;filter:none}
+.camera-focus-meter{position:absolute;left:140px;top:130px;width:40px;height:2px;background:#c7e8de22;z-index:7}
+.camera-focus-meter i{display:block;height:100%;width:0;background:#9fe9dc}
+.cycle-terrain{background:rgba(76,76,46,.6);border-top-color:#9ba878;opacity:.75}
+
+.rune-select-art{display:block;width:32px;height:32px;background-repeat:no-repeat;filter:drop-shadow(0 1px 3px #0005)}
+
+/* These four games accept sequential single presses; no direction+OK chord. */
+.ice-sites{position:absolute;inset:0;z-index:7}.ice-sites span{position:absolute;top:137px;width:11px;height:11px;text-align:center;line-height:10px;font-size:6px;color:#a9c9c8;border:1px solid transparent;background:#07151b88}
+.ice-sites span.selected{border-color:var(--cyan);color:#efffff}
+.sensor-paths{position:absolute;top:120px;left:70px;right:70px;height:14px;display:flex;gap:4px;z-index:7}
+.sensor-paths span{flex:1;display:block;border:1px solid #8aa9a655;background:#05141bc9;color:#a8c4bb;font-size:6px;text-align:center;line-height:12px}
+.sensor-paths span.selected{border-color:var(--cyan);background:#164452cf;color:#edffff}
+
+/* Motion phase feedback is advanced by the simulation clock, so pause freezes it. */
+.amiibo-shadow{position:absolute;z-index:2;border-radius:50%;background:radial-gradient(ellipse,#0009,transparent 72%);pointer-events:none}
+.sensor-reveal{position:absolute;inset:0;z-index:8;pointer-events:none;background:linear-gradient(0deg,#03101444,transparent 55%)}
+.sensor-reveal strong{position:absolute;left:22px;right:22px;top:114px;text-align:center;font-size:13px;font-weight:400;letter-spacing:.14em;color:#ecf9e8;text-shadow:0 1px 7px #000,0 0 12px #7fe9ff;opacity:0}
+#sensorRevealRing{position:absolute;left:112px;top:53px;width:96px;height:96px;border:1px solid #8ceeff88;border-radius:50%;box-shadow:0 0 18px #7fe9ff44,inset 0 0 15px #7fe9ff33;opacity:0}
+.cycle-cue{position:absolute;left:80px;right:30px;top:51px;z-index:7;font-size:7px;color:var(--gold);text-align:center;text-shadow:0 1px 4px #000}
+.extra-game [hidden]{display:none!important}

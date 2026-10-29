@@ -1,0 +1,68 @@
+/* Visible scene art is sampled from game originals or reference-generated PNGs.
+   CSS retains layout, transforms and hit areas; it does not draw world props. */
+.rune-game .game-ground{height:18px;background-color:transparent;border:0;box-shadow:none;clip-path:inset(0)}
+.bridge-bank,.ice-shore,.ice-gate{border:0;background-color:transparent;box-shadow:none;clip-path:inset(0)}
+.bridge-bank.supported{filter:drop-shadow(0 -1px 2px #7fe9ff)}
+.bridge-gap,.ice-water{display:none}
+.ice-shore{height:22px}
+.ice-gate{background:none;border:0}
+.cycle-terrain{background-color:transparent;border:0;opacity:1;height:18px;background-repeat:no-repeat}
+.cycle-finish{display:block;background-repeat:no-repeat;font-size:0;text-shadow:none}
+.game-force{height:14px;background-color:transparent;box-shadow:none;transform-origin:0 50%}
+.game-force::after{display:none}
+.rune-game .game-blast,#cubeBlast{background-image:url('../../assets/gen/prototype/rune-effects-v4.png')!important;background-color:transparent;border:0;border-radius:0;box-shadow:none;filter:none}
+.amiibo-scan-beam,.amiibo-shadow,#sensorRevealRing{background-color:transparent;box-shadow:none;border:0;border-radius:0;filter:none;background-repeat:no-repeat}
+#sensorRevealRing{height:70px;top:65px}
+.amiibo-shadow{background-image:none}
+.map-body{background:#06171d;isolation:isolate}
+.map-viewport{top:17px;bottom:39px;touch-action:none;background:#06171d;overflow:hidden}
+.map-crop{overflow:hidden;pointer-events:none;transform-origin:0 0;transition:left .24s ease,top .24s ease,width .24s ease,height .24s ease}
+.map-dragging .map-crop{transition:none}
+.map-image{object-fit:fill;filter:saturate(.82) brightness(.9)}
+.map-markers{position:absolute;inset:0;pointer-events:none}
+.map-marker{position:absolute;display:grid;place-items:center;width:15px;height:17px;padding:2px;transform:translate(-50%,-50%);border:0;background:none;pointer-events:auto;transition:left .24s ease,top .24s ease;z-index:2}
+.map-marker.selected{z-index:4;width:21px;height:23px}
+.map-marker.pinned::after{content:'';position:absolute;width:8px;height:10px;right:-5px;top:-6px;background-repeat:no-repeat}
+.map-hud{height:17px;background:#06151fe6;font-size:5.5px;z-index:5}
+.map-place-card{position:absolute;left:5px;right:43px;bottom:3px;height:33px;display:flex;flex-direction:column;justify-content:center;gap:1px;padding:3px 7px;z-index:5;pointer-events:none;overflow:hidden}
+.map-place-card strong{font-size:8px;font-weight:400;color:#e5f3df;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.map-place-card span,.map-place-card small{font-size:5px;color:#b8d8d5;line-height:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.map-options{position:absolute;right:4px;bottom:7px;height:22px;width:36px;z-index:6;font-size:5px;padding:2px}
+.map-dialog{position:absolute;inset:0;z-index:30;background:#01090edb;display:grid;place-items:center}
+.map-dialog-card{width:202px;max-height:187px;padding:10px 12px;display:flex;flex-direction:column;gap:3px;overflow:auto;scrollbar-width:thin}
+.map-dialog-card h2{margin:0 0 3px;font-size:10px;font-weight:400;letter-spacing:.06em;color:var(--gold);text-align:center}
+.map-dialog-card p{font-size:6px;line-height:9px;margin:1px 0 3px;color:#c1d5d0}
+.map-dialog-card .chip{min-height:17px;height:17px;flex-shrink:0;font-size:6px;letter-spacing:.02em;padding:2px 4px}
+.map-mode .focus-frame{display:none}.map-mode:has(.map-dialog) .focus-frame{display:block}
+.map-error{z-index:10;bottom:5px;font-size:6px;background:#05141feb}
+@media(prefers-reduced-motion:reduce){.map-crop,.map-marker{transition:none}}
+
+.extra-game[data-game="bomb_cube"] .extra-arena::before{border:0;background-color:transparent;opacity:1;background-image:url(../../assets/gen/prototype/rune-world-kit-v4.png);background-size:502.1021021021021% 450.2392344497608%;background-position:98.20761762509336% 41.12021857923497%;background-repeat:no-repeat;clip-path:inset(0)}
+
+.map-place-icon{display:block;object-fit:contain;pointer-events:none}
+.map-marker.pinned::after{background:url(../../assets/raw/02_ui/glyphs/BotW_Main_Quest_Sprite.png) center/contain no-repeat}
+.map-dialog-card,.map-place-card{background:rgba(5,19,26,.92);border:1px solid rgba(126,232,255,.35)}
+
+/* Explicit bounds survive the rejected HUD skin rollback. */
+.map-marker .map-place-icon{width:11px;height:13px;max-width:11px;max-height:13px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 1px #000)}
+.map-marker.selected .map-place-icon{width:16px;height:19px;max-width:16px;max-height:19px;filter:drop-shadow(0 0 2px #7fe9ff)}
+.map-marker.undiscovered:not(.selected) .map-place-icon{opacity:.65}
+.map-dragging .map-marker{transition:none}
+.game-message{z-index:8;pointer-events:none}
+.cycle-terrain{height:18px;backface-visibility:hidden}
+/* A clearly visible scan overlay; disabling removes the layer completely. */
+body:not(.no-scan) .scanlines{display:block;z-index:60;opacity:.7;background:repeating-linear-gradient(0deg,rgba(0,0,0,.26) 0 .7px,transparent .7px 2.2px,rgba(175,229,239,.08) 2.2px 2.7px,transparent 2.7px 3px);mix-blend-mode:normal}
+body.no-scan .scanlines{display:none}
+
+/* Simple map: permanent point information and direct zoom controls. */
+.map-simple-controls{position:absolute;right:4px;bottom:5px;display:flex;gap:2px;z-index:6;height:23px}
+.map-simple-controls .chip{width:22px;padding:1px;font-size:7px;letter-spacing:0}
+.map-place-card{right:78px;height:30px;bottom:3px}
+.map-place-card strong{font-size:7px}
+.map-marker .map-place-icon,.map-marker.selected .map-place-icon{width:var(--point-size,7px);height:var(--point-size,7px);max-width:var(--point-size,7px);max-height:var(--point-size,7px)}
+.map-marker{padding:0;min-width:0;min-height:0}
+.map-marker.selected{z-index:8}
+.map-marker[hidden]{display:none}
+.map-crop,.map-marker{transition:none}
+.map-mode .focus-frame{display:none}
+.extra-game[data-game="cycle"] .cycle-terrain{height:64px;transform:none;opacity:1}
