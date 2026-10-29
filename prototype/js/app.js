@@ -20,6 +20,7 @@ screenEl.addEventListener('pointerleave', () => {
 });
 
 const state = {
+  lang: (localStorage.getItem('slate-lang') || 'cn'),
   focus: 0,
   runeIndex: 0,
   bomb: { placed: false, type: 'ROUND', done: false },
@@ -27,6 +28,9 @@ const state = {
   stasis: { frozen: false, hits: 0, remaining: 10, done: false },
   cryonis: { count: 0, done: false },
   camera: { sel: 0, shots: [false, false, false, false, false], done: false },
+  cycle: { phase: 'idle', speed: 0, dist: 0 },
+  amiibo: { sel: 0, phase: 'idle', got: null },
+  sensor: { phase: 'idle', d: 120, done: false },
   map: { index: 0, zoom: 1, x: 0, y: 0 },
   compCat: 'creatures',
   inventory: {
@@ -40,6 +44,122 @@ const state = {
   albumShots: [],
   settings: { brightness: 5, volume: 3, scanlines: true, sfx: true }
 };
+
+/* ---------------- i18n ---------------- */
+/* 全局中英切换：UI 静态文案走 LANG 字典（t()），数据侧名称/描述按字段取双语。 */
+const LANG = {
+  cn: {
+    tab_inventory: '装备', tab_runes: '符文', tab_map: '地图', tab_compendium: '图鉴', tab_log: '日志', tab_system: '系统',
+    hold_back: '长按 OK 返回',
+    press_ok: '按 OK 启动',
+    back: '返回',
+    type: '类型', cooldown: '冷却', use_rune: '使用符文', locked: '未解锁',
+    sys_title: '系统', brightness: '亮度', volume: '音量', scanlines: '扫描线', sfx: '按键音',
+    album: '相册', about: '关于', standby: '待机', adjust: '调整 / 切换',
+    map_prev: '◀ 上一张', map_next: '下一张 ▶', map_zoom_out: '缩小', map_zoom_in: '+ 放大', map_reset: '复位',
+    map_foot_l: '▲▼ 选择　OK 确认', map_foot_r: '→ 切图 · 长按 OK 返回',
+    map_error: '地图加载失败，请刷新页面。',
+    comp_title: '海拉鲁图鉴', comp_creatures: '生物', comp_monsters: '怪物', comp_materials: '材料', comp_equipment: '装备', comp_treasure: '宝物',
+    comp_foot_l: '分类　OK 打开', comp_prev: '◀ 上一个', comp_next: '下一个 ▶', comp_list: '返回列表', comp_overview: '分类总览',
+    comp_cat_foot: '◀ 返回分类　OK 查看条目', comp_entry_foot: '◀▶ 切换条目　OK 返回',
+    not_recorded: '未记录', unrecorded: '未记录',
+    log_foot_r: '完整任务清单 · 自写梗概',
+    quest_prev: '上一个', quest_next: '下一个', quest_list: '返回目录', quest_foot: '选择　OK 确认', hold_back_short: '长按返回',
+    log_title: '冒险日志', log_main: '主线', log_side: '支线', log_foot_l: '▲▼ 选择　OK 查看',
+    album_title: '相册', album_new: '新',
+    album_foot: '照片　OK 查看', photo_no: '编号', photo_time: '时间', photo_place: '地点', photo_close: '关闭', photo_delete: '删除',
+    equip: '装备', unequip: '卸下', equipped: '已装备', unequipped: '已卸下',
+    inv_foot: '选择　OK 装备 / 卸下', inv_page_prev: '上一页', inv_page_next: '下一页',
+    slot_weapon: '武器', slot_shield: '盾', slot_head: '头', slot_body: '身', slot_legs: '腿',
+    slot_empty: '未装备', stat_attack: '攻击', stat_guard: '防御', stat_defense: '防御',
+    bonus_normal: '无特殊效果', bonus_swimming: '游泳速度提升', bonus_climbing: '攀爬速度提升', bonus_fire: '耐火守护',
+    lang_label: '语言', lang_cn: '简体中文', lang_en: 'ENGLISH',
+    scanlines_note: '扫描线质感叠加', sfx_note: '界面音效反馈',
+    sys_battery: '电量', sys_uptime: '运行', sys_storage: '存储',
+    use_rune_foot: '▲▼ 选择符文　OK 使用',
+    rune_select: '符文选择',
+    scene_hold: '长按 OK 返回',
+    photo_title: '照片', about_toast: 'AI Passport · Sheikah Slate',
+    rune_placeholder: '原型占位 · 无试炼玩法', rune_placeholder_note: '此符文在本原型中暂无试炼玩法，仅作界面演示。选中后回到符文页。', back_to_runes: '返回符文页',
+    trial_complete: '试炼完成',
+    bomb_done: '岩石已破坏，通往神庙的道路开启。', bomb_placed: '炸弹已放置。再按「引爆」即可起爆。', bomb_idle: '先「放置炸弹」，再「引爆」破坏岩石。',
+    magnet_done: '压力板被压住，闸门开启。', magnet_moved: '金属箱悬在压力板上方，按「放下」。', magnet_grabbed: '金属箱已锁定。按「移动」把它带到压力板上方。', magnet_idle: '用磁力抓住右侧金属箱，把它放到压力板上。',
+    stasis_done: '势能释放，岩石巨人撞开了堵路的墙。', stasis_frozen: '已冻结。按「击打」积蓄势能（最多 6 次），或直接「释放」。', stasis_idle: '先冻结岩石巨人，再击打积蓄势能，最后释放。',
+    cryonis_done: '冰柱已架成通路，可以跨过水面。', cryonis_full: '三根冰柱就位，按「跨越」完成试炼。', cryonis_idle: '在水面升起三根冰柱，搭出可通行的路。',
+    camera_done: '五个目标全部登记，图鉴已更新。', camera_shot: '这个目标已登记。切换目标或直接拍摄下一个。', camera_aim: '取景框对准', camera_shoot_note: '按「快门」登记',
+    scene_retry: '重新试炼', scene_place_bomb: '放置炸弹', scene_detonate: '引爆', scene_grab: '抓取', scene_move: '移动', scene_drop: '放下',
+    scene_freeze: '时停', scene_hit: '击打', scene_release: '释放', scene_ice: '造冰', scene_break: '碎冰', scene_cross: '跨越',
+    scene_shoot: '快门', scene_switch: '切换目标', scene_album: '相册', scene_foot: '▲▼ 选择　OK 执行', camera_foot: '▲▼ 目标　OK 快门',
+    cycle_summon: '召唤', cycle_accel: '加速', cycle_speed: '速度', cycle_dist: '距离',
+    cycle_idle: '英杰摩托停驻于此。召唤后骑乘，一路加速冲向终点。',
+    cycle_riding: '持续加速，驶向远方终点。',
+    cycle_done: '抵达终点，骑行试炼完成。',
+    amiibo_select: '选择要读取的 amiibo，按「读取」召唤。',
+    amiibo_scanning: '正在读取 amiibo…',
+    amiibo_done: '读取完成，获得物品。',
+    amiibo_scan: '读取', amiibo_again: '重新读取',
+    sensor_scan: '扫描', sensor_advance: '前进', sensor_idle: '感应器待命。扫描周围，寻找未被发现的神庙。',
+    sensor_found: '感应到神庙。跟随方向前进。',
+    sensor_near: '感应增强——神庙就在前方！',
+    sensor_done: '发现神庙！感应器试炼完成。'
+  },
+  en: {
+    tab_inventory: 'EQUIP', tab_runes: 'RUNES', tab_map: 'MAP', tab_compendium: 'COMPENDIUM', tab_log: 'LOG', tab_system: 'SYSTEM',
+    hold_back: 'HOLD OK TO GO BACK',
+    press_ok: 'PRESS OK TO ACTIVATE',
+    back: 'BACK',
+    type: 'TYPE', cooldown: 'COOLDOWN', use_rune: 'USE RUNE', locked: 'LOCKED',
+    sys_title: 'SYSTEM', brightness: 'BRIGHTNESS', volume: 'VOLUME', scanlines: 'SCANLINES', sfx: 'SOUND FX',
+    album: 'ALBUM', about: 'ABOUT', standby: 'STANDBY', adjust: 'OK ADJUST / TOGGLE',
+    map_prev: '◀ PREV', map_next: 'NEXT ▶', map_zoom_out: 'ZOOM –', map_zoom_in: '+ ZOOM', map_reset: 'RESET',
+    map_foot_l: '▲▼ SELECT　OK CONFIRM', map_foot_r: '→ SWITCH · HOLD OK BACK',
+    map_error: 'Failed to load the map. Please refresh.',
+    comp_title: 'HYRULE COMPENDIUM', comp_creatures: 'CREATURES', comp_monsters: 'MONSTERS', comp_materials: 'MATERIALS', comp_equipment: 'EQUIPMENT', comp_treasure: 'TREASURE',
+    comp_foot_l: 'SELECT　OK OPEN', comp_prev: '◀ PREV', comp_next: 'NEXT ▶', comp_list: 'LIST', comp_overview: 'OVERVIEW',
+    comp_cat_foot: '◀ BACK TO CATEGORY　OK VIEW', comp_entry_foot: '◀▶ SWITCH ENTRY　OK BACK',
+    not_recorded: 'UNRECORDED', unrecorded: 'UNRECORDED',
+    log_foot_r: 'FULL QUEST LIST · SELF-WRITTEN',
+    quest_prev: 'PREV', quest_next: 'NEXT', quest_list: 'BACK TO LIST', quest_foot: 'SELECT　OK CONFIRM', hold_back_short: 'HOLD BACK',
+    log_title: 'ADVENTURE LOG', log_main: 'MAIN', log_side: 'SIDE', log_foot_l: '▲▼ SELECT　OK VIEW',
+    album_title: 'ALBUM', album_new: 'NEW',
+    album_foot: 'PHOTO　OK VIEW', photo_no: 'NO', photo_time: 'TIME', photo_place: 'PLACE', photo_close: 'CLOSE', photo_delete: 'DELETE',
+    equip: 'EQUIP', unequip: 'UNEQUIP', equipped: 'EQUIPPED', unequipped: 'UNEQUIPPED',
+    inv_foot: 'SELECT　OK EQUIP / UNEQUIP', inv_page_prev: 'PREV PAGE', inv_page_next: 'NEXT PAGE',
+    slot_weapon: 'WEAPON', slot_shield: 'SHIELD', slot_head: 'HEAD', slot_body: 'BODY', slot_legs: 'LEGS',
+    slot_empty: 'EMPTY', stat_attack: 'ATTACK', stat_guard: 'GUARD', stat_defense: 'DEFENSE',
+    bonus_normal: 'NO SPECIAL EFFECT', bonus_swimming: 'SWIM SPEED UP', bonus_climbing: 'CLIMBING SPEED UP', bonus_fire: 'FLAME GUARD',
+    lang_label: 'LANGUAGE', lang_cn: '简体中文', lang_en: 'ENGLISH',
+    scanlines_note: 'CRT OVERLAY', sfx_note: 'UI SOUND EFFECTS',
+    sys_battery: 'BATTERY', sys_uptime: 'UPTIME', sys_storage: 'STORAGE',
+    use_rune_foot: '▲▼ SELECT RUNE　OK USE',
+    rune_select: 'RUNE SELECT',
+    scene_hold: 'HOLD OK TO GO BACK',
+    photo_title: 'PHOTO', about_toast: 'AI Passport · Sheikah Slate',
+    rune_placeholder: 'PLACEHOLDER · NO TRIAL', rune_placeholder_note: 'This rune has no interactive trial in the prototype — display only. Select to return to the rune list.', back_to_runes: 'BACK TO RUNES',
+    trial_complete: 'TRIAL COMPLETE',
+    bomb_done: 'The rocks are destroyed — the path to the shrine is open.', bomb_placed: 'Bomb placed. Press DETONATE to blow it up.', bomb_idle: 'Place a bomb, then detonate it to break the rocks.',
+    magnet_done: 'The pressure plate is pressed — the gate is open.', magnet_moved: 'The metal crate hovers above the plate. Press DROP.', magnet_grabbed: 'Crate locked. Press MOVE to bring it over the plate.', magnet_idle: 'Grab the metal crate on the right and set it on the pressure plate.',
+    stasis_done: 'Energy released — the rock giant smashed the blocked wall.', stasis_frozen: 'Frozen. Hit to store energy (up to 6), or release it.', stasis_idle: 'Freeze the rock giant, hit it to build energy, then release.',
+    cryonis_done: 'Ice pillars form a path across the water.', cryonis_full: 'Three pillars in place. Press CROSS to finish.', cryonis_idle: 'Raise three ice pillars to make a passable path.',
+    camera_done: 'All five targets registered — compendium updated.', camera_shot: 'Already registered. Switch target or shoot the next one.', camera_aim: 'Aim at', camera_shoot_note: 'and press SHOOT to register',
+    scene_retry: 'RETRY', scene_place_bomb: 'PLACE BOMB', scene_detonate: 'DETONATE', scene_grab: 'GRAB', scene_move: 'MOVE', scene_drop: 'DROP',
+    scene_freeze: 'FREEZE', scene_hit: 'HIT', scene_release: 'RELEASE', scene_ice: 'ICE', scene_break: 'BREAK', scene_cross: 'CROSS',
+    scene_shoot: 'SHOOT', scene_switch: 'NEXT TARGET', scene_album: 'ALBUM', scene_foot: '▲▼ SELECT　OK ACT', camera_foot: '▲▼ TARGET　OK SHOOT',
+    cycle_summon: 'SUMMON', cycle_accel: 'ACCEL', cycle_speed: 'SPEED', cycle_dist: 'DIST',
+    cycle_idle: 'The Champion motorcycle waits. Summon it, ride, and race to the finish.',
+    cycle_riding: 'Keep accelerating and ride toward the distant finish.',
+    cycle_done: 'Finish line reached — riding trial complete.',
+    amiibo_select: 'Pick an amiibo figure and press SCAN to summon.',
+    amiibo_scanning: 'Scanning amiibo…',
+    amiibo_done: 'Scan complete — items obtained.',
+    amiibo_scan: 'SCAN', amiibo_again: 'SCAN AGAIN',
+    sensor_scan: 'SCAN', sensor_advance: 'ADVANCE', sensor_idle: 'Sensor on standby. Scan the area for an undiscovered shrine.',
+    sensor_found: 'Shrine detected. Follow the bearing.',
+    sensor_near: 'Signal strengthening — the shrine is right ahead!',
+    sensor_done: 'Shrine found! Sensor trial complete.'
+  }
+};
+const t = k => (LANG[state.lang] && LANG[state.lang][k] !== undefined) ? LANG[state.lang][k] : (LANG.cn[k] ?? k);
 
 /* ---------------- audio ---------------- */
 /* 菜单使用 starter 归档的现成音效；其他玩法保留原有 wav，未核实为游戏原版。
@@ -95,31 +215,31 @@ function back() {
 
 /* ---------------- chrome ---------------- */
 const TABS = [
-  ['inventory', 'EQUIP'],
-  ['runes', 'RUNES'],
-  ['map', 'MAP'],
-  ['compendium', 'COMPENDIUM'],
-  ['log', 'LOG'],
-  ['system', 'SYSTEM']
+  ['inventory', 'tab_inventory'],
+  ['runes', 'tab_runes'],
+  ['map', 'tab_map'],
+  ['compendium', 'tab_compendium'],
+  ['log', 'tab_log'],
+  ['system', 'tab_system']
 ];
 
 function topbar(active) {
   return `<header class="topbar">
-    <nav class="tabs" aria-label="主导航">${TABS.map(([id, label]) => `
+    <nav class="tabs" aria-label="${t('tab_inventory')}">${TABS.map(([id, key]) => `
       <button class="tab ${active === id ? 'on' : ''}" data-action="go:#/${id}" data-focus aria-current="${active === id ? 'page' : 'false'}">
-        <b>${label}</b>
+        <b>${t(key)}</b>
       </button>`).join('')}</nav>
   </header>`;
 }
 
-function footer(left, right = '长按 OK 返回') {
+function footer(left, right = t('hold_back')) {
   return `<footer class="footer"><span>${left}</span><span class="muted">${right}</span></footer>`;
 }
 
 function sceneTop(rune, stat) {
   return `<div class="scene-top">
-    <button class="back-tab" data-action="back" data-focus>◀ BACK</button>
-    <div class="rune-tag"><img src="${IMG(rune.icon)}" alt=""><b>${rune.label}</b></div>
+    <button class="back-tab" data-action="back" data-focus>◀ ${t('back')}</button>
+    <div class="rune-tag"><img src="${IMG(rune.icon)}" alt=""><b>${state.lang === 'cn' ? rune.cn : rune.label}</b></div>
     <span class="scene-stat">${stat}</span>
   </div>`;
 }
@@ -131,9 +251,9 @@ function viewStandby() {
     <img class="sb-slate" src="${IMG('cut_slate.png')}" alt="">
     <img class="sb-eye" src="${IMG('eye.png')}" alt="">
     <div class="sb-clock">09:41</div>
-    <div class="sb-date">SAT · 10.26 · HYRULE</div>
+    <div class="sb-date">${state.lang === 'cn' ? '周六 · 10.26 · 海拉鲁' : 'SAT · 10.26 · HYRULE'}</div>
     <div class="sb-battery"><span class="batt"><i style="width:99%"></i></span>99%</div>
-    <button class="sb-prompt" data-action="go:#/runes" data-focus data-start>PRESS OK TO ACTIVATE</button>
+    <button class="sb-prompt" data-action="go:#/runes" data-focus data-start>${t('press_ok')}</button>
     <div class="sb-brand">AI PASSPORT · SHEIKAH SLATE</div>
   </div>`;
 }
@@ -143,24 +263,23 @@ function viewRunes() {
   const r = RUNES[state.runeIndex];
   return topbar('runes') + `<div class="body runes-body">
     <div class="rune-left">
-      <div class="section-label">RUNE SELECT <em>${String(RUNES.length).padStart(2, '0')}</em></div>
+      <div class="section-label">${t('rune_select')}</div>
       <div class="rune-grid">${RUNES.map((x, i) => `
         <button class="rune-tile ${i === state.runeIndex ? 'sel' : ''}" data-action="pick:${i}" data-focus ${i === state.runeIndex ? 'data-start' : ''}>
           <span class="num">0${i + 1}</span>
           <img src="${IMG(x.icon)}" alt="">
-          <b>${x.short}</b>
+          <b>${state.lang === 'cn' ? (RUNE_TILE_CN[x.short] || x.short) : x.short}</b>
         </button>`).join('')}</div>
     </div>
     <aside class="detail-card">
-      <div class="eyebrow">RUNE ${String(state.runeIndex + 1).padStart(2, '0')}</div>
-      <h2>${r.label}</h2>
-      <div class="cn">${r.cn}</div>
+      <div class="eyebrow">${state.lang === 'cn' ? `符文 ${String(state.runeIndex + 1).padStart(2, '0')}` : `RUNE ${String(state.runeIndex + 1).padStart(2, '0')}`}</div>
+      <h2>${state.lang === 'cn' ? r.cn : r.label}</h2>
       <div class="rule"></div>
-      <p>${r.desc}</p>
-      <div class="stats">${r.stats.map(([k, v]) => `<div><span>${k}</span><b>${v}</b></div>`).join('')}</div>
-      <button class="btn-primary" data-action="enter-rune" data-focus>USE RUNE</button>
+      <p>${state.lang === 'cn' ? r.desc : (r.en_desc || r.desc)}</p>
+      <div class="stats">${r.stats.map(([k, v]) => `<div><span>${state.lang === 'cn' ? (RUNE_STAT_CN[k] || k) : k}</span><b>${state.lang === 'cn' ? (RUNE_STAT_VAL_CN[v] || v) : v}</b></div>`).join('')}</div>
+      <button class="btn-primary" data-action="enter-rune" data-focus>${t('use_rune')}</button>
     </aside>
-  </div>` + footer('<b>▲▼</b> 选择符文　<b>OK</b> 使用');
+  </div>` + footer(t('use_rune_foot'));
 }
 
 /* ---------------- rune scenes ---------------- */
@@ -173,9 +292,9 @@ function viewRune(id) {
     case 'stasis': return viewStasis(rune);
     case 'cryonis': return viewCryonis(rune);
     case 'camera': return viewCamera(rune);
-    case 'cycle':
-    case 'amiibo':
-    case 'sensor': return viewRuneInfo(rune);
+    case 'cycle': return viewCycle(rune);
+    case 'amiibo': return viewAmiibo(rune);
+    case 'sensor': return viewSensor(rune);
     default: return viewRunes();
   }
 }
@@ -185,17 +304,112 @@ function viewRuneInfo(rune) {
   return topbar('runes') + `<div class="body story-body scene-body">
     <div class="scene" style="background-image:url(${IMG(rune.scene)})"></div>
     <div class="scene-shade"></div>
-    <div class="story-meta"><span>RUNE ${rune.short}</span><span>原型占位 · 无试炼玩法</span></div>
+    <div class="story-meta"><span>RUNE ${rune.short}</span><span>${t('rune_placeholder')}</span></div>
     <h2>${rune.label}</h2>
     <div class="story-subtitle">${rune.cn}</div>
     <article class="story-page">
       <p>${rune.desc}</p>
-      <p style="color:#a8cdd4;margin-top:6px">此符文在本原型中暂无试炼玩法，仅作界面演示。选中后回到符文页。</p>
+      <p style="color:#a8cdd4;margin-top:6px">${t('rune_placeholder_note')}</p>
     </article>
     <div class="story-controls">
-      <button data-action="back" data-start>返回符文页</button>
+      <button data-action="back" data-start>${t('back_to_runes')}</button>
     </div>
-  </div>` + footer('<b>OK</b> 返回', `${rune.short} · 原型占位`);
+  </div>` + footer(`<b>OK</b> ${t('back')}`, `${rune.short} · ${t('rune_placeholder')}`);
+}
+
+/* 大师摩托：召唤 → 骑乘加速 → 冲到终点。 */
+function viewCycle(rune) {
+  const c = state.cycle;
+  const riding = c.phase === 'ride' || c.phase === 'done';
+  return `<div class="body scene-body">
+    <div class="scene" id="scene" style="background-image:url(${IMG(rune.scene)})"></div>
+    <div class="scene-shade"></div>
+    <img class="puppet far drift slow" src="${IMG('cut_lynel.png')}" alt="" style="right:10px;bottom:96px;width:52px">
+    <img class="puppet mid drift" src="${IMG('cut_guardian_big.png')}" alt="" style="left:120px;bottom:44px;width:62px">
+    ${sceneTop(rune, c.phase === 'done' ? (state.lang === 'cn' ? '试炼完成' : 'TRIAL CLEAR')
+      : riding ? (state.lang === 'cn' ? `骑行 ${c.dist}%` : `RIDE ${c.dist}%`)
+        : (state.lang === 'cn' ? '待命' : 'STANDBY'))}
+    ${c.phase === 'done' ? `<div class="badge-done">${t('trial_complete')}</div>` : ''}
+    <img class="cycle-bike ${c.phase === 'summon' ? 'in' : ''} ${riding ? 'riding' : ''}" src="${IMG(rune.icon)}" alt="" style="${riding ? `left:${(30 + c.dist * 0.5).toFixed(0)}px;bottom:32px` : ''}">
+    ${c.phase === 'summon' || riding ? '<div class="cycle-dust"></div>' : ''}
+    <div class="msg">${c.phase === 'done' ? t('cycle_done')
+      : c.phase === 'ride' ? t('cycle_riding')
+        : t('cycle_idle')}</div>
+    ${riding ? `<div class="cycle-gauges">
+      <div class="gauge"><span>${t('cycle_speed')}</span><div class="bar"><i style="width:${c.speed}%"></i></div><b>${c.speed}</b></div>
+      <div class="gauge"><span>${t('cycle_dist')}</span><div class="bar"><i style="width:${c.dist}%"></i></div><b>${c.dist}%</b></div>
+    </div>` : ''}
+    <div class="chiprow">
+      <button class="chip" data-action="${c.phase === 'done' ? 'cycle:reset' : 'cycle:summon'}" data-focus data-start ${c.phase === 'ride' ? 'disabled' : ''}>${c.phase === 'done' ? t('scene_retry') : t('cycle_summon')}</button>
+      <button class="chip" data-action="cycle:accel" data-focus ${c.phase === 'ride' ? '' : 'disabled'}>${t('cycle_accel')}</button>
+    </div>
+  </div>` + footer(t('scene_foot'));
+}
+
+const AMIIBO_FIGURES = [
+  { icon: 'cp_master_sword.png', cn: '大师之剑 amiibo', en: 'MASTER SWORD' },
+  { icon: 'cp_hylian_shield.png', cn: '海利亚盾 amiibo', en: 'HYLIAN SHIELD' },
+  { icon: 'cp_bokoblin.png', cn: '波克布林 amiibo', en: 'BOKOBLIN' }
+];
+const AMIIBO_DROPS = [
+  { icon: 'cp_apple.png', cn: '苹果 ×3', en: 'APPLE ×3' },
+  { icon: 'cp_hylian_shroom.png', cn: '海利亚蘑菇 ×5', en: 'HYLIAN SHROOM ×5' },
+  { icon: 'cp_wildberry.png', cn: '野莓 ×4', en: 'WILD BERRY ×4' },
+  { icon: 'cp_hearty_durian.png', cn: '生命榴莲 ×2', en: 'HEARTY DURIAN ×2' },
+  { icon: 'cp_royal_claymore.png', cn: '王族双手剑 ×1', en: 'ROYAL CLAYMORE ×1' }
+];
+/* amiibo：选择角色 → 读取光柱 → 随机掉落。 */
+function viewAmiibo(rune) {
+  const a = state.amiibo;
+  const fig = AMIIBO_FIGURES[a.sel];
+  const drop = a.got;
+  return `<div class="body scene-body">
+    <div class="scene" id="scene" style="background-image:url(${IMG(rune.scene)})"></div>
+    <div class="scene-shade"></div>
+    <img class="puppet far drift slow" src="${IMG('cut_keese.png')}" alt="" style="left:6px;top:30px;width:54px">
+    <img class="puppet mid drift" src="${IMG('cut_lizalfos_big.png')}" alt="" style="right:40px;bottom:46px;width:84px">
+    ${sceneTop(rune, a.phase === 'done' ? (state.lang === 'cn' ? '读取完成' : 'SCAN COMPLETE')
+      : a.phase === 'scan' ? (state.lang === 'cn' ? '读取中…' : 'SCANNING…')
+        : (state.lang === 'cn' ? '待命' : 'STANDBY'))}
+    <div class="amiibo-base"><img src="${IMG(fig.icon)}" alt=""></div>
+    ${a.phase === 'scan' ? '<div class="beam"></div>' : ''}
+    ${a.phase === 'done' && drop ? `<div class="drop-item"><img src="${IMG(drop.icon)}" alt=""><b>${state.lang === 'cn' ? drop.cn : drop.en}</b></div>` : ''}
+    <div class="msg">${a.phase === 'done' ? t('amiibo_done')
+      : a.phase === 'scan' ? t('amiibo_scanning')
+        : t('amiibo_select')}</div>
+    <div class="chiprow">
+      <button class="chip" data-action="amiibo:prev" data-focus ${a.phase === 'scan' || a.phase === 'done' ? 'disabled' : ''}>◀ ${state.lang === 'cn' ? '上一个' : 'PREV'}</button>
+      <button class="chip" data-action="${a.phase === 'done' ? 'amiibo:again' : 'amiibo:scan'}" data-focus data-start ${a.phase === 'scan' ? 'disabled' : ''}>${a.phase === 'done' ? t('amiibo_again') : t('amiibo_scan')}</button>
+      <button class="chip" data-action="amiibo:next" data-focus ${a.phase === 'scan' || a.phase === 'done' ? 'disabled' : ''}>${state.lang === 'cn' ? '下一个' : 'NEXT'} ▶</button>
+    </div>
+  </div>` + footer(t('scene_foot'));
+}
+
+const SENSOR_BEARINGS = [
+  { cn: '东北', en: 'NE' }, { cn: '东南', en: 'SE' }, { cn: '西南', en: 'SW' }, { cn: '西北', en: 'NW' }
+];
+/* 希卡感应器：扫描定位神庙 → 步步逼近 → 发现。 */
+function viewSensor(rune) {
+  const s = state.sensor;
+  const bearing = SENSOR_BEARINGS[s.b];
+  return `<div class="body scene-body">
+    <div class="scene" id="scene" style="background-image:url(${IMG(rune.scene)})"></div>
+    <div class="scene-shade"></div>
+    <img class="puppet mid drift" src="${IMG('cut_skywatcher.png')}" alt="" style="right:14px;bottom:64px;width:68px">
+    ${sceneTop(rune, s.done ? (state.lang === 'cn' ? '发现神庙' : 'SHRINE FOUND')
+      : s.phase === 'scan' ? (state.lang === 'cn' ? `${bearing.cn} · ${s.d}m` : `${bearing.en} · ${s.d}m`)
+        : (state.lang === 'cn' ? '待命' : 'STANDBY'))}
+    ${s.done ? `<div class="badge-done">${t('trial_complete')}</div>` : ''}
+    <div class="sensor-ring ${s.phase === 'scan' ? 'on' : ''}"><i></i><i></i><i></i><i></i></div>
+    ${s.phase === 'scan' && !s.done ? `<div class="sensor-arrow">${state.lang === 'cn' ? bearing.cn : bearing.en}</div>` : ''}
+    <div class="msg">${s.done ? t('sensor_done')
+      : s.phase === 'scan' ? (s.d <= 40 ? t('sensor_near') : t('sensor_found'))
+        : t('sensor_idle')}</div>
+    <div class="chiprow">
+      <button class="chip" data-action="${s.done ? 'sensor:reset' : 'sensor:scan'}" data-focus data-start ${s.phase === 'scan' && !s.done ? 'disabled' : ''}>${s.done ? t('scene_retry') : t('sensor_scan')}</button>
+      <button class="chip" data-action="sensor:advance" data-focus ${s.phase === 'scan' && !s.done ? '' : 'disabled'}>${t('sensor_advance')}</button>
+    </div>
+  </div>` + footer(t('scene_foot'));
 }
 
 function viewBomb(rune) {
@@ -209,20 +423,20 @@ function viewBomb(rune) {
     <img class="puppet far drift slow" src="${IMG('cut_decayed.png')}" alt="" style="right:12px;bottom:110px;width:46px">
     <img class="puppet mid drift" src="${IMG('cut_bokoblin.png')}" alt="" style="left:130px;bottom:46px;width:68px">
     <img class="puppet near drift slow" src="${IMG('cut_moblin_big.png')}" alt="" style="left:-50px;bottom:-4px;width:158px">
-    ${sceneTop(rune, b.done ? 'TRIAL CLEAR' : b.placed ? 'ARMED' : 'STANDBY')}
-    ${b.done ? '<div class="badge-done">TRIAL COMPLETE</div>' : ''}
+    ${sceneTop(rune, b.done ? (state.lang === 'cn' ? '试炼完成' : 'TRIAL CLEAR') : b.placed ? (state.lang === 'cn' ? '已就位' : 'ARMED') : (state.lang === 'cn' ? '待命' : 'STANDBY'))}
+    ${b.done ? `<div class="badge-done">${t('trial_complete')}</div>` : ''}
     <img class="actor wall ${b.done ? 'gone' : ''}" src="${FW('wall.png')}" alt="" style="right:26px;bottom:44px">
     <div class="aim ${b.done ? 'hidden' : 'hot'}" style="right:34px;bottom:42px"></div>
-    <img class="actor bomb ${b.placed ? 'in' : ''}" src="${FW(bombImg)}" alt="" style="right:90px;bottom:50px">
+    <img class="actor bomb ${b.placed ? 'in' : ''} ${b.type === 'ROUND' && b.placed && !b.done ? 'roll' : ''}" src="${FW(bombImg)}" alt="" style="right:90px;bottom:50px">
     <div id="blastLayer"></div>
-    <div class="msg">${b.done ? '岩石已破坏，通往神庙的道路开启。'
-      : b.placed ? '炸弹已放置。再按「引爆」即可起爆。'
-        : '先「放置炸弹」，再「引爆」破坏岩石。'}</div>
+    <div class="msg">${b.done ? t('bomb_done')
+      : b.placed ? t('bomb_placed')
+        : t('bomb_idle')}</div>
     <div class="chiprow">
-      <button class="chip ${b.placed ? 'on' : ''}" data-action="${b.done ? 'bomb:reset' : 'bomb:place'}" data-focus data-start ${b.placed ? 'disabled' : ''}>${b.done ? '重新试炼' : '放置炸弹'}</button>
-      <button class="chip" data-action="bomb:blast" data-focus ${b.placed ? '' : 'disabled'}>引爆</button>
+      <button class="chip ${b.placed ? 'on' : ''}" data-action="${b.done ? 'bomb:reset' : 'bomb:place'}" data-focus data-start ${b.placed ? 'disabled' : ''}>${b.done ? t('scene_retry') : t('scene_place_bomb')}</button>
+      <button class="chip" data-action="bomb:blast" data-focus ${b.placed ? '' : 'disabled'}>${t('scene_detonate')}</button>
     </div>
-  </div>` + footer('<b>▲▼</b> 选择　<b>OK</b> 执行');
+  </div>` + footer(t('scene_foot'));
 }
 
 function viewMagnet(rune) {
@@ -235,21 +449,21 @@ function viewMagnet(rune) {
     <img class="puppet far drift slow" src="${IMG('cut_keese.png')}" alt="" style="right:8px;top:42px;width:56px">
     <img class="puppet mid drift" src="${IMG('cut_lizalfos_big.png')}" alt="" style="right:50px;bottom:40px;width:94px">
     <img class="puppet near drift slow" src="${IMG('cut_bokoblin.png')}" alt="" style="left:-66px;bottom:-4px;width:156px">
-    ${sceneTop(rune, m.done ? 'TRIAL CLEAR' : m.grabbed ? 'LOCKED ON' : 'STANDBY')}
-    ${m.done ? '<div class="badge-done">TRIAL COMPLETE</div>' : ''}
+    ${sceneTop(rune, m.done ? (state.lang === 'cn' ? '试炼完成' : 'TRIAL CLEAR') : m.grabbed ? (state.lang === 'cn' ? '已锁定' : 'LOCKED ON') : (state.lang === 'cn' ? '待命' : 'STANDBY'))}
+    ${m.done ? `<div class="badge-done">${t('trial_complete')}</div>` : ''}
     <img class="actor gate" src="${FW('gate.png')}" alt="" style="left:14px;bottom:58px;${m.done ? 'transform:translateY(-34px);opacity:.4' : ''}">
     <div class="plate-mark" style="left:92px;bottom:56px"></div>
     <img class="actor crate ${m.grabbed && !m.done ? 'in' : ''}" src="${FW('crate.png')}" alt="" style="left:${crateLeft}px;bottom:${crateBottom}px;${m.grabbed && !m.done ? 'filter:drop-shadow(0 0 9px rgba(127,233,255,.9))' : ''}">
-    <div class="msg">${m.done ? '压力板被压住，闸门开启。'
-      : m.moved ? '金属箱悬在压力板上方，按「放下」。'
-        : m.grabbed ? '金属箱已锁定。按「移动」把它带到压力板上方。'
-          : '用磁力抓住右侧金属箱，把它放到压力板上。'}</div>
+    <div class="msg">${m.done ? t('magnet_done')
+      : m.moved ? t('magnet_moved')
+        : m.grabbed ? t('magnet_grabbed')
+          : t('magnet_idle')}</div>
     <div class="chiprow">
-      <button class="chip ${m.grabbed ? 'on' : ''}" data-action="${m.done ? 'magnet:reset' : 'magnet:grab'}" data-focus data-start>${m.done ? '重新试炼' : '抓取'}</button>
-      <button class="chip ${m.moved ? 'on' : ''}" data-action="magnet:move" data-focus ${m.grabbed && !m.done ? '' : 'disabled'}>移动</button>
-      <button class="chip" data-action="magnet:drop" data-focus ${m.moved && !m.done ? '' : 'disabled'}>放下</button>
+      <button class="chip ${m.grabbed ? 'on' : ''}" data-action="${m.done ? 'magnet:reset' : 'magnet:grab'}" data-focus data-start>${m.done ? t('scene_retry') : t('scene_grab')}</button>
+      <button class="chip ${m.moved ? 'on' : ''}" data-action="magnet:move" data-focus ${m.grabbed && !m.done ? '' : 'disabled'}>${t('scene_move')}</button>
+      <button class="chip" data-action="magnet:drop" data-focus ${m.moved && !m.done ? '' : 'disabled'}>${t('scene_drop')}</button>
     </div>
-  </div>` + footer('<b>▲▼</b> 选择　<b>OK</b> 执行');
+  </div>` + footer(t('scene_foot'));
 }
 
 function viewStasis(rune) {
@@ -261,21 +475,21 @@ function viewStasis(rune) {
     <img class="puppet far drift slow" src="${IMG('cut_decayed.png')}" alt="" style="right:6px;bottom:112px;width:44px">
     <img class="puppet mid drift slow" src="${IMG('cut_lynel.png')}" alt="" style="right:96px;bottom:58px;width:86px">
     <img class="puppet near drift slow" src="${IMG('cut_hinox.png')}" alt="" style="left:-62px;bottom:-6px;width:152px">
-    ${sceneTop(rune, s.done ? 'TRIAL CLEAR' : s.frozen ? 'TIME LOCKED' : 'STANDBY')}
+    ${sceneTop(rune, s.done ? (state.lang === 'cn' ? '试炼完成' : 'TRIAL CLEAR') : s.frozen ? (state.lang === 'cn' ? '时停中' : 'TIME LOCKED') : (state.lang === 'cn' ? '待命' : 'STANDBY'))}
     ${s.frozen ? `<div class="stasis-timer"><div class="bar"><i id="stasisBar" style="width:${s.remaining * 10}%"></i></div><span id="stasisTime">${s.remaining.toFixed(1)} s</span></div>
       <div class="pips">${pips}</div>` : ''}
-    ${s.done ? '<div class="badge-done">TRIAL COMPLETE</div>' : ''}
+    ${s.done ? `<div class="badge-done">${t('trial_complete')}</div>` : ''}
     <div class="aim ${s.done ? 'hidden' : ''}" style="right:54px;bottom:44px"></div>
     <img class="actor boulder ${s.frozen ? 'frozen' : ''}" src="${IMG('cut_talus.png')}" alt="" style="right:46px;bottom:44px;${s.done ? 'transform:translateX(40px) rotate(18deg);opacity:.45' : ''}">
-    <div class="msg">${s.done ? '势能释放，岩石巨人撞开了堵路的墙。'
-      : s.frozen ? '已冻结。按「击打」积蓄势能（最多 6 次），或直接「释放」。'
-        : '先冻结岩石巨人，再击打积蓄势能，最后释放。'}</div>
+    <div class="msg">${s.done ? t('stasis_done')
+      : s.frozen ? t('stasis_frozen')
+        : t('stasis_idle')}</div>
     <div class="chiprow">
-      <button class="chip ${s.frozen ? 'on' : ''}" data-action="${s.done ? 'stasis:reset' : 'stasis:freeze'}" data-focus data-start ${s.frozen ? 'disabled' : ''}>${s.done ? '重新试炼' : '时停'}</button>
-      <button class="chip" data-action="stasis:hit" data-focus ${s.frozen ? '' : 'disabled'}>击打</button>
-      <button class="chip" data-action="stasis:release" data-focus ${s.frozen ? '' : 'disabled'}>释放</button>
+      <button class="chip ${s.frozen ? 'on' : ''}" data-action="${s.done ? 'stasis:reset' : 'stasis:freeze'}" data-focus data-start ${s.frozen ? 'disabled' : ''}>${s.done ? t('scene_retry') : t('scene_freeze')}</button>
+      <button class="chip" data-action="stasis:hit" data-focus ${s.frozen ? '' : 'disabled'}>${t('scene_hit')}</button>
+      <button class="chip" data-action="stasis:release" data-focus ${s.frozen ? '' : 'disabled'}>${t('scene_release')}</button>
     </div>
-  </div>` + footer('<b>▲▼</b> 选择　<b>OK</b> 执行');
+  </div>` + footer(t('scene_foot'));
 }
 
 const ICE_SLOTS = [52, 110, 168];
@@ -288,29 +502,29 @@ function viewCryonis(rune) {
     <img class="puppet mid drift" src="${IMG('cut_wizzrobe.png')}" alt="" style="left:4px;bottom:58px;width:66px">
     <img class="puppet far drift slow" src="${IMG('cut_skywatcher.png')}" alt="" style="right:-16px;bottom:102px;width:96px">
     <img class="puppet near drift slow" src="${IMG('cut_keese.png')}" alt="" style="left:-52px;top:8px;width:146px">
-    ${sceneTop(rune, c.done ? 'TRIAL CLEAR' : `PILLARS ${c.count}/3`)}
-    ${c.done ? '<div class="badge-done">TRIAL COMPLETE</div>' : ''}
+    ${sceneTop(rune, c.done ? (state.lang === 'cn' ? '试炼完成' : 'TRIAL CLEAR') : (state.lang === 'cn' ? `冰柱 ${c.count}/3` : `PILLARS ${c.count}/3`))}
+    ${c.done ? `<div class="badge-done">${t('trial_complete')}</div>` : ''}
     ${ICE_SLOTS.map((x, i) => `
       <div class="slot" style="left:${x}px;bottom:56px"></div>
       ${i < c.count ? `<div class="pillar" style="left:${x}px;bottom:56px"></div>` : ''}`).join('')}
-    <div class="msg">${c.done ? '冰柱已架成通路，可以跨过水面。'
-      : c.count >= 3 ? '三根冰柱就位，按「跨越」完成试炼。'
-        : '在水面升起三根冰柱，搭出可通行的路。'}</div>
+    <div class="msg">${c.done ? t('cryonis_done')
+      : c.count >= 3 ? t('cryonis_full')
+        : t('cryonis_idle')}</div>
     <div class="chiprow">
-      <button class="chip" data-action="${c.done ? 'cryonis:reset' : 'cryonis:create'}" data-focus data-start ${c.count >= 3 && !c.done ? 'disabled' : ''}>${c.done ? '重新试炼' : '造冰'}</button>
-      <button class="chip" data-action="cryonis:break" data-focus ${c.count === 0 || c.done ? 'disabled' : ''}>碎冰</button>
-      <button class="chip" data-action="cryonis:cross" data-focus ${c.count >= 3 && !c.done ? '' : 'disabled'}>跨越</button>
+      <button class="chip" data-action="${c.done ? 'cryonis:reset' : 'cryonis:create'}" data-focus data-start ${c.count >= 3 && !c.done ? 'disabled' : ''}>${c.done ? t('scene_retry') : t('scene_ice')}</button>
+      <button class="chip" data-action="cryonis:break" data-focus ${c.count === 0 || c.done ? 'disabled' : ''}>${t('scene_break')}</button>
+      <button class="chip" data-action="cryonis:cross" data-focus ${c.count >= 3 && !c.done ? '' : 'disabled'}>${t('scene_cross')}</button>
     </div>
-  </div>` + footer('<b>▲▼</b> 选择　<b>OK</b> 执行');
+  </div>` + footer(t('scene_foot'));
 }
 
 /* 取景框里的缩略图是 96px；big 是写进相册后详情页用的 280px 图，没大图就回落。 */
 const CAM_TARGETS = [
-  { x: 26, y: 30, img: 'pic_nightshade.png', big: 'cp_blue_nightshade.png', name: 'BLUE NIGHTSHADE' },
-  { x: 112, y: 12, img: 'pic_bass.png', big: 'cp_hyrule_bass.png', name: 'HYLIAN BASS' },
-  { x: 196, y: 34, img: 'pic_chuchu.png', name: 'CHUCHU' },
-  { x: 58, y: 76, img: 'mat_amber.png', name: 'AMBER' },
-  { x: 152, y: 82, img: 'pic_mastersword.png', big: 'cp_master_sword.png', name: 'MASTER SWORD' }
+  { x: 26, y: 30, img: 'pic_nightshade.png', big: 'cp_blue_nightshade.png', name: 'BLUE NIGHTSHADE', cn: '蓝夜光草' },
+  { x: 112, y: 12, img: 'pic_bass.png', big: 'cp_hyrule_bass.png', name: 'HYLIAN BASS', cn: '海拉鲁鲈鱼' },
+  { x: 196, y: 34, img: 'pic_chuchu.png', name: 'CHUCHU', cn: '丘丘' },
+  { x: 58, y: 76, img: 'mat_amber.png', name: 'AMBER', cn: '琥珀' },
+  { x: 152, y: 82, img: 'pic_mastersword.png', big: 'cp_master_sword.png', name: 'MASTER SWORD', cn: '大师之剑' }
 ];
 
 function viewCamera(rune) {
@@ -319,8 +533,8 @@ function viewCamera(rune) {
   return `<div class="body scene-body">
     <div class="scene" id="scene" style="background-image:url(${IMG('rune_scene_camera.png')})"></div>
     <div class="scene-shade"></div>
-    ${sceneTop(rune, `REGISTERED ${got}/5`)}
-    ${c.done ? '<div class="badge-done">TRIAL COMPLETE</div>' : ''}
+    ${sceneTop(rune, state.lang === 'cn' ? `已登记 ${got}/5` : `REGISTERED ${got}/5`)}
+    ${c.done ? `<div class="badge-done">${t('trial_complete')}</div>` : ''}
     <div class="viewfinder">
       <span class="vf-corner tr"></span><span class="vf-corner bl"></span>
       <div class="vf-grid"></div>
@@ -333,15 +547,15 @@ function viewCamera(rune) {
           ${c.shots[i] ? '<span class="mark">✓</span>' : ''}
         </button>`).join('')}
     </div>
-    <div class="msg">${c.done ? '五个目标全部登记，图鉴已更新。'
-      : c.shots[c.sel] ? '这个目标已登记。切换目标或直接拍摄下一个。'
-        : `取景框对准 ${CAM_TARGETS[c.sel].name}，按「快门」登记。`}</div>
+    <div class="msg">${c.done ? t('camera_done')
+      : c.shots[c.sel] ? t('camera_shot')
+        : `${t('camera_aim')} ${state.lang === 'cn' ? CAM_TARGETS[c.sel].cn : CAM_TARGETS[c.sel].name}，${t('camera_shoot_note')}`}</div>
     <div class="chiprow">
-      <button class="chip" data-action="camera:shoot" data-focus data-start ${c.done || c.shots[c.sel] ? 'disabled' : ''}>快门</button>
-      <button class="chip" data-action="camera:next" data-focus>切换目标</button>
-      <button class="chip" data-action="camera:album" data-focus>相册 ${albumItems().length}</button>
+      <button class="chip" data-action="camera:shoot" data-focus data-start ${c.done || c.shots[c.sel] ? 'disabled' : ''}>${t('scene_shoot')}</button>
+      <button class="chip" data-action="camera:next" data-focus>${t('scene_switch')}</button>
+      <button class="chip" data-action="camera:album" data-focus>${t('scene_album')} ${albumItems().length}</button>
     </div>
-  </div>` + footer('<b>▲▼</b> 目标　<b>OK</b> 快门');
+  </div>` + footer(t('camera_foot'));
 }
 
 /* ---------------- map ---------------- */
@@ -362,17 +576,17 @@ function viewMap() {
       <div class="map-crop" id="mapCrop">
         <img class="map-image" id="mapImage" src="${mapImageURL(image)}" alt="《旷野之息》${image.name}中部地图" draggable="false">
       </div>
-      <p class="map-error" id="mapError" role="alert" hidden>地图加载失败，请刷新页面。</p>
+      <p class="map-error" id="mapError" role="alert" hidden>${t('map_error')}</p>
     </div>
     <div class="map-hud"><span id="mapCaption" aria-live="polite"></span><output id="mapZoom" aria-label="地图序号与缩放倍率"></output></div>
     <div class="map-controls" aria-label="地图操作">
-      <button class="chip" data-action="map:step:-1" data-focus title="上一张（←）">◀ 上一张</button>
-      <button class="chip" data-action="map:step:1" data-focus data-start title="下一张（→）">下一张 ▶</button>
-      <button class="chip" data-action="map:zoom:-0.5" data-focus aria-label="缩小地图">− 缩小</button>
-      <button class="chip" data-action="map:zoom:0.5" data-focus aria-label="放大地图">＋ 放大</button>
-      <button class="chip" data-action="map:reset" data-focus title="恢复裁切全图（0）">复位</button>
+      <button class="chip" data-action="map:step:-1" data-focus title="上一张（←）">${t('map_prev')}</button>
+      <button class="chip" data-action="map:step:1" data-focus data-start title="下一张（→）">${t('map_next')}</button>
+      <button class="chip" data-action="map:zoom:-0.5" data-focus aria-label="缩小地图">${t('map_zoom_out')}</button>
+      <button class="chip" data-action="map:zoom:0.5" data-focus aria-label="放大地图">${t('map_zoom_in')}</button>
+      <button class="chip" data-action="map:reset" data-focus title="恢复裁切全图（0）">${t('map_reset')}</button>
     </div>
-  </div>` + footer('<b>▲▼</b> 选择　<b>OK</b> 确认', '←→ 切图 · 长按 OK 返回');
+  </div>` + footer(t('map_foot_l'), t('map_foot_r'));
 }
 
 function updateMapView() {
@@ -408,7 +622,7 @@ function updateMapView() {
   img.style.top = `${-y * scale}px`;
   viewport.classList.toggle('zoomed', m.zoom > 1);
   viewport.setAttribute('aria-label', `${image.name}地图`);
-  document.getElementById('mapCaption').textContent = `${image.name} · ${image.label}`;
+  document.getElementById('mapCaption').textContent = state.lang === 'cn' ? image.name : image.label;
   document.getElementById('mapZoom').textContent = `${m.index + 1}/${MAP_IMAGES.length} · ${Math.round(m.zoom * 100)}%`;
   screenEl.querySelector('[data-action="map:zoom:-0.5"]').disabled = m.zoom <= 1;
   screenEl.querySelector('[data-action="map:zoom:0.5"]').disabled = m.zoom >= 4;
@@ -425,7 +639,39 @@ const INV_PAGE_SIZE = 20;
 const INV_BONUS = { normal: 'NO SPECIAL EFFECT', swimming: 'SWIM SPEED UP', climbing: 'CLIMBING SPEED UP', fire: 'FLAME GUARD' };
 const INV_BONUS_ICONS = { swimming: 'inventory/water.svg', climbing: 'inventory/mountain.svg', fire: 'inventory/fire.svg' };
 const INV_SLOT = { weapon: 'WEAPON', shield: 'SHIELD', head: 'HEAD', body: 'BODY', legs: 'LEGS' };
+const RUNE_STAT_CN = { TYPE: '类型', COOLDOWN: '冷却', RANGE: '范围', TARGET: '目标', LIMIT: '上限', 'MAX HIT': '最多击打', ALBUM: '相册', SOURCE: '来源', USE: '使用' };
+const RUNE_STAT_VAL_CN = { ROUND: '圆形', CUBE: '方形', METAL: '金属', '1 / DAY': '每日 1 次', FIGURE: '手办', ANYWHERE: '任意地点', SHRINE: '神庙' };
+const RUNE_TILE_CN = { 'ROUND BOMB': '圆炸弹', 'CUBE BOMB': '方炸弹', MAGNET: '磁力抓取', STASIS: '静止器', CRYONIS: '制冰器', CAMERA: '照相机', 'MASTER CYCLE': '大师摩托', AMIIBO: 'amiibo 读取', SENSOR: '希卡感应器' };
+const PLACE_CN = {
+  'Hyrule Field': '海拉鲁平原', 'Satori Mountain': '萨托利山', 'Hebra Mountains': '海布拉山脉', 'Greater Hyrule': '海拉鲁全境',
+  'Gerudo Desert': '格鲁德沙漠', 'Akkala Highlands': '阿卡莱高地', 'East Necluda': '东内克拉达', 'Eldin Canyon': '埃尔丁峡谷',
+  'Faron Grasslands': '费罗尼草原', 'Great Hyrule Forest': '海拉鲁大森林', 'Hyrule Ridge': '海拉鲁山脊', 'Lanayru Great Spring': '拉聂耳大泉',
+  'Lanayru Sea': '拉聂耳海', 'Lanayru Wetlands': '拉聂耳湿地', 'Necluda Sea': '内克拉达海', 'Tabantha Frontier': '塔班萨边境', 'West Necluda': '西内克拉达',
+  'Death Mountain': '死亡之山', 'Deep Akkala': '阿卡莱深处', 'Divine Beast Vah Medoh': '神兽 瓦·梅德', 'Divine Beast Vah Naboris': '神兽 瓦·纳波利斯',
+  'Divine Beast Vah Rudania': '神兽 瓦·鲁达尼亚', 'Divine Beast Vah Ruta': '神兽 瓦·鲁塔', 'Eldin Mountains': '埃尔丁山脉', 'Faron': '费罗尼',
+  'Gerudo Highlands': '格鲁德高地', 'Gerudo Town': '格鲁德小镇', 'Hyrule Castle': '海拉鲁城堡', 'Kakariko Village': '卡卡利科村',
+  'Lake Hylia': '海利亚湖', 'Mount Lanayru': '拉聂耳山', 'Yiga Clan Hideout': '依盖队基地',
+  'HYRULE FIELD': '海拉鲁平原', 'GREAT PLATEAU': '初始台地', 'KOROK FOREST': '克洛格森林', 'HYRULE CASTLE': '海拉鲁城堡',
+  'CENTRAL HYRULE': '中央海拉鲁', 'ARCHIVE': '档案库'
+};
+const placeCn = s => PLACE_CN[s] || s;
 const esc = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+/* 装备中文名复用图鉴 equipment 分类的译名映射。 */
+const COMP_CN = {};
+for (const catKey of Object.keys(COMP_ENTRIES)) {
+  for (const e of COMP_ENTRIES[catKey]) COMP_CN[e.name.toLowerCase()] = e.cn;
+}
+/* 图鉴未收录的防具装备中文名：直接按物品 id 映射。 */
+const INV_CN = {
+  tree_branch: '树枝', ancient_short_sword: '古代短剑', dragonbone_boko_club: '龙骨波克棒', feathered_edge: '羽刃',
+  flameblade: '火焰剑', soldiers_broadsword: '士兵之剑', royal_claymore: '王族双手剑', master_sword: '大师之剑',
+  wooden_shield: '木盾', travelers_shield: '旅人盾', gerudo_shield: '格鲁德盾', ancient_shield: '古代盾',
+  zora_helm: '卓拉头盔', zora_armor: '卓拉盔甲', zora_greaves: '卓拉护胫',
+  climbers_bandanna: '攀爬头巾', climbing_gear: '攀爬服', climbing_boots: '攀爬鞋',
+  flamebreaker_helm: '防火头盔', flamebreaker_armor: '防火盔甲', flamebreaker_boots: '防火靴',
+  cap_of_the_hero: '勇者之帽', champions_tunic: '英杰服', hylian_trousers: '海利亚裤子'
+};
+const invName = item => item ? (state.lang === 'cn' ? (INV_CN[item.id] || COMP_CN[item.name.toLowerCase()] || item.name) : item.name) : '';
 const inventoryItems = category => INVENTORY_ITEMS.filter(item => item.category === category);
 const isEquipped = item => state.inventory.equipped[item.slot] === item.id;
 const inventoryStat = item => item.slot === 'weapon' ? 'ATTACK' : item.slot === 'shield' ? 'GUARD' : 'DEFENSE';
@@ -439,22 +685,22 @@ function inventorySummary() {
   return `<div class="inv-summary" aria-label="当前装备">
     ${Object.keys(INV_SLOT).map(slot => {
       const item = INV_BY_ID[slots[slot]];
-      return `<span title="${INV_SLOT[slot]} · ${esc(item?.name || '未装备')}" aria-label="${INV_SLOT[slot]} · ${esc(item?.name || '未装备')}">
-        <em>${INV_SLOT[slot]}</em>${item ? `<img src="${IMG(item.img)}" alt="${esc(item.name)}">` : '<i>—</i>'}</span>`;
+      return `<span title="${t('slot_' + slot)} · ${esc(invName(item) || t('slot_empty'))}" aria-label="${t('slot_' + slot)} · ${esc(invName(item) || t('slot_empty'))}">
+        <em>${t('slot_' + slot)}</em>${item ? `<img src="${IMG(item.img)}" alt="${esc(invName(item))}">` : '<i>—</i>'}</span>`;
     }).join('')}
-    <b>DEF ${inventoryDefense()}</b></div>`;
+    <b>${t('stat_defense')} ${inventoryDefense()}</b></div>`;
 }
 
 function inventoryPreview(item) {
   const inv = state.inventory;
   if (inv.textId !== item.id) { inv.textId = item.id; inv.textPage = 0; }
-  const pages = inventoryTextPages(item.description);
+  const pages = inventoryTextPages(state.lang === 'cn' ? (item.description_cn || item.description) : item.description);
   inv.textPage = Math.max(0, Math.min(inv.textPage, pages.length - 1));
   const current = INV_BY_ID[inv.equipped[item.slot]];
-  return `<span class="inv-eyebrow">${INV_SLOT[item.slot]} ${isEquipped(item) ? '· EQUIPPED' : '· IN POUCH'}</span>
-    <h2>${esc(item.name)}</h2>
-    <div class="inv-stat"><span>${inventoryStat(item)}</span><b>${current?.value || 0} <em>→</em> ${item.value}</b></div>
-    <span class="inv-bonus">${INV_BONUS_ICONS[item.bonus] ? `<img src="${IMG(INV_BONUS_ICONS[item.bonus])}" alt="">` : ''}${INV_BONUS[item.bonus] || 'NO SPECIAL EFFECT'}</span>
+  return `<span class="inv-eyebrow">${t('slot_' + item.slot)} ${isEquipped(item) ? (state.lang === 'cn' ? '· 已装备' : '· EQUIPPED') : (state.lang === 'cn' ? '· 随身携带' : '· IN POUCH')}</span>
+    <h2>${esc(invName(item))}</h2>
+    <div class="inv-stat"><span>${t('stat_' + inventoryStat(item).toLowerCase())}</span><b>${current?.value || 0} <em>→</em> ${item.value}</b></div>
+    <span class="inv-bonus">${INV_BONUS_ICONS[item.bonus] ? `<img src="${IMG(INV_BONUS_ICONS[item.bonus])}" alt="">` : ''}${t('bonus_' + (item.bonus || 'normal'))}</span>
     <p class="inv-description">${esc(pages[inv.textPage])}</p>
     <div class="inv-pager"><button data-action="inv:text:-1" ${inv.textPage === 0 ? 'disabled' : ''} aria-label="说明上一页"><img class="inv-page-arrow previous" src="${IMG('inventory/arrow.svg')}" alt=""></button>
       <span>${inv.textPage + 1} / ${pages.length}</span>
@@ -498,12 +744,12 @@ function viewInventory(category, id) {
         data-action="go:#/inventory/${cat.id}" data-focus title="${cat.label}" aria-label="${cat.label}" aria-pressed="${category === cat.id}"><img src="${IMG(cat.icon)}" alt=""></button>`).join('')}</nav>
       <div class="inv-grid">${visible.map(item => `<button class="inv-cell ${isEquipped(item) ? 'equipped' : ''} ${selected.id === item.id ? 'sel' : ''}"
         data-action="inv:equip:${item.id}" data-item="${item.id}" data-focus ${selected.id === item.id ? 'data-start' : ''}
-        title="${esc(item.name)} · ${isEquipped(item) ? '卸下' : '装备'}" aria-pressed="${isEquipped(item)}" aria-label="${esc(item.name)} · ${isEquipped(item) ? '卸下' : '装备'}">
+        title="${esc(invName(item))} · ${isEquipped(item) ? t('unequip') : t('equip')}" aria-pressed="${isEquipped(item)}" aria-label="${esc(invName(item))} · ${isEquipped(item) ? t('unequip') : t('equip')}">
         <img class="inv-item-art" src="${IMG(item.img)}" alt="">${INV_BONUS_ICONS[item.bonus] ? `<img class="inv-cell-bonus" src="${IMG(INV_BONUS_ICONS[item.bonus])}" alt="${INV_BONUS[item.bonus]}">` : ''}<b>${item.value}</b>
       </button>`).join('')}${Array.from({ length: INV_PAGE_SIZE - visible.length }, () => '<span class="inv-cell empty" aria-hidden="true"></span>').join('')}</div>
-      <div class="inv-pager"><button data-action="inv:page:-1" ${page === 0 ? 'disabled' : ''} aria-label="上一页"><img class="inv-page-arrow previous" src="${IMG('inventory/arrow.svg')}" alt=""></button>
+      <div class="inv-pager"><button data-action="inv:page:-1" ${page === 0 ? 'disabled' : ''} aria-label="${t('inv_page_prev')}"><img class="inv-page-arrow previous" src="${IMG('inventory/arrow.svg')}" alt=""></button>
         <span>${String(page + 1).padStart(2, '0')} / ${String(pageCount).padStart(2, '0')}</span>
-        <button data-action="inv:page:1" ${page === pageCount - 1 ? 'disabled' : ''} aria-label="下一页"><img class="inv-page-arrow" src="${IMG('inventory/arrow.svg')}" alt=""></button></div>
+        <button data-action="inv:page:1" ${page === pageCount - 1 ? 'disabled' : ''} aria-label="${t('inv_page_next')}"><img class="inv-page-arrow" src="${IMG('inventory/arrow.svg')}" alt=""></button></div>
     </section><aside class="inv-character" aria-label="林克与装备说明">
       <img class="inv-link" src="${IMG('inventory/bg.png')}?v=link-original" alt="林克立绘（固定外观）">
       <div class="inv-stamina" aria-hidden="true"></div>
@@ -511,7 +757,7 @@ function viewInventory(category, id) {
       <section class="inv-preview" id="inventoryPreview">${inventoryPreview(selected)}</section>
     </aside></div>
     ${inventorySummary()}
-  </div>` + footer('<b>▲▼</b> 选择　<b>OK</b> 装备 / 卸下', '长按 OK 返回');
+  </div>` + footer(`<b>▲▼</b> ${t('inv_foot')}`);
 }
 
 function syncInventoryPreview() {
@@ -544,7 +790,7 @@ function inventoryAction(kind, value) {
     if (!item || routeParts()[0] !== 'inventory' || item.category !== inv.category || inv.selected[item.category] !== item.id) return;
     inv.equipped[item.slot] = isEquipped(item) ? null : item.id;
     render(); beep('ok');
-    toast(isEquipped(item) ? '已装备 · ' + item.name : '已卸下 · ' + item.name);
+    toast((isEquipped(item) ? t('equipped') : t('unequipped')) + ' · ' + invName(item));
   } else if (kind === 'text') {
     const item = INV_BY_ID[inv.textId];
     if (!item) return;
@@ -560,16 +806,16 @@ function viewCompendium() {
   const have = COMP_CATS.reduce((n, c) => n + c.have, 0);
   const total = COMP_CATS.reduce((n, c) => n + c.total, 0);
   return topbar('compendium') + `<div class="body comp-body">
-    <div class="comp-head"><h3>HYRULE COMPENDIUM</h3><span>${have} / ${total} · ${Math.round(have / total * 100)}%</span></div>
+    <div class="comp-head"><h3>${t('comp_title')}</h3><span>${have} / ${total} · ${Math.round(have / total * 100)}%</span></div>
     <div class="comp-grid">${COMP_CATS.map((c, i) => `
       <button class="comp-tile ${i === 0 ? 'span2' : ''}" data-action="comp:${c.id}" data-focus ${i === 0 ? 'data-start' : ''}>
         <img class="cover" src="${IMG(c.cover)}" alt="">
         <img class="art" src="${IMG(c.art)}" alt="">
-        <b>${c.label}</b>
-        <span>${c.cn} · ${c.have}/${c.total}</span>
+        <b>${state.lang === 'cn' ? c.cn : c.label}</b>
+        <span>${state.lang === 'cn' ? `${c.have}/${c.total}` : `${c.cn} · ${c.have}/${c.total}`}</span>
         <div class="bar"><i style="width:${Math.round(c.have / c.total * 100)}%"></i></div>
       </button>`).join('')}</div>
-  </div>` + footer('<b>▲▼</b> 分类　<b>OK</b> 打开');
+  </div>` + footer(t('comp_foot_l'));
 }
 
 function viewCompendiumCat(catId) {
@@ -577,20 +823,20 @@ function viewCompendiumCat(catId) {
   state.compCat = cat.id;
   const entries = COMP_ENTRIES[cat.id] || [];
   return topbar('compendium') + `<div class="body comp-body">
-    <div class="comp-head"><span class="head-left"><button class="back-tab" data-action="back" data-focus>◀ BACK</button><img class="cat-mark" src="${IMG(cat.art)}" alt=""><h3>${cat.label}</h3></span><span>${cat.have}/${cat.total} RECORDED</span></div>
+    <div class="comp-head"><span class="head-left"><button class="back-tab" data-action="back" data-focus>◀ ${t('back')}</button><img class="cat-mark" src="${IMG(cat.art)}" alt=""><h3>${state.lang === 'cn' ? cat.cn : cat.label}</h3></span><span>${cat.have}/${cat.total} RECORDED</span></div>
     <div class="entry-list">${entries.map((e, i) => `
       <button class="entry-row" data-action="entry:${cat.id}:${i}" data-focus ${i === 0 ? 'data-start' : ''}>
         <span class="no">#${e.no}</span>
         ${e.got ? `<img src="${IMG(e.thumb || e.img)}" alt="">` : `<span class="unknown"><img src="${IMG(cat.art)}" alt=""></span>`}
-        <span class="name"><b>${e.got ? e.name : '???'}${e.mm ? `<i class="mm-dot">M</i>` : ''}</b><span>${e.got ? e.cn : '未记录'}</span></span>
-        <span class="state ${e.got ? 'ok' : ''}">${e.got ? '✓ 已登记' : '— 未发现'}</span>
+        <span class="name"><b>${e.got ? (state.lang === 'cn' ? e.cn : e.name) : '???'}${e.mm ? `<i class="mm-dot">M</i>` : ''}</b>${e.got ? `<span>${state.lang === 'cn' ? '' : e.cn}</span>` : `<span>${t('not_recorded')}</span>`}</span>
+        <span class="state ${e.got ? 'ok' : ''}">${e.got ? (state.lang === 'cn' ? '✓ 已登记' : '✓ RECORDED') : (state.lang === 'cn' ? '— 未发现' : '— NOT FOUND')}</span>
       </button>`).join('')}</div>
     <div class="comp-foot">
       <div class="row"><span>RECORDED</span><b>${cat.have} / ${cat.total}</b></div>
       <div class="bar"><i style="width:${Math.round(cat.have / cat.total * 100)}%"></i></div>
-      <p>全量条目 · ${cat.cn}共 ${cat.total} 条${cat.id === 'monsters' ? ' · 含大师模式金色怪' : ''}</p>
+      <p>${state.lang === 'cn' ? ('全量条目 · ' + cat.cn + ' 共 ' + cat.total + ' 条' + (cat.id === 'monsters' ? ' · 含大师模式金色怪' : '')) : ('ALL ENTRIES · ' + cat.total + (cat.id === 'monsters' ? ' · INCL. MASTER MODE GOLD' : ''))}</p>
     </div>
-  </div>` + footer('<b>◀</b> 返回分类　<b>OK</b> 查看条目');
+  </div>` + footer(t('comp_cat_foot'));
 }
 
 function viewEntry(catId, idx) {
@@ -604,28 +850,28 @@ function viewEntry(catId, idx) {
   const seq = String(i + 1).padStart(2, '0');
   const total = String(list.length);
   return topbar('compendium') + `<div class="body comp-body">
-    <div class="comp-head"><h3>ENTRY #${e.no}</h3><span>${cat.label} · ${seq}/${total}</span></div>
+    <div class="comp-head"><h3>${state.lang === 'cn' ? '图鉴条目' : 'ENTRY'} #${e.no}</h3><span>${state.lang === 'cn' ? cat.cn : cat.label} · ${seq}/${total}</span></div>
     <div class="entry-detail">
       <div class="entry-art ${e.got ? '' : 'unknown'}"><img src="${IMG(e.got ? e.img : cat.art)}" alt=""></div>
       <div class="entry-info">
-        <h2>${e.got ? e.name : '???'}${e.mm ? `<i class="mm-badge">MASTER</i>` : ''}</h2>
-        <div class="cn">${e.got ? e.cn : 'UNRECORDED'}</div>
-        <p>${e.desc}</p>
-        ${e.got && e.meta ? `<div class="entry-fact"><span>${e.meta[0]}</span><b>${e.meta[1]}</b></div>` : ''}
+        <h2>${e.got ? (state.lang === 'cn' ? e.cn : e.name) : '???'}${e.mm ? `<i class="mm-badge">${state.lang === 'cn' ? '大师模式' : 'MASTER'}</i>` : ''}</h2>
+        <div class="cn">${state.lang === 'cn' ? '' : esc(e.cn)}</div>
+        <p>${state.lang === 'cn' ? (e.cn_desc || e.desc) : e.desc}</p>
+        ${e.got && e.meta ? `<div class="entry-fact"><span>${e.meta[0]}</span><b>${state.lang === 'cn' ? placeCn(e.meta[1]) : e.meta[1]}</b></div>` : ''}
         <div class="entry-meta">
-          <span class="stamp ${e.got ? '' : 'miss'}">${e.got ? 'REGISTERED' : 'NOT FOUND'}</span>
-          ${e.mm ? `<span class="mm-stamp">MASTER MODE</span>` : ''}
+          <span class="stamp ${e.got ? '' : 'miss'}">${e.got ? (state.lang === 'cn' ? '已登记' : 'REGISTERED') : (state.lang === 'cn' ? '未发现' : 'NOT FOUND')}</span>
+          ${e.mm ? `<span class="mm-stamp">${state.lang === 'cn' ? '大师模式' : 'MASTER MODE'}</span>` : ''}
           ${e.stat ? `<span class="entry-stat">${e.thumb ? `<img src="${IMG(e.thumb)}" alt="">` : ''}<b>${e.stat[0]}</b> ${e.stat[1]}</span>` : ''}
         </div>
       </div>
     </div>
     <div class="chiprow">
-      <button class="chip" data-action="entry:${cat.id}:${i - 1}" data-focus ${prev ? '' : 'disabled'} aria-label="上一个条目">◀ 上一个</button>
-      <button class="chip" data-action="back" data-focus data-start>返回列表</button>
-      <button class="chip" data-action="comp:${cat.id}" data-focus>分类总览</button>
-      <button class="chip" data-action="entry:${cat.id}:${i + 1}" data-focus ${next ? '' : 'disabled'} aria-label="下一个条目">下一个 ▶</button>
+      <button class="chip" data-action="entry:${cat.id}:${i - 1}" data-focus ${prev ? '' : 'disabled'} aria-label="${t('comp_prev')}">${t('comp_prev')}</button>
+      <button class="chip" data-action="back" data-focus data-start>${t('comp_list')}</button>
+      <button class="chip" data-action="comp:${cat.id}" data-focus>${t('comp_overview')}</button>
+      <button class="chip" data-action="entry:${cat.id}:${i + 1}" data-focus ${next ? '' : 'disabled'} aria-label="${t('comp_next')}">${t('comp_next')}</button>
     </div>
-  </div>` + footer('<b>◀▶</b> 切换条目　<b>OK</b> 返回', `${seq} / ${total}`);
+  </div>` + footer(t('comp_entry_foot'), `${seq} / ${total}`);
 }
 
 /* ---------------- adventure log ---------------- */
@@ -635,17 +881,17 @@ function viewLog() {
   const total = String(list.length);
   return topbar('log') + `<div class="body log-body">
     <div class="log-tabs">
-      ${[['main', '主线 · MAIN'], ['side', '支线 · SIDE']].map(([id, label]) => `
-        <button class="log-tab ${tab === id ? 'on' : ''}" data-action="logtab:${id}" data-focus aria-pressed="${tab === id}" ${tab === id ? 'data-start' : ''}>${label}</button>`).join('')}
+      ${[['main', 'log_main'], ['side', 'log_side']].map(([id, key]) => `
+        <button class="log-tab ${tab === id ? 'on' : ''}" data-action="logtab:${id}" data-focus aria-pressed="${tab === id}" ${tab === id ? 'data-start' : ''}>${t(key)}</button>`).join('')}
     </div>
-    <div class="story-intro"><b>ADVENTURE LOG</b><span>${tab === 'main' ? '主线任务 ' + total + ' 条' : '迷你挑战 ' + total + ' 条'} · 含剧透</span></div>
+    <div class="story-intro"><b>${t('log_title')}</b></div>
     <div class="quest-list">${list.map((q, i) => `
       <button class="quest-row" data-action="quest:${tab}:${q.id}" data-focus>
         <span class="q-number">${String(i + 1).padStart(2, '0')}</span>
-        <span class="q-main"><b>${esc(q.cn)}</b><span>${esc(q.title)}</span></span>
-        <span class="q-pages">${esc(q.loc)}</span>
+        <span class="q-main"><b>${esc(state.lang === 'cn' ? q.cn : q.title)}</b>${state.lang === 'cn' ? '' : `<span>${esc(q.cn)}</span>`}</span>
+        <span class="q-pages">${esc(state.lang === 'cn' ? q.loc : (q.loc_en || ''))}</span>
       </button>`).join('')}</div>
-  </div>` + footer('<b>▲▼</b> 选择　<b>OK</b> 查看', '完整任务清单 · 自写梗概');
+  </div>` + footer(t('log_foot_l'), t('log_foot_r'));
 }
 
 function viewQuest(tabId, id) {
@@ -662,18 +908,18 @@ function viewQuest(tabId, id) {
   const seq = String(idx + 1).padStart(2, '0');
   const total = String(list.length);
   return topbar('log') + `<div class="body story-body">
-    <div class="story-meta"><span>${tab === 'main' ? '主线' : '迷你挑战'} ${seq} / ${total}</span><span>${esc(q.loc)} · 剧情梗概</span></div>
-    <h2>${esc(q.cn)}</h2>
-    <div class="story-subtitle">${esc(q.title)}</div>
-    <article class="story-page" aria-label="${esc(q.cn)}">
-      <p>${esc(q.desc)}</p>
+    <div class="story-meta"><span>${tab === 'main' ? (state.lang === 'cn' ? '主线' : 'MAIN') : (state.lang === 'cn' ? '迷你挑战' : 'SIDE')} ${seq} / ${total}</span><span>${esc(state.lang === 'cn' ? q.loc : (q.loc_en || q.title))} · ${state.lang === 'cn' ? '剧情梗概' : 'SUMMARY'}</span></div>
+    <h2>${esc(state.lang === 'cn' ? q.cn : q.title)}</h2>
+    ${state.lang === 'cn' ? '' : `<div class="story-subtitle">${esc(q.cn)}</div>`}
+    <article class="story-page" aria-label="${esc(state.lang === 'cn' ? q.cn : q.title)}">
+      <p>${esc(state.lang === 'cn' ? q.desc : (q.en_desc || q.desc))}</p>
     </article>
     <div class="story-controls">
-      <button data-action="quest:${tab}:${prevId}" ${prev ? '' : 'disabled'} aria-label="上一个任务">上一个</button>
-      <button data-action="back" data-start>返回目录</button>
-      <button data-action="quest:${tab}:${nextId}" ${next ? '' : 'disabled'} aria-label="下一个任务">下一个</button>
+      <button data-action="quest:${tab}:${prevId}" ${prev ? '' : 'disabled'} aria-label="${t('quest_prev')}">${t('quest_prev')}</button>
+      <button data-action="back" data-start>${t('quest_list')}</button>
+      <button data-action="quest:${tab}:${nextId}" ${next ? '' : 'disabled'} aria-label="${t('quest_next')}">${t('quest_next')}</button>
     </div>
-  </div>` + footer('<b>▲▼</b> 选择　<b>OK</b> 确认', `${seq} / ${total} · 长按返回`);
+  </div>` + footer(`<b>▲▼</b> ${t('quest_foot')}`, `${seq} / ${total} · ${t('hold_back_short')}`);
 }
 
 /* ---------------- system ---------------- */
@@ -684,28 +930,32 @@ function meter(level, max) {
 function viewSystem() {
   const s = state.settings;
   return topbar('system') + `<div class="body sys-body">
-    <div class="sys-title"><h2>SYSTEM</h2></div>
+    <div class="sys-title"><h2>${t('sys_title')}</h2></div>
     <button class="sys-row" data-action="set:brightness" data-focus data-start>
-      <span class="lab">亮度</span>${meter(s.brightness, 5)}<span class="val">${s.brightness * 20}%</span>
+      <span class="lab">${t('brightness')}</span>${meter(s.brightness, 5)}<span class="val">${s.brightness * 20}%</span>
     </button>
     <button class="sys-row" data-action="set:volume" data-focus>
-      <span class="lab">音量</span>${meter(s.volume, 5)}<span class="val">${s.volume * 20}%</span>
+      <span class="lab">${t('volume')}</span>${meter(s.volume, 5)}<span class="val">${s.volume * 20}%</span>
     </button>
     <button class="sys-row" data-action="set:scanlines" data-focus>
-      <span class="lab">扫描线</span><span class="muted" style="flex:1;font-size:5.5px">CRT 质感叠加</span>
+      <span class="lab">${t('scanlines')}</span><span class="muted" style="flex:1;font-size:5.5px">${t('scanlines_note')}</span>
       <span class="toggle ${s.scanlines ? 'on' : ''}"><i></i></span>
     </button>
     <button class="sys-row" data-action="set:sfx" data-focus>
-      <span class="lab">按键音</span><span class="muted" style="flex:1;font-size:5.5px">UI 反馈音效</span>
+      <span class="lab">${t('sfx')}</span><span class="muted" style="flex:1;font-size:5.5px">${t('sfx_note')}</span>
       <span class="toggle ${s.sfx ? 'on' : ''}"><i></i></span>
     </button>
+    <button class="sys-row" data-action="lang:toggle" data-focus>
+      <span class="lab">${t('lang_label')}</span><span class="muted" style="flex:1;font-size:5.5px">${state.lang === 'cn' ? t('lang_cn') : t('lang_en')}</span>
+      <span class="toggle on"><i></i></span>
+    </button>
     <div class="sys-actions">
-      <button class="chip" data-action="go:#/album" data-focus>相册</button>
-      <button class="chip" data-action="sys:about" data-focus>关于</button>
-      <button class="chip" data-action="go:#/standby" data-focus>待机</button>
+      <button class="chip" data-action="go:#/album" data-focus>${t('album')}</button>
+      <button class="chip" data-action="sys:about" data-focus>${t('about')}</button>
+      <button class="chip" data-action="go:#/standby" data-focus>${t('standby')}</button>
     </div>
-    <div class="sys-meta">电量 <b>99%</b> · 运行 <b>01:24</b> · 存储 <b>2.1 / 8 MB</b></div>
-  </div>` + footer('<b>OK</b> 调整 / 切换');
+    <div class="sys-meta">${t('sys_battery')} <b>99%</b> · ${t('sys_uptime')} <b>01:24</b> · ${t('sys_storage')} <b>2.1 / 8 MB</b></div>
+  </div>` + footer(`<b>OK</b> ${t('adjust')}`);
 }
 
 /* ---------------- album ---------------- */
@@ -717,20 +967,20 @@ function viewAlbum() {
   const items = albumItems();
   const slots = 12;
   return topbar('system') + `<div class="body album-body">
-    <div class="comp-head"><h3>CAMERA ALBUM</h3><span>${Math.min(items.length, slots)} / ${slots} PHOTOS</span></div>
+    <div class="comp-head"><h3>${t('album_title')}</h3><span>${Math.min(items.length, slots)} / ${slots} ${state.lang === 'cn' ? '张照片' : 'PHOTOS'}</span></div>
     <div class="album-grid">${Array.from({ length: slots }, (_, i) => {
       const a = items[i];
       return a
         ? `<button class="photo" data-action="album:open:${a.id}" data-focus ${i === 0 ? 'data-start' : ''}>
              <img class="bg" src="${IMG(a.img)}" alt="">
              <span class="no">${a.no}</span>
-             ${a.fresh ? '<span class="new">NEW</span>' : ''}
+             ${a.fresh ? `<span class="new">${t('album_new')}</span>` : ''}
              <span class="meta">${a.time}</span>
            </button>`
         : `<div class="photo empty">+</div>`;
     }).join('')}</div>
-    <div class="album-note"><span>CAMERA RUNE · SHEIKAH SLATE</span><b>${(2.1 + state.albumShots.length * 0.2).toFixed(1)} / 8 MB</b></div>
-  </div>` + footer('<b>▲▼</b> 照片　<b>OK</b> 查看');
+    <div class="album-note"><span>${state.lang === 'cn' ? '相机符文 · 希卡石板' : 'CAMERA RUNE · SHEIKAH SLATE'}</span><b>${(2.1 + state.albumShots.length * 0.2).toFixed(1)} / 8 MB</b></div>
+  </div>` + footer(`<b>▲▼</b> ${t('album_foot')}`);
 }
 
 function viewAlbumModal() {
@@ -739,16 +989,16 @@ function viewAlbumModal() {
   return `<div class="photo-modal">
     <div class="big"><img class="bg" src="${IMG(a.big)}" alt=""></div>
     <div class="info">
-      <h3>${a.title}</h3>
-      <div class="cn">${a.cn}</div>
+      <h3>${state.lang === 'cn' ? a.cn : a.title}</h3>
+      <div class="cn">${state.lang === 'cn' ? '' : a.cn}</div>
       <dl>
-        <dt>编号</dt><dd>${a.no}</dd>
-        <dt>时间</dt><dd>${a.time}</dd>
-        <dt>地点</dt><dd>${a.place}</dd>
+        <dt>${t('photo_no')}</dt><dd>${a.no}</dd>
+        <dt>${t('photo_time')}</dt><dd>${a.time}</dd>
+        <dt>${t('photo_place')}</dt><dd>${state.lang === 'cn' ? (a.place_cn || placeCn(a.place)) : a.place}</dd>
       </dl>
       <div class="chiprow">
-        <button class="chip" data-action="album:close" data-focus data-start>关闭</button>
-        <button class="chip" data-action="album:delete:${a.id}" data-focus>删除</button>
+        <button class="chip" data-action="album:close" data-focus data-start>${t('photo_close')}</button>
+        <button class="chip" data-action="album:delete:${a.id}" data-focus>${t('photo_delete')}</button>
       </div>
     </div>
   </div>`;
@@ -909,6 +1159,9 @@ function run(action) {
     case 'stasis': stasisAction(rest[0]); break;
     case 'cryonis': cryonisAction(rest[0]); break;
     case 'camera': cameraAction(rest[0], rest[1]); break;
+    case 'cycle': cycleAction(rest[0]); break;
+    case 'amiibo': amiiboAction(rest[0]); break;
+    case 'sensor': sensorAction(rest[0]); break;
 
     case 'inv': inventoryAction(rest[0], rest[1]); break;
     case 'comp': go('#/compendium/' + rest.join(':')); break;
@@ -918,6 +1171,7 @@ function run(action) {
     case 'quest': go(`#/log/${rest[0]}/${rest[1]}`); break;
 
     case 'set': sysAction(rest[0]); break;
+    case 'lang': if (rest[0] === 'toggle') toggleLang(); break;
     case 'sys': about(); break;
 
     case 'album': albumAction(rest[0], rest[1]); break;
@@ -1065,6 +1319,58 @@ function cameraAction(kind, arg) {
   }
 }
 
+function cycleAction(kind) {
+  const c = state.cycle;
+  if (kind === 'reset') { c.phase = 'idle'; c.speed = 0; c.dist = 0; render(); beep('back'); return; }
+  if (kind === 'summon' && c.phase === 'idle') {
+    c.phase = 'summon'; render(); beep('ok');
+    setTimeout(() => {
+      if (state.cycle.phase === 'summon') { state.cycle.phase = 'ride'; render(); beep('ok'); }
+    }, 950);
+    return;
+  }
+  if (kind === 'accel' && c.phase === 'ride') {
+    c.speed = Math.min(100, c.speed + 30);
+    c.dist = Math.min(100, c.dist + c.speed / 4);
+    beep('hit');
+    if (c.dist >= 100) { c.phase = 'done'; beep('complete'); }
+    render();
+  }
+}
+
+function amiiboAction(kind) {
+  const a = state.amiibo;
+  if (kind === 'prev' && a.phase === 'idle') { a.sel = (a.sel + AMIIBO_FIGURES.length - 1) % AMIIBO_FIGURES.length; render(); beep('move'); return; }
+  if (kind === 'next' && a.phase === 'idle') { a.sel = (a.sel + 1) % AMIIBO_FIGURES.length; render(); beep('move'); return; }
+  if (kind === 'scan' && a.phase === 'idle') {
+    a.phase = 'scan'; a.got = null; render(); beep('ok');
+    setTimeout(() => {
+      if (state.amiibo.phase === 'scan') {
+        state.amiibo.got = AMIIBO_DROPS[Math.floor(Math.random() * AMIIBO_DROPS.length)];
+        state.amiibo.phase = 'done'; render(); beep('complete');
+      }
+    }, 1100);
+    return;
+  }
+  if (kind === 'again' && a.phase === 'done') { a.phase = 'idle'; a.got = null; render(); beep('back'); }
+}
+
+function sensorAction(kind) {
+  const s = state.sensor;
+  if (kind === 'scan' && s.phase === 'idle') {
+    s.phase = 'scan'; s.b = Math.floor(Math.random() * SENSOR_BEARINGS.length); s.d = 120; s.done = false;
+    render(); beep('ok'); return;
+  }
+  if (kind === 'advance' && s.phase === 'scan' && !s.done) {
+    s.d = Math.max(0, s.d - 40);
+    beep('hit');
+    if (s.d <= 0) { s.done = true; beep('complete'); }
+    render();
+    return;
+  }
+  if (kind === 'reset') { s.phase = 'idle'; s.d = 120; s.done = false; render(); beep('back'); }
+}
+
 function mapAction(kind, arg, silent = false) {
   if (mapDrag) endMapDrag({ pointerId: mapDrag.id });
   const m = state.map;
@@ -1084,6 +1390,12 @@ function mapAction(kind, arg, silent = false) {
   updateMapView();
   initFocus(focusKey);
   if (!silent) beep(kind === 'step' ? 'move' : 'ok');
+}
+
+function toggleLang() {
+  state.lang = state.lang === 'cn' ? 'en' : 'cn';
+  try { localStorage.setItem('slate-lang', state.lang); } catch (e) { /* 无持久化也不影响 */ }
+  render(); beep('ok');
 }
 
 function sysAction(kind) {
