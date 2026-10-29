@@ -190,28 +190,32 @@ function beep(kind) {
 
 
 /* ---------------- routing ---------------- */
-const routeHash = () => (location.hash && !['#', '#/'].includes(location.hash) ? location.hash : '#/map');
+const routeHash = () => (location.hash && !['#', '#/'].includes(location.hash) ? location.hash : '#/home');
 const routeParts = () => routeHash().replace(/^#\//, '').split('/');
 
 function go(hash) {
+  rememberInputPage();
+  inputUI.dialog=null;inputUI.edit=null;
   if (routeHash() === hash) { render(); return; }
   location.hash = hash;
 }
 
 function back() {
+  if(inputUI.dialog||screenEl.querySelector('.input-reading'))return closeInputMenu();
   const p = routeParts();
-  if (p[0] === 'map') return go('#/runes');
+  if(p[0]==='home')return go('#/standby');
+  if (p[0] === 'map') return go('#/home');
   if (p[0] === 'rune' && RUNE_GAMES.has(p[1])) return pauseRuneGame();
   if (p[0] === 'rune') return go('#/runes');
-  if (p[0] === 'inventory') return go(p[2] ? '#/inventory/' + state.inventory.category : '#/runes');
+  if (p[0] === 'inventory') return go('#/home');
   if (p[0] === 'compendium') {
     if (p[2] !== undefined) return go('#/compendium/' + p[1]);
     if (p[1]) return go('#/compendium');
-    return go('#/standby');
+    return go('#/home');
   }
-  if (p[0] === 'log') return go(p[2] ? `#/log/${logTabId(p[1])}` : '#/standby');
+  if (p[0] === 'log') return go(p[2] ? `#/log/${logTabId(p[1])}` : '#/home');
   if (p[0] === 'album') return go(p[1] ? '#/album' : '#/system');
-  if (p[0] === 'system' || p[0] === 'runes') return go('#/standby');
+  if (p[0] === 'system' || p[0] === 'runes') return go('#/home');
   return go('#/runes');
 }
 
@@ -256,7 +260,7 @@ function viewStandby() {
     <div class="sb-clock">09:41</div>
     <div class="sb-date">${state.lang === 'cn' ? '周六 · 10.26 · 海拉鲁' : 'SAT · 10.26 · HYRULE'}</div>
     <div class="sb-battery" role="img" aria-label="${t('sys_battery')} 99%"><span class="sb-battery-art" aria-hidden="true"></span><span aria-hidden="true">99%</span></div>
-    <button class="sb-prompt" data-action="go:#/runes" data-focus data-start>${t('press_ok')}</button>
+    <button class="sb-prompt" data-action="go:#/home" data-focus data-start>${t('press_ok')}</button>
     <div class="sb-brand">AI PASSPORT · SHEIKAH SLATE</div>
   </div>`;
 }
@@ -713,17 +717,20 @@ let railLanguage = null;
 let prevHash = null;
 let focusKey = null;
 function render() {
+  rememberInputPage();
   buildRail();
   document.getElementById('languageBtn').textContent = state.lang === 'cn' ? '语言 · 简体中文' : 'LANGUAGE · ENGLISH';
   document.documentElement.lang = state.lang === 'cn' ? 'zh-CN' : 'en';
   const p = routeParts();
   const hash = routeHash();
+  if(prevHash&&prevHash!==hash){if(inputUI.edit)state.settings[inputUI.edit.key]=inputUI.edit.before;inputUI.edit=null;inputUI.dialog=null;}
   const sameRoute = prevHash === hash;
   const isMap = p[0] === 'map';
   if (mapDrag) endMapDrag({ pointerId: mapDrag.id });
   document.body.classList.toggle('map-mode', isMap);
   let html = '';
   switch (p[0]) {
+    case 'home': html = viewHome(); break;
     case 'runes': html = viewRunes(); break;
     case 'map': html = viewMap(); break;
     case 'inventory': html = viewInventory(p[1], p[2]); break;
@@ -745,12 +752,14 @@ function render() {
       break;
     default: html = viewStandby();
   }
-  screenEl.innerHTML = html + '<div class="focus-frame" id="focusFrame"></div><div class="wipe" id="wipe"></div>';
+  screenEl.innerHTML = html + inputDialogHTML() + '<div class="focus-frame" id="focusFrame"></div><div class="wipe" id="wipe"></div>';
   screenEl.style.filter = `brightness(${(0.55 + state.settings.brightness * 0.09).toFixed(3)})`;
   if (isMap) updateMapView();
   document.body.classList.toggle('no-scan', !state.settings.scanlines);
   /* 同一页内重绘（调亮度、切换目标等）时把选中位置留在原处，不要跳回顶部。 */
-  initFocus(sameRoute ? focusKey : null);
+  initFocus(inputUI.dialog?null:(sameRoute ? focusKey : inputUI.memory.get(hash)?.key));
+  restoreInputPage();
+  updateInputHint();
   updateRail();
   document.body.classList.toggle('rune-playing', Boolean(gameInputActive()));
   syncRuneGame();
@@ -781,8 +790,8 @@ function flashBoot() {
 
 function focusables() {
   /* 照片详情是盖在上面的弹层：打开时焦点只在弹层里循环，不能落到被盖住的列表上。 */
-  const scope = screenEl.querySelector('.map-dialog') || screenEl.querySelector('.game-pause') || screenEl.querySelector('.photo-modal') || screenEl;
-  return [...scope.querySelectorAll('[data-action]:not([disabled])')];
+  const scope = screenEl.querySelector('.input-dialog') || screenEl.querySelector('.map-dialog') || screenEl.querySelector('.game-pause') || screenEl.querySelector('.photo-modal') || screenEl;
+  return [...scope.querySelectorAll('[data-action]:not([disabled])')].filter(n=>!n.closest('.tabs')&&!n.hidden);
 }
 
 function initFocus(key) {
@@ -799,6 +808,7 @@ function paintFocus(pop = true) {
   state.focus = (state.focus + els.length) % els.length;
   focusKey = els[state.focus].dataset.action || null;
   syncInventoryPreview();
+  previewRuneFocus();
   const el = els[state.focus];
   if (el && el.scrollIntoView) el.scrollIntoView({ block: 'nearest' });
   placeFocus(pop);
@@ -857,6 +867,7 @@ function updateRail() {
 /* ---------------- actions ---------------- */
 function run(action) {
   const [verb, ...rest] = action.split(':');
+  if (verb === 'ui') {inputAction(rest);return;}
   if (verb === 'game') { runeGameAction(rest[0]); return; }
   if (verb === 'ability') { abilityAction(rest[0], rest[1]); return; }
   switch (verb) {
@@ -870,13 +881,13 @@ function run(action) {
     case 'back': back(); break;
     case 'pick':
       state.runeIndex = Number(rest[0]);
-      render(); beep('ok'); break;
+      go('#/rune/'+RUNES[state.runeIndex].id);beep('activate');break;
     case 'enter-rune':
       go('#/rune/' + RUNES[state.runeIndex].id); beep('activate'); break;
 
     case 'camera': cameraAction(rest[0], rest[1]); break;
 
-    case 'inv': inventoryAction(rest[0], rest[1]); break;
+    case 'inv': if(rest[0]==='equip')inventoryMenu(rest[1]);else inventoryAction(rest[0],rest[1]);break;
     case 'comp': go('#/compendium/' + rest.join(':')); break;
     case 'entry': go(`#/compendium/${rest[0]}/${rest[1]}`); break;
     case 'map': mapAction(rest[0], rest[1]); break;
@@ -885,11 +896,11 @@ function run(action) {
       go(`#/log/${state.logTab}`); beep('ok'); break;
     case 'quest': go(`#/log/${rest[0]}/${rest[1]}`); break;
 
-    case 'set': sysAction(rest[0]); break;
+    case 'set': if(['brightness','volume'].includes(rest[0]))inputAction(['edit',rest[0]]);else sysAction(rest[0]);break;
     case 'lang': if (rest[0] === 'toggle') toggleLang(); break;
     case 'sys': about(); break;
 
-    case 'album': albumAction(rest[0], rest[1]); break;
+    case 'album': if(rest[0]==='delete')inputAction(['delete-photo',rest[1]]);else albumAction(rest[0],rest[1]);break;
     default: break;
   }
 }
@@ -1046,11 +1057,12 @@ screenEl.addEventListener('click', e => {
   if (!el || el.disabled) return;
   const els = focusables();
   const i = els.indexOf(el);
-  if (i < 0) return;
+  if (i < 0) {if(el.closest('.tabs')&&!screenEl.querySelector('.input-dialog,.game-pause,.photo-modal'))run(el.dataset.action);return;}
   state.focus = i; paintFocus();
   run(el.dataset.action);
 });
 
+let pressedRoute = null;
 let holdTimer = null;
 let holdRAF = 0;
 let holdStart = 0;
@@ -1085,16 +1097,17 @@ function stopHoldBar() {
 function okDown() {
   if (holdTimer !== null) return;
   longFired = false;
+  pressedRoute = routeHash();
   clearTimeout(holdTimer);
   startHoldBar();
-  holdTimer = setTimeout(() => { longFired = true; stopHoldBar(); back(); beep('back'); }, HOLD_MS);
+  holdTimer = setTimeout(() => { longFired = true; stopHoldBar(); if(pressedRoute===routeHash()){back();beep('back');} }, HOLD_MS);
 }
 function okUp() {
   if (holdTimer === null) return;
   clearTimeout(holdTimer);
   holdTimer = null;
   stopHoldBar();
-  if (!longFired) { if (mapBrowseActive()) mapAction('zoom'); else if (gameInputActive()) gamePrimary(); else activateFocused(); }
+  if (!longFired && pressedRoute===routeHash()) { if(inputPrimary()){} else if (mapBrowseActive()) mapAction('control'); else if (gameInputActive()) gamePrimary(); else activateFocused(); }
   longFired = false;
 }
 
@@ -1104,7 +1117,8 @@ let navTimer = null;
 function startNav(dir) {
   stopNav();
   document.querySelector(`[data-key="${dir < 0 ? 'UP' : 'DOWN'}"]`).classList.add('pressed');
-  if (mapBrowseActive()) { mapNavigate(dir); return; }
+  if(inputNavigate(dir)){navDelay=setTimeout(()=>{navTimer=setInterval(()=>inputNavigate(dir),120);},380);return;}
+  if (mapBrowseActive()) { mapNavigate(dir);navDelay=setTimeout(()=>{navTimer=setInterval(()=>mapNavigate(dir),96);},380);return; }
   if (gameInputActive()) { gameSetDirection(dir); return; }
   moveFocus(dir);
   navDelay = setTimeout(() => {

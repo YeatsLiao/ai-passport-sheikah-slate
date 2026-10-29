@@ -19,7 +19,7 @@ function viewMap(){
     <div class="map-hud"><span>${L('海拉鲁','HYRULE')} · ${MAP_PLACES.length} ${L('点位','PLACES')}</span><output id="mapZoom"></output></div>
     <div class="map-place-card" aria-live="polite"><strong id="mapPlaceName"></strong><span id="mapPlaceStatus"></span></div>
     <div class="map-simple-controls"><button class="chip" data-action="map:zoom:-1" aria-label="${L('缩小','Zoom out')}">−</button><button class="chip" data-action="map:zoom:1" aria-label="${L('放大','Zoom in')}">＋</button><button class="chip" data-action="map:reset">${L('全图','ALL')}</button></div>
-  </div>`+footer(L('▲▼ 点位 · OK 缩放','▲▼ place · OK zoom'),L('拖动浏览 · 长按返回','DRAG · HOLD OK BACK'));
+  </div>`+footer(L('▲▼ 左右移动 · OK 切换','▲▼ pan left/right · OK switch'),L('拖动浏览 · 长按返回','DRAG · HOLD OK BACK'));
 }
 function updateMapView(){
   if(!document.getElementById('mapImage'))return;
@@ -48,13 +48,15 @@ function updateMapView(){
   v.classList.toggle('zoomed',m.zoom>1);
 }
 function mapNavigate(dir){
-  const m=state.map,index=MAP_PLACES.indexOf(mapCurrent());
-  m.selection=MAP_PLACES[(index+dir+MAP_PLACES.length)%MAP_PLACES.length].id;
-  m.follow=true;updateMapView();beep('move');
+  const m=state.map;m.follow=false;
+  if((m.control||'x')==='zoom'){mapAction('zoom',-dir,true);return;}
+  m[(m.control||'x')==='x'?'x':'y']-=dir*14;
+  m.pickNearest=true;updateMapView();
 }
 function mapAction(kind,arg,silent=false){
   const m=state.map;
   if(mapDrag)endMapDrag({pointerId:mapDrag.id});
+  if(kind==='control'){const modes=['x','y','zoom'];m.control=modes[(modes.indexOf(m.control||'x')+1)%3];updateMapView();updateInputHint();return;}
   if(kind==='select'){
     if(!MAP_PLACES.some(p=>p.id===arg))return;
     m.selection=arg;m.follow=false;

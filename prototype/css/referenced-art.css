@@ -66,3 +66,21 @@ body.no-scan .scanlines{display:none}
 .map-crop,.map-marker{transition:none}
 .map-mode .focus-frame{display:none}
 .extra-game[data-game="cycle"] .cycle-terrain{height:64px;transform:none;opacity:1}
+
+/* Three-key navigation layers reuse the existing visual language. */
+.device-home{padding:12px 18px;top:0}
+.device-home h2{font-size:13px;text-align:center;font-weight:400;color:var(--gold);margin:8px 0 12px}
+.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.home-grid .chip{height:32px;font-size:9px}
+.home-grid .chip:last-child{grid-column:1/-1;height:22px}
+.input-dialog{position:absolute;inset:0;z-index:40;background:rgba(1,8,12,.92);display:grid;place-items:center}
+.input-dialog .game-pause-card{max-height:215px;overflow-y:auto;width:204px;gap:5px}
+.input-dialog .game-pause-card h2{font-size:10px;line-height:14px;text-align:center;margin:0 0 3px;font-weight:400;color:var(--gold)}
+.input-dialog .game-pause-card p,.input-dialog small{font-size:6px;line-height:9px;color:var(--muted)}
+.input-dialog strong{text-align:center;font-size:18px;color:var(--cyan)}
+.input-reading{height:137px;flex-shrink:0;overflow-y:auto;white-space:pre-wrap;font-size:8px;line-height:13px;scrollbar-width:thin;color:#d5e8e5}
+.entry-info{height:100%;min-height:0;overflow-y:auto;scrollbar-width:thin}
+.reading-mode:not(:has(.input-dialog)) .focus-frame{display:none}
+.reading-mode .story-controls button{font-size:6px}
+.footer:has(span:only-child){font-size:6px;letter-spacing:.04em}
+.input-dialog~.focus-frame{z-index:55}
