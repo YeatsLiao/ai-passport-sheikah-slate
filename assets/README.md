@@ -11,7 +11,7 @@ assets/
 │   ├── 04_equipment/    35  玩家装备：starter 24 张图标、林克立绘、背包 SVG10
 │   ├── 05_world/        23  场景：地图10、石板11、符文基座1、纹理1
 │   ├── 06_audio/         2  现成菜单音效（mp3）
-│   ├── 07_fonts/         4  Calamity 字体（woff/woff2）
+│   ├── 07_fonts/            Calamity 字体（woff/woff2）、思源黑体 Medium 原件与许可证
 │   ├── 99_archive/     528  非目标与溯源：TOTK 510、大师模式 5、他作 2、各仓库说明 10
 │   └── _index/               content_map.csv（旧→新映射+SHA-256）、import_manifest.json
 ├── gen/         ② 生成物：构建与原型直接读，可整目录重跑
@@ -37,7 +37,7 @@ assets/
 | `raw/03_compendium/` | `build_real_assets.py`（模型剪影）；390 张 BOTW 图标暂无读者 | 否 | 否 |
 | `raw/04_equipment/` | `import_compendium_assets.py`（starter 24 张、林克立绘、背包 SVG） | 可从本地来源再导入，原件保留 | 否 |
 | `raw/05_world/` | Web 地图页读取 4 张截图并裁出中部地图；`crop_botw_maps.py`（地图）、`build_real_assets.py`（石板） | 否 | 否 |
-| `raw/06_audio/`、`raw/07_fonts/` | `import_compendium_assets.py` 导入到 `audio/prototype/`、`prototype/fonts/` | 是（从 starter 原件导出） | 否 |
+| `raw/06_audio/`、`raw/07_fonts/` | `import_compendium_assets.py` 导入 starter 音效与 Calamity；原型 CSS 直接加载思源黑体 OTF | starter 可再导入；思源黑体来源见 [中文字体](../docs/assets/provenance.md#中文字体) | 否 |
 | `raw/99_archive/` | 无读者，纯溯源留档（TOTK/大师模式/他作/仓库说明） | 否 | 否 |
 | `raw/_index/` | 人工查阅；`verify_assets.py` 读 `import_manifest.json` | manifest 是（`--archive` 模式） | 否 |
 | `gen/firmware/` | `tools/img_to_c.py`、`tools/gen_catalog.py` | 是（`gen_assets.py`） | 是（转成 `main/img/*.c`） |
