@@ -1,13 +1,13 @@
-/* Calamity：BotW 原生 HUD 字体，取自同级仓库 zelda-botw-starter（见 README「UI 参考」）。
-   只覆盖拉丁字母，中文仍回落到系统无衬线字体。 */
+/* Hylia Serif：粉丝依据 BotW 提取的同款 UI 衬线体（覆盖拉丁字母），
+   中文回落到系统黑体（微软雅黑），全局只保留这一套主字体。 */
 @font-face{
-  font-family:"Calamity";
-  src:url(../fonts/Calamity-Regular.woff2) format("woff2");
+  font-family:"Hylia Serif";
+  src:url(../fonts/HyliaSerifBeta-Regular.ttf) format("truetype");
   font-weight:400;font-style:normal;font-display:swap;
 }
 @font-face{
-  font-family:"Calamity";
-  src:url(../fonts/Calamity-Bold.woff2) format("woff2");
+  font-family:"Hylia Serif";
+  src:url(../fonts/HyliaSerifBeta-Regular.ttf) format("truetype");
   font-weight:600;font-style:normal;font-display:swap;
 }
 
@@ -24,9 +24,9 @@
   --red:#ff6f6f;
   --text:#dcebee;
   --muted:#7f9ba3;
-  --font-display:"Cinzel","Trajan Pro",Georgia,"Times New Roman","Songti SC",serif;
-  --font-ui:"Calamity","Rajdhani","Bahnschrift","Segoe UI",system-ui,"Noto Sans SC",sans-serif;
-  --font-num:"Rajdhani","Bahnschrift","Segoe UI",system-ui,sans-serif;
+  --font-display:"Hylia Serif","Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  --font-ui:"Hylia Serif","Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  --font-num:"Hylia Serif","Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
   --scale:2;
 }
 
