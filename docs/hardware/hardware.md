@@ -13,27 +13,27 @@
 
 ## 构建
 
-前置：ESP-IDF v5.5.x、Python 3.10+、Pillow（仅资源生成需要）。
+前置：可用的 ESP-IDF 环境；版本范围以 [组件声明](../../firmware/components/bsp/idf_component.yml) 为准（当前声明 `>=5.5.3,<5.6.0`），Python 需符合所用 IDF 的要求；Pillow 仅资源生成需要。
+以下命令以仓库根为当前目录；2026-10-29 仅核对入口与配置，未执行。构建、烧录的授权与验证要求见 [RUNBOOK](../context/RUNBOOK.md#固件构建与烧录)。`COMx` 为待确认的设备端口。
 
 ```bash
 idf.py -C firmware build
 idf.py -C firmware -p COMx flash monitor
 ```
 
-在受限终端里 `idf.py build` 可能停在 `Executing "cmake ..."` 之后不再输出，可改用等价的 CMake/esptool 路径
-（本机实测通过；命令需在 `firmware/` 下执行）：
+历史排障记录：受限终端曾在 `Executing "cmake ..."` 后停止输出，并使用以下 CMake/esptool 流程。
+该流程的旧成功记录不证明迁移后的工程可用；以下改为通用 PowerShell 占位写法，本轮未执行，需在 `firmware/` 下核对环境、产物与当前分区后使用。
 
 ```powershell
 cmake -G Ninja -DIDF_TARGET=esp32c3 -B build .
 cmake --build build -- -j 8
-python %IDF_PATH%\components\esptool_py\esptool\esptool.py --chip esp32c3 -p COM5 -b 460800 `
+python "$env:IDF_PATH\components\esptool_py\esptool\esptool.py" --chip esp32c3 -p COMx -b 460800 `
   --before default_reset --after hard_reset write_flash --flash_mode dio --flash_size 8MB `
   --flash_freq 80m 0x0 build\bootloader\bootloader.bin 0x8000 build\partition_table\partition-table.bin `
   0x10000 build\ai-passport-sheikah-slate.bin
 ```
 
-> 本机 ESP-IDF 实际装在 `D:\Software\Espressif`，虚拟环境为 `idf5.5_py3.11_env`（`export.ps1` 默认找 py3.12，
-> 需先设 `IDF_PYTHON_ENV_PATH`）。当前按用户要求**不跑编译**，以上仅为记录。
+> 当前安装位置、Python 环境与旧 esptool 脚本入口可用性待核实；按实际安装设置 `IDF_PATH`，必要时核对 `IDF_PYTHON_ENV_PATH`，不复用个人设备路径。优先使用上方 IDF 标准入口。
 
 ## 固件内部分层
 
@@ -66,20 +66,22 @@ firmware/main/
 
 ## 主机逻辑测试
 
+以下保留预期流程，当前测试源缺失与恢复条件见 [R1](../context/RISKS.md#r1)。宿主 C 编译器可用性待核实；仅在测试恢复并取得授权后执行，本轮未运行。
+
 ```bash
 cmake -S firmware/tests -B build-host
 cmake --build build-host
 ctest --test-dir build-host -V
 ```
 
-覆盖五关成功/失败/重试、冷却禁止重入、时停方向与蓄力上限、磁力边界、冰柱先进先出、空拍/重复拍摄、
-相册满、进度编码校验与三键手势分类。测试只编译 `firmware/main/game/`，不依赖 ESP-IDF、LVGL 或音频。
-本机没有可用的宿主 C 编译器，以上命令**未实际运行**。
+历史预期覆盖五关成功/失败/重试、冷却禁止重入、时停方向与蓄力上限、磁力边界、冰柱先进先出、空拍/重复拍摄、
+相册满、进度编码校验与三键手势分类；原计划只编译 `firmware/main/game/`，不依赖 ESP-IDF、LVGL 或音频。
+以上是恢复时可核对的目标，不是当前已有测试覆盖或通过的声明。
 
 ## 实机记录（历史）
 
 - 编译体积：1,993,776 B（0x1e6d90），app 分区 4 MB，剩余 52%；DRAM 82,806 / 321,296 B（25.77%），RTC SLOW 56 B。
-- 实机：ESP32-C3 rev1.1 / 8 MB Flash（MAC 4c:11:ae:30:d5:78）经 COM5 烧录成功；启动日志为背光 LEDC gpio21、
+- 实机：ESP32-C3 rev1.1 / 8 MB Flash 曾经串口烧录成功；启动日志为背光 LEDC gpio21、
   显示 320×240、LVGL task、ADC 三键、电量 99%、`Ready - landscape 320x240`，未出现重启循环。
 - **未执行**：屏幕观感与五关玩法的人工验收、主机测试实际运行、与原版截图的逐项对照。
 

@@ -20,11 +20,11 @@
 ## 目录
 
 ```
-firmware/    硬件开发：ESP-IDF 工程（main/、components/bsp/、tests/、sdkconfig）
+firmware/    硬件开发：ESP-IDF 工程（main/、components/bsp/、sdkconfig.defaults）
 prototype/   模拟页面开发：纯静态 320×240 点击原型
 assets/      素材：raw（按游戏内容分类）→ gen → data / audio
 tools/       管线：assets（入库校验）、gen（生成固件源码）、web（字体/SVG）
-docs/        文档：架构、硬件、原型、素材、规格、开发日志
+docs/        文档：任务索引、上下文、架构、硬件、原型、素材与历史
 ```
 
 依赖是单向的：`assets/raw → tools → assets/gen → firmware/main/img` 与 `prototype/`。
@@ -32,37 +32,23 @@ docs/        文档：架构、硬件、原型、素材、规格、开发日志
 
 ## 快速开始
 
-```bash
-idf.py -C firmware build                 # 固件（需要 ESP-IDF v5.5.x）
-idf.py -C firmware -p COMx flash monitor
+- 看原型：使用 Python 从仓库根提供静态服务，再访问 `/prototype/`；命令与路径要求见 [本地预览](prototype/README.md#本地预览)。
+- 用设备：准备符合组件声明的 ESP-IDF 环境，以 `firmware/` 为工程根，按 [构建与烧录](docs/hardware/hardware.md#构建) 操作。
+- 改素材：先按 [素材操作入口](docs/context/RUNBOOK.md#素材加工与校验) 确认脚本与输入可用。
 
-python -m http.server 8124                # 原型：http://127.0.0.1:8124/prototype/
-python tools/assets/verify_assets.py      # 素材只读校验（脚本待恢复）
-```
+这些是使用入口，不代表本轮执行成功，也不授权 AI 自动构建、烧录或安装依赖；执行前确认 [协作规则](AGENTS.md)。
 
 ## 文档
 
-| 文档 | 内容 |
-|---|---|
-| [docs/architecture.md](docs/architecture.md) | 五域边界、依赖方向、命名规则、迁移记录 |
-| [docs/hardware/hardware.md](docs/hardware/hardware.md) | 硬件规格、构建与烧录、资源约束、实机记录 |
-| [docs/prototype/pages.md](docs/prototype/pages.md) | 路由、三键、交互手感、装备页 |
-| [docs/prototype/trials.md](docs/prototype/trials.md) | 五关规则、图鉴与相册、进度存储 |
-| [docs/assets/pipeline.md](docs/assets/pipeline.md) | 素材四层、脚本读写、重生成顺序 |
-| [docs/assets/provenance.md](docs/assets/provenance.md) | 来源与许可边界、图鉴数据出处 |
-| [docs/development-log.md](docs/development-log.md) | 决策与执行记录 |
-| [assets/README.md](assets/README.md) | 资产地图：分层、谁读、能否重生成 |
+- [AGENTS.md](AGENTS.md)：项目协作、按需读取、定点写入及验证规则。
+- [文档索引](docs/README.md)：按任务进入对应文件或章节；沿用为 PROJECT_INDEX。
+- [当前工作](docs/context/NOW.md)：接续目标、进展、下一步与证据。
+- [操作入口](docs/context/RUNBOOK.md)：使用与验证的前置条件；其他专题按索引选择。
 
 ## 当前状态
 
-原型阶段。按用户要求**不跑固件编译、不跑自动化测试、不做浏览器截图**，界面由用户分步查看。
-
-- 固件未复验：`firmware/` 内的源码尚未在本次结构中编译过；历史编译/烧录数据见
-  [docs/hardware/hardware.md](docs/hardware/hardware.md)，不代表当前代码可编译。
-- `tools/assets/` 的 5 个脚本与整个 `tests/` 在 2026-10-28 的清理事故中丢失，待恢复；
-  恢复落位见 [tools/README.md](tools/README.md)。
-- 素材已于同日按游戏内容重排，1215 个文件逐条 SHA-256 复核一致，`raw/` 内零同字节重复；
-  映射与回滚见 `assets/raw/_index/`。
+当前目标与完成证据统一见 [NOW](docs/context/NOW.md)，已知问题和待核实项见 [RISKS](docs/context/RISKS.md)。
+旧编译、烧录与素材校验记录通过 [历史索引](docs/context/history/README.md) 追溯，不代表当前验证结果。
 
 ## License
 

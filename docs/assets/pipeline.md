@@ -31,21 +31,11 @@ assets/
 
 ## 脚本读写
 
-| 脚本 | 读 | 写 |
-|---|---|---|
-| `tools/gen/gen_assets.py` | 无（程序绘制） | `assets/gen/firmware/` |
-| `tools/gen/img_to_c.py` | `assets/gen/firmware/` | `firmware/main/img/*.c` + `img_all.h` |
-| `tools/gen/gen_synth.py` | 无（合成） | `assets/audio/*.wav`（不入库） |
-| `tools/gen/gen_audio.py` | `assets/audio/*.wav` | `firmware/main/audio/sfx_data.{c,h}`（需先跑 gen_synth） |
-| `tools/web/gen_font.mjs` | Hylia Serif TTF | `firmware/main/font/hylia_serif_{16,20,28}.c` |
-| `tools/assets/build_real_assets.py` | 25 张管线输入 | `assets/gen/prototype/` |
-| `tools/assets/import_compendium_assets.py` | `assets/raw/`、`assets/data/` | `assets/gen/prototype`、`assets/data`、`prototype/js/inventory-data.js` |
-| `tools/assets/verify_assets.py` | 全 `assets/` | 无（只读校验） |
-
-`tools/assets/` 下 5 个脚本与 `tools/gen/gen_catalog.py` 目前在 2026-10-28 的清理事故中缺失，
-恢复时按 [tools/README.md](../../tools/README.md) 落位。
+工具输入输出与恢复落位统一见 [tools/README.md](../../tools/README.md)；缺失脚本与测试的当前证据见 [R1](../context/RISKS.md#r1)。本文件只维护分层与操作顺序，不复制工具清单。
 
 ## 重生成顺序
+
+以下保留既有顺序作为恢复后的操作依据，2026-10-29 本轮未执行。当前不能整段运行：先按 [RUNBOOK](../context/RUNBOOK.md#素材加工与校验) 核对对应脚本、输入、依赖与输出覆盖范围；只有任务授权涉及的步骤才执行。
 
 ```bash
 python tools/gen/gen_assets.py           # 程序绘制 -> assets/gen/firmware
@@ -68,8 +58,9 @@ python tools/assets/verify_assets.py     # 只读校验
 ```bash
 python tools/assets/verify_assets.py                # 归档哈希 / 28 固件图 / 110 原型素材 / 24 装备 / 25 输入 / raw 零重复
 python tools/assets/verify_assets.py --duplicates   # 列出 assets/ 全树同字节分组，人工判断
-python tools/assets/verify_assets.py --source-root D:/Project   # 与本地来源逐文件对照
-python -m unittest discover -s tests -p test_asset_import.py -v # 素材导入测试（tests/ 待恢复）
+python tools/assets/verify_assets.py --source-root "<本地来源目录>" # 替换占位符后再执行
 ```
 
-当前按用户要求不运行自动化测试；以上命令仅作为可选工具，不构成「已通过」的声明。
+历史素材导入测试记录使用 `python -m unittest discover -s tests -p test_asset_import.py -v`；测试源当前缺失，恢复后的实际位置待核实，不作为可直接运行的步骤。
+
+验证限制以 [项目规则](../../AGENTS.md#验证与授权边界) 为准；以上命令及历史覆盖数量不构成当前「已通过」的声明。
