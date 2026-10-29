@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-"""BotW 支线任务数据(76 条,迷你挑战)。
-字段: [英文名, 中文名(官方译名,可能繁体;空则自拟并加 *), 地点, 梗概]
+"""BotW 迷你挑战数据(本体 76 条 + DLC 13 条 + 联动 1 条)。
+字段: [英文名, 中文名, 地点, 梗概, 可选内容包标识]；末尾 * 表示社区译名待官方核对。
+新增清单来源：https://zeldawiki.wiki/wiki/Side_Quests_in_Breath_of_the_Wild
+联动来源：https://zeldawiki.wiki/wiki/Xenoblade_Chronicles_2
 中文名以 Zelda Wiki Breath_of_the_Wild_Translations 官方译名为准(繁体转简体);
 wiki 未收录的用社区通用译名并加 * 标注。
-顺序:按英文名 A-Z 排序,与 Zelda Central 76 条清单一致。
+本体维持原 A-Z 顺序；新增任务追加，保留既有 s1–s76 链接。梗概为项目自写。
 """
 SIDE_QUESTS = [
   ["A Freezing Rod", "冰之杖试练", "克洛格森林",
@@ -36,7 +38,7 @@ SIDE_QUESTS = [
    "夜里抓五只黄昏萤火虫,放进卡卡利科村拉兹莉的屋子。"],
   ["Cooking with Koko", "珂珂娜的厨房2", "卡卡利科村",
    "珂珂娜在学做菜:去杂货店买山羊黄油给她,做出热黄油苹果。"],
-  ["Curry for What Ails You", "寒冷时要吃咖哩!", "利特驿站",
+  ["Curry for What Ails You", "寒冷时要吃咖喱!", "利特驿站",
    "利特驿站的莱斯特想买鼓隆香料,做咖喱抵御寒风。"],
   ["Death Mountain's Secret", "死亡之山的秘密", "鼓隆温泉",
    "炸开欧尔汀桥附近的岩壁,为鼓隆温泉的普恩思取回钻岩机。"],
@@ -158,4 +160,32 @@ SIDE_QUESTS = [
    "双子驿站的蕾莎挑战你:两分钟内驯服一匹野生马。"],
   ["Zora Stone Monuments", "寻找卓拉石碑", "卓拉领地",
    "阅读拉涅鲁地区十块卓拉石碑,向甲哈拓报告。"],
+  ["EX Trial of the Sword", "Ex 剑之试炼*", "克洛格森林",
+   "将大师之剑插回台座，进入不携带原有装备的战斗试炼。依次克服初阶、中阶与高阶挑战，让大师之剑的力量完全觉醒。", "master_trials"],
+  ["EX Strange Mask Rumors", "Ex 奇妙面具的谣传*", "森林驿站",
+   "阅读三叶的传闻，前往迷失森林寻找藏在树洞中的宝箱，取得能对附近克洛格产生反应的克洛格面具。", "master_trials"],
+  ["EX Teleportation Rumors!", "Ex 瞬间移动的谣传！*", "南阿卡莱驿站",
+   "调查瞬间移动道具的传闻，在洛美岛迷宫地下的守护者区域寻找宝箱，取得可设置自定义传送点的传送标记器。", "master_trials"],
+  ["EX Treasure: Ancient Mask", "Ex 拉姆达的秘宝 古代面具*", "驿站村遗迹",
+   "循拉姆达日记的提示，在科摩罗驻军地遗迹寻找埋藏的宝箱，取出梅祖拉的假面。", "master_trials"],
+  ["EX Treasure: Fairy Clothes", "Ex 拉姆达的秘宝 精灵绿衣*", "驿站村遗迹",
+   "阅读拉姆达的日记，在交易所遗迹、监狱遗迹和麦贝镇遗迹寻找三只宝箱，集齐汀空套装。", "master_trials"],
+  ["EX Treasure: Twilight Relic", "Ex 拉姆达的秘宝 黄昏之冠*", "驿站村遗迹",
+   "根据日记对旧战场的描述，探索贤者之殿遗迹，在埋藏的宝箱中找到米多娜的王冠。", "master_trials"],
+  ["EX Treasure: Phantasma", "Ex 拉姆达的秘宝 梦幻铠甲*", "驿站村遗迹",
+   "循拉姆达的线索搜寻竞技场遗迹、祭奠场遗迹与海拉鲁驻军地遗迹，取回幻影铠甲的三个部件。", "master_trials"],
+  ["EX Ancient Horse Rumors", "Ex 古代马具的谣传*", "高原驿站",
+   "阅读古代马具的传闻，在萨托利山的樱花树附近与马神之泉附近找出宝箱，集齐古代缰绳和古代马鞍。", "champions_ballad"],
+  ["EX Royal Guard Rumors", "Ex 近卫兵的谣传*", "河畔驿站",
+   "从三叶的报道得知近卫兵装备的线索，进入海拉鲁城堡，在内部的不同房间寻找三个宝箱，集齐近卫兵套装。", "champions_ballad"],
+  ["EX Treasure: Merchant Hood", "Ex 拉姆达的秘宝 行商头巾*", "阿德亚村遗迹",
+   "阅读拉姆达的新日记，前往卡兹溜湖一带，在吞食勇气之泉来客的巨龙附近寻找宝箱，取得罗维奥的头巾。", "champions_ballad"],
+  ["EX Treasure: Garb of Winds", "Ex 拉姆达的秘宝 风之青衣*", "阿德亚村遗迹",
+   "沿日记中关于河流源头的线索前往湖之塔附近，用磁力取出瀑布水域的宝箱，找到蓝色大虾衬衫。", "champions_ballad"],
+  ["EX Treasure: Usurper King", "Ex 拉姆达的秘宝 僭王头盔*", "阿德亚村遗迹",
+   "根据日记对双生之山的描述，在托比奥河谷下游的河岸寻找埋藏宝箱，取出藏特的头盔。", "champions_ballad"],
+  ["EX Treasure: Dark Armor", "Ex 拉姆达的秘宝 恶灵铠甲*", "阿德亚村遗迹",
+   "沿费罗尼树海的河流调查瀑布、桥梁和石像附近的藏宝地点，集齐幻影盖侬装备。", "champions_ballad"],
+  ["[Xenoblade Chronicles 2]", "合作：异度神剑２", "海拉鲁各地",
+   "夜间分别从海利亚大桥中央向南、骷髅池塘左眼向东、海布拉山顶向西南仰望，追寻三颗红色流星落下的宝箱，集齐打捞员套装。", "xenoblade"],
 ]

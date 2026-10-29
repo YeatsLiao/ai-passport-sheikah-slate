@@ -1,0 +1,610 @@
+{
+  "FOLLOW THE SHEIKAH SLATE": {
+    "en_desc": "Link awakens in the Shrine of Resurrection. Guided by a mysterious voice, he uses the Sheikah Slate to activate four shrines on the Great Plateau, taking his first steps toward recovering his memories.",
+    "loc_en": "Great Plateau"
+  },
+  "THE ISOLATED PLATEAU": {
+    "en_desc": "After completing the four shrine trials on the plateau, Link receives a paraglider from the old man. He leaves the secluded plateau and begins his journey to save Hyrule.",
+    "loc_en": "Great Plateau"
+  },
+  "SEEK OUT IMPA": {
+    "en_desc": "Link visits Impa in Kakariko Village and learns the truth about the Great Calamity a hundred years ago, the sacrifice of the four Champions, and his own duty as the hero.",
+    "loc_en": "Kakariko Village"
+  },
+  "LOCKED MEMENTOS": {
+    "en_desc": "Impa points Link toward the traces of Zelda's memories. Learning about the princess and the Champions through these recollections helps him understand what he is fighting for.",
+    "loc_en": "Kakariko Village"
+  },
+  "CAPTURED MEMORIES": {
+    "en_desc": "With the restored Camera and the old pictures in his album, Link travels across Hyrule to recover twelve memories of his time with Zelda and the four Champions.",
+    "loc_en": "Across Hyrule"
+  },
+  "FREE THE DIVINE BEASTS": {
+    "en_desc": "Impa asks Link to free the four Divine Beasts from Ganon's control. Each one he liberates weakens Calamity Ganon's power.",
+    "loc_en": "Kakariko Village"
+  },
+  "REACH ZORA'S DOMAIN": {
+    "en_desc": "With Sidon's help, Link follows a storm-battered road to Zora's Domain, where the Zora are preparing a counterattack.",
+    "loc_en": "Zora's Domain"
+  },
+  "DIVINE BEAST VAH RUTA": {
+    "en_desc": "Link and Sidon enter the water Divine Beast responsible for the downpour flooding Zora's Domain. Link defeats Waterblight Ganon and frees the spirit of the Champion Mipha.",
+    "loc_en": "Zora's Domain"
+  },
+  "DIVINE BEAST VAH RUDANIA": {
+    "en_desc": "On Death Mountain, Link joins Yunobo to enter the fire Divine Beast, defeat Fireblight Ganon, and reunite with the Champion Daruk from a hundred years ago.",
+    "loc_en": "Death Mountain"
+  },
+  "DIVINE BEAST VAH MEDOH": {
+    "en_desc": "At Rito Village, Link and Teba confront the wind Divine Beast circling overhead. Defeating Windblight Ganon frees the spirit of the Champion Revali.",
+    "loc_en": "Rito Village"
+  },
+  "DIVINE BEAST VAH NABORIS": {
+    "en_desc": "After recovering the Thunder Helm, Link approaches the lightning Divine Beast with Riju. He defeats Thunderblight Ganon and frees the Champion Urbosa.",
+    "loc_en": "Gerudo Desert"
+  },
+  "FORBIDDEN CITY ENTRY": {
+    "en_desc": "To approach the lightning Divine Beast, Link must enter Gerudo Town, where men are forbidden. He disguises himself in women's clothing and earns the residents' trust to continue his investigation.",
+    "loc_en": "Gerudo Town"
+  },
+  "THE HERO'S SWORD": {
+    "en_desc": "After crossing the Lost Woods, Link faces a test of vitality before the Great Deku Tree and draws the Master Sword, which has slept for a hundred years.",
+    "loc_en": "Korok Forest"
+  },
+  "FIND THE FAIRY FOUNTAIN": {
+    "en_desc": "Following the painter Pikango's clues, Link finds the fairy fountain near Kakariko Village, opening the way to awaken the Great Fairy and enhance his equipment.",
+    "loc_en": "Kakariko Village"
+  },
+  "DESTROY GANON": {
+    "en_desc": "The final battle begins. Link enters Hyrule Castle to confront Calamity Ganon. With help from the liberated Divine Beasts and Zelda, he brings the century-long calamity to an end.",
+    "loc_en": "Hyrule Castle"
+  },
+  "A Freezing Rod": {
+    "en_desc": "Bring an Ice Rod to Kula in Korok Forest for a silver rupee, or give him a Blizzard Rod for a gold rupee.",
+    "loc_en": "Korok Forest"
+  },
+  "A Gift for My Beloved": {
+    "en_desc": "Help Manny in Hateno Village court Prima: find out what she likes, then catch ten restless crickets to give her.",
+    "loc_en": "Hateno Village"
+  },
+  "A Gift for the Great Fairy": {
+    "en_desc": "Accept Toren's request at Tabantha Bridge Stable and visit the Great Fairy on Piper Ridge, receiving five hundred rupees for the offering.",
+    "loc_en": "Tabantha Bridge Stable"
+  },
+  "A Gift from the Monks": {
+    "en_desc": "After completing all 120 shrines, follow the monks' invitation to the Forgotten Temple and claim the armor of the Wild.",
+    "loc_en": "Forgotten Temple"
+  },
+  "A Gift of Nightshade": {
+    "en_desc": "Wabbin on Tuft Mountain asks Link to deliver blue nightshade to Perda, helping him make a quiet confession of love.",
+    "loc_en": "Tuft Mountain"
+  },
+  "A Parent's Love": {
+    "en_desc": "Overhear Ruli and Hagie's conversation in Tarrey Town, then bring them a monster cake to receive a gold rupee.",
+    "loc_en": "Tarrey Town"
+  },
+  "A Rare Find": {
+    "en_desc": "Trott at Outskirt Stable wants raw gourmet meat. Sell him a piece for one hundred rupees.",
+    "loc_en": "Outskirt Stable"
+  },
+  "A Royal Recipe": {
+    "en_desc": "Bake a cake using a recipe from the library in Hyrule Castle and bring it to Gotter at Riverside Stable.",
+    "loc_en": "Riverside Stable"
+  },
+  "A Shady Customer": {
+    "en_desc": "Photograph Kilton at Skull Lake at night, then show the picture to Hoz at East Akkala Stable for a silver rupee.",
+    "loc_en": "East Akkala Stable"
+  },
+  "A Wife Washed Away": {
+    "en_desc": "Fronk in Zora's Domain asks Link to find his wife Mei, who was swept away by the river.",
+    "loc_en": "Zora's Domain"
+  },
+  "An Ice Guy": {
+    "en_desc": "Guy, a Rito struggling with the heat at Kara Kara Bazaar, wants a cooling elixir.",
+    "loc_en": "Kara Kara Bazaar"
+  },
+  "Arrows of Burning Heat": {
+    "en_desc": "Help Rola by lighting the four torches around the Goddess Statue in Kakariko Village with fire arrows.",
+    "loc_en": "Kakariko Village"
+  },
+  "Balloon Flight": {
+    "en_desc": "Attach two Octo Balloons to a barrel and send it aloft. Shamae at Woodland Stable rewards Link with a star fragment.",
+    "loc_en": "Woodland Stable"
+  },
+  "By Firefly's Light": {
+    "en_desc": "Catch five sunset fireflies at night and release them inside Lasli's house in Kakariko Village.",
+    "loc_en": "Kakariko Village"
+  },
+  "Cooking with Koko": {
+    "en_desc": "Koko is learning to cook. Buy goat butter from the general store so she can make hot buttered apples.",
+    "loc_en": "Kakariko Village"
+  },
+  "Curry for What Ails You": {
+    "en_desc": "Lester at Rito Stable wants to buy Goron spice to make curry that will ward off the cold.",
+    "loc_en": "Rito Stable"
+  },
+  "Death Mountain's Secret": {
+    "en_desc": "Blast open the rock wall near the Bridge of Eldin and retrieve a Drillshaft for Dugby at Goron Hot Springs.",
+    "loc_en": "Goron Hot Springs"
+  },
+  "Diving is Beauty!": {
+    "en_desc": "Perform a dive in Zora's Domain and swim back to impress Gruve.",
+    "loc_en": "Zora's Domain"
+  },
+  "Face the Frost Talus": {
+    "en_desc": "Melt the Frost Talus in Coldsnap Hollow near Rito Village, break the ore on its head, then return for the reward.",
+    "loc_en": "Rito Village"
+  },
+  "Find Kheel": {
+    "en_desc": "Glide to the stone pillars at Warbler's Nest and find Amali's missing daughter Kheel.",
+    "loc_en": "Rito Village"
+  },
+  "Fireproof Lizard Roundup": {
+    "en_desc": "Catch ten fireproof lizards for Kima at the Southern Mine and receive flame-resistant armor.",
+    "loc_en": "Southern Mine"
+  },
+  "Flown the Coop": {
+    "en_desc": "Find the seven Cuccos that escaped from Cado's enclosure in Kakariko Village.",
+    "loc_en": "Kakariko Village"
+  },
+  "Frog Catching": {
+    "en_desc": "Catch five hot-footed frogs after the rain for Tumbo in Zora's Domain.",
+    "loc_en": "Zora's Domain"
+  },
+  "From the Ground Up": {
+    "en_desc": "Help Hudson deliver wood and recruit residents, transforming the empty land in Lake Akkala into Tarrey Town.",
+    "loc_en": "Tarrey Town"
+  },
+  "Good-Sized Horse": {
+    "en_desc": "Zyle in Gerudo Canyon wants to buy a good horse. Catch one and sell it to him.",
+    "loc_en": "Gerudo Canyon"
+  },
+  "Hobbies of the Rich": {
+    "en_desc": "Hagie in Tarrey Town asks Link to defeat two Guardians in Torin Wetland.",
+    "loc_en": "Tarrey Town"
+  },
+  "Hunt for the Giant Horse": {
+    "en_desc": "Tame the giant black horse on Taobab Grassland and bring it to Straia, who is waiting at the Mounted Archery Camp.",
+    "loc_en": "Mounted Archery Camp"
+  },
+  "Hylian Homeowner": {
+    "en_desc": "Pay three thousand rupees and provide thirty bundles of wood to buy the vacant Hateno Village house that Bolson is about to demolish.",
+    "loc_en": "Hateno Village"
+  },
+  "Koko Cuisine": {
+    "en_desc": "Koko wants to cook a dish her mother taught her. Bring her raw meat so she can make a pumpkin stew.",
+    "loc_en": "Kakariko Village"
+  },
+  "Koko's Kitchen": {
+    "en_desc": "Buy a swift carrot for Koko so she can make hasty vegetable cream soup.",
+    "loc_en": "Kakariko Village"
+  },
+  "Koko's Specialty": {
+    "en_desc": "Bring Koko courser bee honey so she can prepare her mother's honeyed apples.",
+    "loc_en": "Kakariko Village"
+  },
+  "Legendary Rabbit Trial": {
+    "en_desc": "Photograph a glowing Blupee at night and show the picture to Peeks in Korok Forest.",
+    "loc_en": "Korok Forest"
+  },
+  "Leviathan Bones": {
+    "en_desc": "Photograph the giant skeletons in Gerudo, Eldin, and Hebra, then show the pictures to the researcher at Serenne Stable.",
+    "loc_en": "Serenne Stable"
+  },
+  "Little Sister's Big Request": {
+    "en_desc": "Help Jana at South Akkala Stable deliver a beetle to her older sister Gleema.",
+    "loc_en": "South Akkala Stable"
+  },
+  "Luminous Stone Gathering": {
+    "en_desc": "Trade luminous stones for diamonds with Ledo at the entrance to Zora's Domain.",
+    "loc_en": "Zora's Domain"
+  },
+  "Lynel Safari": {
+    "en_desc": "Photograph a red-maned Lynel and show the picture to Laflat in Zora's Domain to receive Zora greaves.",
+    "loc_en": "Zora's Domain"
+  },
+  "Medicinal Molduga": {
+    "en_desc": "Bring Molduga guts to Malena in Gerudo Town so she can prepare medicine for her sick husband.",
+    "loc_en": "Gerudo Town"
+  },
+  "Misko, the Great Bandit": {
+    "en_desc": "Buy a riddle at Dueling Peaks Stable, blast open Misko's hidden cave, and recover the great bandit's treasure.",
+    "loc_en": "Dueling Peaks Stable"
+  },
+  "Missing in Action": {
+    "en_desc": "Rescue four missing travelers from the Bokoblin camps on Koukot Plateau.",
+    "loc_en": "Gerudo Canyon Stable"
+  },
+  "My Hero": {
+    "en_desc": "Show the Master Sword to Aliza at Outskirt Stable to prove that Link is the hero.",
+    "loc_en": "Outskirt Stable"
+  },
+  "Playtime with Cottla": {
+    "en_desc": "Play with Cottla in Kakariko Village during the day, then find her behind Impa's house in the evening.",
+    "loc_en": "Kakariko Village"
+  },
+  "Riddles of Hyrule": {
+    "en_desc": "Answer Walton's five riddles at the top of the Great Deku Tree and win a diamond.",
+    "loc_en": "Korok Forest"
+  },
+  "Riverbed Reward": {
+    "en_desc": "Use Magnesis to retrieve a chest from the riverbed near Wetland Stable. It contains a Royal Claymore.",
+    "loc_en": "Wetland Stable"
+  },
+  "Robbie's Research": {
+    "en_desc": "Prove Link's identity at the Akkala Ancient Tech Lab and carry the blue flame to Robbie.",
+    "loc_en": "Akkala Ancient Tech Lab"
+  },
+  "Rushroom Rush!": {
+    "en_desc": "Collect fifty-five rushrooms for Pirou at Gerudo Canyon Stable.",
+    "loc_en": "Gerudo Canyon Stable"
+  },
+  "Slated for Upgrades": {
+    "en_desc": "Help Purah at the Hateno Ancient Tech Lab upgrade three functions of the Sheikah Slate.",
+    "loc_en": "Hateno Ancient Tech Lab"
+  },
+  "Special Delivery": {
+    "en_desc": "Escort Finley's bottled letter downstream to Mercay Island, then return to Zora's Domain for a reward.",
+    "loc_en": "Zora's Domain"
+  },
+  "Stalhorse: Pictured!": {
+    "en_desc": "Photograph a Stalhorse on the Tabantha Snowfield at night and show the picture to Juannelle at Snowfield Stable.",
+    "loc_en": "Snowfield Stable"
+  },
+  "Sunken Treasure": {
+    "en_desc": "Travel to the golden triangle off the coast of Lurelin Village and use Magnesis to retrieve sunken treasure chests.",
+    "loc_en": "Lurelin Village"
+  },
+  "Sunshroom Sensing": {
+    "en_desc": "Photograph a sunshroom and use the upgraded Sheikah Sensor to find three more, then trade them for truffles.",
+    "loc_en": "Hateno Ancient Tech Lab"
+  },
+  "Take Back the Sea": {
+    "en_desc": "Clear the monster camp on Aris Beach near Lurelin Village and reclaim the fishing grounds.",
+    "loc_en": "Lurelin Village"
+  },
+  "The Apple of My Eye": {
+    "en_desc": "Bake an apple in Rito Village and give it to Juney to win her affection.",
+    "loc_en": "Rito Village"
+  },
+  "The Eighth Heroine": {
+    "en_desc": "Photograph the statue of the eighth heroine in the Gerudo Highlands and show the picture to Bozai.",
+    "loc_en": "Gerudo Highlands"
+  },
+  "The Forgotten Sword": {
+    "en_desc": "Climb to Gerudo Summit and photograph the heroine's sword.",
+    "loc_en": "Gerudo Summit"
+  },
+  "The Giant of Ralis Pond": {
+    "en_desc": "Defeat the blue Hinox sleeping at Ralis Pond, then report to Torfeau.",
+    "loc_en": "Zora's Domain"
+  },
+  "The Hero's Cache": {
+    "en_desc": "Listen to Kass sing on a stone pillar in Kitano Bay, then use Magnesis to retrieve the underwater treasure chest.",
+    "loc_en": "Kitano Bay"
+  },
+  "The Horseback Hoodlums": {
+    "en_desc": "Drive off the mounted Bokoblins roaming the grasslands near Highland Stable.",
+    "loc_en": "Highland Stable"
+  },
+  "The Jewel Trade": {
+    "en_desc": "Sell ten pieces of amber to Ramella in Goron City for five hundred rupees.",
+    "loc_en": "Goron City"
+  },
+  "The Korok Trials": {
+    "en_desc": "Complete the three shrine trials in Korok Forest to earn big hearty truffles.",
+    "loc_en": "Great Hyrule Forest"
+  },
+  "The Mystery Polluter": {
+    "en_desc": "Find out who is polluting the water supply in Gerudo Town.",
+    "loc_en": "Gerudo Town"
+  },
+  "The Priceless Maracas": {
+    "en_desc": "Help Hestu recover his precious maracas from the Bokoblins.",
+    "loc_en": "Korok Forest"
+  },
+  "The Road to Respect": {
+    "en_desc": "Defeat the Igneo Talus in Darunia Lake and prove Link's strength to Fugo in Goron City.",
+    "loc_en": "Goron City"
+  },
+  "The Royal Guard's Gear": {
+    "en_desc": "Bring a Royal Guard's weapon from Hyrule Castle to Parcy at Riverside Stable.",
+    "loc_en": "Riverside Stable"
+  },
+  "The Royal White Stallion": {
+    "en_desc": "Tame the royal white stallion on Safula Hill, register it, and report back to Toffa.",
+    "loc_en": "Outskirt Stable"
+  },
+  "The Search for Barta": {
+    "en_desc": "Take a mighty banana to the Gerudo Great Skeleton and find the missing Barta.",
+    "loc_en": "Gerudo Town"
+  },
+  "The Secret Club's Secret": {
+    "en_desc": "Overhear the secret club's password and enter the hidden shop in Gerudo Town.",
+    "loc_en": "Gerudo Town"
+  },
+  "The Sheep Rustlers": {
+    "en_desc": "Clear out the monsters attacking the sheep on Hateno Beach and help Koyin get her revenge.",
+    "loc_en": "Hateno Village"
+  },
+  "The Spark of Romance": {
+    "en_desc": "Bring a piece of flint to Jogo in Rito Village to light the fire for his newlywed evening.",
+    "loc_en": "Rito Village"
+  },
+  "The Statue's Bargain": {
+    "en_desc": "Follow Teebo to pray at the Horned Statue, then pay one hundred and twenty rupees to reclaim a Heart Container.",
+    "loc_en": "Hateno Village"
+  },
+  "The Thunder Helm": {
+    "en_desc": "Help the residents of Gerudo Town resolve their troubles and earn the Thunder Helm.",
+    "loc_en": "Gerudo Town"
+  },
+  "The Weapon Connoisseur": {
+    "en_desc": "Show eight different weapons, one after another, to Nebb in Hateno Village.",
+    "loc_en": "Hateno Village"
+  },
+  "Thunder Magnet": {
+    "en_desc": "Use Magnesis to remove the axe attracting lightning from the horse's head atop Lakeside Stable.",
+    "loc_en": "Lakeside Stable"
+  },
+  "Tools of the Trade": {
+    "en_desc": "Give Isha in Gerudo Town ten pieces of flint, then choose a piece of jewelry she has made.",
+    "loc_en": "Gerudo Town"
+  },
+  "What's for Dinner?": {
+    "en_desc": "Bring a hearty blueshell snail and goat butter to Kiana in Lurelin Village and share dinner with her.",
+    "loc_en": "Lurelin Village"
+  },
+  "Wild Horses": {
+    "en_desc": "Rensa at Dueling Peaks Stable challenges Link to tame a wild horse within two minutes.",
+    "loc_en": "Dueling Peaks Stable"
+  },
+  "Zora Stone Monuments": {
+    "en_desc": "Read the ten Zora stone monuments in the Lanayru region, then report to Jiahto.",
+    "loc_en": "Zora's Domain"
+  },
+  "EX The Champions' Ballad": {
+    "en_desc": "After freeing all four Divine Beasts, return to the Shrine of Resurrection for the One-Hit Obliterator trials. Follow the four Champions' clues and complete the final trial to obtain the Master Cycle Zero.",
+    "loc_en": "Shrine of Resurrection"
+  },
+  "EX Champion Revali's Song": {
+    "en_desc": "Follow the monument and Kass's song to complete three trials in the Rito region. Face Windblight Ganon again in a memory, discover Revali's past, and strengthen his Champion ability.",
+    "loc_en": "Rito Region"
+  },
+  "EX Champion Mipha's Song": {
+    "en_desc": "Use the monument and Kass's verses to find three trials in the Zora region. Defeat Waterblight Ganon in a memory, learn more about Mipha, and strengthen the ability she left behind.",
+    "loc_en": "Zora Region"
+  },
+  "EX Champion Daruk's Song": {
+    "en_desc": "Complete three trials in the volcanic region using the monument and Kass's song. Fight Fireblight Ganon in a memory with limited equipment, revisit Daruk's story, and strengthen his ability.",
+    "loc_en": "Eldin Region"
+  },
+  "EX Champion Urbosa's Song": {
+    "en_desc": "Follow the monument and Kass's song through three Gerudo-region trials. Challenge Thunderblight Ganon in a memory, uncover Urbosa's past, and strengthen her Champion ability.",
+    "loc_en": "Gerudo Region"
+  },
+  "EX Trial of the Sword": {
+    "en_desc": "Return the Master Sword to its pedestal and enter combat trials without your usual equipment. Clear the Beginning, Middle, and Final Trials to awaken the sword's full power.",
+    "loc_en": "Korok Forest"
+  },
+  "EX Strange Mask Rumors": {
+    "en_desc": "Read Traysi's rumor and search a hollow tree in the Lost Woods for a treasure chest. Recover the Korok Mask, which reacts when hidden Koroks are nearby.",
+    "loc_en": "Woodland Stable"
+  },
+  "EX Teleportation Rumors!": {
+    "en_desc": "Investigate rumors of a teleportation tool. Search the Guardian-filled chamber beneath the Lomei Labyrinth Island maze for the Travel Medallion, which creates a custom travel point.",
+    "loc_en": "South Akkala Stable"
+  },
+  "EX Treasure: Ancient Mask": {
+    "en_desc": "Follow Misko's journal to a buried chest in the Kolomo Garrison Ruins and recover Majora's Mask.",
+    "loc_en": "Outpost Ruins"
+  },
+  "EX Treasure: Fairy Clothes": {
+    "en_desc": "Read Misko's journal and search Exchange Ruins, Castle Town Prison, and Mabe Village Ruins for three chests containing the Tingle set.",
+    "loc_en": "Outpost Ruins"
+  },
+  "EX Treasure: Twilight Relic": {
+    "en_desc": "Use the journal's description of an old battlefield to search the Sage Temple Ruins. Find Midna's Helmet in a buried chest.",
+    "loc_en": "Outpost Ruins"
+  },
+  "EX Treasure: Phantasma": {
+    "en_desc": "Follow Misko's clues to the Coliseum Ruins, Sacred Ground Ruins, and Hyrule Garrison Ruins. Recover all three pieces of the Phantom set.",
+    "loc_en": "Outpost Ruins"
+  },
+  "EX Ancient Horse Rumors": {
+    "en_desc": "Read the ancient horse-gear rumor, then search near Satori Mountain's cherry tree and the Horse God fountain. Recover the Ancient Bridle and Ancient Saddle.",
+    "loc_en": "Highland Stable"
+  },
+  "EX Royal Guard Rumors": {
+    "en_desc": "Read Traysi's report on the Royal Guard's equipment. Search different rooms inside Hyrule Castle for three chests and complete the Royal Guard set.",
+    "loc_en": "Riverside Stable"
+  },
+  "EX Treasure: Merchant Hood": {
+    "en_desc": "Read Misko's new journal and head toward Dracozu Lake. Search near the dragon that consumes visitors to the Spring of Courage for Ravio's Hood.",
+    "loc_en": "Deya Village Ruins"
+  },
+  "EX Treasure: Garb of Winds": {
+    "en_desc": "Follow the journal's clue about a river's source near Lake Tower. Use Magnesis to retrieve the chest in the waterfall waters and find the Island Lobster Shirt.",
+    "loc_en": "Deya Village Ruins"
+  },
+  "EX Treasure: Usurper King": {
+    "en_desc": "Follow the journal's description of twin peaks to the riverbank in lower Tobio's Hollow. Unearth the hidden chest containing Zant's Helmet.",
+    "loc_en": "Deya Village Ruins"
+  },
+  "EX Treasure: Dark Armor": {
+    "en_desc": "Explore the rivers of Faron's forests and search near waterfalls, bridges, and statues. Recover all three pieces of the Phantom Ganon set.",
+    "loc_en": "Deya Village Ruins"
+  },
+  "[Xenoblade Chronicles 2]": {
+    "en_desc": "At night, look south from the middle of the Bridge of Hylia, east from Skull Lake's left eye, and southwest from Hebra Peak. Follow the three red shooting stars to their chests and collect the Salvager set.",
+    "loc_en": "Across Hyrule"
+  },
+  "A Brother's Roast": {
+    "en_desc": "Accept Bladon's request and find the exhausted Gonguron in Gorko Tunnel. Carry him a rock roast to restore his strength so he can break through the wall hiding a shrine.",
+    "loc_en": "Goron City"
+  },
+  "A Fragmented Monument": {
+    "en_desc": "Photograph three monument fragments for Garini at Palmorae Ruins. Once the inscription is restored, kneel on a glowing platform to reveal the shrine.",
+    "loc_en": "Palmorae Ruins"
+  },
+  "A Landscape of a Stable": {
+    "en_desc": "Study the stable's painting of Death Mountain. Identify the landmarks and the shrine shown in the landscape, then follow them to the hidden mountain shrine.",
+    "loc_en": "Foothill Stable"
+  },
+  "A Song of Storms": {
+    "en_desc": "Listen to Kass's song about lightning. Place metal equipment on the rocks sealing the entrance so a lightning strike breaks them open and reveals the shrine.",
+    "loc_en": "Calora Lake"
+  },
+  "Cliffside Etchings": {
+    "en_desc": "Follow Geggle's directions to the enormous markings on the cliff. Fire a shock arrow at the pedestal in the center of the pattern to reveal a shrine.",
+    "loc_en": "Tabantha Bridge Stable"
+  },
+  "Guardian Slideshow": {
+    "en_desc": "Show Loone pictures of a Guardian Stalker, Skywatcher, and Scout. Receive her treasured orb and place it in the nearby pedestal to open the shrine.",
+    "loc_en": "Puffer Beach"
+  },
+  "Into the Vortex": {
+    "en_desc": "Read the ancient tablet, then carry the orb through the spiral peninsula. Place it in the pedestal at the center to summon a shrine.",
+    "loc_en": "Rist Peninsula"
+  },
+  "Master of the Wind": {
+    "en_desc": "Blast away rocks blocking the wind and restore the bay's air currents. Ride them with the paraglider and land on the designated platform to fulfill Kass's song.",
+    "loc_en": "Horon Lagoon"
+  },
+  "Recital at Warbler's Nest": {
+    "en_desc": "Help Kheel's sisters prepare Salmon Meuniere so all five can rehearse at Warbler's Nest. Blow wind through the rock openings in the order given by their song.",
+    "loc_en": "Rito Village"
+  },
+  "Secret of the Cedars": {
+    "en_desc": "Hear the story of three cedar trees on the snowy mountain. Follow the line they form toward the sea and blast open a cracked rock wall.",
+    "loc_en": "Hateno Village"
+  },
+  "Secret of the Snowy Peaks": {
+    "en_desc": "Read the journal in the mountain cabin. In the late afternoon, hold up a large snowball so its shadow covers the glowing mark on the cliff.",
+    "loc_en": "Mount Granajh"
+  },
+  "Shrouded Shrine": {
+    "en_desc": "Navigate the dark ruins using torches and bird-shaped statues. Take the orb carried by the Hinox and place it in the pedestal to reveal the shrine entrance.",
+    "loc_en": "Thyphlo Ruins"
+  },
+  "Sign of the Shadow": {
+    "en_desc": "Follow Kass's song to the platform indicated by the tower's shadow. At the right time, shoot an arrow toward the sun to reveal the shrine.",
+    "loc_en": "Gerudo Tower"
+  },
+  "Stranded on Eventide": {
+    "en_desc": "Survive on the island using only local resources while your usual equipment is withheld. Place three orbs in their pedestals to complete the trial and reclaim your gear.",
+    "loc_en": "Eventide Island"
+  },
+  "Test of Will": {
+    "en_desc": "Accept the Goron brothers' endurance challenge. Prepare for extreme heat and last until the end on the scorching platform to earn their respect.",
+    "loc_en": "Mount Nabooru"
+  },
+  "The Ancient Rito Song": {
+    "en_desc": "Ask the sisters in Rito Village for both halves of an old song. Find the platform beneath the rock pillar's shadow and light a flame at the right time.",
+    "loc_en": "Rito Village"
+  },
+  "The Bird in the Mountains": {
+    "en_desc": "Follow Molli's description to the cedar atop a snowy mountain. Look for the landscape shaped like a white bird, then glide toward its belly to find a shrine.",
+    "loc_en": "Rito Village"
+  },
+  "The Ceremonial Song": {
+    "en_desc": "Listen to the ceremonial song and recover the Ceremonial Trident from the water. Rise beside the waterfall, then drive the spear down into the platform to reveal the shrine.",
+    "loc_en": "Zora's Domain"
+  },
+  "The Crowned Beast": {
+    "en_desc": "Hear Kass's riddle about a beast crowned with two spears. Sneak up on a stag, mount it, and guide it onto the glowing platform.",
+    "loc_en": "Rabia Plain"
+  },
+  "The Cursed Statue": {
+    "en_desc": "Investigate the statues in the canyon at night. Find the one with glowing eyes and shoot it with an arrow to lift the curse and reveal a shrine.",
+    "loc_en": "Fort Hateno"
+  },
+  "The Desert Labyrinth": {
+    "en_desc": "Enter the vast desert labyrinth. Trace its corridors and hidden passages to reach the shrine at the center.",
+    "loc_en": "South Lomei Labyrinth"
+  },
+  "The Eye of the Sandstorm": {
+    "en_desc": "Hear Nobiro's tale of treasure hidden by a sandstorm. Use a lull in the storm to get your bearings and find the shrine among the rocks north of the bazaar.",
+    "loc_en": "Kara Kara Bazaar"
+  },
+  "The Gut Check Challenge": {
+    "en_desc": "Accept Bayge's challenge to climb Gut Check Rock within the time limit. Collect enough rupees along the way to earn access to the shrine at the summit.",
+    "loc_en": "Gut Check Rock"
+  },
+  "The Lost Pilgrimage": {
+    "en_desc": "Quietly follow a young Korok on his first trial through the Lost Woods. Stay out of sight and watch him reach the shrine safely.",
+    "loc_en": "Korok Forest"
+  },
+  "The Perfect Drink": {
+    "en_desc": "Help Pokki recover from exhaustion at the shrine terminal. Deliver ice for the bar's Noble Pursuit, then tell her a fresh drink awaits in town.",
+    "loc_en": "East Gerudo"
+  },
+  "The Serpent's Jaws": {
+    "en_desc": "Follow Kass's song to the Spring of Courage within the dragon's jaws. Offer a scale from Farosh to open the passage to the shrine behind the spring.",
+    "loc_en": "Pagos Woods"
+  },
+  "The Seven Heroines": {
+    "en_desc": "Inspect the symbols on the seven heroine statues. Match each scattered orb to the pedestal bearing its symbol to solve the ruins' puzzle.",
+    "loc_en": "East Gerudo Ruins"
+  },
+  "The Silent Swordswomen": {
+    "en_desc": "Follow the directions indicated by the swordswomen statues in the desert. Trace their route through the sandstorm to a concealed shrine.",
+    "loc_en": "Gerudo Town"
+  },
+  "The Skull's Eye": {
+    "en_desc": "Follow Jerrin's clue to Skull Lake. Climb the tall pillar forming its left eye to reach the shrine on top.",
+    "loc_en": "Akkala Ancient Tech Lab"
+  },
+  "The Spring of Power": {
+    "en_desc": "Find the Spring of Power and obtain a scale from Dinraal as requested by the Goddess Statue. Offer the scale in the water to open the shrine.",
+    "loc_en": "Akkala Region"
+  },
+  "The Spring of Wisdom": {
+    "en_desc": "Climb Mount Lanayru and shoot the eyes of Malice corrupting Naydra. Free the dragon, then offer its scale to the Spring of Wisdom.",
+    "loc_en": "Hateno Village"
+  },
+  "The Stolen Heirloom": {
+    "en_desc": "Investigate the missing heirloom in Kakariko Village. Follow Dorian at night, defeat the Yiga Blademaster who appears, and return the recovered orb to its pedestal.",
+    "loc_en": "Kakariko Village"
+  },
+  "The Test of Wood": {
+    "en_desc": "Equip the designated Forest Dweller's sword, bow, and shield. Cross the dangerous swamp without breaking the equipment and reach the shrine at the end.",
+    "loc_en": "Korok Forest"
+  },
+  "The Three Giant Brothers": {
+    "en_desc": "Use the stone tablet's clue to find three nearby Hinox brothers. Retrieve their orbs and place them in the pedestals to reveal a shrine.",
+    "loc_en": "Mount Taran"
+  },
+  "The Two Rings": {
+    "en_desc": "Follow Kass's riddle to find two stone rings that line up. Shoot a single arrow through both rings from the correct angle.",
+    "loc_en": "West Hyrule Plain"
+  },
+  "The Undefeated Champ": {
+    "en_desc": "After freeing Vah Naboris, enter the sand-seal race and beat the champion's record. Win the orb and place it in the pedestal.",
+    "loc_en": "Sand-Seal Rally"
+  },
+  "Trial of Second Sight": {
+    "en_desc": "Use Magnesis to find metal markers in the forest. Follow the trees' clues, moving an iron shield and a chest to trace the hidden route to the shrine.",
+    "loc_en": "Korok Forest"
+  },
+  "Trial of the Labyrinth": {
+    "en_desc": "Glide to the labyrinth island off Akkala's coast. Explore its layered corridors and stairs to find the route to the central shrine.",
+    "loc_en": "Lomei Labyrinth Island"
+  },
+  "Trial of Thunder": {
+    "en_desc": "Find four colored orbs on the stormy plateau. Avoid lightning and place each orb in the pedestal of the matching color.",
+    "loc_en": "Thundra Plateau"
+  },
+  "Trial on the Cliff": {
+    "en_desc": "Enter the huge labyrinth at the edge of the snowfield. Navigate the cold and Malice to reach the shrine at its center.",
+    "loc_en": "North Lomei Labyrinth"
+  },
+  "Under a Red Moon": {
+    "en_desc": "Listen to Kass's song about the red moon. When a Blood Moon rises, remove your equipment and stand on the glowing platform to reveal the shrine.",
+    "loc_en": "Hyrule Ridge"
+  },
+  "Watch Out for the Flowers": {
+    "en_desc": "Follow the narrow paths through Magda's flower beds without stepping on the flowers. Reach the shrine entrance safely in the middle of the garden.",
+    "loc_en": "Floret Sandbar"
+  }
+}
