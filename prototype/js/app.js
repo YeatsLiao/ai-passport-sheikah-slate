@@ -2,6 +2,7 @@
    纯静态：哈希路由 + 示例进度。没有运行时 API 请求，没有持久化。
    装备元数据由本地归档生成；展示外部名称与描述时统一转义。 */
 
+const L = (cn,en) => state.lang === 'cn' ? cn : en;
 const IMG = n => `../assets/gen/prototype/${n}`;   /* 原型贴片 */
 const FW = n => `../assets/gen/firmware/${n}`;     /* 固件图源（程序绘制，原型里只借少数张） */
 const screenEl = document.getElementById('screen');
@@ -161,33 +162,7 @@ const LANG = {
 };
 const t = k => (LANG[state.lang] && LANG[state.lang][k] !== undefined) ? LANG[state.lang][k] : (LANG.cn[k] ?? k);
 
-/* ---------------- audio ---------------- */
-/* 菜单使用 starter 归档的现成音效；其他玩法保留原有 wav，未核实为游戏原版。
-   音量跟随「系统 · 音量」档位，Web 音效切换不影响固件。 */
-const SFX_FILES = {
-  move: 'prototype/select.mp3', ok: 'prototype/action.mp3', back: 'prototype/select.mp3',
-  boom: 'bomb_boom.wav', shutter: 'shutter.wav', place: 'bomb_place.wav',
-  complete: 'complete.wav', found: 'found.wav', hit: 'hit.wav',
-  freeze: 'stasis_freeze.wav', unfreeze: 'stasis_unfreeze.wav', shatter: 'shatter.wav',
-  cryonis: 'cryonis_activate.wav', magnet: 'magnesis_activate.wav', activate: 'prototype/action.mp3'
-};
-const sfxCache = {};
-
-function beep(kind) {
-  if (!state.settings.sfx || state.settings.volume === 0) return;
-  const name = SFX_FILES[kind] ? kind : 'move';
-  if (!sfxCache[name]) {
-    const a = new Audio('../assets/audio/' + SFX_FILES[name]);
-    a.preload = 'auto';
-    sfxCache[name] = a;
-  }
-  /* 同一音效连续触发时克隆一份，避免打断上一声。 */
-  const node = sfxCache[name].cloneNode();
-  node.volume = Math.min(1, 0.10 + state.settings.volume * 0.10);
-  const p = node.play();
-  if (p && p.catch) p.catch(() => { /* 未获得播放许可时静默 */ });
-}
-
+/* Original game audio is managed by sound.js. */
 
 /* ---------------- routing ---------------- */
 const routeHash = () => (location.hash && !['#', '#/'].includes(location.hash) ? location.hash : '#/home');
@@ -201,7 +176,8 @@ function go(hash) {
 }
 
 function back() {
-  if(inputUI.dialog||screenEl.querySelector('.input-reading'))return closeInputMenu();
+  beep('back');
+  if(inputUI.dialog)return closeInputMenu();
   const p = routeParts();
   if(p[0]==='home')return go('#/standby');
   if (p[0] === 'map') return go('#/home');
@@ -291,7 +267,7 @@ function viewRunes() {
 
 /* ---------------- rune scenes ---------------- */
 function viewRune(id) {
-  return viewAbility(id);
+  return viewRuneGame(RUNE_GAMES.has(id) ? id : 'bomb');
 }
 
 /* 相机示例目标；拍照同时更新图鉴登记与相册。 */
@@ -495,7 +471,7 @@ function inventoryAction(kind, value) {
     const item = INV_BY_ID[value];
     if (!item || routeParts()[0] !== 'inventory' || item.category !== inv.category || inv.selected[item.category] !== item.id) return;
     inv.equipped[item.slot] = isEquipped(item) ? null : item.id;
-    render(); beep('ok');
+    render(); beep(isEquipped(item)?'equip':'unequip');
     toast((isEquipped(item) ? t('equipped') : t('unequipped')) + ' · ' + invName(item));
   } else if (kind === 'text') {
     const item = INV_BY_ID[inv.textId];
@@ -869,12 +845,11 @@ function run(action) {
   const [verb, ...rest] = action.split(':');
   if (verb === 'ui') {inputAction(rest);return;}
   if (verb === 'game') { runeGameAction(rest[0]); return; }
-  if (verb === 'ability') { abilityAction(rest[0], rest[1]); return; }
   switch (verb) {
     case 'go': {
       const target = rest.join(':');
       /* 从待机进入符文页时给一声石板启动音。 */
-      if (target === '#/runes' && routeParts()[0] === 'standby') beep('activate');
+      beep(routeParts()[0]==='standby'?'startup':'page');
       go(target);
       break;
     }
@@ -952,7 +927,8 @@ function sysAction(kind) {
   if (kind === 'volume') s.volume = s.volume >= 5 ? 0 : s.volume + 1;
   if (kind === 'scanlines') s.scanlines = !s.scanlines;
   if (kind === 'sfx') s.sfx = !s.sfx;
-  render(); beep('ok');
+  if(!s.sfx||!s.volume)stopSfx();
+  render();beep(['scanlines','sfx'].includes(kind)?(s[kind]?'switch_on':'switch_off'):'ok');
 }
 
 function about() {
@@ -1100,7 +1076,7 @@ function okDown() {
   pressedRoute = routeHash();
   clearTimeout(holdTimer);
   startHoldBar();
-  holdTimer = setTimeout(() => { longFired = true; stopHoldBar(); if(pressedRoute===routeHash()){back();beep('back');} }, HOLD_MS);
+  holdTimer = setTimeout(() => { longFired = true; stopHoldBar(); if(pressedRoute===routeHash())back(); }, HOLD_MS);
 }
 function okUp() {
   if (holdTimer === null) return;
@@ -1153,6 +1129,7 @@ document.addEventListener('keyup', e => {
 });
 window.addEventListener('blur', () => {
   stopNav();
+  stopSfx();
   clearTimeout(holdTimer); holdTimer = null; longFired = true;
   stopHoldBar();
   if (mapDrag) endMapDrag({ pointerId: mapDrag.id });
@@ -1160,7 +1137,7 @@ window.addEventListener('blur', () => {
 });
 
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden && gameInputActive()) { stopNav(); pauseRuneGame(); }
+  if (document.hidden) {stopSfx();if(gameInputActive()) { stopNav(); pauseRuneGame(); }}
 });
 
 document.querySelectorAll('.key').forEach(btn => {

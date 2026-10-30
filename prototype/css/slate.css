@@ -241,9 +241,9 @@ body.no-scan .scanlines{display:none}
 @keyframes eyePulse{0%,100%{opacity:.82;transform:scale(1)}50%{opacity:1;transform:scale(1.035)}}
 .sb-clock{position:relative;z-index:2;margin-top:6px;font-family:var(--font-display);font-size:30px;letter-spacing:.1em;color:#eafcff;text-shadow:0 0 18px rgba(127,233,255,.5),0 2px 6px rgba(0,0,0,.8)}
 .sb-date{position:relative;z-index:2;margin-top:1px;font-size:6.5px;letter-spacing:.36em;color:#8fc3cd;text-shadow:0 1px 3px #000}
-.sb-battery{position:absolute;z-index:3;right:10px;top:9px;display:flex;align-items:center;gap:4px;font-size:5.5px;letter-spacing:.04em;color:#c4c7b6;opacity:.9}
+.sb-battery{position:absolute;z-index:3;right:11px;top:10px;display:flex;align-items:center;gap:3px;font-size:5px;line-height:9px;letter-spacing:.02em;color:#a5c8cc;opacity:.85}
 /* Actual TotK HUD frame from the archived 640 × 249 reference, displayed without redrawing. */
-.sb-battery-art{display:block;width:24px;height:15px;background:url(../../assets/raw/02_ui/totk_battery_hud_reference.jpg) -52px -64.73px/232.73px 90.55px no-repeat}
+.sb-battery-art{display:block;width:17px;height:9px;flex-shrink:0;background:url(../../assets/raw/02_ui/totk_battery_hud_reference.jpg) -48.71154px -61.66667px/209.23077px 83px no-repeat;clip-path:inset(0)}
 .sb-title{position:absolute;z-index:2;left:50%;transform:translateX(-50%);object-fit:contain;pointer-events:none}
 .sb-title.cn{top:24px;width:154px;height:55px}
 .sb-title.en{top:13px;width:90px;height:71px}

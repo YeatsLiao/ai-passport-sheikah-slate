@@ -12,29 +12,29 @@ function restoreInputPage(){
 function viewHome(){
   return `<div class="body device-home"><h2>${L('主目录','MAIN MENU')}</h2><div class="home-grid">${TABS.map(([id,label])=>`<button class="chip" data-action="go:#/${id}" ${id==='runes'?'data-start':''}>${t(label)}</button>`).join('')}<button class="chip" data-action="go:#/standby">${t('standby')}</button></div></div>`+footer(L('▲▼ 选择 · OK 进入','▲▼ select · OK open'));
 }
-function openInputMenu(title,items){rememberInputPage();stopNav();inputUI.dialog={title,items};render();}
+function openInputMenu(title,items,options={}){rememberInputPage();stopNav();inputUI.dialog={title,items,...options};render();beep('menu');}
 function closeInputMenu(){
   if(inputUI.edit){state.settings[inputUI.edit.key]=inputUI.edit.before;inputUI.edit=null;}
   inputUI.dialog=null;render();
 }
 function inputDialogHTML(){
   const d=inputUI.dialog;if(!d)return '';
-  return `<div class="input-dialog" role="dialog" aria-modal="true" aria-label="${esc(d.title)}"><div class="game-pause-card"><h2>${esc(d.title)}</h2>${inputUI.edit?`<p>${L('▲▼ 调整数值 · OK 保存 · 长按取消','▲▼ adjust · OK save · hold cancel')}</p><strong>${state.settings[inputUI.edit.key]*20}%</strong>`:d.items.map((item,i)=>`<button class="chip" data-action="ui:choose:${i}" ${i===0?'data-start':''}>${esc(item.label)}</button>`).join('')}</div></div>`;
+  return `<div class="input-dialog ${d.kind==='inventory'?'inventory-context':''}" role="dialog" aria-modal="true" aria-label="${esc(d.title)}"><div class="game-pause-card" ${d.kind==='inventory'?`style="left:${d.x}px;top:${d.y}px"`:''}>${d.hideTitle?'':`<h2>${esc(d.title)}</h2>`}${inputUI.edit?`<p>${L('▲▼ 调整数值 · OK 保存 · 长按取消','▲▼ adjust · OK save · hold cancel')}</p><strong>${state.settings[inputUI.edit.key]*20}%</strong>`:d.items.map((item,i)=>`<button class="chip" data-action="ui:choose:${i}" ${i===0?'data-start':''}>${esc(item.label)}</button>`).join('')}</div></div>`;
 }
 function inputReadingNode(){
   if(inputUI.dialog)return null;
   const p=routeParts();
   if(p[0]==='log'&&p[2])return screenEl.querySelector('.story-page');
   if(p[0]==='compendium'&&p[2]!==undefined)return screenEl.querySelector('.entry-info');
-  return screenEl.querySelector('.input-reading');
+  return null;
 }
 function inputNavigate(dir){
-  if(inputUI.edit){const e=inputUI.edit;state.settings[e.key]=Math.max(e.key==='volume'?0:1,Math.min(5,state.settings[e.key]-dir));render();return true;}
+  if(inputUI.edit){const e=inputUI.edit;state.settings[e.key]=Math.max(e.key==='volume'?0:1,Math.min(5,state.settings[e.key]-dir));if(!state.settings.volume)stopSfx();render();beep('move');return true;}
   const reading=inputReadingNode();
   if(reading){reading.scrollTop=Math.max(0,Math.min(reading.scrollHeight-reading.clientHeight,reading.scrollTop+dir*Math.max(20,reading.clientHeight*.7)));return true;}
   if(routeParts()[0]==='inventory'&&!inputUI.dialog){
     const inv=state.inventory,items=inventoryItems(inv.category),index=items.findIndex(i=>i.id===inv.selected[inv.category]);
-    const next=Math.max(0,Math.min(items.length-1,index+dir));inv.selected[inv.category]=items[next].id;inv.pages[inv.category]=Math.floor(next/INV_PAGE_SIZE);focusKey='inv:equip:'+items[next].id;render();return true;
+    const next=Math.max(0,Math.min(items.length-1,index+dir));inv.selected[inv.category]=items[next].id;inv.pages[inv.category]=Math.floor(next/INV_PAGE_SIZE);focusKey='inv:equip:'+items[next].id;render();beep('move');return true;
   }
   return false;
 }
@@ -43,19 +43,23 @@ function inputPrimary(){
   if(inputUI.dialog){activateFocused();return true;}
   const reading=inputReadingNode();
   if(reading){
-    if(reading.classList.contains('input-reading')){closeInputMenu();return true;}
     const items=[...screenEl.querySelectorAll('.story-controls [data-action]:not([disabled]),.chiprow [data-action]:not([disabled])')].map(n=>({label:n.textContent.trim(),action:n.dataset.action}));
     openInputMenu(L('阅读操作','READING OPTIONS'),items);return true;
   }
   return false;
 }
+function inventoryMenuPosition(){
+  const cell=screenEl.querySelector('.inv-cell.sel'),screenRect=screenEl.getBoundingClientRect();
+  const scale=screenRect.width/320;
+  const rect=cell?.getBoundingClientRect();
+  return {kind:'inventory',x:Math.max(6,Math.min(204,rect?(rect.right-screenRect.left)/scale+4:112)),y:Math.max(30,Math.min(126,rect?(rect.top-screenRect.top)/scale:72))};
+}
 function inventoryMenu(id){
   const item=INV_BY_ID[id];if(!item)return;
   openInputMenu(invName(item),[
     {label:isEquipped(item)?L('卸下','UNEQUIP'):L('装备','EQUIP'),action:'ui:equip:'+id},
-    {label:L('阅读说明','READ DESCRIPTION'),action:'ui:read:'+id},
-    {label:L('切换装备分类','CHANGE CATEGORY'),action:'ui:categories'},
-    {label:L('取消','CANCEL'),action:'ui:close'}]);
+    {label:L('切换分类','CATEGORY'),action:'ui:categories'},
+    {label:L('取消','CANCEL'),action:'ui:close'}],{...inventoryMenuPosition(),hideTitle:true});
 }
 function inputAction(parts){
   const [kind,arg]=parts;
@@ -63,14 +67,9 @@ function inputAction(parts){
     const item=inputUI.dialog?.items[Number(arg)];if(!item)return;
     inputUI.dialog=null;render();run(item.action);return;
   }
-  if(kind==='close'){closeInputMenu();return;}
+  if(kind==='close'){beep('back');closeInputMenu();return;}
   if(kind==='equip'){inventoryAction('equip',arg);return;}
-  if(kind==='read'){
-    const item=INV_BY_ID[arg];
-    inputUI.dialog=null;
-    screenEl.insertAdjacentHTML('beforeend',`<div class="input-dialog"><div class="game-pause-card"><h2>${esc(invName(item))}</h2><article class="input-reading">${esc(state.lang==='cn'?(item.description_cn||item.description):item.description)}</article><small>${L('▲▼ 阅读 · OK 关闭','▲▼ read · OK close')}</small></div></div>`);updateInputHint();return;
-  }
-  if(kind==='categories'){openInputMenu(L('装备分类','CATEGORY'),INV_CATS.map(c=>({label:L({weapons:'武器',shields:'盾牌',armors:'防具'}[c.id],c.label),action:'go:#/inventory/'+c.id})));return;}
+  if(kind==='categories'){openInputMenu(L('装备分类','CATEGORY'),INV_CATS.map(c=>({label:L({weapons:'武器',shields:'盾牌',armors:'防具'}[c.id],c.label),action:'go:#/inventory/'+c.id})),inventoryMenuPosition());return;}
   if(kind==='edit'){
     rememberInputPage();inputUI.edit={key:arg,before:state.settings[arg]};inputUI.dialog={title:t(arg),items:[]};render();return;
   }

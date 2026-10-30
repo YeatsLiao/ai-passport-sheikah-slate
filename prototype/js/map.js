@@ -67,7 +67,7 @@ function mapAction(kind,arg,silent=false){
   }else if(kind==='reset'){m.zoom=1;m.x=m.y=0;m.follow=false;}
   else if(kind==='step'){mapNavigate(Number(arg));return;}
   else return;
-  updateMapView();if(!silent)beep('ok');
+  updateMapView();if(kind==='zoom')beep('zoom');else if(!silent)beep('ok');
 }
 function discoverSensorShrine(){if(!state.map.discovered.includes('Dungeon079'))state.map.discovered.push('Dungeon079');}
 function showSensorMap(){const p=MAP_PLACES.find(p=>p.gameId==='Dungeon079');if(p)Object.assign(state.map,{selection:p.id,zoom:8,follow:true});go('#/map');}
