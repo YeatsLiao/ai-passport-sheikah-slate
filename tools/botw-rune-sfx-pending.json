@@ -1,0 +1,20 @@
+{
+  "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/",
+  "pack": "Miscellaneous Sounds (2 / 3)",
+  "folder": "Miscellaneous",
+  "status": "imported_and_wired_pending_listening",
+  "files": {
+    "magnet_catch": "ReactionHit/SE_MagneCatch_Catch.wav",
+    "magnet_move": "ReactionHit/SE_MagneCatch_Moving.wav",
+    "magnet_stop": "ReactionHit/SE_MagneCatch_Stop.wav",
+    "magnet_release": "ReactionHit/SE_MagneCatch_Disappear.wav",
+    "stasis_start": "ReactionHit/Bitalock_Start_02.wav",
+    "stasis_hit": "ReactionHit/Bitalock_Hit_06.wav",
+    "stasis_hit_end": "ReactionHit/Bitalock_Hitend_06.wav",
+    "stasis_release_1": "ReactionHit/Bitalock_End_06.wav",
+    "stasis_release_2": "ReactionHit/Bitalock_End_07.wav",
+    "stasis_release_3": "ReactionHit/Bitalock_End_08.wav",
+    "chest_open": "TBox_Field_Wood/TboxFieldWood_Open.wav",
+    "ice_break": "Obj_IceMakerBlock/IceMakerBlock_Crush.wav"
+  }
+}

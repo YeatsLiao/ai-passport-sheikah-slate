@@ -15,15 +15,16 @@
  * Usage: node gen_font.mjs
  */
 
+import { createRequire } from 'module';
 import { execFileSync } from 'child_process';
 import { mkdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const FONT_TTF = String.raw`D:\2.Project\zelda-hyrule-ui\packages\core\assets\fonts\HyliaSerif.ttf`;
+const FONT_TTF = join(HERE, '..', '..', 'prototype', 'fonts', 'HyliaSerifBeta-Regular.ttf');
 const OUT_DIR = join(HERE, '..', '..', 'firmware', 'main', 'font');
-const CLI = join(HERE, 'node_modules', 'lv_font_conv', 'lv_font_conv.js');
+const CLI = createRequire(import.meta.url).resolve('lv_font_conv/lv_font_conv.js');
 
 mkdirSync(OUT_DIR, { recursive: true });
 

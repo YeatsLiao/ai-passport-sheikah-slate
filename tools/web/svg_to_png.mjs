@@ -10,16 +10,20 @@
  * - `fill="var(--x, FALLBACK)"`: if a fillColor override is given it wins,
  *   otherwise the SVG's own fallback color is kept.
  *
- * Usage: node svg_to_png.mjs
+ * Usage: node tools/web/svg_to_png.mjs INPUT_SVG_DIRECTORY OUTPUT_PNG_DIRECTORY
  */
 
 import { Resvg } from '@resvg/resvg-js';
 import sharp from 'sharp';
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
-import { join } from 'path';
+import { join, resolve } from 'path';
 
-const SVG_DIR = String.raw`D:\2.Project\zelda-hyrule-ui\packages\core\assets\svg`;
-const OUT_DIR = String.raw`D:\2.Project\ai-passport-sheikah-slate\assets\images`;
+if (process.argv.length !== 4) {
+    console.error('Usage: node tools/web/svg_to_png.mjs INPUT_SVG_DIRECTORY OUTPUT_PNG_DIRECTORY');
+    process.exit(1);
+}
+const SVG_DIR = resolve(process.argv[2]);
+const OUT_DIR = resolve(process.argv[3]);
 
 mkdirSync(OUT_DIR, { recursive: true });
 
