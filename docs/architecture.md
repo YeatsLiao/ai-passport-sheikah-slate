@@ -57,7 +57,7 @@ docs/                      README（任务索引）、architecture（映射）�
 | ESP-IDF 与组件版本约束 | [bsp/idf_component.yml](../firmware/components/bsp/idf_component.yml)；约束不是本机已安装或 lock 已解析版本 |
 | 目标与默认配置 | [sdkconfig.defaults](../firmware/sdkconfig.defaults)：ESP32-C3、8 MB Flash、自定义分区；实际构建的 `sdkconfig` 为本地生成物 |
 | Flash 分区 | [partitions.csv](../firmware/partitions.csv)：NVS、PHY 与 factory；精确地址/大小以该文件为准 |
-| 生成配置与依赖 | `.gitignore` 忽略 `sdkconfig`、`dependencies.lock`、`managed_components/` 与构建产物；旧根残留不作为当前工程配置来源 |
+| 生成配置与依赖 | `.gitignore` 忽略 `sdkconfig`、`dependencies.lock`、`managed_components/` 与构建产物；旧根残留已于 2026-10-30 清理，不作为当前工程配置来源 |
 | 原型运行根 | 静态服务器根是仓库根，页面路径 `/prototype/`，与 `assets/` 保持相对关系；见 [原型入口](../prototype/README.md#本地预览) |
 | 部署目标 | 设备固件与本地原型是已知使用方式；生产站点、平台和发布流程待核实，见 [R4](context/RISKS.md#r4) |
 

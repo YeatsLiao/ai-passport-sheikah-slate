@@ -80,7 +80,7 @@ Hylia Serif 字体与希卡之眼沿用此前仓库，其来源声明不能证�
 
 2026-10-29 按用户纠正，待机页停用生成的 `battery-sheikah-v1.png`，不再猜测生成电量图标。旧文件保留，当前页面不引用。
 
-- `assets/raw/02_ui/totk_battery_hud_reference.jpg`：来自 [Gaming Reinvented 的实机预览报道](https://gamingreinvented.com/news/tears-of-the-kingdom-previews-reveal-tons-of-new-info/)，[原截图](https://gamingreinvented.com/wp-content/uploads/2023/04/BatteryIcons.jpg)。CSS 仅取画面中的一个完整电量格显示，不重画，不修改下载原文件。该 HUD 来自《王国之泪》，按用户提供的电池参考用于本原型；不是《旷野之息》原生电量 HUD。
+- `assets/raw/02_ui/totk_battery_hud_reference.jpg`：来自 [Gaming Reinvented 的实机预览报道](https://gamingreinvented.com/news/tears-of-the-kingdom-previews-reveal-tons-of-new-info/)，[原截图](https://gamingreinvented.com/wp-content/uploads/2023/04/BatteryIcons.jpg)。CSS 仅取画面中的三格能量槽显示，不重画，不修改下载原文件；当前取样框为原图 [149,185,52,27]，显示 17×9，排除外层灰色截图底框。该 HUD 来自《王国之泪》，按用户提供的电池参考用于本原型；不是《旷野之息》原生电量 HUD。
 - `assets/raw/02_ui/BotW_English_Logo.png`：来自 [Zelda Wiki 英文标题文件页](https://zeldawiki.wiki/wiki/File:BotW_English_Logo.png)，文件历史记录来自 E3 Press Kit 后经社区透明处理、缩小；不声明当前文件是未加工原版提取。
 - `assets/raw/02_ui/BotW_Simplified_Chinese_Logo.png`：来自 [Zelda Wiki 简体中文标题文件页](https://zeldawiki.wiki/wiki/File:BotW_Simplified_Chinese_Logo.png)，页面注明由繁体标题和视频重建，由 Htwretched 获取并提供给 Zelda Wiki；保留此署名，不声明为官方简体源文件。
 
@@ -140,3 +140,31 @@ Hylia Serif 字体与希卡之眼沿用此前仓库，其来源声明不能证�
 - `location-names-game.json`：来自 [ZeldaMods LocationMarker 文本资源](https://objmap.zeldamods.org/game_files/text/StaticMsg/LocationMarker.json)，原游戏英文名称。
 - `location-names-multilingual.html`：来自 [BotW Text Dump / StaticMsg](https://sh0wer1ee.github.io/BotwText/page/StaticMsg.html)，按 MessageID 提取 CNzh/USen 地点名称；仅作为游戏文本转储来源，不把社区站点当作 Nintendo 官方发布。
 - 生成脚本只连接原始地点 ID、坐标与中英名称，177 条均具备中文名，未编造位置。网页只展示名称、类别、坐标，不复制大段游戏文本。
+
+
+## BotW 原版音效
+
+2026-10-29 用户提供已解压的 `assets/raw/06_audio/Miscellaneous/`。来源为 [The Sounds Resource / Switch BotW Miscellaneous Sounds](https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/)，页面上传者 Random Talking Bush；命令行下载曾返回 403 人机验证，随后使用用户手动取得的文件，未绕过网站验证。
+
+已执行 `python -B tools/import_botw_sfx.py assets/raw/06_audio/Miscellaneous`，选择复制 39 段游戏 WAV 到 `assets/audio/prototype/botw/`，原文件保留，不剪辑、不合成、不修改字节。`manifest.json` 保存来源页面、包内路径、事件候选名、字节数和 SHA-256。当前导入总计 11,264,692 字节，均为 48kHz PCM；启动音为 6 声道，其余为单/双声道。核对 RIFF/WAVE、PCM 参数与源复制 SHA-256，不代表已经试听或完成浏览器播放验收。
+
+`prototype/js/sound.js` 接入菜单光标、背包选择、确认/取消、石板开关、装备/卸下、相机、感应器、制冰、amiibo、完成提示及原炸弹出现/爆炸。语义映射依据原始文件名，为原型事件适配，不宣称时机、混音及音量已逐项复刻实机。连续选择限频 85ms、最多六路播放，音量/静音跟随设置，静音或窗口失焦会停止正在播放的声音。旧 starter MP3 与缺失的合成 WAV 映射已停用，不修改固件音频。
+
+物品展示阶段新增第一包 `GetItemSound/SYS_ItemGet_Common.wav`；收取使用 UI 确认音。删除宝箱落地时误用的确认音，移除磁力/静止器的通用锁定替代。未取得的实体音效保持静默，不伪造替代音。
+
+游戏音频的权利仍属于原权利人，资源站可下载不等于公开分发授权。
+
+
+### 磁力与静止器专用音效补齐进度
+
+已进一步核对：现有第一包 `ExpressionSound/BitaLock_Timer03.wav` 是静止器倒计时音，已原字节导入，最后约 1.683 秒触发，暂停或提前解除会停止；未试听确认混音。
+
+磁力的 SE_MagneCatch_Catch/Moving/Stop/Disappear、静止器 Bitalock_Start_02/Hit_06/End_06/07/08、木质宝箱 TboxFieldWood_Open，以及碎冰 IceMakerBlock_Crush，已在 [Miscellaneous Sounds (2 / 3)](https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/) 文件清单确认。用户已提供第二包，以上 12 段全部原字节导入并接入动作：木质宝箱开盖、碎冰、磁力抓取/移动/停手/解除、静止器启动/逐次击打/第六下满蓄力/分三档释放。磁力移动音循环播放，停手、暂停、返回、重试及失焦时停止。导入状态见 `tools/botw-rune-sfx-pending.json`（保留原路径作为清单）。宝箱落地、摩托实体声音尚未确认对应源文件，未伪造替代。
+
+导入器对第二包明确路径作可选识别；将第二包合并到原 Miscellaneous 目录后重新运行导入命令。脚本生成 `prototype/js/sound-files.js`，仅收录本次确实导入的文件，HTML 先加载该映射再加载播放器，兼容 file:// 打开。暂停、返回与重试停止磁力移动/静止器倒计时；隐藏页面停止所有播放。未进行自动化测试或浏览器试听。
+
+### 磁力关重构素材 v5
+
+2026-10-29 用户确认重做磁力关构图与交互。使用 imagegen，以仓库现有实机截图 `assets/gen/prototype/rune_scene_magnet.png` 为游戏材质参考，生成 `magnet-shrine-side-v5.png`（两岸整合的神庙场景）与 `magnet-metal-plate-v5.png`（透明横向铁板，另参考新场景视角）。这两张是参考游戏生成的素材，不是实机原图；原图保留。透明 PNG 原字节保存，仅运行时限定采样范围并叠加同图 alpha 掩膜抑制半透明边缘。替换范围仅磁力关；场景直接使用 PNG，未以 SVG/CSS 绘制桥岸和铁板。
+
+2026-10-30 完成音可听度修正：原 Sys_Challenge_Complete.wav 峰值为 1691/32768；保留原件，生成 Sys_Challenge_Complete-audible.wav 播放副本，16-bit PCM 每个样本乘 10，声道/采样率/时长不变，无削波（峰值 16910）。只切换完成声映射，完成时停止其他音效。未浏览器试听。

@@ -24,5 +24,7 @@ python -m http.server 8124 --bind 127.0.0.1
 - 英文沿用 `fonts/HyliaSerifBeta-Regular.ttf`；中文统一加载 `../assets/raw/07_fonts/SourceHanSansSC-Medium.otf`（思源黑体 Medium，完整字库约 16.5 MB）。标题、正文、数字样式共用字体栈；这是贴近 BotW 正文的风格替代，非实机原版字库。来源与许可见 [素材来源](../docs/assets/provenance.md#中文字体)。Calamity woff2 保留为素材。
 - `js/rune-games.js` 为九项符文的直接操控与暂停入口，其余六项逻辑在 `js/rune-extras.js`。`js/rune-art.js` 统一映射 v2 场景与透明物件图集，均参考实机生成，见 [素材来源](../docs/assets/provenance.md#九项符文场景与透明物件-v2)。相机暂只临时预览，相册后续再讨论。
 
+音效由 `js/sound.js` 管理，直接播放 `assets/audio/prototype/botw/` 中的 26 段游戏 WAV；跟随音量/静音设置。原包、事件映射和待补齐能力音效见 [音效来源](../docs/assets/provenance.md#botw-原版音效)。
+
 页面、路由、三键语义、交互手感见 [../docs/prototype/pages.md](../docs/prototype/pages.md)，
 五关规则与图鉴/相册规则见 [../docs/prototype/trials.md](../docs/prototype/trials.md)。

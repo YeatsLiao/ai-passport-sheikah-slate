@@ -51,7 +51,7 @@ python tools/assets/verify_assets.py     # 只读校验
 
 `img_to_c.py` 缺素材直接报错；`gen_audio.py` 缺 wav 也直接失败，不生成全 NULL 的静音表；
 所以 2026-10-28 把合成 wav 移出库后，重跑必须先 `gen_synth.py`。
-`svg_to_png.mjs` 仍是硬编码旧路径的留档脚本，未纳入管线。
+`tools/web/svg_to_png.mjs` 是显式传入输入/输出目录的独立转换工具，未纳入默认管线，也不参与原型运行。
 
 ## 校验与测试
 

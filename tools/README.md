@@ -39,8 +39,8 @@ tools/
 
 | 脚本 | 说明 |
 |---|---|
-| `gen_font.mjs` | Hylia Serif TTF → `firmware/main/font/hylia_serif_{16,20,28}.c`；依赖 `npm --prefix tools/web install` |
-| `svg_to_png.mjs` | 原说明记载源/目标为硬编码旧路径，仅作留档；涉及该工具时先核对实际路径，未纳入当前管线 |
+| `gen_font.mjs` | Hylia Serif TTF → `firmware/main/font/hylia_serif_{16,20,28}.c`；使用仓库内 `prototype/fonts/HyliaSerifBeta-Regular.ttf`；依赖 `npm --prefix tools/web install`，按 Node 标准规则查找已安装的 lv_font_conv |
+| `svg_to_png.mjs` | 独立转换工具，显式传入 SVG 输入目录和 PNG 输出目录；没有默认外部路径，不参与原型运行 |
 
 ## 原型任务数据
 
@@ -69,3 +69,12 @@ tools/
 ## 原型地图点位
 
 `python -B tools/gen_map_places.py` 从 `assets/raw/05_world/maps/locations-game-source.yml` 的 LocationMarker、`location-names-game.json` 和 `location-names-multilingual.html` 中提取命名点位与中英名称，生成 `prototype/js/map-data.js`。只使用有名称的 LocationMarker，按坐标排序；当前 177 条，包含本体神庙 120、塔 15。不会生成克洛格、宝箱或补猜 DLC 坐标。使用已存在的 PyYAML，不自动安装依赖；来源见 [素材记录](../docs/assets/provenance.md#简化全图地点数据)。
+
+
+## BotW UI 音效导入
+
+`python -B tools/import_botw_sfx.py ZIP_OR_EXTRACTED_DIRECTORY` 从用户取得的 BotW 音效 ZIP 或解压目录按明确路径选择 27 段必选与 12 段第二包可选原作 WAV，复制到 `assets/audio/prototype/botw/` 并生成来源、包内路径、字节数和 SHA-256 清单。无新增依赖，不解包任意路径，不处理未知文件，存在不同文件时停止。先核对全部必选目标存在及 RIFF/WAVE 标识，再写文件；原包和原解压目录保留。
+
+本轮已从 `assets/raw/06_audio/Miscellaneous` 导入成功，播放器为 `prototype/js/sound.js`，可用文件映射由脚本生成 `prototype/js/sound-files.js`；来源和未补齐项见 [音效来源](../docs/assets/provenance.md#botw-原版音效)。
+
+第二包的磁力/静止器、木质宝箱开盖、碎冰明确路径列在 `botw-rune-sfx-pending.json`。导入器只识别这些可选路径；缺件不写入播放映射。本轮第二包已导入成功（共 39 段）；后续导入仍使用合并后的 Miscellaneous 目录，不能单独以第二包替换原目录。
