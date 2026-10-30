@@ -61,7 +61,7 @@ function extraPrimary(g) {
     if(g.cooldown) return;
     if(!e.cubePlaced) {
       e.cubePlaced=true;e.cubeX=e.cursor;e.onPlatform=Math.abs(e.cursor-e.platform)<26;
-      e.cubeY=e.onPlatform?107:132;
+      e.cubeY=e.onPlatform?107:132;beep('place');
       extraMessage(g,e.onPlatform?'方弹已放上平台，等待运到障碍附近。':'方弹停在原地，不会滚动。',e.onPlatform?'Bomb aboard. Wait until the platform approaches the rocks.':'The cube stays where placed.');
     } else {
       g.shotX=e.cubeX;g.shotY=e.cubeY;g.flash=.5;e.cubePlaced=false;g.cooldown=2.5;
@@ -71,9 +71,9 @@ function extraPrimary(g) {
   } else if(g.id==='cryonis') {
     if(g.phase!=='ready') return;
     const found=e.ice.findIndex(x=>Math.abs(x-e.cursor)<17);
-    if(found>=0) {e.ice.splice(found,1);extraMessage(g,'冰柱已碎裂，可以重新选点。','Pillar shattered. Choose another spot.');}
+    if(found>=0) {e.ice.splice(found,1);beep('ice_break');extraMessage(g,'冰柱已碎裂，可以重新选点。','Pillar shattered. Choose another spot.');}
     else {
-      if(e.ice.length===3) e.ice.shift();e.ice.push(e.cursor);e.iceBirth[e.cursor]=g.time;
+      if(e.ice.length===3) {e.ice.shift();beep('ice_break');}e.ice.push(e.cursor);e.iceBirth[e.cursor]=g.time;
       extraMessage(g,'冰柱升起。靠近旧冰柱可碎冰，第四根会替换最早的一根。','Pillar raised. Target an existing pillar to shatter it. A fourth replaces the oldest.');
     }
     e.gate=e.ice.some(x=>Math.abs(x-214)<18);
@@ -105,7 +105,7 @@ function extraPrimary(g) {
     e.routeFrom={x:e.px,y:e.py};e.routeTo=branch;e.routeTravel=0;e.walking=true;
     extraMessage(g,'沿选定方向前进，留意信号是否增强。','Following the chosen path. Listen for a stronger signal.');
   }
-  beep('ok');paintExtra(g);
+  if(!g.flash && !['bomb_cube','cryonis','amiibo'].includes(g.id))beep('ok');paintExtra(g);
 }
 function extraAction(g,action) {
   if(action==='sensor-map' && g.id==='sensor' && g.phase==='won' && !initExtra(g).target) {showSensorMap();return true;}
@@ -115,7 +115,7 @@ function extraAction(g,action) {
     extraMessage(g,'正在尝试通过，冰柱位置与闸门都要合适。','Trying the route. Pillar spacing and the gate both matter.');render();return true;
   }
   if(action==='camera-tools' && g.id==='camera') {g.paused=false;g.tool=true;render();return true;}
-  if(action.startsWith('zoom-') && g.id==='camera') {e.zoom=Number(action.slice(5));g.tool=false;render();return true;}
+  if(action.startsWith('zoom-') && g.id==='camera') {e.zoom=Number(action.slice(5));g.tool=false;render();beep('zoom');return true;}
   if(action==='camera-back' && g.id==='camera') {e.preview=null;g.phase='ready';g.tool=false;render();return true;}
   if(action==='refuel' && g.id==='cycle' && g.paused) {e.fuel=Math.min(100,e.fuel+35);extraMessage(g,'投入材料，燃料已补充。','Materials added. Fuel replenished.');render();return true;}
   if(action==='sensor-target' && g.id==='sensor') {
@@ -178,7 +178,7 @@ function stepExtra(g,dt) {
     if(e.animTime>.65) g.phase='lost';
   } else if(g.id==='amiibo') {
     if(g.phase==='scanning') {e.scanTime+=dt;if(e.scanTime>1.2) {g.phase='dropping';e.dropY=42;e.dropV=0;extraMessage(g,'补给正在落下…','Supplies incoming…');}}
-    else if(g.phase==='dropping') {e.dropV+=260*dt;e.dropY+=e.dropV*dt;if(e.dropY>=111){e.dropY=111;g.phase='chest-settle';e.animTime=0;beep('ok');}}
+    else if(g.phase==='dropping') {e.dropV+=260*dt;e.dropY+=e.dropV*dt;if(e.dropY>=111){e.dropY=111;g.phase='chest-settle';e.animTime=0;}}
     else if(g.phase==='chest-settle') {e.animTime+=dt;e.dropY=111-Math.sin(Math.PI*Math.min(1,e.animTime/.28))*3;if(e.animTime>=.28){e.dropY=111;g.phase='chest';extraMessage(g,'宝箱已落稳，按 OK 靠近打开。','Chest settled. Press OK to approach and open it.');}}
     else if(g.phase==='approaching') {e.animTime+=dt;const u=easeRune(e.animTime/.65);e.playerX=e.playerFrom+(e.cursor-44-e.playerFrom)*u;if(e.animTime>=.65){g.phase='opening';e.animTime=0;extraMessage(g,'正在打开宝箱…','Opening the chest…');}}
     else if(g.phase==='opening') {e.animTime+=dt;if(e.animTime>=.8){g.phase='reward';e.animTime=0;extraMessage(g,'获得装备，按 OK 收取。','Equipment revealed. Press OK to collect.');}}
@@ -197,7 +197,7 @@ function stepExtra(g,dt) {
     const nextDist=Math.hypot(tx-branch.x,ty-branch.y);
     const alignment=nextDist<dist?1:.25;
     e.signal=Math.round(gameClamp((1-dist/300)*alignment*4,0,4));
-    e.tone+=dt;if(e.signal && e.tone>1.65-e.signal*.3) {e.tone=0;beep('move');}
+    e.tone+=dt;if(e.signal && e.tone>1.65-e.signal*.3) {e.tone=0;beep('sensor');}
     if(dist<15) {e.walking=false;g.phase='discovering';e.discoverTime=0;extraMessage(g,'发现目标，正在展开…','Target found. Revealing…');}
   }
 }
@@ -232,6 +232,7 @@ function viewAdditionalRuneGame(id) {
 function paintExtra(g) {
   const e=initExtra(g),el=id=>document.getElementById(id);
   if(!el('extraPrimary')) return;
+  runeSoundFeedback(g);
   const place=(id,x,y,w=30,h=w)=>{const n=el(id);if(!n)return;n.style.left=(x-w/2)+'px';n.style.top=(y-h/2)+'px';n.style.width=w+'px';n.style.height=h+'px';};
   const visible=(id,show)=>{const n=el(id);if(n)n.hidden=!show;};
   const txt=(id,value)=>{if(el(id))gameText(el(id),value);};

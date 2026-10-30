@@ -2,7 +2,7 @@
    All distances and timings are prototype tuning, independent of firmware. */
 const RUNE_GAMES = new Set(['bomb','magnet','stasis','bomb_cube','cryonis','camera','cycle','amiibo','sensor']);
 // Shared geometry for the visible slab and both support checks.
-const MAGNET_BRIDGE = {half:74, bottom:11, left:112, right:208, top:128, support:8};
+const MAGNET_BRIDGE = {half:74, surfaceOffset:11, left:112, right:208, top:110, support:8};
 function magnetContact(g) {
   const b=MAGNET_BRIDGE;
   const left=Math.max(0,Math.min(b.left,g.x+b.half)-Math.max(8,g.x-b.half));
@@ -22,20 +22,20 @@ function currentRuneGame() {
 function getRuneGame(id) {
   if(!runeGames.has(id)) runeGames.set(id, {
     id, paused:false, tool:false, lifting:false, phase:'ready', time:0, cooldown:0, message:'', flash:0, language:state.lang,
-    power:50, x:id==='magnet'?82:id==='stasis'?52:36, y:id==='magnet'?117:id==='stasis'?129:120,
+    power:50, x:id==='magnet'?82:id==='stasis'?52:36, y:id==='magnet'?99:id==='stasis'?129:120,
     vx:0, vy:0, angle:id==='stasis'?-.32:0, held:false, axis:'x', hits:0, freeze:0, pulse:0,
     roll:0, camera:0, cameraY:0, distance:0, startX:0, rollingDirection:1, cross:0, landed:0, travel:0, shotX:0, shotY:0, effort:0, hitsWall:false
   });
   return runeGames.get(id);
 }
-function resetRuneGame(id) { runeGames.delete(id); runeGameDirection=0; render(); }
+function resetRuneGame(id) { stopSfxKind('stasis_timer');stopSfxKind('magnet_move');beep('back');runeGames.delete(id); runeGameDirection=0; render(); }
 function pauseRuneGame() {
   const id=currentRuneGame(); if(!id) return;
   const g=getRuneGame(id);
   if(g.tool){g.tool=false;g.paused=false;if(id==='camera'){const e=initExtra(g);e.preview=null;g.phase='ready';}}
   else g.paused=!g.paused;
   runeGameDirection=0;
-  render(); beep('back');
+  render();
 }
 function gameInputActive() {
   const id=currentRuneGame(); return id && !getRuneGame(id).paused && !getRuneGame(id).tool;
@@ -77,8 +77,8 @@ function gamePrimary() {
     if(['falling','settling','crossing'].includes(g.phase)) return;
     if(!g.held) {
       g.held=true;g.phase='carry';g.vy=0;g.axis='x';g.lifting=true;
-      g.message=L('▲▼ 移动；OK 打开操作菜单，可随时切换方向或放下。','▲▼ move; OK opens tools to switch axes or release.');
-    } else {g.tool=true;runeGameDirection=0;render();return;}
+      g.message=L('▲▼ 左右搬运，对齐两岸后按 OK 放下。','▲▼ move sideways. Align both shores, then OK to release.');
+    } else {runeGameAction('drop');return;}
   } else if(id==='stasis') {
     if(g.cooldown>0) return;
     if(g.phase==='ready') {
@@ -89,21 +89,18 @@ function gamePrimary() {
       else gameReleaseStasis(g);
     }
   }
-  beep('ok'); paintRuneGame(g);
+  if(!g.flash && !['flight','carry','frozen','flying'].includes(g.phase))beep('ok');paintRuneGame(g);
 }
 function runeGameAction(action) {
   const id=currentRuneGame();if(!id) return;
   const g=getRuneGame(id);
-  if(action==='pause'||action==='resume') {pauseRuneGame();return;}
+  if(action==='pause'||action==='resume') {beep(g.paused?'back':'menu');pauseRuneGame();return;}
   if(action==='retry') {resetRuneGame(id);return;}
   if(action==='exit') {runeGameDirection=0;go('#/runes');return;}
   if(action==='release' && id==='stasis' && g.phase==='frozen') {g.paused=false;gameReleaseStasis(g);render();return;}
-  if(id==='magnet' && action==='tools-close') {g.tool=false;render();return;}
-  if(id==='magnet' && action==='axis-x' && g.held) {g.axis='x';g.tool=false;render();return;}
-  if(id==='magnet' && action==='axis-y' && g.held) {g.axis='y';g.lifting=false;g.tool=false;render();return;}
   if(id==='magnet' && action==='drop' && g.held && !g.paused) {
-    const landY=MAGNET_BRIDGE.top-MAGNET_BRIDGE.bottom;
-    if(g.y>landY+.01) {g.message=L('铁板低于桥台，请先抬高。','Lift the slab above the supports first.');g.tool=false;g.axis='y';render();return;}
+    const landY=MAGNET_BRIDGE.top-MAGNET_BRIDGE.surfaceOffset;
+    if(g.lifting) return;
     g.held=false;g.tool=false;g.lifting=false;g.phase='falling';g.vy=0;
     g.message=L('磁力已解除，检查两端支撑。','Released. Checking both supports.');render();return;
   }
@@ -129,14 +126,14 @@ function stepRuneGame(g,dt) {
     }
   } else if(g.id==='magnet') {
     if(g.held) {
-      if(g.lifting) {g.y=Math.max(82,g.y-45*dt);if(g.y<=82) g.lifting=false;}
+      if(g.lifting) {g.y=Math.max(65,g.y-45*dt);if(g.y<=65) g.lifting=false;}
       if(g.axis==='x') g.x=gameClamp(g.x+runeGameDirection*dt*46,MAGNET_BRIDGE.half+8,312-MAGNET_BRIDGE.half);
-      else g.y=gameClamp(g.y+runeGameDirection*dt*34,55,MAGNET_BRIDGE.top-MAGNET_BRIDGE.bottom);
+
     } else if(g.phase==='falling') {
       const previousY=g.y;
       g.vy+=180*dt;g.y+=g.vy*dt;
       const supported=magnetContact(g).both;
-      const landY=MAGNET_BRIDGE.top-MAGNET_BRIDGE.bottom;
+      const landY=MAGNET_BRIDGE.top-MAGNET_BRIDGE.surfaceOffset;
       if(supported && previousY<=landY+.01 && g.y>=landY) {
         g.y=landY;g.vy=0;g.phase='settling';g.landed=0;
         g.message=L('两端已搭上桥台，等待铁板稳定。','Both ends supported. Let the slab settle.');
@@ -183,8 +180,9 @@ function gameWords(g) {
   if(g.phase==='lost') return {status:L('再试一次','TRY AGAIN'),primary:L('重试','RETRY'),hint:L('OK 重试 · 长按 OK 暂停菜单','OK retry · hold OK for menu')};
   if(g.id==='bomb') return {status:g.cooldown?L(`冷却 ${g.cooldown.toFixed(1)} 秒`,`COOLDOWN ${g.cooldown.toFixed(1)}s`):L(`投掷力度 ${Math.round(g.power)}%`,`THROW ${Math.round(g.power)}%`),primary:g.phase==='flight'?L('引爆','DETONATE'):L('投掷','THROW'),hint:L('▲ 减力 · ▼ 加力 · OK 投掷 / 引爆','▲ less · ▼ more · OK throw / detonate')};
   if(g.id==='magnet') {
+    if(['won','lost'].includes(g.phase))return {status:L(g.phase==='won'?'通路开启':'重新对齐',g.phase==='won'?'PATH OPEN':'TRY ALIGNING'),primary:L('再试一次','TRY AGAIN'),hint:L('OK 重新开始 · 长按暂停','OK restart · hold OK pause')};
     const aligned=magnetContact(g).both;
-    return {status:g.held?L(aligned?'两端对齐 · 可放下':g.x<160?'向右搬运':'向左搬运',aligned?'ALIGNED · RELEASE':g.x<160?'MOVE RIGHT':'MOVE LEFT'):L('铁板搭桥','BRIDGE THE GAP'),primary:!g.held?L('抓取','GRAB'):L('磁力操作','TOOLS'),hint:!g.held?L('OK 抓取铁板','OK grab the slab'):g.axis==='x'?L('▲ 左移 · ▼ 右移 · OK 操作菜单','▲ left · ▼ right · OK tools'):L('▲ 抬升 · ▼ 降低 · OK 操作菜单','▲ lift · ▼ lower · OK tools')};
+    return {status:g.held?L(aligned?'两端对齐 · 可放下':g.x<160?'向右搬运':'向左搬运',aligned?'ALIGNED · RELEASE':g.x<160?'MOVE RIGHT':'MOVE LEFT'):L('铁板搭桥','BRIDGE THE GAP'),primary:!g.held?L('抓取','GRAB'):L('放下','RELEASE'),hint:!g.held?L('OK 抓取铁板','OK grab the slab'):L('▲ 左移 · ▼ 右移 · OK 放下','▲ left · ▼ right · OK release')};
   }
   const flight=['flying','landing'].includes(g.phase);
   return {status:g.phase==='frozen'?L(`时停 ${g.freeze.toFixed(1)} 秒 · ${g.hits}/6`,`STASIS ${g.freeze.toFixed(1)}s · ${g.hits}/6`):flight?L(`飞出 ${Math.round(g.distance)} 米`,`DISTANCE ${Math.round(g.distance)} m`):L('滚石运动中','BOULDER ROLLING'),primary:g.phase==='ready'?L('锁定','LOCK'):flight?L('飞行中','IN FLIGHT'):g.hits<6?L('击打','STRIKE'):L('释放','RELEASE'),hint:L('▲▼ 调角度 · OK 锁定 / 击打 · 六次后再按释放','▲▼ aim · OK lock / strike · OK after six releases')};
@@ -197,38 +195,38 @@ function viewRuneGame(id) {
   const goal=g.id==='bomb'?L('在右侧岩石附近引爆炸弹','Detonate near the rocks on the right'):g.id==='magnet'?L('让铁板两端搭住断口两侧','Rest both slab ends on the banks'):L('停止滚石，击打六次后向远处释放','Freeze the rolling stone. Store six strikes and launch');
   return topbar('runes')+`<div class="body scene-body rune-game" data-game="${id}"><div class="scene" style="${runeSceneStyle(id)}"></div><div class="scene-shade"></div>${sceneTop(r,'')}<div class="game-goal"><b>${title}</b><span>${goal}</span></div><div class="game-arena" aria-label="${goal}">
     <div class="game-ground ${id==='bomb'?'sloped':''}"></div>
-    ${id==='magnet'?'<div class="bridge-gap"></div><div class="bridge-bank left"></div><div class="bridge-bank right"></div><span id="bridgeWalker" class="bridge-walker"></span>':''}
+    ${id==='magnet'?'<span id="magnetBeam" class="magnet-beam"></span><span id="bridgeWalker" class="bridge-walker"></span>':''}
     ${id==='bomb'?'<span class="ability-sprite game-obstacle" style="background-position:100% 0%"></span>':''}
     <span id="gameActor" class="${id==='magnet'?'game-bridge':'ability-sprite'} game-actor" style="background-position:${id==='bomb'?'0%':id==='magnet'?'66.6667%':'100%'} 0%"></span>
     ${id==='stasis'?'<div id="gameDistance" class="game-distance"></div><div id="gameMilestones" class="game-milestones">'+[0,50,100,150,200,250,300].map(m=>'<span style="left:'+(m*6)+'px">'+m+' m</span>').join('')+'</div>':''}
     <div id="gameForce" class="game-force"><i></i></div><div id="gameBlast" class="ability-sprite game-blast" style="background-position:100% 100%"></div>
     <div id="gameResult" class="game-result"></div>
-    </div><div class="game-message" id="gameMessage"></div><div class="game-controls"><button class="chip" data-action="game:primary" data-focus id="gamePrimary"></button><button class="chip" data-action="game:pause" data-focus>${L('暂停','PAUSE')}</button></div></div>`+footer('<span id="gameHint"></span>',L('长按 OK 暂停','HOLD OK PAUSE'))+(g.paused?`<div class="game-pause" role="dialog" aria-modal="true" aria-label="${L('暂停','Paused')}"><div class="game-pause-card"><h2>${L('已暂停','PAUSED')}</h2><button class="chip" data-focus data-start data-action="game:resume">${L('继续','RESUME')}</button>${g.id==='stasis'&&g.phase==='frozen'?'<button class="chip" data-action="game:release">'+L('提前解除','RELEASE EARLY')+'</button>':''}<button class="chip" data-focus data-action="game:retry">${L('重新开始','RESTART')}</button><button class="chip" data-focus data-action="game:exit">${L('返回符文','RUNES')}</button></div></div>`:'')+(g.tool?magnetTools(g):'');
-}
-function magnetTools(g) {
-  const next=magnetContact(g).both?'drop':g.axis==='x'?'axis-y':'axis-x';
-  return `<div class="game-pause game-tool" role="dialog" aria-modal="true" aria-label="${L('磁力操作','Magnesis tools')}"><div class="game-pause-card"><h2>${L('磁力操作','MAGNESIS')}</h2><button class="chip" data-focus ${next==='axis-x'?'data-start':''} data-action="game:axis-x">${L('水平移动','MOVE HORIZONTALLY')}</button><button class="chip" data-focus ${next==='axis-y'?'data-start':''} data-action="game:axis-y">${L('升降铁板','LIFT / LOWER')}</button><button class="chip" data-focus ${next==='drop'?'data-start':''} data-action="game:drop">${L('解除磁力 · 放下','RELEASE SLAB')}</button><button class="chip" data-focus data-action="game:tools-close">${L('继续调整','KEEP ADJUSTING')}</button></div></div>`;
+    </div><div class="game-message" id="gameMessage"></div><div class="game-controls"><button class="chip" data-action="game:primary" data-focus id="gamePrimary"></button><button class="chip" data-action="game:pause" data-focus>${L('暂停','PAUSE')}</button></div></div>`+footer('<span id="gameHint"></span>',L('长按 OK 暂停','HOLD OK PAUSE'))+(g.paused?`<div class="game-pause" role="dialog" aria-modal="true" aria-label="${L('暂停','Paused')}"><div class="game-pause-card"><h2>${L('已暂停','PAUSED')}</h2><button class="chip" data-focus data-start data-action="game:resume">${L('继续','RESUME')}</button>${g.id==='stasis'&&g.phase==='frozen'?'<button class="chip" data-action="game:release">'+L('提前解除','RELEASE EARLY')+'</button>':''}<button class="chip" data-focus data-action="game:retry">${L('重新开始','RESTART')}</button><button class="chip" data-focus data-action="game:exit">${L('返回符文','RUNES')}</button></div></div>`:'');
 }
 function gameText(el, value) { if(el.textContent!==value) el.textContent=value; }
 function paintRuneGame(g) {
   if(EXTRA_RUNE_GAMES.has(g.id)) {paintExtra(g);return;}
   const actor=document.getElementById('gameActor');if(!actor) return;
+  runeSoundFeedback(g);
   const words=gameWords(g);
-  actor.style.left=(g.x-g.camera-(g.id==='magnet'?MAGNET_BRIDGE.half:18))+'px';actor.style.top=(g.y-g.cameraY-(g.id==='magnet'?17:18))+'px';
+  actor.style.left=(g.x-g.camera-(g.id==='magnet'?MAGNET_BRIDGE.half:18))+'px';actor.style.top=(g.y-g.cameraY-(g.id==='magnet'?3:18))+'px';
   if(g.id==='magnet') {
-    actor.style.width=(MAGNET_BRIDGE.half*2)+'px';
+    actor.style.width=(MAGNET_BRIDGE.half*2)+'px';actor.style.height='17px';
     const contact=magnetContact(g);
-    document.querySelector('.bridge-bank.left').classList.toggle('supported',g.held && contact.left);
-    document.querySelector('.bridge-bank.right').classList.toggle('supported',g.held && contact.right);
+    actor.classList.toggle('aligned',g.held&&contact.both);
+    const beam=document.getElementById('magnetBeam'),dx=g.x-52,dy=g.y-82,len=Math.hypot(dx,dy);
+    beam.hidden=!g.held;setRuneRegion(beam,'fx','beam',8,len);beam.style.left='48px';beam.style.top='82px';beam.style.width='8px';beam.style.height=len+'px';beam.style.transform=`rotate(${Math.atan2(dy,dx)-Math.PI/2}rad)`;
   }
   const ground=document.querySelector('.rune-game .game-ground');if(g.id==='stasis' && ground) ground.style.top=(147-g.cameraY)+'px';
-  actor.style.transform=`rotate(${g.id==='bomb'?g.x*2:g.id==='stasis'?g.roll:g.phase==='lost'?18:0}deg) scale(${1+g.pulse*.6})`;
-  setRuneSprite(actor,g.id==='bomb'?0:g.id==='magnet'?2:3,g.id==='magnet'?MAGNET_BRIDGE.half*2:36,g.id==='magnet'?34:36);
+  actor.style.transform=`rotate(${g.id==='bomb'?g.x*2:g.id==='stasis'?g.roll:g.id==='magnet'&&g.phase==='falling'&&!magnetContact(g).both?Math.min(22,g.vy*.12):g.phase==='lost'?18:0}deg) scale(${1+g.pulse*.6})`;
+  // Use the same horizontal raster surface as the banks, rather than flattening a perspective prop.
+  if(g.id==='magnet')setMagnetPlate(actor);
+  else setRuneSprite(actor,g.id==='bomb'?0:3,36,36);
   actor.classList.toggle('locked',g.held);actor.classList.toggle('frozen',g.phase==='frozen');
   actor.hidden=g.id==='bomb' && !['flight'].includes(g.phase);
   gameText(document.querySelector('.rune-game .scene-stat'),words.status);
   gameText(document.getElementById('gamePrimary'),words.primary);
-  document.getElementById('gamePrimary').disabled=(!['won','lost'].includes(g.phase) && g.cooldown>0) || ['falling','settling','crossing','flying','landing'].includes(g.phase);
+  document.getElementById('gamePrimary').disabled=(!['won','lost'].includes(g.phase) && g.cooldown>0) || ['falling','settling','crossing','flying','landing'].includes(g.phase) || (g.id==='magnet'&&g.lifting);
   gameText(document.getElementById('gameHint'),words.hint);
   gameText(document.getElementById('gameMessage'),g.message || (g.id==='bomb'?L('先调整投掷力度，再按 OK。','Adjust the throw, then press OK.'):g.id==='magnet'?L('抓取铁板，将它搬到断口上方。','Grab the slab and carry it over the gap.'):L('观察石头滚动，按 OK 将它静止。','Watch the stone roll. Press OK to stop it.')));
   const result=document.getElementById('gameResult');gameText(result,['won','lost'].includes(g.phase)?words.status:'');result.classList.toggle('success',g.phase==='won');
@@ -241,7 +239,12 @@ function paintRuneGame(g) {
   document.querySelectorAll('.bridge-bank').forEach(n=>setRuneRegion(n,'world','bank',104,25));
   if(ground) setRuneRegion(ground,'world','road',g.id==='bomb'?281:286,18);
   const obstacle=document.querySelector('.game-obstacle');if(obstacle) {setRuneSprite(obstacle,3,48);obstacle.classList.toggle('broken',g.phase==='won');}
-  const walker=document.getElementById('bridgeWalker');if(walker) {walker.style.left=(26+g.cross*260)+'px';setRuneSprite(walker,14,40,40);}
+  const walker=document.getElementById('bridgeWalker');if(walker) {
+    const x=26+g.cross*260;
+    // Banks and settled slab share the same source crop, height and visible walking line.
+    walker.style.left=x+'px';walker.style.top=(MAGNET_BRIDGE.top-38)+'px';
+    setRuneSprite(walker,14,40,40);
+  }
   const distance=document.getElementById('gameDistance');if(distance) {gameText(distance,Math.round(g.distance)+' m');distance.hidden=!['flying','landing','won','lost'].includes(g.phase);}
   const marks=document.getElementById('gameMilestones');if(marks) marks.style.transform=`translate(${-g.camera}px,${-g.cameraY}px)`;
   const early=document.getElementById('gameRelease');if(early) early.disabled=g.phase!=='frozen';
@@ -249,7 +252,7 @@ function paintRuneGame(g) {
 function syncRuneGame() {
   const id=currentRuneGame();runeGameDirection=0;
   if (runeGameRoute !== id) {
-    if (runeGameRoute) getRuneGame(runeGameRoute).paused=true;
+    if (runeGameRoute) {getRuneGame(runeGameRoute).paused=true;stopSfxKind('stasis_timer');stopSfxKind('magnet_move');}
     runeGameRoute=id;
     runeGameLast=0;
   }

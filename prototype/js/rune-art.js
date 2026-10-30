@@ -21,6 +21,7 @@ function runeAtlasClip(cell) {
 }
 const RUNE_SCENE_CELLS={bomb:0,bomb_cube:1,magnet:2,stasis:3,cryonis:4,camera:5,cycle:6,amiibo:7,sensor:8};
 function runeSceneStyle(id) {
+  if(id==='magnet')return `background-image:url(${IMG('magnet-shrine-side-v5.png')});background-size:100% 100%;background-position:center`;
   if(!RUNE_ART_READY.scenes) {const file=id==='cycle'?'rune_scene_cycle.jpg':'rune_scene_'+(id==='bomb_cube'?'bomb':id)+'.png';return `background-image:url(${IMG(file)});background-size:cover;background-position:center`;}
   const cell=RUNE_SCENE_CELLS[id]??0;
   return `background-image:url(${IMG('rune-environments-v2.png')});background-size:312% 312%;background-position:${cell%3*50}% ${Math.floor(cell/3)*50}%`;
@@ -92,4 +93,11 @@ function setRuneRegion(node,group,name,width,height) {
 function paintRuneBlast(node,remaining,width=74) {
   const frame=Math.min(3,Math.floor(Math.max(0,.6-remaining)/.15));
   setRuneRegion(node,'fx','blast'+frame,width,width);
+}
+
+// Dedicated matched-perspective metal plank; alpha mask suppresses faint generated fringe.
+function setMagnetPlate(node) {
+  const url=`url(${IMG('magnet-metal-plate-v5.png')})`;
+  const scale=148/2105,position=`${-35*scale}px ${-240*scale}px`,size=`${2172*scale}px ${724*scale}px`;
+  Object.assign(node.style,{backgroundImage:url,backgroundSize:size,backgroundPosition:position,backgroundRepeat:'no-repeat',clipPath:'inset(0)',maskImage:url,maskSize:size,maskPosition:position,maskRepeat:'no-repeat'});
 }
