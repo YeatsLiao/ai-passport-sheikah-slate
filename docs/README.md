@@ -22,6 +22,7 @@
 
 | 文档 | 内容 |
 |---|---|
+| [closeout-plan.md](closeout-plan.md) | 收尾阶段计划：功能验收、代码整理、截图文档、GitHub Pages 与配套发布；不是执行授权 |
 | [architecture.md](architecture.md) | 五个域的边界、依赖方向、命名规则、迁移记录 |
 | [hardware/hardware.md](hardware/hardware.md) | 硬件规格、固件构建/烧录与主机测试命令、资源约束、历史实机记录 |
 | [hardware/firmware-plan.md](hardware/firmware-plan.md) | 原型迁移到 C3 的资源、性能、九项玩法取舍与待确认方案；未编译/烧录 |
