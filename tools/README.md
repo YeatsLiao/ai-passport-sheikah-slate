@@ -78,3 +78,25 @@ tools/
 本轮已从 `assets/raw/06_audio/Miscellaneous` 导入成功，播放器为 `prototype/js/sound.js`，可用文件映射由脚本生成 `prototype/js/sound-files.js`；来源和未补齐项见 [音效来源](../docs/assets/provenance.md#botw-原版音效)。
 
 第二包的磁力/静止器、木质宝箱开盖、碎冰明确路径列在 `botw-rune-sfx-pending.json`。导入器只识别这些可选路径；缺件不写入播放映射。本轮第二包已导入成功（共 39 段）；后续导入仍使用合并后的 Miscellaneous 目录，不能单独以第二包替换原目录。
+
+## 全离线设备资源包
+
+`python -B tools/build_offline_pack.py --fonts` 使用 `export_offline_data.mjs` 读取原型常量数据，生成设备专用资源包、394/152/24/177 条数据、原型固定 12 张相册及 10/12/14/16px 双语字库、28/40/52px 数字时钟字库，不执行编译或烧录。输入与原型素材保持不变；设备动作/路面参考生成原件位于 assets/gen/firmware/offline/sources/，工具从中等比派生角色小帧和道路，不访问外部生成目录。地图生成 384×320、768×640、1536×1280 三层，照片目标预生成三档。工具不联网或安装依赖；具体输出、格式、分区与验证范围统一见 [V1 实现说明](../docs/hardware/offline-v1.md#资源生成与布局)。若只更新图片/音频可省略 --fonts；UI 文案或字体字符变化后必须重新带 --fonts 生成，app 与 pack 索引 CRC 需要匹配。
+
+当前设备派生物还包含 24 件装备的 24/32/44px 三套 RGB565A8 透明原生图、320×198 游戏场景及原型效果。`export_offline_data.mjs` 仅提取声明常量，包含符文/相册/分类/地点中文/几何/奖励元数据，不执行浏览器功能。`web/device_svg.mjs` 使用现有 @resvg/resvg-js 将原型 SVG 图标转 PNG，不修改原文件或安装依赖。装备/奖励避免运行时 JPEG 缩放。声音文件映射从原型 `sound-files.js` 与 `sound.js` 的 `SFX_FILES` 字典提取，含其显式覆盖；不执行浏览器功能，不另选完成音。
+
+## USB 一键校时
+
+根目录双击 [校时.cmd](../校时.cmd)，或执行 `python tools/sync_time.py --port COM4`。输入为电脑当前 UTC 秒，设备显示北京时间；先握手，再核对带随机标识的设置成功回复。不联网、不复位、不烧录、不安装依赖。需先更新支持该协议的固件，关闭其他串口工具；失败窗口保留原因。
+
+[serial_connection.ps1](serial_connection.ps1) 共用已有 Python/pyserial 与端口发现；[sync_time.ps1](sync_time.ps1) 只启动 [sync_time.py](sync_time.py)。协议及断电限制见 [设备校时](../docs/hardware/offline-v1.md#usb-一键校时)。
+
+待机资源输入为 `assets/gen/firmware/offline/standby/sources/E.png`～`I.png` 无字背景；J 由固件绘制。来源和提示词在同目录上一级 `provenance.json`，预览在 `design/standby-concepts/`；生成工具不把预览的固定时间/文案烘焙进设备图片。
+
+## USB 屏幕截图
+
+仓库根目录双击 [`截图.cmd`](../截图.cmd)，自动查找带 pyserial 的 Python（ESP-IDF 环境变量、当前构建元数据对应的 Espressif 安装、用户默认环境与 PATH），只有一台 ESP USB 设备时直接选择，多台时提示输入端口（存在 COM4 时默认 COM4），不向其他设备自动重试。成功后保存到根目录 `screenshots/` 并打开图片；失败时窗口保留错误。入口调用 [`capture_screen.ps1`](capture_screen.ps1)，不安装依赖；也可在命令行运行 `.\截图.cmd -Port COM4` 明确指定。
+
+[`capture_screen.py`](capture_screen.py) 向已烧录截图功能的设备 USB 控制台发送 `screenshot` 命令，接收 320×240 或 240×320 RGB565 像素并保存 PNG。使用 ESP-IDF Python 环境已有的 pyserial，其余仅用标准库，不自动安装依赖。不烧录、不主动复位、不覆盖已有文件；读设备当前画面，写命令指定的 PNG。用法与限制见 [设备截图](../docs/hardware/offline-v1.md#usb-截图)。
+
+2026-10-31 起脚本先发 `SLATE_SCREENSHOT_PING` 并核对就绪回复；设备须重新编译、烧录带 USB 驱动初始化修复的固件（启动日志含 `USB ready: FAP_SCREENSHOT_V1 + screenshot, stack=16384`）。电脑端修改不能修复仍在运行的旧固件；未收到就绪回复时不会继续请求整屏重绘。
