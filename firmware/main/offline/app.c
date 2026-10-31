@@ -558,9 +558,9 @@ void of_app_edge(bsp_btn_t key,bool pressed){
  uint32_t before=generation;of_app_key(key,false);
  if(before==generation&&page!=P_STANDBY){held_key=key;held_at=lv_tick_get();repeat_started=false;}
 }
-static void open_category(void){pending_category=category;editing=true;read_menu=inventory_menu=false;held_key=-1;generation++;render();}
+static void open_category(void){pending_category=category;editing=true;read_menu=inventory_menu=false;held_key=-1;of_audio_play("menu",false,true);generation++;render();}
 static void enter_game(unsigned id){
- page_selected[P_RUNES]=selected;of_audio_stop();page=P_GAME;
+ page_selected[P_RUNES]=selected;of_audio_stop();of_audio_play("activate",false,true);page=P_GAME;
  if(game_saved[id]){game=saved_games[id];paused=true;}else{of_game_init(&game,id);paused=false;}
  if(id==8)game.tracking_unlocked=game_saved[5]&&(saved_games[5].seen&1);
  game.paused=paused;game.input=0;held_key=-1;pause_mode=0;pause_choice=0;magnet_sounding=false;scroll_elapsed=0;generation++;render();
@@ -572,29 +572,33 @@ void of_app_key(bsp_btn_t key,bool long_press){
   if(key!=BSP_BTN_OK)return;held_key=-1;of_game_direction(&game,0);
   if(page==P_GAME){
    if(game.id==5&&game.phase==OF_REVEAL&&!paused){of_camera_retake(&game);generation++;render();return;}
-   if(paused&&pause_mode){pause_mode=0;generation++;render();return;}
-   paused=!paused;game.paused=paused;pause_choice=0;of_audio_stop();magnet_sounding=false;generation++;render();return;
+   if(paused&&pause_mode){pause_mode=0;of_audio_play("back",false,true);generation++;render();return;}
+   paused=!paused;game.paused=paused;pause_choice=0;of_audio_stop();of_audio_play(paused?"menu":"back",false,true);
+   if(!paused&&game.id==3&&game.phase==OF_ACTIVE&&game.freeze_ms&&game.freeze_ms<=1683)of_audio_play("stasis_timer",false,true); // Warning window re-arms after pause cut the one-shot.
+   magnet_sounding=false;generation++;render();return;
   }
-  if(inventory_menu||read_menu){inventory_menu=read_menu=false;generation++;render();return;}
+  if(inventory_menu||read_menu){inventory_menu=read_menu=false;of_audio_play("back",false,true);generation++;render();return;}
   if(editing){
    if(page==P_SETTINGS&&selected<SET_YEAR){setting_assign(selected,editing_before);bsp_display_backlight(of_state.brightness*20);of_audio_settings();}
    if(page==P_SETTINGS&&selected>=SET_YEAR&&selected<=SET_MINUTE)of_clock_edit_cancel();
-   editing=false;generation++;render();return;
+   editing=false;of_audio_play("back",false,true);generation++;render();return;
   }
-  if(page==P_ALBUM&&album_mode){album_mode=album_mode>=2?album_mode-1:0;generation++;render();return;}
-  if(settings_mode){settings_mode=0;generation++;render();return;}
-  show(P_HOME);return;
+  if(page==P_ALBUM&&album_mode){album_mode=album_mode>=2?album_mode-1:0;of_audio_play("back",false,true);generation++;render();return;}
+  if(settings_mode){settings_mode=0;of_audio_play("back",false,true);generation++;render();return;}
+  if(page==P_HOME)show(P_HOME);else{bool from_standby=page==P_STANDBY;show(P_HOME);of_audio_play(from_standby?"startup":"back",false,true);}
+  return;
  }
  int d=key==BSP_BTN_UP?-1:1;
  if(page==P_GAME){
   if(paused){
-   if(pause_mode==1){if(key!=BSP_BTN_OK){game.zoom=(game.zoom+3+d)%3;game.focus_ms=0;}else{pause_mode=0;paused=game.paused=false;of_audio_play("zoom",false,true);}render();return;}
-   if(pause_mode==2){if(key!=BSP_BTN_OK){unsigned target=game.target_kind?0:1;if(!target||game.tracking_unlocked){of_sensor_target(&game,target);game.paused=true;}}else{pause_mode=0;paused=game.paused=false;}render();return;}
-   int count=pause_count();if(key!=BSP_BTN_OK){pause_choice=(pause_choice+count+d)%count;render();return;}
+   if(pause_mode==1){if(key!=BSP_BTN_OK){game.zoom=(game.zoom+3+d)%3;game.focus_ms=0;of_audio_play("move",false,false);}else{pause_mode=0;paused=game.paused=false;of_audio_play("zoom",false,true);}render();return;}
+   if(pause_mode==2){if(key!=BSP_BTN_OK){unsigned target=game.target_kind?0:1;if(!target||game.tracking_unlocked){of_sensor_target(&game,target);game.paused=true;of_audio_play("move",false,false);}}else{pause_mode=0;paused=game.paused=false;}render();return;}
+   int count=pause_count();if(key!=BSP_BTN_OK){pause_choice=(pause_choice+count+d)%count;of_audio_play("move",false,false);render();return;}
    int action=count==3?(pause_choice==0?0:pause_choice+1):pause_choice;
-   if(action==3){show(P_RUNES);return;}
+   if(action==3){show(P_RUNES);of_audio_play("back",false,true);return;}
    if(action==1){if(game.id==3){of_game_release(&game);events();paused=game.paused=false;}else pause_mode=game.id==5?1:2;render();return;}
    if(action==2){bool tracking=game.tracking_unlocked;unsigned id=game.id;of_audio_stop();of_game_init(&game,id);game.tracking_unlocked=tracking;}
+   if(!action)of_audio_play("back",false,true); // Resume via menu choice; restart stays silent until the new run acts.
    paused=game.paused=false;generation++;render();return;
   }
   if(game.id==8&&game.phase==OF_WON&&!game.target_kind&&key==BSP_BTN_OK){
@@ -604,48 +608,48 @@ void of_app_key(bsp_btn_t key,bool long_press){
   of_phase_t before=game.phase;of_game_key(&game,key);events();
   if(game.id==5&&before!=game.phase){generation++;scroll_elapsed=0;render();}else game_draw();return;
  }
- if(page==P_STANDBY){if(key==BSP_BTN_OK)show(P_HOME);else{of_state.standby_style=(of_state.standby_style+OF_STANDBY_STYLES+d)%OF_STANDBY_STYLES;standby_changed_at=lv_tick_get();of_state_dirty();generation++;render();}return;}
- if(page==P_HOME){if(key==BSP_BTN_OK){static const page_t routes[]={P_INVENTORY,P_RUNES,P_MAP,P_COMP,P_QUEST,P_SETTINGS,P_ALBUM,P_STANDBY};show(routes[home_selection]);}else{home_selection=bounded(home_selection+d,0,7);of_audio_play("cursor",false,false);render();}return;}
+ if(page==P_STANDBY){if(key==BSP_BTN_OK){show(P_HOME);of_audio_play("startup",false,true);}else{of_state.standby_style=(of_state.standby_style+OF_STANDBY_STYLES+d)%OF_STANDBY_STYLES;standby_changed_at=lv_tick_get();of_state_dirty();generation++;render();}return;}
+ if(page==P_HOME){if(key==BSP_BTN_OK){static const page_t routes[]={P_INVENTORY,P_RUNES,P_MAP,P_COMP,P_QUEST,P_SETTINGS,P_ALBUM,P_STANDBY};show(routes[home_selection]);of_audio_play("page",false,true);}else{home_selection=bounded(home_selection+d,0,7);of_audio_play("cursor",false,false);render();}return;}
  if(page==P_RUNES){if(key==BSP_BTN_OK)enter_game(selected);else{selected=bounded(selected+d,0,8);of_audio_play("cursor",false,false);scroll_elapsed=0;render();}return;}
- if(page==P_MAP){if(key==BSP_BTN_OK)map_axis=(map_axis+1)%3;else if(map_axis==2)map_zoom=bounded(map_zoom-d,1,3);else if(map_axis==0)map_x+=d*(32>>(map_zoom-1));else map_y+=d*(32>>(map_zoom-1));map_x=bounded(map_x,0,768);map_y=bounded(map_y,0,640);render();return;}
+ if(page==P_MAP){int old_zoom=map_zoom;if(key==BSP_BTN_OK)map_axis=(map_axis+1)%3;else if(map_axis==2)map_zoom=bounded(map_zoom-d,1,3);else if(map_axis==0)map_x+=d*(32>>(map_zoom-1));else map_y+=d*(32>>(map_zoom-1));map_x=bounded(map_x,0,768);map_y=bounded(map_y,0,640);if(map_axis==2&&map_zoom!=old_zoom)of_audio_play("zoom",false,false);render();return;}
  if(page==P_ALBUM){
   int count=album_count();if(!count)return;
-  if(album_mode>=2){if(key!=BSP_BTN_OK)album_choice=1-album_choice;
-   else if(album_mode==2){if(album_choice){album_mode=3;album_choice=0;}else album_mode=1;}
-   else{if(album_choice){of_state.album_deleted|=1u<<album_index(selected);of_state_dirty();selected=bounded(selected,0,count>1?count-2:0);album_mode=0;}else album_mode=2;album_choice=0;}
-  }else if(key==BSP_BTN_OK){album_mode=album_mode?2:1;album_choice=0;}else{selected=bounded(selected+d,0,count-1);scroll_elapsed=0;}
+  if(album_mode>=2){if(key!=BSP_BTN_OK){album_choice=1-album_choice;of_audio_play("move",false,false);}
+   else if(album_mode==2){if(album_choice){album_mode=3;album_choice=0;of_audio_play("menu",false,true);}else{album_mode=1;of_audio_play("back",false,true);}}
+   else{if(album_choice){of_state.album_deleted|=1u<<album_index(selected);of_state_dirty();selected=bounded(selected,0,count>1?count-2:0);album_mode=0;of_audio_play("back",false,true);}else{album_mode=2;of_audio_play("menu",false,true);}album_choice=0;}
+  }else if(key==BSP_BTN_OK){if(album_mode){album_mode=2;of_audio_play("menu",false,true);}else{album_mode=1;of_audio_play("ok",false,true);}album_choice=0;}else{selected=bounded(selected+d,0,count-1);scroll_elapsed=0;of_audio_play("move",false,false);}
   render();return;
  }
  if(page==P_SETTINGS){
-  if(settings_mode==1||settings_mode==3){if(key==BSP_BTN_OK){settings_mode=0;render();}return;}
-  if(settings_mode==2){if(key!=BSP_BTN_OK)confirm_choice=1-confirm_choice;else{if(confirm_choice){of_state_reset_progress();memset(game_saved,0,sizeof(game_saved));}settings_mode=0;}render();return;}
+  if(settings_mode==1||settings_mode==3){if(key==BSP_BTN_OK){settings_mode=0;of_audio_play("back",false,true);render();}return;}
+  if(settings_mode==2){if(key!=BSP_BTN_OK){confirm_choice=1-confirm_choice;of_audio_play("move",false,false);}else{if(confirm_choice){of_state_reset_progress();memset(game_saved,0,sizeof(game_saved));of_audio_play("ok",false,true);}else of_audio_play("back",false,true);settings_mode=0;}render();return;}
   if(key==BSP_BTN_OK){
-   if(selected==SET_DIAGNOSTICS)settings_mode=1;else if(selected==SET_RESET){settings_mode=2;confirm_choice=0;}else if(selected==SET_USB_TIME)settings_mode=3;else if(selected==SET_BATTERY)return;
-   else if(!editing){if(selected<SET_YEAR)editing_before=setting_value(selected);else of_clock_edit_begin();editing=true;}
-   else{if(selected>=SET_YEAR&&!of_clock_edit_commit()){of_audio_play("invalid",false,true);return;}editing=false;of_state_flush();}
-  }else if(!editing)selected=bounded(selected+d,0,SETTINGS_COUNT-1);
-  else if(selected<SET_YEAR){int value=setting_value(selected),delta=-d;const int lo[]={0,0,1,0,0,0,0,0},hi[]={1,5,5,1,4,5,4,5};setting_assign(selected,bounded(value+delta,lo[selected],hi[selected]));bsp_display_backlight(of_state.brightness*20);of_audio_settings();}
-  else of_clock_adjust(selected-SET_YEAR,-d);
+   if(selected==SET_DIAGNOSTICS){settings_mode=1;of_audio_play("menu",false,true);}else if(selected==SET_RESET){settings_mode=2;confirm_choice=0;of_audio_play("menu",false,true);}else if(selected==SET_USB_TIME){settings_mode=3;of_audio_play("menu",false,true);}else if(selected==SET_BATTERY)return;
+   else if(!editing){if(selected<SET_YEAR)editing_before=setting_value(selected);else of_clock_edit_begin();editing=true;of_audio_play("menu",false,true);}
+   else{if(selected>=SET_YEAR&&!of_clock_edit_commit()){of_audio_play("invalid",false,true);return;}editing=false;of_state_flush();of_audio_play(selected==SET_SCANLINES?(of_state.scanlines?"switch_on":"switch_off"):"ok",false,true);}
+  }else if(!editing){selected=bounded(selected+d,0,SETTINGS_COUNT-1);of_audio_play("move",false,false);}
+  else if(selected<SET_YEAR){int value=setting_value(selected),delta=-d;const int lo[]={0,0,1,0,0,0,0,0},hi[]={1,5,5,1,4,5,4,5};setting_assign(selected,bounded(value+delta,lo[selected],hi[selected]));bsp_display_backlight(of_state.brightness*20);of_audio_settings();of_audio_play("move",false,false);}
+  else{of_clock_adjust(selected-SET_YEAR,-d);of_audio_play("move",false,false);}
   render();return;
  }
  if(page==P_INVENTORY||page==P_COMP||page==P_QUEST){
   filter_items();
-  if(editing){int count=page==P_COMP?5:3;if(key!=BSP_BTN_OK)pending_category=(pending_category+count+d)%count;
-   else{item_selected[item_page()][category]=selected;category=pending_category;selected=item_selected[item_page()][category];editing=false;filter_items();selected=bounded(selected,0,filtered?filtered-1:0);scroll_elapsed=0;generation++;}
+  if(editing){int count=page==P_COMP?5:3;if(key!=BSP_BTN_OK){pending_category=(pending_category+count+d)%count;of_audio_play("move",false,false);}
+   else{item_selected[item_page()][category]=selected;category=pending_category;selected=item_selected[item_page()][category];editing=false;filter_items();selected=bounded(selected,0,filtered?filtered-1:0);scroll_elapsed=0;of_audio_play("ok",false,true);generation++;}
    render();return;
   }
   if(inventory_menu){
-   if(key!=BSP_BTN_OK)inventory_choice=bounded(inventory_choice+d,0,2);
-   else{if(inventory_choice==1){open_category();return;}inventory_menu=false;
+   if(key!=BSP_BTN_OK){inventory_choice=bounded(inventory_choice+d,0,2);of_audio_play("move",false,false);}
+   else{if(inventory_choice==1){open_category();return;}inventory_menu=false;if(inventory_choice==2)of_audio_play("back",false,true);
     if(inventory_choice==0&&filtered){int id=ids[selected],slot=slot_for(of_inventory+id);of_state.equipped[slot]=of_state.equipped[slot]==id?255:id;of_state_dirty();of_audio_play(of_state.equipped[slot]==255?"unequip":"equip",false,true);}
    }render();return;
   }
   if(read_menu){
-   if(key!=BSP_BTN_OK)read_choice=bounded(read_choice+d,0,2);
-   else{if(read_choice==1){open_category();return;}read_menu=false;if(read_choice==0&&filtered){uint8_t *bits=page==P_QUEST?of_state.quests:of_state.comp;of_set_bit(bits,ids[selected],!of_bit(bits,ids[selected]));of_state_dirty();of_audio_play("ok",false,true);}}
+   if(key!=BSP_BTN_OK){read_choice=bounded(read_choice+d,0,2);of_audio_play("move",false,false);}
+   else{if(read_choice==1){open_category();return;}read_menu=false;if(read_choice==2)of_audio_play("back",false,true);if(read_choice==0&&filtered){uint8_t *bits=page==P_QUEST?of_state.quests:of_state.comp;of_set_bit(bits,ids[selected],!of_bit(bits,ids[selected]));of_state_dirty();of_audio_play("ok",false,true);}}
    render();return;
   }
-  if(key==BSP_BTN_OK){if(page==P_INVENTORY){inventory_menu=true;inventory_choice=0;}else{read_menu=true;read_choice=0;}held_key=-1;generation++;}
+  if(key==BSP_BTN_OK){if(page==P_INVENTORY){inventory_menu=true;inventory_choice=0;}else{read_menu=true;read_choice=0;}held_key=-1;of_audio_play("menu",false,true);generation++;}
   else{selected=bounded(selected+d,0,filtered?filtered-1:0);item_selected[item_page()][category]=selected;scroll_elapsed=0;of_audio_play(page==P_INVENTORY?"move":"cursor",false,false);}
   render();return;
  }

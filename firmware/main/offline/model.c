@@ -172,7 +172,7 @@ void of_game_step(of_game_t *g,uint32_t ms){
  case 6:
   if(g->phase==OF_ACTIVE){
    g->brake_ms=decay(g->brake_ms,ms);g->jump_buffer=decay(g->jump_buffer,ms);g->speed+=((g->brake_ms?58:82)-g->speed)*fminf(1,dt*5);
-   if(g->jump_buffer&&(g->grounded||(g->coyote&&g->air_ms<140))){g->vy=-120;g->grounded=false;g->coyote=false;g->jump_buffer=0;g->air_ms=0;g->events|=OF_EV_ACTION;}
+   if(g->jump_buffer&&(g->grounded||(g->coyote&&g->air_ms<140))){g->vy=-120;g->grounded=false;g->coyote=false;g->jump_buffer=0;g->air_ms=0;} /* Jump is silent; only starting to ride beeps. */
    g->world+=g->speed*dt;float floor=136-of_geometry.cycle_height;
    if(g->grounded&&of_cycle_gap(g->world)){g->grounded=false;g->coyote=true;g->air_ms=0;g->vy=0;}
    if(g->grounded)g->y=floor;else{g->air_ms+=ms;g->vy+=220*dt;g->y+=g->vy*dt;if(!of_cycle_gap(g->world)&&g->y>=floor&&g->vy>0){g->y=floor;g->grounded=true;g->coyote=false;g->air_ms=0;g->vy=0;}}
