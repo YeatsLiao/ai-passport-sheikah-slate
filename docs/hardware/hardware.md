@@ -37,6 +37,8 @@ python "$env:IDF_PATH\components\esptool_py\esptool\esptool.py" --chip esp32c3 -
 
 ## 固件内部分层
 
+2026-10-30 新的活动构建入口为 `main/offline/`，见 [全离线 V1](offline-v1.md)；下列原五关结构保留为迁移参考，不再全部登记于应用 CMake。本轮未编译。
+
 ```
 firmware/main/
 ├── main.c                 # 初始化 + 按键事件队列 + LVGL 定时派发
@@ -50,7 +52,7 @@ firmware/main/
 └── img/                   # 图片 C 数组（tools/gen/img_to_c.py 生成）
 ```
 
-`main/CMakeLists.txt` 只登记源码与 `images.cmake`；JSON 数据不参与编译，固件只编 `game/catalog.c`（由生成脚本产出）。
+原五关曾登记源码与 `images.cmake`，目录由 `game/catalog.c` 提供；V1 改为 `offline/` 新数据/字库和独立资源包，当前登记以 `main/CMakeLists.txt` 为准。
 
 ## 资源与性能约束
 

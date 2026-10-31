@@ -16,6 +16,8 @@ docs/        文档：不参与构建
 
 ## 目录
 
+2026-10-30 活动固件应用切换为 `firmware/main/offline/`，只复用原 `game/input.c` 与 BSP；旧五关页面和资源数组仍作迁移参考。新增 data 资源分区与设备派生包，数据/字库留在 app，栅格图像和压缩音频由独立 pack 读取。当前入口、输出与未验证范围见 [全离线 V1](hardware/offline-v1.md)，原型目录不变。
+
 ```
 firmware/
 ├── CMakeLists.txt         项目根（project + EXTRA_COMPONENT_DIRS components）

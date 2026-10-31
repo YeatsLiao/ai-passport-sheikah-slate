@@ -24,6 +24,8 @@
 |---|---|
 | [architecture.md](architecture.md) | 五个域的边界、依赖方向、命名规则、迁移记录 |
 | [hardware/hardware.md](hardware/hardware.md) | 硬件规格、固件构建/烧录与主机测试命令、资源约束、历史实机记录 |
+| [hardware/firmware-plan.md](hardware/firmware-plan.md) | 原型迁移到 C3 的资源、性能、九项玩法取舍与待确认方案；未编译/烧录 |
+| [hardware/offline-v1.md](hardware/offline-v1.md) | 全离线 V1 代码、三键操作、设备资源包和未验证范围 |
 | [../prototype/README.md](../prototype/README.md) | 本地预览命令、静态服务根与相对路径要求 |
 | [../tools/README.md](../tools/README.md) | 工具输入输出、缺失脚本恢复落位 |
 | [../assets/README.md](../assets/README.md) | 素材目录导航与资产地图 |
