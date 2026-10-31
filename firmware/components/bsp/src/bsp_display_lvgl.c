@@ -16,7 +16,11 @@ lv_display_t *bsp_lvgl_init(void) {
         return NULL;
     }
 
-    const lvgl_port_cfg_t pc = ESP_LVGL_PORT_INIT_CONFIG();
+    // 默认 ~7KB 栈:LVGL 任务 tick 里同样会走 TJPGD 解码 JPEG,预留足量栈。
+    // 启动日志会打印该值,用于核对实际烧录的固件是否包含本次配置。
+    lvgl_port_cfg_t pc = ESP_LVGL_PORT_INIT_CONFIG();
+    pc.task_stack = 16384;
+    ESP_LOGI(TAG, "LVGL task stack = %d bytes", (int)pc.task_stack);
     if (lvgl_port_init(&pc) != ESP_OK) {
         ESP_LOGE(TAG, "lvgl_port_init 失败");
         return NULL;
@@ -25,8 +29,8 @@ lv_display_t *bsp_lvgl_init(void) {
     const lvgl_port_display_cfg_t dc = {
         .panel_handle = bsp_display_panel(),
         .io_handle    = bsp_display_io(),
-        // ⚠ C3 无 PSRAM,DMA 只能用内部 RAM(总共约 320KB 可用堆)。
-        // 20 行双缓冲 ≈ 19.2KB:LVGL 渲染下一带与上一带 SPI 传输重叠
+        // ⚠ C3 无 PSRAM,DMA 使用内部 RAM（实际可用堆需运行时测量）。
+        // 320×20 行双缓冲 = 25.6KB:LVGL 渲染下一带与上一带 SPI 传输重叠
         // (esp_lvgl_port 用 trans_done 中断回调 flush_ready),比单缓冲
         // 渲染/传输逐带串行快约 30-40%。若加音频等外设后 NO_MEM,
         // 把 double_buffer 改回 false (仅损帧率,不损功能)。

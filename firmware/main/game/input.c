@@ -1,6 +1,6 @@
 #include "input.h"
 #include <string.h>
-#define HOLD_MS 550
+#define HOLD_MS 650
 void input_reset(input_state_t *s) { memset(s,0,sizeof(*s)); }
 input_result_t input_poll(input_state_t *s,int k,uint32_t now) {
     if (k<0 || k>=3 || !s->held[k] || s->consumed[k]) return INPUT_NONE;

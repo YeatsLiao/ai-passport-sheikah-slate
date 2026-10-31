@@ -1,39 +1,17 @@
-set(SLATE_SRCS
-    "main.c"
-    "slate_app.c"
-    "game_view.c"
-    "sheikah_theme.c"
-    "sheikah_ui.c"
-    "page_standby.c"
-    "page_runes.c"
-    "page_rune_app.c"
-    "page_compendium.c"
-    "page_quest.c"
-    "page_settings.c"
-    "game/game.c"
-    "game/bomb.c"
-    "game/magnet.c"
-    "game/stasis.c"
-    "game/cryonis.c"
-    "game/camera.c"
-    "game/input.c"
-    "game/progress.c"
-    "game/store.c"
-    "game/catalog.c"
-    "audio/sfx.c"
-    "audio/sfx_data.c"
-    "font/hylia_serif_16.c"
-    "font/hylia_serif_20.c"
-    "font/hylia_serif_28.c"
+# Offline V1. Generate data/fonts/resources with tools/build_offline_pack.py --fonts first.
+set(OFFLINE_SRCS
+    "offline/main.c" "offline/app.c" "offline/model.c" "offline/state.c"
+    "offline/resources.c" "offline/audio.c" "offline/clock.c" "offline/data.c"
+    "offline/font_10.c" "offline/font_12.c" "offline/font_14.c" "offline/font_16.c" "offline/font_clock.c" "offline/font_clock_40.c" "offline/font_clock_52.c" "offline/screenshot.c" "game/input.c"
 )
+foreach(source IN LISTS OFFLINE_SRCS)
+    if(NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/${source}")
+        message(FATAL_ERROR "Missing ${source}; run python -B tools/build_offline_pack.py --fonts from repository root")
+    endif()
+endforeach()
+idf_component_register(SRCS ${OFFLINE_SRCS} INCLUDE_DIRS "." "offline"
+    REQUIRES bsp PRIV_REQUIRES nvs_flash esp_timer esp_partition esp_mm esp_driver_usb_serial_jtag vfs)
 
-# 28 项素材（含希卡之眼）；旧五页的 img_*.c 已随 assets 整理删除。
-include(${CMAKE_CURRENT_LIST_DIR}/images.cmake)
-
-# 旧JSON素材保留在 assets/data，固件只编译生成好的只读目录(catalog.c)。
-idf_component_register(
-    SRCS ${SLATE_SRCS} ${SLATE_IMAGES}
-    INCLUDE_DIRS "."
-    REQUIRES bsp
-    PRIV_REQUIRES nvs_flash esp_timer
-)
+# Offline V1 is intentionally written in a dense, one-statement-per-line style;
+# the indentation heuristic misfires on it, so disable only that check here.
+target_compile_options(${COMPONENT_LIB} PRIVATE -Wno-misleading-indentation)

@@ -18,6 +18,8 @@ CONFIG_LV_FONT_MONTSERRAT_14=y
 CONFIG_LV_FONT_MONTSERRAT_16=y
 CONFIG_LV_FONT_MONTSERRAT_20=y
 CONFIG_LV_FONT_MONTSERRAT_24=y
+# offline/font_14.c and font_16.c use compressed bitmaps (bitmap_format=1).
+CONFIG_LV_USE_FONT_COMPRESSED=y
 # 使用系统堆
 CONFIG_LV_USE_CLIB_MALLOC=y
 # 刷新周期 16ms (上限 60fps):默认 33ms 会把帧率硬限在 30fps,
@@ -32,7 +34,14 @@ CONFIG_LV_USE_IMAGE=y
 CONFIG_LV_USE_LABEL=y
 CONFIG_LV_USE_FLEX=y
 CONFIG_LV_DRAW_SW_SUPPORT_RGB565=y
+CONFIG_LV_DRAW_SW_SUPPORT_RGB565A8=y
 CONFIG_LV_DRAW_SW_SUPPORT_ARGB8888=y
 
 # --- 系统 ---
 CONFIG_FREERTOS_HZ=1000
+# app_main 主任务默认 ~3.6KB 栈不够 render() 里 TJPGD 解码 JPEG 使用,
+# 实测触发 Stack protection fault (decoder_info),加大到 16KB。
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=16384
+
+# Offline V1: small JPEG photos/tiles; no radio stack initialization in application.
+CONFIG_LV_USE_TJPGD=y
