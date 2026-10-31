@@ -1,56 +1,70 @@
-# Sheikah Slate - AI Passport Edition
+# 🗡️ 希卡石板 · Sheikah Slate
 
-> 运行在 [FoloToy AI Passport](https://github.com/nickyc975/ai-passport)（ESP32-C3）上的
-> 《塞尔达传说：旷野之息》希卡石板界面模拟。设备横置，逻辑分辨率 **320×240**。
+> 一块真的能玩的希卡石板 —— 基于 ESP32-C3 的《塞尔达传说：旷野之息》
+> 希卡石板复刻。320×240，全离线，开机即玩，不需要网——因为一万年前也没有。
 
-## 是什么
+| 开机 | 主菜单 |
+|---|---|
+| ![开机画面](screenshots/slate-20261031-002653-7286.png) | ![主菜单](screenshots/slate-20261031-081542-9757.png) |
+| *符文小游戏* | *大师摩托* |
+| ![方形炸弹](screenshots/slate-20261031-081606-4563.png) | ![大师摩托](screenshots/slate-20261031-081703-6342.png) |
 
-不是开放世界，而是围绕五种符文各做一个固定视角、可完成、可失败、可重试的小场景，加五个功能页：
+## 这是什么
 
-| 试炼 | 目标 | 功能页 |
-|---|---|---|
-| 遥控炸弹（圆/方） | 在石墙旁引爆，炸开通路 | 待机 |
-| 磁力抓取 | 金属板对齐桥台并稳定落下 | 符文选择（六入口） |
-| 静止器 | 蓄力 ≥4 且方向正确，撞开障碍 | 海拉鲁图鉴 + 相册 8 张 |
-| 制冰器 | 闸门下方生成冰柱顶起闸门 | 冒险记录 |
-| 相机 | 拍下并保存五个图鉴目标 | 系统设置 |
+不是模拟器，也不是动态壁纸。一块真实的 320×240 硬件
+（ESP32-C3 + ST7789 屏 + 三个按键 + I2S 音效），把《旷野之息》的希卡石板
+界面整个装了进去，连同样能玩、能输、能重来的符文小游戏。
+没有 Wi-Fi，没有蓝牙，没有 App —— 石板就该这样。
 
-三键（UP / OK / DOWN）共用一路 ADC；OK 长按为返回/暂停，UP 长按只在屏幕明确提示处使用。
+## 石板上有什么
 
-## 目录
+| 功能 | 内容 |
+|---|---|
+| ⚔️ 装备 | 九宫格装备菜单，分类浏览、选中试装 |
+| 🔯 符文 | 九项符文小游戏：圆/方炸弹、磁力抓取、静止器、制冰器、相机、感应器、amiibo、大师摩托——固定视角、可完成、可失败、可重试 |
+| 🗺️ 地图 | 全海拉鲁一张图，177 个游戏原始命名点位，缩放、横移、纵移 |
+| 📖 海拉鲁图鉴 | 394 条全量图鉴（含大师模式金色怪），中英文名齐全 |
+| 📜 冒险日志 | 152 条任务：主线 / 神庙挑战 / 迷你挑战，含全部 DLC 与联动，中英双语 |
+| ⚙️ 设置 | 音量、亮度、扫描线、校时、息屏、中英切换 |
+
+音效直接播放游戏原声 WAV：开锁、烹饪、磁力移动、时停蓄力……
+操作只有三个键 **UP / OK / DOWN**；OK 长按暂停或返回。
+
+## 先在浏览器里玩
+
+设备还没到手？原型和真机是同一套界面：
+
+```bash
+python -m http.server 8124 --bind 127.0.0.1
+# 打开 http://127.0.0.1:8124/prototype/
+```
+
+预览要求和页面说明见 [prototype/README.md](prototype/README.md)。
+
+## 烧进真机
+
+硬件是 FoloToy AI Passport（ESP32-C3，8MB Flash，ST7789 240×320 SPI 屏，
+三键 ADC 分压，ES8311 音效，CW2017 电量计）。需要 ESP-IDF 环境：
+
+- 构建、烧录与硬件规格：[docs/hardware/hardware.md](docs/hardware/hardware.md)
+- 固件为全离线 V1，app 与设备资源包必须配套烧录：[docs/hardware/offline-v1.md](docs/hardware/offline-v1.md)
+
+## 仓库地图
 
 ```
-firmware/    硬件开发：ESP-IDF 工程（main/、components/bsp/、sdkconfig.defaults）
-prototype/   模拟页面开发：纯静态 320×240 点击原型
-assets/      素材：raw（按游戏内容分类）→ gen → data / audio
-tools/       管线：assets（入库校验）、gen（生成固件源码）、web（字体/SVG）
-docs/        文档：任务索引、上下文、架构、硬件、原型、素材与历史
+prototype/   浏览器原型 —— 就是上面让你先玩的那套界面
+firmware/    ESP-IDF 固件（main/offline/ + components/bsp/）
+assets/      素材：raw（原作/授权生成）→ gen（管线产物）
+tools/       素材与数据管线脚本
+docs/        文档索引、架构、硬件、原型说明与历史
 ```
 
-依赖是单向的：`assets/raw → tools → assets/gen → firmware/main/img` 与 `prototype/`。
-详细边界见 [docs/architecture.md](docs/architecture.md)。
+依赖是单向的：`assets/raw → tools → assets/gen → firmware/ 与 prototype/`，
+详细边界见 [docs/architecture.md](docs/architecture.md)；按任务查文档从
+[文档索引](docs/README.md) 进。
 
-## 快速开始
+## 声明
 
-- 看原型：使用 Python 从仓库根提供静态服务，再访问 `/prototype/`；命令与路径要求见 [本地预览](prototype/README.md#本地预览)。
-- 用设备：准备符合组件声明的 ESP-IDF 环境，以 `firmware/` 为工程根，按 [构建与烧录](docs/hardware/hardware.md#构建) 操作。
-- 改素材：先按 [素材操作入口](docs/context/RUNBOOK.md#素材加工与校验) 确认脚本与输入可用。
-
-这些是使用入口，不代表本轮执行成功，也不授权 AI 自动构建、烧录或安装依赖；执行前确认 [协作规则](AGENTS.md)。
-
-## 文档
-
-- [AGENTS.md](AGENTS.md)：项目协作、按需读取、定点写入及验证规则。
-- [文档索引](docs/README.md)：按任务进入对应文件或章节；沿用为 PROJECT_INDEX。
-- [当前工作](docs/context/NOW.md)：接续目标、进展、下一步与证据。
-- [操作入口](docs/context/RUNBOOK.md)：使用与验证的前置条件；其他专题按索引选择。
-
-## 当前状态
-
-当前目标与完成证据统一见 [NOW](docs/context/NOW.md)，已知问题和待核实项见 [RISKS](docs/context/RISKS.md)。
-旧编译、烧录与素材校验记录通过 [历史索引](docs/context/history/README.md) 追溯，不代表当前验证结果。
-
-## License
-
-MIT（仅代码）。游戏相关名称与素材权利归 Nintendo 所有；素材来源与限制见
-[docs/assets/provenance.md](docs/assets/provenance.md)。
+代码以 MIT 许可发布。《塞尔达传说》相关名称与游戏素材权利归 Nintendo 所有；
+本项目的图像素材多为参考实机授权生成的风格替代，音效取自个人合法获得的游戏
+解包资源，来源与限制见 [docs/assets/provenance.md](docs/assets/provenance.md)。

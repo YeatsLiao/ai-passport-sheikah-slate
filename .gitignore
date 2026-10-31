@@ -3,6 +3,7 @@ build/
 build-host/
 .build-tools/
 __pycache__/
+screenshots/
 
 # ESP-IDF generated
 sdkconfig
