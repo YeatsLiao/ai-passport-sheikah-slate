@@ -2,6 +2,19 @@
 
 按「谁读它、能不能重生成」分四层，改动任何一层前先看这张表。
 
+## 素材存放策略（2026-11-01）
+
+上游原始素材已**外迁归档**到仓库外（`D:.Project\游戏素材\塞尔达\`，含 raw/01~07 各类原件、06_audio 两个原包、99_archive、design 候选稿）。仓库只保留**构建资源包与运行原型必需**的部分：
+
+| 类别 | 位置 | 说明 |
+|---|---|---|
+| 克隆即有 | `gen/` 全部、`raw/02_ui/`、`raw/05_world/maps/`（botw-map-base.webp + 点位数据源 yml/json/html）、`raw/01_runes/gallery/reference_sensor_shrine.png`、`raw/07_fonts/SourceHanSans*`（含 OFL 许可）、`raw/06_audio/{action,select}.mp3`、`assets/battery/`、`assets/data/` | 构建资源包、运行原型必需，随 git 分发 |
+| 需自备（版权） | `assets/audio/prototype/botw/`（40 段原作 WAV，已 gitignore） | 从外部归档复制，或按 [tools/README 音效导入](../tools/README.md) 从原包重新导入；缺失时资源包生成明确报错（FileNotFoundError），原型音效静音 |
+| 已外迁 | `raw/01_runes`（除例外）、`raw/03_compendium`、`raw/04_equipment`、`raw/05_world`（除例外）、`raw/06_audio` 原包、`raw/99_archive`、`raw/_index`、`design/` | 已 gitignore；不再参与构建，需要时从外部归档取回 |
+
+以下目录树与表格描述**外迁前**的完整布局，供溯源查阅。
+
+
 ```
 assets/
 ├── raw/         ① 上游原料：通常由生成脚本读，不进固件；地图原图评审直接读取 maps；2026-10-28 起按游戏内容分类

@@ -1,0 +1,12 @@
+{
+  "source": "https://raw.githubusercontent.com/FoloToy/ai-passport/main/assets/battery/wanli-500mah-profile2-xil40x-20261020.txt",
+  "driver_reference": "https://github.com/FoloToy/ai-passport/blob/main/components/bsp/src/bsp_battery.c",
+  "retrieved": "2026-10-31",
+  "profile": "Wanli New Energy 500mAh, profile2 / XIL40X / 2026-10-20",
+  "selection": "User confirmed official AI Passport device and working official-firmware battery display; uses current upstream configured profile, not a measured identification of the cell.",
+  "bytes": 80,
+  "payload_sha256": "fa7365671093ef449c5bdcfb4adb279e3d275f888109f50b6b2f21e9b96220d5",
+  "normalized_hex_file_sha256": "7ea96eba4634f4495a37c25ffacd54c1deaa0693b162c892d671a2ba68460919",
+  "derived_array": "../../firmware/components/bsp/src/bsp_battery.c:s_battery_profile",
+  "validation": "Source bytes and C initializer compared statically; no device profile programming performed by the agent."
+}

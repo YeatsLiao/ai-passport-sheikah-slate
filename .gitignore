@@ -27,3 +27,26 @@ assets/raw/imagegen/import/
 
 # ZCode workspace metadata
 .zcode/
+
+# 用户自备版权素材（原作解包）：不入库，按 tools/README「音效导入」自备导入
+assets/audio/prototype/botw/
+assets/raw/06_audio/
+# 停止跟踪的归档美术（用户自行整理保留，工程无读者）
+assets/raw/99_archive/
+# 可重建产物（tools/pack/build_offline_pack.py 重新生成；standby/sources 输入已入库）
+assets/gen/firmware/offline/resources.bin
+# 已否决/停用素材：本地保留
+assets/gen/prototype/slate-hud-kit-v4.png
+assets/gen/prototype/battery-sheikah-v1.png
+
+# 素材外迁归档（D:\2.Project\游戏素材\塞尔达）：上游原料不入库。
+# 例外（保持跟踪）：01_runes/gallery/reference_sensor_shrine.png、
+# 05_world/maps/{botw-map-base.webp,locations-game-source.yml,location-names-*.json,*.html}、
+# 07_fonts/SourceHanSans*、06_audio/{action,select}.mp3 —— 更新这些文件需 git add -f。
+assets/raw/01_runes/
+assets/raw/03_compendium/
+assets/raw/04_equipment/
+assets/raw/05_world/
+assets/raw/07_fonts/
+assets/raw/_index/
+design/
