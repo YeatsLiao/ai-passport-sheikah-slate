@@ -34,8 +34,13 @@
 | standby-misty-cn-portrait.png | 待机 I 林间薄雾（竖屏） | cn | portrait | slate-20261031-213835-8561.png |
 | standby-english.png | 待机英文（SET DATE AND TIME） | en | landscape | slate-20261031-113800-4328.png |
 | error-pack-mismatch-cn.png | 排障：资源包版本不匹配错误页 | cn | landscape | slate-20261101-001346-7017.png |
+| rune-bomb-round-cn.png | 圆炸弹·投掷力度 50%（OK 引爆） | cn | landscape | slate-20261101-181841-6938.png |
+| settings-usb-battery-cn.png | 设置·USB 校时已校时 + 电量 90%（4131mV） | cn | landscape | slate-20261101-181857-0355.png |
 
-## 待补拍
+
 
 - 圆炸弹玩法图（投掷/引爆视角）——九项中唯一无实拍
 - USB 校时弹窗页（设置 → USB 一键校时）
+## 待补拍
+
+- （2026-11-01 已补齐：圆炸弹玩法、USB 校时+电量页——暂无缺项；新增实拍直接追加至 assets/screenshots/ 并在此登记）
