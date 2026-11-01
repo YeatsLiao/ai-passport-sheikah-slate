@@ -25,6 +25,8 @@ def adpcm(samples):
 
 def main():
  parser=argparse.ArgumentParser();parser.add_argument('--fonts',action='store_true');args=parser.parse_args()
+ missing=[d for d in ('@resvg/resvg-js','lv_font_conv') if not (ROOT/'tools/node_modules'/d).exists()]
+ if missing:raise SystemExit(f'Missing node dependencies in tools/node_modules: {", ".join(missing)}; run: cd tools && npm install (no automatic install)')
  data=json.loads(subprocess.check_output(['node',str(ROOT/'tools/pack/export_offline_data.mjs')],cwd=ROOT))
  comp=[dict(e,category=i) for i,c in enumerate(data['COMP_CATS']) for e in data['COMP_ENTRIES'][c['id']]]
  quests=[dict(e,category=i) for i,c in enumerate(['main','shrine','side']) for e in data['QUESTS'][c]]
