@@ -47,7 +47,16 @@ python -m http.server 8124 --bind 127.0.0.1
 三键 ADC 分压，ES8311 音效，CW2017 电量计）。需要 ESP-IDF 环境：
 
 - 构建、烧录与硬件规格：[docs/hardware/hardware.md](docs/hardware/hardware.md)
-- 固件为全离线 V1，app 与设备资源包必须配套烧录；也可合并为单一整包一次写入，见 [docs/hardware/offline-v1.md](docs/hardware/offline-v1.md) 的[合并烧录包](docs/hardware/offline-v1.md#合并烧录包)
+- 整包流程（资源包首次生成与更新见 [全离线 V1](docs/hardware/offline-v1.md)）：
+
+  ```bash
+  cd firmware
+  idf.py build
+  idf.py merge-bin     # 产出整包 build/ai-passport-sheikah-slate-full.bin
+  esptool.py --chip esp32c3 --port COMx --baud 460800 write_flash 0x0 build/ai-passport-sheikah-slate-full.bin
+  ```
+
+  日常开发用 `idf.py flash monitor` 即可，它会自动带上资源包。
 
 ## 仓库地图
 
