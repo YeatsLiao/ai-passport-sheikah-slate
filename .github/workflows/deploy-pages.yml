@@ -1,7 +1,7 @@
 name: deploy-pages
 # 组装原型静态站并部署到 GitHub Pages。
 # 启用前提（仓库设置 → Pages → Source: GitHub Actions）+ 仓库可见性/素材公开决策确认。
-# 策略：静音演示——原作音效不入站；如需公开音效，改 build_site.py --with-audio。
+# 策略：含原作音效（用户决策 2026-11-01）；如需静音演示，去掉 --with-audio。
 on:
   workflow_dispatch:
   push:
@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install fonttools
-      - run: python -B tools/pages/build_site.py -o dist
+      - run: python -B tools/pages/build_site.py -o dist --with-audio
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

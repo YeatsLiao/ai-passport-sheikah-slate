@@ -46,15 +46,20 @@ def main():
     n+=2
     if a.with_audio:
         n+=copy_tree(ROOT/'assets/audio/botw',out/'assets/audio/botw')
+    # 叠甲：注入原型页底部（浏览器页面层，不进 320x240 设备画布）
+    idx=out/'prototype'/'index.html'
+    html=idx.read_text(encoding='utf-8')
+    disclaimer=('<div style="text-align:center;padding:12px 0 26px;color:#3f565d;font-size:12px;'
+                'font-family:system-ui">非官方粉丝项目，与 Nintendo 无关。《塞尔达传说：旷野之息》相关名称、'
+                '图片与音效版权归 Nintendo 所有，仅作个人演示使用。</div>')
+    assert '</body>' in html
+    idx.write_text(html.replace('</body>',disclaimer+'</body>'),encoding='utf-8')
     (out/'index.html').write_text(
      '<!doctype html><meta charset="utf-8"><title>Sheikah Slate · AI Passport</title>'
-     '<meta name="viewport" content="width=device-width,initial-scale=1">'
-     '<style>body{background:#06151e;color:#e5e6d3;font-family:system-ui;display:grid;place-items:center;min-height:100vh;margin:0}'
-     'a{color:#56cbe0}div{text-align:center;padding:2rem}</style>'
-     '<div><h1>🗡️ 希卡石板 · AI Passport</h1>'
-     '<p><a href="./prototype/" style="font-size:1.4rem">进入原型 →</a></p>'
-     +('<p>含原作音效演示。</p>' if a.with_audio else '<p style="opacity:.7">本站为静音演示；原作音效请自备（见仓库 README）。</p>')
-     +'<p style="opacity:.5">非官方粉丝项目；《塞尔达传说》相关权利归 Nintendo 所有。</p></div>',
+     '<meta http-equiv="refresh" content="0; url=./prototype/">'
+     '<style>body{background:#06151e;margin:0;display:grid;place-items:center;min-height:100vh}'
+     'a,p{color:#56cbe0;font-family:system-ui;text-align:center}</style>'
+     '<p><a href="./prototype/">进入原型 →</a></p>',
      encoding='utf-8')
     total=sum(os.path.getsize(os.path.join(dp,fn)) for dp,_,fns in os.walk(out) for fn in fns)
     count=sum(len(fns) for _,_,fns in os.walk(out))
