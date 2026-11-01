@@ -59,7 +59,7 @@ static void battery_worker(void *arg){
 }
 static uint8_t scan_pixels[320*2*4];
 static const lv_image_dsc_t scan_image={.header={.magic=LV_IMAGE_HEADER_MAGIC,.cf=LV_COLOR_FORMAT_ARGB8888,.w=320,.h=2,.stride=1280},.data_size=2560,.data=scan_pixels};
-static void render(void);
+void render(void);
 static void show(page_t next){
  of_audio_stop();of_state_flush();page_selected[page]=selected;page_category[page]=category;
  if(page==P_GAME){game.input=0;saved_games[game.id]=game;saved_games[game.id].paused=true;game_saved[game.id]=true;}
