@@ -37,6 +37,7 @@ def main():
     out=Path(a.o);shutil.rmtree(out,ignore_errors=True);out.mkdir(parents=True)
     n=copy_tree(ROOT/'prototype',out/'prototype')
     n+=copy_tree(ROOT/'assets/gen/prototype',out/'assets/gen/prototype')
+    n+=copy_tree(ROOT/'assets/gen/offline/standby/sources',out/'assets/gen/offline/standby/sources')
     n+=copy_tree(ROOT/'assets/ui',out/'assets/ui')
     (out/'assets/maps').mkdir(parents=True)
     shutil.copy2(ROOT/'assets/maps/botw-map-base.webp',out/'assets/maps/')

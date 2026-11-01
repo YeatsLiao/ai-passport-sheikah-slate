@@ -41,7 +41,8 @@ const state = {
   albumOpen: null,
   albumDeleted: [],
   albumShots: [], /* 预留：相机相册另行讨论（NOW）；当前只由相册逻辑读取，恒为空 */
-  settings: { brightness: 5, volume: 3, scanlines: true, sfx: true }
+  settings: { brightness: 5, volume: 3, scanlines: true, sfx: true,
+    standbyDelay: 1, screenTimeout: 2, standbyCycle: 0, standbyStyle: 0, bg: 0 }
 };
 
 /* ---------------- i18n ---------------- */
@@ -55,6 +56,7 @@ const LANG = {
     back: '返回',
     type: '类型', cooldown: '冷却', use_rune: '使用符文', locked: '未解锁',
     sys_title: '系统', brightness: '亮度', volume: '音量', scanlines: '扫描线', sfx: '按键音',
+    standby_enter: '进入待机', screen_off: '待机后熄屏', canvas_cycle: '自动切换画布', standby_style: '待机风格', bg_label: '背景', off: '关', manual: '手动',
     album: '相册', about: '关于', standby: '待机', adjust: '调整 / 切换',
     map_prev: '◀ 上一张', map_next: '下一张 ▶', map_zoom_out: '缩小', map_zoom_in: '+ 放大', map_reset: '复位',
     map_foot_l: '▲▼ 选择　OK 确认', map_foot_r: '→ 切图 · 长按 OK 返回',
@@ -110,6 +112,7 @@ const LANG = {
     back: 'BACK',
     type: 'TYPE', cooldown: 'COOLDOWN', use_rune: 'USE RUNE', locked: 'LOCKED',
     sys_title: 'SYSTEM', brightness: 'BRIGHTNESS', volume: 'VOLUME', scanlines: 'SCANLINES', sfx: 'SOUND FX',
+    standby_enter: 'ENTER STANDBY', screen_off: 'SCREEN OFF AFTER', canvas_cycle: 'CANVAS INTERVAL', standby_style: 'STANDBY STYLE', bg_label: 'BACKGROUND', off: 'OFF', manual: 'MANUAL',
     album: 'ALBUM', about: 'ABOUT', standby: 'STANDBY', adjust: 'OK ADJUST / TOGGLE',
     map_prev: '◀ PREV', map_next: 'NEXT ▶', map_zoom_out: 'ZOOM –', map_zoom_in: '+ ZOOM', map_reset: 'RESET',
     map_foot_l: '▲▼ SELECT　OK CONFIRM', map_foot_r: '→ SWITCH · HOLD OK BACK',
@@ -225,17 +228,56 @@ function sceneTop(rune, stat) {
 }
 
 /* ---------------- standby ---------------- */
+const STANDBY_DELAYS=[0,30,60,120,300],SCREEN_TIMEOUTS=[0,30,60,120,300,600],STANDBY_CYCLES=[0,15,30,60,300];
+const STANDBY_STYLES=[
+  {cn:'静谧科技',en:'QUIET TECH',plate:'E',portrait:false},
+  {cn:'晨光旷野',en:'DAWN FIELD',plate:'F',portrait:false},
+  {cn:'古地图',en:'ANTIQUE MAP',plate:'G',portrait:false},
+  {cn:'神庙石碑',en:'SHRINE STELE',plate:'H',portrait:true},
+  {cn:'林间薄雾',en:'MISTY FOREST',plate:'I',portrait:true},
+  {cn:'极简黑金',en:'BLACK & GOLD',plate:null,portrait:true},
+];
+const BG_NAMES=['眼纹','石材','眼角','字符环'];
+let standbyBlackout=false,standbyStyleAt=Date.now(),idleSince=Date.now();
+function standbyShift(dir){
+  state.settings.standbyStyle=(state.settings.standbyStyle+6+dir)%6;
+  standbyStyleAt=Date.now();render();
+}
+function standbyClockText(){
+  const d=new Date(),p=n=>String(n).padStart(2,'0');
+  return {clock:p(d.getHours())+':'+p(d.getMinutes()),
+    date:(state.lang==='cn'?['周日','周一','周二','周三','周四','周五','周六'][d.getDay()]:['SUN','MON','TUE','WED','THU','FRI','SAT'][d.getDay()])+
+      ' · '+p(d.getMonth()+1)+'.'+p(d.getDate())+' · '+(state.lang==='cn'?'海拉鲁':'HYRULE')};
+}
 function viewStandby() {
+  const st=STANDBY_STYLES[state.settings.standbyStyle];
+  const w=st.portrait?240:320,h=st.portrait?320:240;
+  const left=st.portrait?(320-w)/2:0,top=st.portrait?(240-h)/2:0;
+  const ink=state.settings.standbyStyle===2,gold=state.settings.standbyStyle===5;
+  const fg=ink?'#4b2c0d':'#e5e6d3',accent=ink?'#654419':gold?'#e1c37b':'#56cbe0';
+  const clockFs=[52,40,40,52,40,52][state.settings.standbyStyle];
+  const logoY=[20,22,20,26,66,28][state.settings.standbyStyle],logoW=[128,154,136,158,148,156][state.settings.standbyStyle];
+  const eyeY=[78,86,84,110,126,110][state.settings.standbyStyle],eyeS=[52,42,48,64,46,58][state.settings.standbyStyle];
+  const clockY=[139,141,146,208,216,190][state.settings.standbyStyle],dateY=[195,187,194,265,263,249][state.settings.standbyStyle];
+  const {clock,date}=standbyClockText();
+  const fresh=Date.now()-standbyStyleAt<3500;
+  const plate=st.plate?`<img class="standby-plate" src="../assets/gen/offline/standby/sources/${st.plate}.png" alt="">`:'';
+  const corners=st.plate?'':[[8,8],[w-32,8],[8,h-9],[w-32,h-9]].map(([x,y])=>
+    `<div style="position:absolute;left:${x}px;top:${y}px;width:24px;height:1px;background:#66502d"></div>`).join('')+
+    [[8,8],[w-15,8],[8,h-15],[w-15,h-15]].map(([x,y])=>`<div style="position:absolute;left:${x}px;top:${y}px;width:7px;height:7px;border:1px solid #91713c;border-radius:4px"></div>`).join('');
+  const recolor=ink||gold?`filter:sepia(.5) saturate(1.6) hue-rotate(${gold?-10:170}deg) brightness(${ink?1.1:.9});`:'';
   return `<div class="standby">
-    <img class="sb-puppet a" src="${IMG('cut_skywatcher.png')}" alt="">
-    <img class="sb-slate" src="${IMG('cut_slate.png')}" alt="">
-    <img class="sb-title ${state.lang === 'cn' ? 'cn' : 'en'}" src="../assets/ui/${state.lang === 'cn' ? 'BotW_Simplified_Chinese_Logo.png' : 'BotW_English_Logo.png'}" alt="${state.lang === 'cn' ? '塞尔达传说 旷野之息' : 'The Legend of Zelda: Breath of the Wild'}">
-    <img class="sb-eye" src="${IMG('eye.png')}" alt="">
-    <div class="sb-clock">09:41</div>
-    <div class="sb-date">${state.lang === 'cn' ? '周六 · 10.26 · 海拉鲁' : 'SAT · 10.26 · HYRULE'}</div>
-    <div class="sb-battery" role="img" aria-label="${t('sys_battery')} 99%"><span class="sb-battery-art" aria-hidden="true"></span><span aria-hidden="true">99%</span></div>
-    <button class="sb-prompt" data-action="go:#/home" data-focus data-start>${t('press_ok')}</button>
-    <div class="sb-brand">AI PASSPORT · SHEIKAH SLATE</div>
+    <div class="standby-canvas" style="left:${left}px;top:${top}px;width:${w}px;height:${h}px">
+      ${plate||`<div style="position:absolute;inset:0;background:#060604">${corners}</div>`}
+      <img class="standby-logo" src="../assets/ui/${state.lang === 'cn' ? 'BotW_Simplified_Chinese_Logo.png' : 'BotW_English_Logo.png'}" style="left:${(w-logoW)/2}px;top:${logoY}px;width:${logoW}px;${ink?`filter:brightness(.6) sepia(.6);`:''}${gold?`filter:sepia(.7) saturate(1.4);`:''}" alt="">
+      <img class="standby-eye" src="${IMG('eye.png')}" style="left:${(w-eyeS)/2}px;top:${eyeY}px;width:${eyeS}px;${recolor}" alt="">
+      <div class="standby-clock" id="standbyClock" style="left:8px;top:${clockY}px;width:${w-16}px;font-size:${clockFs}px;color:#eafcff">${clock}</div>
+      <div class="standby-date" style="left:8px;top:${dateY}px;width:${w-16}px;color:${accent}">${date}</div>
+      <div class="standby-brand" style="left:8px;top:${h-20}px;width:${w-16}px;color:${ink?'#6b5029':gold?'#e1c37b':'#91b0b8'}">AI PASSPORT · SHEIKAH SLATE</div>
+      <button class="sb-prompt" data-action="go:#/home" data-focus data-start>${t('press_ok')}</button>
+      ${fresh?`<div class="standby-toast" style="left:8px;top:3px;color:${accent}">${'EFGHIJ'[state.settings.standbyStyle]} · ${state.lang==='cn'?st.cn:st.en} ${state.settings.standbyStyle+1}/6</div>`:''}
+      ${standbyBlackout?'<div class="standby-blackout"></div>':''}
+    </div>
   </div>`;
 }
 
@@ -600,6 +642,21 @@ function viewSystem() {
       <span class="lab">${t('lang_label')}</span><span class="muted" style="flex:1;font-size:5.5px">${state.lang === 'cn' ? t('lang_cn') : t('lang_en')}</span>
       <span class="toggle on"><i></i></span>
     </button>
+    <button class="sys-row" data-action="set:standbydelay" data-focus>
+      <span class="lab">${t('standby_enter')}</span><span class="val">${STANDBY_DELAYS[s.standbyDelay] ? STANDBY_DELAYS[s.standbyDelay] + 's' : t('off')}</span>
+    </button>
+    <button class="sys-row" data-action="set:screentimeout" data-focus>
+      <span class="lab">${t('screen_off')}</span><span class="val">${SCREEN_TIMEOUTS[s.screenTimeout] ? SCREEN_TIMEOUTS[s.screenTimeout] + 's' : t('off')}</span>
+    </button>
+    <button class="sys-row" data-action="set:standbycycle" data-focus>
+      <span class="lab">${t('canvas_cycle')}</span><span class="val">${STANDBY_CYCLES[s.standbyCycle] ? STANDBY_CYCLES[s.standbyCycle] + 's' : t('manual')}</span>
+    </button>
+    <button class="sys-row" data-action="set:standbystyle" data-focus>
+      <span class="lab">${t('standby_style')}</span><span class="val">${STANDBY_STYLES[s.standbyStyle].cn} · ${STANDBY_STYLES[s.standbyStyle].en}</span>
+    </button>
+    <button class="sys-row" data-action="set:bg" data-focus>
+      <span class="lab">${t('bg_label')}</span><span class="val">${BG_NAMES[s.bg]}</span>
+    </button>
     <div class="sys-actions">
       <button class="chip" data-action="go:#/album" data-focus>${t('album')}</button>
       <button class="chip" data-action="sys:about" data-focus>${t('about')}</button>
@@ -696,6 +753,8 @@ function render() {
     default: html = viewStandby();
   }
   screenEl.innerHTML = html + inputDialogHTML() + '<div class="focus-frame" id="focusFrame"></div><div class="wipe" id="wipe"></div>';
+  screenEl.style.background = routeParts()[0]==='standby' ? '#000' :
+    `#02070b url('../assets/gen/prototype/backgrounds/${['bg_0_crest.png','bg_1_stone.png','bg_2_corner.png','bg_3_glyphs.png'][state.settings.bg]}') center/100% 100% no-repeat`;
   screenEl.style.filter = `brightness(${(0.55 + state.settings.brightness * 0.09).toFixed(3)})`;
   if (isMap) updateMapView();
   document.body.classList.toggle('no-scan', !state.settings.scanlines);
@@ -857,8 +916,13 @@ function sysAction(kind) {
   if (kind === 'volume') s.volume = s.volume >= 5 ? 0 : s.volume + 1;
   if (kind === 'scanlines') s.scanlines = !s.scanlines;
   if (kind === 'sfx') s.sfx = !s.sfx;
+  if (kind === 'standbydelay') s.standbyDelay = (s.standbyDelay + 1) % 5;
+  if (kind === 'screentimeout') s.screenTimeout = (s.screenTimeout + 1) % 6;
+  if (kind === 'standbycycle') s.standbyCycle = (s.standbyCycle + 1) % 5;
+  if (kind === 'standbystyle') s.standbyStyle = (s.standbyStyle + 1) % 6;
+  if (kind === 'bg') s.bg = (s.bg + 1) % 4;
   if(!s.sfx||!s.volume)stopSfx();
-  render();beep(['scanlines','sfx'].includes(kind)?(s[kind]?'switch_on':'switch_off'):'ok');
+  render();beep(['scanlines','sfx'].includes(kind)?(s[kind]?'switch_on':'switch_off'):['standbystyle','bg'].includes(kind)?'move':'ok');
 }
 
 function about() {
@@ -1013,7 +1077,7 @@ function okUp() {
   clearTimeout(holdTimer);
   holdTimer = null;
   stopHoldBar();
-  if (!longFired && pressedRoute===routeHash()) { if(inputPrimary()){} else if (mapBrowseActive()) mapAction('control'); else if (gameInputActive()) gamePrimary(); else activateFocused(); }
+  if (!longFired && pressedRoute===routeHash()) { if(routeParts()[0]==='standby'){go('#/home');return;} if(inputPrimary()){} else if (mapBrowseActive()) mapAction('control'); else if (gameInputActive()) gamePrimary(); else activateFocused(); }
   longFired = false;
 }
 
@@ -1023,6 +1087,7 @@ let navTimer = null;
 function startNav(dir) {
   stopNav();
   document.querySelector(`[data-key="${dir < 0 ? 'UP' : 'DOWN'}"]`).classList.add('pressed');
+  if(routeParts()[0]==='standby'){if(standbyBlackout)return;standbyShift(dir);return;}
   if(inputNavigate(dir)){navDelay=setTimeout(()=>{navTimer=setInterval(()=>inputNavigate(dir),120);},380);return;}
   if (mapBrowseActive()) { mapNavigate(dir);navDelay=setTimeout(()=>{navTimer=setInterval(()=>mapNavigate(dir),96);},380);return; }
   if (gameInputActive()) { gameSetDirection(dir); return; }
@@ -1085,6 +1150,28 @@ document.querySelectorAll('.key').forEach(btn => {
     btn.addEventListener('pointercancel', stopNav);
   }
 });
+
+/* ---------------- standby idle system ---------------- */
+function activityReset(){
+  idleSince=Date.now();
+  if(standbyBlackout){standbyBlackout=false;render();}
+}
+document.addEventListener('pointerdown',activityReset,{capture:true});
+document.addEventListener('keydown',activityReset,{capture:true});
+setInterval(()=>{
+  const s=state.settings,now=Date.now();
+  if(routeParts()[0]==='standby'){
+    if(standbyBlackout)return;
+    if(s.screenTimeout&&now-idleSince>=SCREEN_TIMEOUTS[s.screenTimeout]*1000){standbyBlackout=true;render();return;}
+    if(s.standbyCycle&&now-standbyStyleAt>=STANDBY_CYCLES[s.standbyCycle]*1000){standbyShift(1);return;}
+    const el=document.getElementById('standbyClock');
+    if(el){const t=standbyClockText();el.textContent=t.clock;const d=document.querySelector('.standby-date');if(d)d.textContent=t.date;}
+    return;
+  }
+  if(standbyBlackout){standbyBlackout=false;render();}
+  if(inputUI.dialog||inputUI.edit||gameInputActive()||!s.standbyDelay)return;
+  if(now-idleSince>=STANDBY_DELAYS[s.standbyDelay]*1000){go('#/standby');}
+},1000);
 
 /* ---------------- boot ---------------- */
 function buildRail() {
