@@ -51,6 +51,7 @@ void of_state_load(void){
   of_state.last_clock_epoch=(int64_t)((uint64_t)u32(b+128)|((uint64_t)u32(b+132)<<32));
   // Reserved-byte extension; old V2 saves retain the defaults above.
   if(!memcmp(b+136,"SB1\1",4)&&b[140]<=4&&b[141]<OF_STANDBY_STYLES&&b[142]<=4){of_state.standby_delay=b[140];of_state.standby_style=b[141];of_state.standby_cycle=b[142];}
+  if(!memcmp(b+144,"SBG\1",4)&&b[148]<OF_BG_COUNT)of_state.bg_style=b[148];
   for(int i=0;i<of_state.photo_count;i++){const uint8_t *p=b+160+i*12;of_state.photos[i]=(of_photo_t){.pan=u16(p),.zoom=p[2],.subject=p[3],.scene_version=u16(p+4),.sequence=u32(p+8)};}
  }
 }
@@ -66,6 +67,7 @@ bool of_state_flush(void){
  b[114]=of_state.scanlines;b[115]=of_state.idle_timeout;b[116]=of_state.photo_count;put16(b+117,of_state.album_deleted);put32(b+120,of_state.photo_sequence);
  uint64_t epoch=(uint64_t)of_state.last_clock_epoch;put32(b+128,epoch);put32(b+132,epoch>>32);
  memcpy(b+136,"SB1\1",4);b[140]=of_state.standby_delay;b[141]=of_state.standby_style;b[142]=of_state.standby_cycle;
+ memcpy(b+144,"SBG\1",4);b[148]=of_state.bg_style;
  for(int i=0;i<of_state.photo_count;i++){uint8_t *p=b+160+i*12;const of_photo_t *photo=&of_state.photos[i];put16(p,photo->pan);p[2]=photo->zoom;p[3]=photo->subject;put16(p+4,photo->scene_version);put32(p+8,photo->sequence);}
  put32(b+508,esp_rom_crc32_le(0,b,508));
  if(xQueueOverwrite(saves,&request)!=pdTRUE){atomic_store(&save_error,true);return false;}

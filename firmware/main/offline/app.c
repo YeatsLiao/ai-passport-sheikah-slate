@@ -236,23 +236,25 @@ static void album_render(void){
   for(int i=0;i<2;i++){lv_obj_t *r=box(modal,5,32+i*31,214,28,CYAN,album_choice==i?90:0);label(r,of_text(i?(album_mode==3?"确认删除":"删除照片"):(album_mode==3?"取消":"返回浏览"),i?(album_mode==3?"DELETE":"DELETE PHOTO"):"BACK"),6,5,202,false,FG);}
  }
 }
-enum {SET_LANG,SET_VOLUME,SET_BRIGHTNESS,SET_SCANLINES,SET_STANDBY,SET_SCREEN,SET_CYCLE,SET_STYLE,SET_YEAR,SET_MONTH,SET_DAY,SET_HOUR,SET_MINUTE,SET_USB_TIME,SET_BATTERY,SET_DIAGNOSTICS,SET_RESET,SETTINGS_COUNT};
-static int setting_value(int field){switch(field){case SET_LANG:return of_state.lang;case SET_VOLUME:return of_state.volume;case SET_BRIGHTNESS:return of_state.brightness;case SET_SCANLINES:return of_state.scanlines;case SET_STANDBY:return of_state.standby_delay;case SET_SCREEN:return of_state.idle_timeout;case SET_CYCLE:return of_state.standby_cycle;default:return of_state.standby_style;}}
-static void setting_assign(int field,int value){switch(field){case SET_LANG:of_state.lang=value;break;case SET_VOLUME:of_state.volume=value;break;case SET_BRIGHTNESS:of_state.brightness=value;break;case SET_SCANLINES:of_state.scanlines=value;break;case SET_STANDBY:of_state.standby_delay=value;break;case SET_SCREEN:of_state.idle_timeout=value;break;case SET_CYCLE:of_state.standby_cycle=value;break;case SET_STYLE:of_state.standby_style=value;break;}of_state_dirty();}
+enum {SET_LANG,SET_VOLUME,SET_BRIGHTNESS,SET_SCANLINES,SET_STANDBY,SET_SCREEN,SET_CYCLE,SET_STYLE,SET_BG,SET_YEAR,SET_MONTH,SET_DAY,SET_HOUR,SET_MINUTE,SET_USB_TIME,SET_BATTERY,SET_DIAGNOSTICS,SET_RESET,SETTINGS_COUNT};
+static const char *const bg_value_cn[OF_BG_COUNT]={"眼纹","石材","眼角","字符环"},*const bg_value_en[OF_BG_COUNT]={"CREST","STONE","CORNER","GLYPHS"};
+static int setting_value(int field){switch(field){case SET_LANG:return of_state.lang;case SET_VOLUME:return of_state.volume;case SET_BRIGHTNESS:return of_state.brightness;case SET_SCANLINES:return of_state.scanlines;case SET_STANDBY:return of_state.standby_delay;case SET_SCREEN:return of_state.idle_timeout;case SET_CYCLE:return of_state.standby_cycle;case SET_BG:return of_state.bg_style;default:return of_state.standby_style;}}
+static void setting_assign(int field,int value){switch(field){case SET_LANG:of_state.lang=value;break;case SET_VOLUME:of_state.volume=value;break;case SET_BRIGHTNESS:of_state.brightness=value;break;case SET_SCANLINES:of_state.scanlines=value;break;case SET_STANDBY:of_state.standby_delay=value;break;case SET_SCREEN:of_state.idle_timeout=value;break;case SET_CYCLE:of_state.standby_cycle=value;break;case SET_STYLE:of_state.standby_style=value;break;case SET_BG:of_state.bg_style=value;break;}of_state_dirty();}
 static void battery_row_text(char *out,size_t capacity){
  if(battery>=0){if(battery_millivolts>=0)snprintf(out,capacity,"%s %d%% · %d mV",of_text("电量","BATTERY"),battery,battery_millivolts);else snprintf(out,capacity,"%s %d%%",of_text("电量","BATTERY"),battery);return;}
  const char *status=of_text(battery_status==BATTERY_READING?"电量读取中":battery_status==BATTERY_NO_DEVICE?"电量计未应答":battery_status==BATTERY_NOT_READY?"电量未就绪":"电量读取失败",battery_status==BATTERY_READING?"BATTERY READING":battery_status==BATTERY_NO_DEVICE?"GAUGE NOT RESPONDING":battery_status==BATTERY_NOT_READY?"SOC NOT READY":"BATTERY READ FAILED");
  if(battery_millivolts>=0)snprintf(out,capacity,"%s · %d mV",status,battery_millivolts);else snprintf(out,capacity,"%s",status);
 }
 static void settings_render(void){
- const char *cn[]={"语言","音量","亮度","扫描线","进入待机","待机后熄屏","自动切换画布","待机风格","年份","月份","日期","小时","分钟","USB 一键校时","电量","诊断信息","重置进度"};
- const char *en[]={"LANGUAGE","VOLUME","BRIGHTNESS","SCANLINES","ENTER STANDBY","SCREEN OFF AFTER","CANVAS INTERVAL","STANDBY STYLE","YEAR","MONTH","DAY","HOUR","MINUTE","USB TIME SYNC","BATTERY","DIAGNOSTICS","RESET PROGRESS"};
+ const char *cn[]={"语言","音量","亮度","扫描线","进入待机","待机后熄屏","自动切换画布","待机风格","背景","年份","月份","日期","小时","分钟","USB 一键校时","电量","诊断信息","重置进度"};
+ const char *en[]={"LANGUAGE","VOLUME","BRIGHTNESS","SCANLINES","ENTER STANDBY","SCREEN OFF AFTER","CANVAS INTERVAL","STANDBY STYLE","BACKGROUND","YEAR","MONTH","DAY","HOUR","MINUTE","USB TIME SYNC","BATTERY","DIAGNOSTICS","RESET PROGRESS"};
  int start=selected/6*6;for(int row=0;row<6&&start+row<SETTINGS_COUNT;row++){int i=start+row;char value[64]="";
   if(i==SET_LANG)snprintf(value,sizeof(value),"%s",of_state.lang?"ENGLISH":"简体中文");
   else if(i==SET_VOLUME||i==SET_BRIGHTNESS)snprintf(value,sizeof(value),"%d",setting_value(i));
   else if(i==SET_SCANLINES)snprintf(value,sizeof(value),"%s",of_text(of_state.scanlines?"开":"关",of_state.scanlines?"ON":"OFF"));
   else if(i>=SET_STANDBY&&i<=SET_CYCLE){unsigned seconds=i==SET_STANDBY?standby_seconds[of_state.standby_delay]:i==SET_SCREEN?screen_seconds[of_state.idle_timeout]:cycle_seconds[of_state.standby_cycle];if(seconds)snprintf(value,sizeof(value),"%us",seconds);else snprintf(value,sizeof(value),"%s",of_text(i==SET_CYCLE?"手动":"关闭",i==SET_CYCLE?"MANUAL":"OFF"));}
   else if(i==SET_STYLE)snprintf(value,sizeof(value),"%c · %s",'E'+of_state.standby_style,of_text(style_cn[of_state.standby_style],style_en[of_state.standby_style]));
+  else if(i==SET_BG)snprintf(value,sizeof(value),"%s",of_text(bg_value_cn[of_state.bg_style],bg_value_en[of_state.bg_style]));
   else if(i>=SET_YEAR&&i<=SET_MINUTE)snprintf(value,sizeof(value),"%d",of_clock_field(i-SET_YEAR));
   else if(i==SET_USB_TIME)snprintf(value,sizeof(value),"%s",of_text(of_clock_valid()?"已校时":"未校时",of_clock_valid()?"SET":"UNSET"));
   snprintf(message,sizeof(message),"%s %s%s",of_text(cn[i],en[i]),value,editing&&i==selected?" <":"");if(i==SET_BATTERY)battery_row_text(message,sizeof(message));list_row(row,message,i==selected);if(i==SET_BATTERY)settings_battery_row=row_labels[row];lv_obj_set_height(row_labels[row],20);lv_label_set_long_mode(row_labels[row],LV_LABEL_LONG_SCROLL_CIRCULAR);
@@ -461,6 +463,11 @@ static void render(void){
  if(lv_display_get_rotation(display)!=rotation)lv_display_set_rotation(display,rotation);
  standby_clock=standby_date=standby_brand=standby_toast=settings_battery_row=NULL;
  scroll_count=0;lv_obj_t *old=screen;screen=lv_obj_create(NULL);lv_obj_remove_style_all(screen);lv_obj_set_style_bg_color(screen,lv_color_hex(BG),0);lv_obj_set_style_bg_opa(screen,255,0);lv_screen_load(screen);if(old)lv_obj_delete(old);lv_image_cache_drop(NULL);of_resources_page_reset();image_path_count=0;save_warning=scan_overlay=NULL;modal=NULL;world=actor=player=effect=game_info=notice=NULL;
+ if(resource_ok&&page!=P_STANDBY){ // Switchable 160x120 plate upscaled 2x; first child = behind everything.
+  static const char *const bg_names[]={"ui/bg0","ui/bg1","ui/bg2","ui/bg3"};
+  lv_obj_t *bg=picture(screen,bg_names[of_state.bg_style],0,0);
+  if(bg){lv_image_set_pivot(bg,0,0);lv_image_set_scale(bg,512);}
+  }
  title=label(screen,"AI PASSPORT",8,5,304,true,CYAN);lv_obj_set_height(title,18);lv_label_set_long_mode(title,LV_LABEL_LONG_SCROLL_CIRCULAR);content=box(screen,0,24,320,198,BG,0);footer=label(screen,"",8,222,304,false,CYAN);
  if(!resource_ok){label(content,"RESOURCE PACK ERROR",8,10,304,true,GOLD);label(content,of_resource_error(),8,44,304,false,FG);label(content,"Upload the matching resources.bin to 0x410000. Firmware and pack versions must match.",8,80,304,false,FG);return;}
  if(page==P_STANDBY||(page==P_ALBUM&&album_mode)){lv_obj_add_flag(title,LV_OBJ_FLAG_HIDDEN);lv_obj_set_pos(content,0,0);lv_obj_set_size(content,lv_display_get_horizontal_resolution(display),lv_display_get_vertical_resolution(display));}
@@ -628,7 +635,7 @@ void of_app_key(bsp_btn_t key,bool long_press){
    else if(!editing){if(selected<SET_YEAR)editing_before=setting_value(selected);else of_clock_edit_begin();editing=true;of_audio_play("menu",false,true);}
    else{if(selected>=SET_YEAR&&!of_clock_edit_commit()){of_audio_play("invalid",false,true);return;}editing=false;of_state_flush();of_audio_play(selected==SET_SCANLINES?(of_state.scanlines?"switch_on":"switch_off"):"ok",false,true);}
   }else if(!editing){selected=bounded(selected+d,0,SETTINGS_COUNT-1);of_audio_play("move",false,false);}
-  else if(selected<SET_YEAR){int value=setting_value(selected),delta=-d;const int lo[]={0,0,1,0,0,0,0,0},hi[]={1,5,5,1,4,5,4,5};setting_assign(selected,bounded(value+delta,lo[selected],hi[selected]));bsp_display_backlight(of_state.brightness*20);of_audio_settings();of_audio_play("move",false,false);}
+  else if(selected<SET_YEAR){int value=setting_value(selected),delta=-d;const int lo[]={0,0,1,0,0,0,0,0,0},hi[]={1,5,5,1,4,5,4,5,3};setting_assign(selected,bounded(value+delta,lo[selected],hi[selected]));bsp_display_backlight(of_state.brightness*20);of_audio_settings();of_audio_play("move",false,false);}
   else{of_clock_adjust(selected-SET_YEAR,-d);of_audio_play("move",false,false);}
   render();return;
  }

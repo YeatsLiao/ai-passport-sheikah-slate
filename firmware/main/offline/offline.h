@@ -15,6 +15,7 @@
 #define OF_SCENE_Y 24
 #define OF_SCENE_H 198
 #define OF_STANDBY_STYLES 6
+#define OF_BG_COUNT 4
 
 typedef struct {const char *cn,*en,*cn_body,*en_body,*image; uint8_t category,slot; uint16_t value;} of_item_t;
 typedef struct {const char *cn,*en,*kind; int16_t x,y;} of_place_t;
@@ -34,7 +35,7 @@ extern const char *of_rune_tile_cn[9];
 extern const lv_font_t of_chinese_10,of_chinese_12,of_chinese_14,of_chinese_16;
 extern const lv_font_t of_clock_28,of_clock_40,of_clock_52;
 typedef struct {uint16_t pan;uint8_t zoom,subject;uint16_t scene_version;uint32_t sequence;} of_photo_t;
-typedef struct {uint8_t lang,volume,brightness,equipped[5],scanlines,idle_timeout,photo_count,standby_delay,standby_style,standby_cycle;int64_t last_clock_epoch;uint32_t photo_sequence;of_photo_t photos[OF_ALBUM_CAPACITY];uint16_t completed,supplies[3],album_deleted;uint8_t comp[50],quests[19],places[23];} of_state_t;
+typedef struct {uint8_t lang,volume,brightness,equipped[5],scanlines,idle_timeout,photo_count,standby_delay,standby_style,standby_cycle,bg_style;int64_t last_clock_epoch;uint32_t photo_sequence;of_photo_t photos[OF_ALBUM_CAPACITY];uint16_t completed,supplies[3],album_deleted;uint8_t comp[50],quests[19],places[23];} of_state_t;
 extern of_state_t of_state;
 void of_state_load(void);
 void of_state_dirty(void);
