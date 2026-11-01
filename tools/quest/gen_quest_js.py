@@ -23,7 +23,7 @@ def to_cn(raw):
     # 转简体,同时去掉自拟标记星号信息留在注释
     return convert(raw, 'zh-cn') if convert else raw
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 def unique_object(pairs):
     result = {}
     for key, value in pairs:
@@ -95,8 +95,8 @@ def build(name, items, prefix):
     return "  %s: [\n%s\n  ]" % (name, ',\n'.join(out))
 
 packs = validate()
-js = "/* BotW 任务数据（自动生成，勿手改；源：tools/quest_data_{main,shrine,side}.py）\n"
-js += "   英文地点与自写梗概：tools/quest_translations_en.json；译名来源见各数据源。\n"
+js = "/* BotW 任务数据（自动生成，勿手改；源：tools/quest/quest_data_{main,shrine,side}.py）\n"
+js += "   英文地点与自写梗概：tools/quest/quest_translations_en.json；译名来源见各数据源。\n"
 js += "   主线20 + 神庙挑战42 + 迷你挑战90 = 152；本体133 + DLC18 + 联动1。\n"
 js += "   既有 m1–m15、s1–s76 编号不变；DLC与联动追加；神庙挑战使用 sh1–sh42。 */\n"
 js += "const QUESTS = {\n"

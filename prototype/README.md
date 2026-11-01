@@ -18,7 +18,7 @@ python -m http.server 8124 --bind 127.0.0.1
 - `index.html` 只有外壳，页面由 `js/app.js` 按哈希路由渲染。
 - `js/data.js` 是展示数据；`js/inventory-data.js` 由 `tools/assets/import_compendium_assets.py` 生成。
 - `js/quest-data.js` 是 LOG 页的中英文任务数据，含全部 DLC 与《异度之刃 2》联动，共 152 条。主线、神庙挑战、迷你挑战三个分类共用目录与详情路由；数据源、数量明细及生成方式见 [原型任务数据](../tools/README.md#原型任务数据)，译名核验边界见 [任务来源](../docs/assets/provenance.md#任务数据)。
-- `js/compendium-data.js` 是**海拉鲁图鉴全量数据**（394 条 = 官方 389 条 + 大师模式 5 条金色怪），由 `tools/gen_compendium_js.py` 从 `tools/compendium_all.json`（官方 API 元数据）+ `tools/cn_*.py`（中文译名）生成；图片取 `assets/raw/03_compendium/BOTW` + `master_mode-BOTW`（已铺位到 `assets/gen/prototype/`）。
+- `js/compendium-data.js` 是**海拉鲁图鉴全量数据**（394 条 = 官方 389 条 + 大师模式 5 条金色怪），由 `tools/compendium/gen_compendium_js.py` 从 `tools/compendium/compendium_all.json`（官方 API 元数据）+ `tools/compendium/cn_*.py`（中文译名）生成；图片取 `assets/raw/03_compendium/BOTW` + `master_mode-BOTW`（已铺位到 `assets/gen/prototype/`）。
 - 图片走相对路径：`../assets/gen/prototype/`、`../assets/gen/firmware/`（少量借用），音效走 `../assets/audio/`。
   因此**本目录必须与 `assets/` 同级**，换成别的服务器根会 404。
 - 英文沿用 `fonts/HyliaSerifBeta-Regular.ttf`；中文统一加载 `../assets/raw/07_fonts/SourceHanSansSC-Medium.otf`（思源黑体 Medium，完整字库约 16.5 MB）。标题、正文、数字样式共用字体栈；这是贴近 BotW 正文的风格替代，非实机原版字库。来源与许可见 [素材来源](../docs/assets/provenance.md#中文字体)。Calamity woff2 保留为素材。

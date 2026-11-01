@@ -24,3 +24,6 @@ Thumbs.db
 
 # 本地自备美术（原版素材不入库）
 assets/raw/imagegen/import/
+
+# ZCode workspace metadata
+.zcode/

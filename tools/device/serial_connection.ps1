@@ -1,7 +1,7 @@
 ﻿# Shared environment/port discovery only. Never opens a serial port or installs anything.
 function Resolve-SlateConnection {
     param([string]$Port = '')
-    $projectRoot = Split-Path -Parent $PSScriptRoot
+    $projectRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
     $candidates = [System.Collections.Generic.List[string]]::new()
     $environmentRoots = [System.Collections.Generic.List[string]]::new()
     if ($env:IDF_PYTHON_ENV_PATH) {

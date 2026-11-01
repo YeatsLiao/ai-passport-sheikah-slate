@@ -45,7 +45,7 @@ python tools/gen/gen_synth.py            # 合成 14 段玩法 wav -> assets/aud
 python tools/assets/verify_assets.py     # 只读校验
 ```
 
-指向固件 C 数组的旧链路（`gen_catalog.py`→`game/catalog.c`、`gen_audio.py`→`main/audio`、`img_to_c.py`→`main/img`、`gen_font.mjs`→`main/font`）已随 2026-10-31 死代码清理删除（tag `firmware-legacy`）。固件数据、字库与设备资源包现由 [build_offline_pack.py](../../tools/build_offline_pack.py) 与 [export_offline_data.mjs](../../tools/export_offline_data.mjs) 生成，操作见 [V1 实现说明](../hardware/offline-v1.md)。
+指向固件 C 数组的旧链路（`gen_catalog.py`→`game/catalog.c`、`gen_audio.py`→`main/audio`、`img_to_c.py`→`main/img`、`gen_font.mjs`→`main/font`）已随 2026-10-31 死代码清理删除（tag `firmware-legacy`）。固件数据、字库与设备资源包现由 [build_offline_pack.py](../../tools/pack/build_offline_pack.py) 与 [export_offline_data.mjs](../../tools/pack/export_offline_data.mjs) 生成，操作见 [V1 实现说明](../hardware/offline-v1.md)。
 
 `img_to_c.py` 与 `gen_audio.py` 已删除（见上）；现行固件生成器 `build_offline_pack.py` 缺依赖或输入时报错退出，不生成占位数据；
 所以 2026-10-28 把合成 wav 移出库后，重跑必须先 `gen_synth.py`。

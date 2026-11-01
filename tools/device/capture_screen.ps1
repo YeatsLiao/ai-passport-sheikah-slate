@@ -5,7 +5,7 @@
 
 $ErrorActionPreference = 'Stop'
 try {
-    $projectRoot = Split-Path -Parent $PSScriptRoot
+    $projectRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
     if (-not $OutputDirectory) {
         $OutputDirectory = Join-Path $projectRoot 'screenshots'
     }

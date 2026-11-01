@@ -51,12 +51,12 @@
 
 ## 资源生成与布局## 资源生成与布局
 
-工具：[build_offline_pack.py](../../tools/build_offline_pack.py)、[export_offline_data.mjs](../../tools/export_offline_data.mjs)。输入为仓库原型数据、用户自备游戏素材和已保存的设备参考生成补件；来源见 [素材记录](../assets/provenance.md#全离线固件补件)。转换工具不联网、不安装依赖。
+工具：[build_offline_pack.py](../../tools/pack/build_offline_pack.py)、[export_offline_data.mjs](../../tools/pack/export_offline_data.mjs)。输入为仓库原型数据、用户自备游戏素材和已保存的设备参考生成补件；来源见 [素材记录](../assets/provenance.md#全离线固件补件)。转换工具不联网、不安装依赖。
 
 从仓库根执行：
 
 ```powershell
-python -B tools/build_offline_pack.py --fonts
+python -B tools/pack/build_offline_pack.py --fonts
 ```
 
 这只是资源/字体转换，不调用 CMake、编译器或烧录工具。需要现有 Python/Pillow、Node、已安装的 lv_font_conv 与 @resvg/resvg-js；[device_svg.mjs](../../tools/web/device_svg.mjs) 只将已有 SVG 派生为设备图标，不安装依赖。输出：
@@ -102,22 +102,22 @@ esptool.py --chip esp32c3 merge_bin -o merged-binary.bin --flash_mode dio --flas
 
 ## USB 一键校时
 
-先更新配套 app 和资源包，关闭 `idf.py monitor` / 其他串口工具，双击根目录 [校时.cmd](../../校时.cmd)。它调用 [sync_time.ps1](../../tools/sync_time.ps1) 和 [sync_time.py](../../tools/sync_time.py)，与截图共用 [serial_connection.ps1](../../tools/serial_connection.ps1) 查找已有 Python/pyserial 和选择设备；多设备时仍由用户选端口，不向其他设备重试。也可从根目录执行 `python tools/sync_time.py --port COM4`。无联网、复位、烧录或依赖安装；脚本等待成功/失败并保留双击窗口。
+先更新配套 app 和资源包，关闭 `idf.py monitor` / 其他串口工具，双击根目录 [sync-time.cmd](../../sync-time.cmd)。它调用 [sync_time.ps1](../../tools/device/sync_time.ps1) 和 [sync_time.py](../../tools/device/sync_time.py)，与截图共用 [serial_connection.ps1](../../tools/device/serial_connection.ps1) 查找已有 Python/pyserial 和选择设备；多设备时仍由用户选端口，不向其他设备重试。也可从根目录执行 `python tools/device/sync_time.py --port COM4`。无联网、复位、烧录或依赖安装；脚本等待成功/失败并保留双击窗口。
 
 协议：`SLATE_TIME_PING` 回复 `@SLATE_TIME_READY 1 UNIX_UTC`；`SLATE_TIME_SET <Unix UTC 秒> <8位十六进制随机标识>` 以 LF 结束，成功回复 `@SLATE_TIME_OK 1 <标识> <秒>`。设备允许 2024～2099 年，忙碌、格式错误或手动编辑时返回 `@SLATE_TIME_ERROR`。成功表示当前系统时钟已设置，不保证 NVS 已落盘；电脑必须核对标识与秒值，写入/等待各有超时，不无限 flush。时区固定北京时间。屏幕关闭不影响计时；完全断电后仍需重新同步或手动校时，不能把上次保存值当成现在。
 
 ## USB 截图
 
-已加入 `offline/screenshot.c` 与主机脚本 `tools/capture_screen.py`。2026-10-31 USB 收发驱动、直接分块读写及 16KB 截图重绘栈修订后，用户已生成并提供 15 张 320×240 PNG，证明自定义截图链路可输出设备画面；官方网页兼容性仍待验证。截图功能本身不要求改资源包，但本轮装备/声音资源修订要求 app 与 pack 配套更新。
+已加入 `offline/screenshot.c` 与主机脚本 `tools/device/capture_screen.py`。2026-10-31 USB 收发驱动、直接分块读写及 16KB 截图重绘栈修订后，用户已生成并提供 15 张 320×240 PNG，证明自定义截图链路可输出设备画面；官方网页兼容性仍待验证。截图功能本身不要求改资源包，但本轮装备/声音资源修订要求 app 与 pack 配套更新。
 
 在设备上进入要截图的页面，先用 **Ctrl+]** 退出 `idf.py monitor`（其他串口软件也需关闭）。
 
-也可直接双击仓库根目录的 [`截图.cmd`](../../截图.cmd)：自动寻找 Python 环境，只有一台 ESP USB 设备时直接使用，多台时询问端口（存在 COM4 时默认 COM4）。图片保存在根目录 `screenshots/` 并自动打开；失败时保留窗口显示错误。电脑脚本现要求带 USB 驱动修复和就绪回复的新版截图固件。
+也可直接双击仓库根目录的 [`screenshot.cmd`](../../screenshot.cmd)：自动寻找 Python 环境，只有一台 ESP USB 设备时直接使用，多台时询问端口（存在 COM4 时默认 COM4）。图片保存在根目录 `screenshots/` 并自动打开；失败时保留窗口显示错误。电脑脚本现要求带 USB 驱动修复和就绪回复的新版截图固件。
 
 命令行方式：从仓库根目录，在 ESP-IDF 终端执行：
 
 ```powershell
-python tools/capture_screen.py --port COM4
+python tools/device/capture_screen.py --port COM4
 ```
 
 成功时在当前目录保存带时间戳的 `slate-*.png` 并打印绝对路径；可用 `--output screen.png` 指定新文件名。串口若不是 COM4，替换为实际 USB Serial/JTAG 端口。脚本不主动切换复位控制线，端口被占用、固件未更新、传输缺失或校验失败会报错，接收失败不会保存图片。默认超时 45 秒。

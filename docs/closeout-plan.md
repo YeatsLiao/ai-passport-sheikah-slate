@@ -65,8 +65,8 @@
 - [ ] 把压缩成单行的关键逻辑展开，重点包括输入、音效、电量初始化和存档；每次只处理一个模块。
 - [ ] 评估是否仍需要 `-Wno-misleading-indentation`，完成对应整理并有构建证据后再决定移除。
 - [x] 旧 `page_*`、旧五关模型、旧字体/图像数组和旧工具逐项检查引用；有迁移价值的归档，无用途的形成删除清单后执行。（2026-10-31 执行：删除 74 文件约 4.4 万行——main 根 21、game/ 旧模型 13、audio/ 4、font/ 3、img/ 28、images.cmake、tools 死端 img_to_c/gen_audio/gen_font；生成器回归通过，回溯 tag `firmware-legacy`）
-- [ ] 截图与校时继续共用串口环境发现，避免重新复制两套逻辑。
-- [ ] 检查生成文件、依赖缓存、日志、下载残片和设计草图的忽略规则；不把本地缓存当成可交付依赖。
+- [x] 截图与校时继续共用串口环境发现，避免重新复制两套逻辑。（2026-11-01 核验：两者均 dot-source `tools/device/serial_connection.ps1`；本轮将五件整组移入 `tools/device/`，根入口英文名 `screenshot.cmd`/`sync-time.cmd`）
+- [x] 检查生成文件、依赖缓存、日志、下载残片和设计草图的忽略规则；不把本地缓存当成可交付依赖。（2026-11-01：build/managed_components/node_modules/__pycache__/screenshots 均已覆盖，新增 `.zcode/`；assets 未跟踪项属用户自备素材策略，不设忽略）
 
 完成标准：结构说明与活动构建入口一致；整理前后功能和资源引用不变；没有混入无关删除或格式化。
 

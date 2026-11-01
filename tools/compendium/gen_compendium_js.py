@@ -6,15 +6,16 @@
 输出:COMP_CATS(全量 have=total) + COMP_ENTRIES(394 条,img 指向 gen/prototype 的 snake_case 图)
 """
 import json, os, sys
+from pathlib import Path
 
-ROOT = r'D:\Project\ai-passport-sheikah-slate'
-sys.path.insert(0, ROOT + r'\tools')
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from cn_creatures import CN as CN_CRE
 from cn_monsters import CN as CN_MON
 from cn_materials import CN_MATERIALS, CN_TREASURE
 from cn_equipment import CN as CN_EQ
 
-d = json.load(open(ROOT + r'\tools\compendium_all.json', encoding='utf-8'))
+d = json.load(open(ROOT / 'tools' / 'compendium_all.json', encoding='utf-8'))
 data = sorted(d['data'], key=lambda e: e['id'])
 
 CAT_ALIAS = {'treasure': 'treasures'}
@@ -92,7 +93,7 @@ COMP_CATS = [
     ('treasures', 'TREASURE', '宝物', 'cp_treasure_chest.png', 'cat_treasures.png'),
 ]
 lines = []
-lines.append('// 海拉鲁图鉴全量数据 · 由 tools/gen_compendium_js.py 生成,请勿手改')
+lines.append('// 海拉鲁图鉴全量数据 · 由 tools/compendium/gen_compendium_js.py 生成,请勿手改')
 lines.append('// 来源:Hyrule Compendium API(官方元数据)+ 中文译名整理 + 大师模式补充')
 lines.append('const COMP_CATS = [')
 for i, (cid, label, cn, cover, art) in enumerate(COMP_CATS):
@@ -108,7 +109,7 @@ for cid in by_cat:
     lines.append('  ],')
 lines.append('};')
 
-out_path = ROOT + r'\prototype\js\compendium-data.js'
+out_path = ROOT / 'prototype' / 'js' / 'compendium-data.js'
 open(out_path, 'w', encoding='utf-8').write('\n'.join(lines))
 print('written:', out_path)
 print('counts:', {c: len(by_cat[c]) for c in by_cat})

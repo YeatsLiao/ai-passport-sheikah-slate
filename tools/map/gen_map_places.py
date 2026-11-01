@@ -4,7 +4,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 import yaml
 
-ROOT=Path(__file__).resolve().parents[1]
+ROOT=Path(__file__).resolve().parents[2]
 RAW=ROOT/'assets/raw/05_world/maps'
 
 class TextRows(HTMLParser):
@@ -41,5 +41,5 @@ if __name__=='__main__':
         points.append(dict(id=key+'_'+str(len(points)),gameId=key,kind=kind,x=pos['X'],z=pos['Z'],cn=cn,en=en))
     points.sort(key=lambda p:(p['z'],p['x'],p['gameId']))
     output=ROOT/'prototype/js/map-data.js'
-    output.write_text('/* Generated from archived game map records; see tools/gen_map_places.py. */\nconst MAP_PLACES = '+json.dumps(points,ensure_ascii=False,separators=(',',':'))+';\n',encoding='utf-8')
+    output.write_text('/* Generated from archived game map records; see tools/map/gen_map_places.py. */\nconst MAP_PLACES = '+json.dumps(points,ensure_ascii=False,separators=(',',':'))+';\n',encoding='utf-8')
     print(f'{len(points)} points, {sum(bool(p["cn"]) for p in points)} Chinese names; '+str(output.relative_to(ROOT)))

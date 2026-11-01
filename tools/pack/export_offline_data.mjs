@@ -1,7 +1,7 @@
 // Repository-owned const data only; no prototype application or browser code executes.
 import fs from 'node:fs';
 import vm from 'node:vm';
-const root=new URL('../',import.meta.url),context={};vm.createContext(context);
+const root=new URL('../../',import.meta.url),context={};vm.createContext(context);
 const result={};
 function literal(file,name){
  const text=fs.readFileSync(new URL(file,root),'utf8');
