@@ -12,6 +12,11 @@ endforeach()
 idf_component_register(SRCS ${OFFLINE_SRCS} INCLUDE_DIRS "." "offline"
     REQUIRES bsp PRIV_REQUIRES nvs_flash esp_timer esp_partition esp_mm esp_driver_usb_serial_jtag vfs)
 
+# Register the resource pack so `idf.py flash` and `idf.py merge-bin` include it
+# (offset must match partitions.csv; regenerate with tools/build_offline_pack.py first).
+esptool_py_flash_target_image(flash "resources" "0x410000"
+    "${CMAKE_CURRENT_LIST_DIR}/../../assets/gen/firmware/offline/resources.bin")
+
 # Offline V1 is intentionally written in a dense, one-statement-per-line style;
 # the indentation heuristic misfires on it, so disable only that check here.
 target_compile_options(${COMPONENT_LIB} PRIVATE -Wno-misleading-indentation)

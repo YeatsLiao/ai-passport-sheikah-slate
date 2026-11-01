@@ -76,6 +76,30 @@ ADP1：magic、16000Hz、采样数，再接低半字节优先 IMA ADPCM。各声
 
 2026-10-31 音效触发对齐原型（代码静态核验，未实机听测）：接入待机启动（`startup`，离开待机进目录）、换页（`page`）、进入符文（`activate`）、返回/关闭菜单（`back`）、打开菜单与进入编辑（`menu`）、扫描线开关（`switch_on/off`）、地图缩放（`zoom`）、相册浏览/查看/删除、分类与暂停菜单的选择/确认/取消；摩托起跳按原型改为静音（仅开始骑行发声）；静止器在警告窗口（≤1.683s）暂停后恢复会重播 `stasis_timer`，补偿暂停中断的一次性音。已移植的播放规则：move/cursor/zoom/sensor 同类替换、magnet_move 循环与停手即停、六路上限淘汰最旧、完成音全停、音量为 0 即静音。未移植：原型 35/85ms 同名冷却（设备按键重复 ≥120ms 且同类替换已防叠加）与独立音效开关（设备无该设置项，以音量 0 静音代替）——如需独立开关须扩展设置页与存档布局，另行决定。宝箱落地声、摩托引擎声原型本身未接入，不加替代音。
 
+## 合并烧录包
+
+资源包已注册进固件 flash 目标（`main/CMakeLists.txt` 末尾的 `esptool_py_flash_target_image`），所以 `idf.py flash` 会自动带上 resources.bin，合并命令也会自动包含它。工程构建成功后：
+
+```bash
+idf.py merge-bin        # 产出 build/merged-binary.bin（0x0 起含 bootloader/分区表/app/resources）
+```
+
+整包一次写入（可先擦全片）：
+
+```bash
+esptool.py --chip esp32c3 --port COMx --baud 460800 write_flash 0x0 build/merged-binary.bin
+```
+
+等价的手工合并（merge-bin 不可用时的 fallback，偏移与 [partitions.csv](../../firmware/partitions.csv) 对应，flash 参数 dio/80m/8MB 与 sdkconfig 一致）：
+
+```bash
+esptool.py --chip esp32c3 merge_bin -o merged-binary.bin --flash_mode dio --flash_freq 80m --flash_size 8MB \
+  0x0 build/bootloader/bootloader.bin 0x8000 build/partition_table/partition-table.bin \
+  0x10000 build/ai-passport-sheikah-slate.bin 0x410000 ../assets/gen/firmware/offline/resources.bin
+```
+
+合并包必须用**当次构建**的 app 与当前 resources.bin 生成；旧 build 目录里的产物不能代表当前版本。合并成功不等于实机验收。
+
 ## USB 一键校时
 
 先更新配套 app 和资源包，关闭 `idf.py monitor` / 其他串口工具，双击根目录 [校时.cmd](../../校时.cmd)。它调用 [sync_time.ps1](../../tools/sync_time.ps1) 和 [sync_time.py](../../tools/sync_time.py)，与截图共用 [serial_connection.ps1](../../tools/serial_connection.ps1) 查找已有 Python/pyserial 和选择设备；多设备时仍由用户选端口，不向其他设备重试。也可从根目录执行 `python tools/sync_time.py --port COM4`。无联网、复位、烧录或依赖安装；脚本等待成功/失败并保留双击窗口。
