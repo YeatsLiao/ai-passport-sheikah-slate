@@ -29,8 +29,52 @@ assets/raw/imagegen/import/
 # ZCode workspace metadata
 .zcode/
 
-# 用户自备版权素材（原作解包）：不入库，按 tools/README「音效导入」自备导入
-assets/audio/botw/
+# 音效仅跟踪运行映射中的 WAV 和来源清单；原包与备用文件保留在本地。
+assets/audio/botw/*
+!assets/audio/botw/manifest.json
+!assets/audio/botw/Amiibo_TouchEffect01.wav
+!assets/audio/botw/BGM_LocationOpen_S.wav
+!assets/audio/botw/BitaLock_Timer03.wav
+!assets/audio/botw/Bitalock_End_06.wav
+!assets/audio/botw/Bitalock_End_07.wav
+!assets/audio/botw/Bitalock_End_08.wav
+!assets/audio/botw/Bitalock_Hit_06.wav
+!assets/audio/botw/Bitalock_Hitend_06.wav
+!assets/audio/botw/Bitalock_Start_02.wav
+!assets/audio/botw/Bomb_appear01.wav
+!assets/audio/botw/IceMakerBlock_Crush.wav
+!assets/audio/botw/MotorcycleEngine-loop.wav
+!assets/audio/botw/Motorcycle_BodyLand00.wav
+!assets/audio/botw/Motorcycle_EngineJump00.wav
+!assets/audio/botw/Motorcycle_EngineStart.wav
+!assets/audio/botw/RemoteBomb.wav
+!assets/audio/botw/SE_MagneCatch_Catch.wav
+!assets/audio/botw/SE_MagneCatch_Disappear.wav
+!assets/audio/botw/SE_MagneCatch_Moving.wav
+!assets/audio/botw/SE_MagneCatch_Stop.wav
+!assets/audio/botw/SYS_CursorMove_Sub.wav
+!assets/audio/botw/SYS_ItemGet_Common.wav
+!assets/audio/botw/SheikerStoneClose_04.wav
+!assets/audio/botw/SheikerStoneOpen_04_light.wav
+!assets/audio/botw/Sys_Camera_Detect.wav
+!assets/audio/botw/Sys_Camera_Shutter.wav
+!assets/audio/botw/Sys_Camera_ZoomEnd.wav
+!assets/audio/botw/Sys_Challenge_Complete.wav
+!assets/audio/botw/Sys_Cmn_Cancel_01.wav
+!assets/audio/botw/Sys_Cmn_Decide_01.wav
+!assets/audio/botw/Sys_Do_Invalid.wav
+!assets/audio/botw/Sys_GameStart.wav
+!assets/audio/botw/Sys_Item_IceMaker_Making.wav
+!assets/audio/botw/Sys_Item_SheikSensor.wav
+!assets/audio/botw/Sys_MainScreen_Lockon.wav
+!assets/audio/botw/Sys_PauseMenu_PageSlide.wav
+!assets/audio/botw/Sys_PauseMenu_UnEquip.wav
+!assets/audio/botw/Sys_Pouch_CursolMove_03.wav
+!assets/audio/botw/Sys_Pouch_OpenSubWindow_00.wav
+!assets/audio/botw/Sys_ShortCut_EquipDecide.wav
+!assets/audio/botw/Sys_SlideSwitch_Off.wav
+!assets/audio/botw/Sys_SlideSwitch_On.wav
+!assets/audio/botw/TboxFieldWood_Open.wav
 assets/data/
 assets/manifest.json
 

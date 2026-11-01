@@ -1,0 +1,366 @@
+{
+  "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+  "submitter": "Random Talking Bush",
+  "platform": "Nintendo Switch",
+  "files": [
+    {
+      "kind": "move",
+      "file": "Sys_Pouch_CursolMove_03.wav",
+      "archive_path": "M_UI/Sys_Pouch_CursolMove_03.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "f7390cf5d4f0fbaedbe77a29b47479976e9bc3988610e3c289ad05f3f99f4b77",
+      "bytes": 15664
+    },
+    {
+      "kind": "ok",
+      "file": "Sys_Cmn_Decide_01.wav",
+      "archive_path": "M_UI/Sys_Cmn_Decide_01.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "53b87757a1251f734f9fce89bc19b6e651de799361263a43343ce415bb60214a",
+      "bytes": 384044
+    },
+    {
+      "kind": "back",
+      "file": "Sys_Cmn_Cancel_01.wav",
+      "archive_path": "M_UI/Sys_Cmn_Cancel_01.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "7d429fb60049fc5289cbbcc11849852dd83d0db5cb75cb9f8cf2ab101d7a76f4",
+      "bytes": 68058
+    },
+    {
+      "kind": "invalid",
+      "file": "Sys_Do_Invalid.wav",
+      "archive_path": "M_UI/Sys_Do_Invalid.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "4a94f13eafa58c8173a872b647aff68c597c6c3f8b03013e0e585f0731d7c970",
+      "bytes": 61378
+    },
+    {
+      "kind": "activate",
+      "file": "SheikerStoneOpen_04_light.wav",
+      "archive_path": "M_UI/SheikerStoneOpen_04_light.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "b2d8f734613453406faf3214942f5a5afc834f3f65b82873df62fac45ee9162c",
+      "bytes": 488808
+    },
+    {
+      "kind": "close",
+      "file": "SheikerStoneClose_04.wav",
+      "archive_path": "M_UI/SheikerStoneClose_04.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "59e11ff512bb63f99d8c47b31c903ffecbf76f704679f781f7ac01c8cabd273e",
+      "bytes": 128576
+    },
+    {
+      "kind": "startup",
+      "file": "Sys_GameStart.wav",
+      "archive_path": "M_UI/Sys_GameStart.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "c430526f47a7fed0508cf7456f911083f7cbbccb449662d80eae72924a141b1d",
+      "bytes": 4718636
+    },
+    {
+      "kind": "page",
+      "file": "Sys_PauseMenu_PageSlide.wav",
+      "archive_path": "M_UI/Sys_PauseMenu_PageSlide.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "5473fa9645063c823cc64af3ff31fe42a1c224185d75ededaefabe5413b2ca83",
+      "bytes": 24054
+    },
+    {
+      "kind": "menu",
+      "file": "Sys_Pouch_OpenSubWindow_00.wav",
+      "archive_path": "M_UI/Sys_Pouch_OpenSubWindow_00.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "de7d544ffce32ac27a9b722f0b6e1eb27f8c5c815ca373e1c5d9efe3e939ff9a",
+      "bytes": 192044
+    },
+    {
+      "kind": "equip",
+      "file": "Sys_ShortCut_EquipDecide.wav",
+      "archive_path": "M_UI/Sys_ShortCut_EquipDecide.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "9657daac9b97134010a5e19ec56d904269b35162a9f2be2fe872e385e07bfe2a",
+      "bytes": 15914
+    },
+    {
+      "kind": "shutter",
+      "file": "Sys_Camera_Shutter.wav",
+      "archive_path": "M_UI/Sys_Camera_Shutter.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "87152d5f3f3584ae12b46efae505ed07cdd9b828c39e512d0c9de67599923413",
+      "bytes": 39430
+    },
+    {
+      "kind": "detect",
+      "file": "Sys_Camera_Detect.wav",
+      "archive_path": "M_UI/Sys_Camera_Detect.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "22ae24e151e0db7ee28f1579009f1521a95e9b1af5b2de13910243b2a5997bd6",
+      "bytes": 191744
+    },
+    {
+      "kind": "zoom",
+      "file": "Sys_Camera_ZoomEnd.wav",
+      "archive_path": "M_UI/Sys_Camera_ZoomEnd.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "8f1b1a48e6da30f5e2887c1e82874625c71b58ae9f173fda2dc9f335d469b853",
+      "bytes": 11830
+    },
+    {
+      "kind": "sensor",
+      "file": "Sys_Item_SheikSensor.wav",
+      "archive_path": "M_UI/Sys_Item_SheikSensor.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "6566e245160c1ab127a72bb3c3985bb8b7b92da5b21fae9862655e245e8ef5b8",
+      "bytes": 100712
+    },
+    {
+      "kind": "found",
+      "file": "BGM_LocationOpen_S.wav",
+      "archive_path": "M_UI/BGM_LocationOpen_S.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "92f163fa51a52b7419d78c736a4260cc371c31eb601e55234d0e204699477372",
+      "bytes": 648680
+    },
+    {
+      "kind": "cryonis",
+      "file": "Sys_Item_IceMaker_Making.wav",
+      "archive_path": "M_UI/Sys_Item_IceMaker_Making.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "c6e32ea8d7bf5be643c7c87bd8ad25fe183c0892b4770b2aff7d22bac9328d73",
+      "bytes": 129076
+    },
+    {
+      "kind": "amiibo",
+      "file": "Amiibo_TouchEffect01.wav",
+      "archive_path": "M_UI/Amiibo_TouchEffect01.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "b9fa10b4c389f93fc3da10e8022f3cb14ac213c5243197317ca470bb649cd299",
+      "bytes": 343700
+    },
+    {
+      "kind": "complete",
+      "file": "Sys_Challenge_Complete.wav",
+      "archive_path": "M_UI/Sys_Challenge_Complete.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "93c292f6a17e9b5f7123544f27eaeea177b825dd0d3d9f790b860c19d137c0a4",
+      "bytes": 454284
+    },
+    {
+      "kind": "switch_on",
+      "file": "Sys_SlideSwitch_On.wav",
+      "archive_path": "M_UI/Sys_SlideSwitch_On.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "8b6bd68fc01d8e9c1c2b44503527de7740496f2c89862b34fcba195562967bf4",
+      "bytes": 131116
+    },
+    {
+      "kind": "switch_off",
+      "file": "Sys_SlideSwitch_Off.wav",
+      "archive_path": "M_UI/Sys_SlideSwitch_Off.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "d25afb777a70b92620fd77f81401627eb7c125c46bc067e688e3fb4147fdb6b1",
+      "bytes": 262188
+    },
+    {
+      "kind": "cursor",
+      "file": "SYS_CursorMove_Sub.wav",
+      "archive_path": "M_UI/SYS_CursorMove_Sub.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "049624a36d4ba82664661875c398d8f985aae5bfc9d2d87c09a098740a196805",
+      "bytes": 31956
+    },
+    {
+      "kind": "lock",
+      "file": "Sys_MainScreen_Lockon.wav",
+      "archive_path": "M_UI/Sys_MainScreen_Lockon.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "81248989e5254516e74432ad976fe22062ad8a9b8814f5d05b5a3308e0c84130",
+      "bytes": 41048
+    },
+    {
+      "kind": "boom",
+      "file": "RemoteBomb.wav",
+      "archive_path": "M_SceneStatic/RemoteBomb.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "727831207cdb5c94c09bdad1ff9cf7fad2fe5bf057b649c3626bcb2431ef29e5",
+      "bytes": 278512
+    },
+    {
+      "kind": "place",
+      "file": "Bomb_appear01.wav",
+      "archive_path": "M_SceneStatic/Bomb_appear01.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "d0aedd9f439ad24eac3fae6296291ab3e01cbcf92dfe16cf6e61462f465e9070",
+      "bytes": 76740
+    },
+    {
+      "kind": "unequip",
+      "file": "Sys_PauseMenu_UnEquip.wav",
+      "archive_path": "M_SceneStatic/Sys_PauseMenu_UnEquip.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "93d945ccc12cf284dc7d392fc510a284eb0a8f38f56e1cb85da7174d1f87a550",
+      "bytes": 36642
+    },
+    {
+      "kind": "stasis_timer",
+      "file": "BitaLock_Timer03.wav",
+      "archive_path": "ExpressionSound/BitaLock_Timer03.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "ffab9a53be5d153390485a2c6f2bdc65a44c64b0fbc95e064d4040d3ed10f601",
+      "bytes": 161598
+    },
+    {
+      "kind": "item_get",
+      "file": "SYS_ItemGet_Common.wav",
+      "archive_path": "GetItemSound/SYS_ItemGet_Common.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405753/",
+      "sha256": "7022301c9e1eb59c8dbb73163999fe957509d3d7c9ad9692c2c88e8c304dc17d",
+      "bytes": 94586
+    },
+    {
+      "kind": "magnet_catch",
+      "file": "SE_MagneCatch_Catch.wav",
+      "archive_path": "The Legend of Zelda - Breath of the Wild (Switch)/Miscellaneous/ReactionHit/SE_MagneCatch_Catch.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/",
+      "sha256": "6af2c9a621e71db353ad99001cb72204cd7e4494ce39088dae95c3871549ead9",
+      "bytes": 52052
+    },
+    {
+      "kind": "magnet_move",
+      "file": "SE_MagneCatch_Moving.wav",
+      "archive_path": "The Legend of Zelda - Breath of the Wild (Switch)/Miscellaneous/ReactionHit/SE_MagneCatch_Moving.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/",
+      "sha256": "1f2035afa003a6444c9d774c61341f27a04b79778d9d1124f4e58c7241e11031",
+      "bytes": 129160
+    },
+    {
+      "kind": "magnet_stop",
+      "file": "SE_MagneCatch_Stop.wav",
+      "archive_path": "The Legend of Zelda - Breath of the Wild (Switch)/Miscellaneous/ReactionHit/SE_MagneCatch_Stop.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/",
+      "sha256": "d4f5be63aa56ef720817cd55cadc64536c7b695c0ad4773a21ecf0bea3b5ee9c",
+      "bytes": 89612
+    },
+    {
+      "kind": "magnet_release",
+      "file": "SE_MagneCatch_Disappear.wav",
+      "archive_path": "The Legend of Zelda - Breath of the Wild (Switch)/Miscellaneous/ReactionHit/SE_MagneCatch_Disappear.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/",
+      "sha256": "878c9b784ed49fc7f99094adf233d3e4f4b966f5b1d653470ec644603efcf17c",
+      "bytes": 58326
+    },
+    {
+      "kind": "stasis_start",
+      "file": "Bitalock_Start_02.wav",
+      "archive_path": "The Legend of Zelda - Breath of the Wild (Switch)/Miscellaneous/ReactionHit/Bitalock_Start_02.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/",
+      "sha256": "4177bb993b1bedfb0c0f2dbe56e196cd914e9e45eb4b3ee4bc2205aa051a0c5b",
+      "bytes": 215548
+    },
+    {
+      "kind": "stasis_hit",
+      "file": "Bitalock_Hit_06.wav",
+      "archive_path": "The Legend of Zelda - Breath of the Wild (Switch)/Miscellaneous/ReactionHit/Bitalock_Hit_06.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/",
+      "sha256": "c393ced19ab437e35124485a1dea2f50eed287a0eca443ca365adaf9d524ebbb",
+      "bytes": 185050
+    },
+    {
+      "kind": "stasis_hit_end",
+      "file": "Bitalock_Hitend_06.wav",
+      "archive_path": "The Legend of Zelda - Breath of the Wild (Switch)/Miscellaneous/ReactionHit/Bitalock_Hitend_06.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/",
+      "sha256": "1ae37b0f7a609104d0ac6c70c9d963eef91e9ebaf52e15ca9372eaa8dd88f493",
+      "bytes": 185478
+    },
+    {
+      "kind": "stasis_release_1",
+      "file": "Bitalock_End_06.wav",
+      "archive_path": "The Legend of Zelda - Breath of the Wild (Switch)/Miscellaneous/ReactionHit/Bitalock_End_06.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/",
+      "sha256": "9e8d8c1109404aa84c812637f487ab13935f9f15991f33fc7f01baaa495b8a87",
+      "bytes": 280420
+    },
+    {
+      "kind": "stasis_release_2",
+      "file": "Bitalock_End_07.wav",
+      "archive_path": "The Legend of Zelda - Breath of the Wild (Switch)/Miscellaneous/ReactionHit/Bitalock_End_07.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/",
+      "sha256": "8bc539de56f07744d806678b5b64d52196bc94be8066b1cab19d72becc717fed",
+      "bytes": 278896
+    },
+    {
+      "kind": "stasis_release_3",
+      "file": "Bitalock_End_08.wav",
+      "archive_path": "The Legend of Zelda - Breath of the Wild (Switch)/Miscellaneous/ReactionHit/Bitalock_End_08.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/",
+      "sha256": "5dbda34b613da238d6e977c4c2fbff9ef234f507db2cda3b4f48d83f5672c0aa",
+      "bytes": 342498
+    },
+    {
+      "kind": "chest_open",
+      "file": "TboxFieldWood_Open.wav",
+      "archive_path": "The Legend of Zelda - Breath of the Wild (Switch)/Miscellaneous/TBox_Field_Wood/TboxFieldWood_Open.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/",
+      "sha256": "02df07fcb20fd2150e4bcbd14742fe4c55317a883abf45dbfc7cf8ede6a84600",
+      "bytes": 64828
+    },
+    {
+      "kind": "ice_break",
+      "file": "IceMakerBlock_Crush.wav",
+      "archive_path": "The Legend of Zelda - Breath of the Wild (Switch)/Miscellaneous/Obj_IceMakerBlock/IceMakerBlock_Crush.wav",
+      "source": "https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/",
+      "sha256": "f7cac964b6bc51cdde2f0b85b082c8bd90fd3598deb44a9fbae488e129231008",
+      "bytes": 251806
+    },
+    {
+      "kind": "bike_engine_source",
+      "file": "MotorcycleEngine.wav",
+      "archive_path": "Equipment/GameROMMotorcycle/MotorcycleEngine.wav",
+      "source": "User-provided Equipment archive",
+      "sha256": "d63df66da78e2a80e60508d3b2d1ac4a1e91cbef2f9fb7101b84a58b3ca897f7",
+      "bytes": 307882,
+      "seconds": 3.2059375
+    },
+    {
+      "kind": "bike_engine",
+      "file": "MotorcycleEngine-loop.wav",
+      "archive_path": "Equipment/GameROMMotorcycle/MotorcycleEngine.wav",
+      "source": "User-provided Equipment archive",
+      "sha256": "75d0ec1809d244062f3bc55de879ec1b20607a59380e4b78e97714cdf2687974",
+      "bytes": 305462,
+      "seconds": 3.1814375,
+      "source_sha256": "d63df66da78e2a80e60508d3b2d1ac4a1e91cbef2f9fb7101b84a58b3ca897f7",
+      "derivation": "PCM frames [1176,153885), from original LOOP.txt; no normalization or resampling"
+    },
+    {
+      "kind": "bike_start",
+      "file": "Motorcycle_EngineStart.wav",
+      "archive_path": "Equipment/GameROMMotorcycle/Motorcycle_EngineStart.wav",
+      "source": "User-provided Equipment archive",
+      "sha256": "fb485a624a7ea2d26b784b6fa90acaf8e99556be4439d8a6d9c8907a3a062771",
+      "bytes": 71216,
+      "seconds": 0.741375
+    },
+    {
+      "kind": "bike_jump",
+      "file": "Motorcycle_EngineJump00.wav",
+      "archive_path": "Equipment/GameROMMotorcycle/Motorcycle_EngineJump00.wav",
+      "source": "User-provided Equipment archive",
+      "sha256": "6117afc116954f133632af8ae668a540554f4a705e78cfedb9ea118f125924f5",
+      "bytes": 59872,
+      "seconds": 0.6232083333333334
+    },
+    {
+      "kind": "bike_land",
+      "file": "Motorcycle_BodyLand00.wav",
+      "archive_path": "Equipment/GameROMMotorcycle/Motorcycle_BodyLand00.wav",
+      "source": "User-provided Equipment archive",
+      "sha256": "a95cc3d1b8c14fdb7625caf8070211bc878cc1ee7dfe42758e62eec8a35f01fb",
+      "bytes": 52030,
+      "seconds": 0.5415208333333333
+    }
+  ]
+}
