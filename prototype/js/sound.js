@@ -1,5 +1,5 @@
 /* Exact WAV bytes imported from the Switch BotW Sounds Resource archive.
-   Per-file source paths and hashes: assets/audio/prototype/botw/manifest.json. */
+   Per-file source paths and hashes: assets/audio/botw/manifest.json. */
 const SFX_FILES={...BOTW_SFX_FILES,complete:'Sys_Challenge_Complete-audible.wav'};
 const sfxCache=new Map(),activeSfx=new Set(),sfxLast=new Map();
 function stopSfxKind(kind){for(const a of activeSfx)if(a.dataset.sound===kind){a.pause();activeSfx.delete(a);}}
@@ -10,7 +10,7 @@ function beep(kind){
   const file=SFX_FILES[name];if(!file)return; // No invented substitute for missing rune SFX.
   const now=performance.now(),cooldown=['move','cursor','zoom'].includes(name)?85:35;
   if(now-(sfxLast.get(name)??-Infinity)<cooldown)return;sfxLast.set(name,now);
-  if(!sfxCache.has(file)){const a=new Audio('../assets/audio/prototype/botw/'+file);a.preload='auto';sfxCache.set(file,a);}
+  if(!sfxCache.has(file)){const a=new Audio('../assets/audio/botw/'+file);a.preload='auto';sfxCache.set(file,a);}
   if(['move','cursor','zoom','sensor'].includes(name))for(const a of activeSfx)if(a.dataset.sound===name){a.pause();activeSfx.delete(a);}
   while(activeSfx.size>=6){const a=activeSfx.values().next().value;a.pause();activeSfx.delete(a);}
   const node=sfxCache.get(file).cloneNode();node.dataset.sound=name;node.loop=name==='magnet_move';

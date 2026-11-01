@@ -3,7 +3,7 @@ const mapName=p=>state.lang==='cn'?(p.cn||p.en):p.en;
 const mapKind=k=>L({shrine:'神庙',tower:'希卡塔',stable:'驿站',village:'聚落',shop:'商店',landmark:'地标'}[k],{shrine:'SHRINE',tower:'TOWER',stable:'STABLE',village:'SETTLEMENT',shop:'SHOP',landmark:'LANDMARK'}[k]);
 function mapPlaceIcon(kind) {
   const file=kind==='tower'?'BotW_Main_Quest_Sprite.png':kind==='shrine'?'BotW_White_Sheikah_Eye_Symbol.png':'BotW_Key_Item_Icon.png';
-  return `<img class="map-place-icon" src="../assets/raw/02_ui/glyphs/${file}" alt="">`;
+  return `<img class="map-place-icon" src="../assets/ui/glyphs/${file}" alt="">`;
 }
 function mapPlaces(){return MAP_PLACES;}
 function mapCurrent(){return MAP_PLACES.find(p=>p.id===state.map.selection||p.gameId===state.map.selection)||MAP_PLACES[0];}
@@ -12,7 +12,7 @@ function viewMap(){
   const p=mapCurrent();state.map.selection=p.id;
   return topbar('map')+`<div class="body map-body">
     <div class="map-viewport" id="mapViewport" role="region" aria-label="${L('海拉鲁地图','Map of Hyrule')}">
-      <div class="map-crop" id="mapCrop"><img class="map-image" id="mapImage" src="../assets/raw/05_world/maps/botw-map-base.webp" alt="${L('海拉鲁完整地图','Full map of Hyrule')}" draggable="false"></div>
+      <div class="map-crop" id="mapCrop"><img class="map-image" id="mapImage" src="../assets/maps/botw-map-base.webp" alt="${L('海拉鲁完整地图','Full map of Hyrule')}" draggable="false"></div>
       <div class="map-markers" id="mapMarkers">${MAP_PLACES.map(place=>`<button class="map-marker" data-place="${place.id}" data-action="map:select:${place.id}" title="${mapName(place)}" aria-label="${mapName(place)}">${mapPlaceIcon(place.kind)}</button>`).join('')}</div>
       <p class="map-error" id="mapError" role="alert" hidden>${t('map_error')}</p>
     </div>
