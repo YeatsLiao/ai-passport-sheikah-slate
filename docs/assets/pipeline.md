@@ -9,9 +9,9 @@ assets/
 │   ├── 99_archive/  TOTK、大师模式、他作、各仓库说明（无读者）
 │   └── _index/      content_map.csv、import_manifest.json、README.md
 ├── gen/           生成物，构建与原型直接读，可整目录重跑
-│   ├── firmware/  28 张 320×240 / 小物件 PNG，tools/gen/img_to_c.py 的输入
+│   ├── firmware/  offline/ 设备资源包与数据清单（build_offline_pack.py 产物）；顶层 28 张旧固件图源 PNG 的转换链路已停用，少量仍被原型借用
 │   └── prototype/ 110 项 Web 导出素材（103 PNG + 7 SVG，含两张停用旧剪影）
-├── data/          数据源 JSON（固件只编生成好的 catalog.c）
+├── data/          数据源 JSON（原型/导出工具读取；固件数据经 export_offline_data.mjs 进入 data.c）
 └── audio/         prototype/ 两段现成 MP3；合成 wav 不入库（gen_synth.py 可重建）
 ```
 
@@ -41,15 +41,13 @@ assets/
 python tools/gen/gen_assets.py           # 程序绘制 -> assets/gen/firmware
 python tools/assets/build_real_assets.py --originals-only   # 只用 25 张输入覆盖，不改背景/照片
 python tools/assets/import_compendium_assets.py             # 图鉴/装备数据与原型素材
-python tools/gen/gen_catalog.py          # assets/data/trial_subjects.json -> firmware/main/game/catalog.c
 python tools/gen/gen_synth.py            # 合成 14 段玩法 wav -> assets/audio（不入库）
-python tools/gen/gen_audio.py            # wav -> firmware/main/audio/sfx_data.c
-node   tools/web/gen_font.mjs            # 字体（先 npm --prefix tools/web install）
-python tools/gen/img_to_c.py             # assets/gen/firmware -> firmware/main/img/*.c
 python tools/assets/verify_assets.py     # 只读校验
 ```
 
-`img_to_c.py` 缺素材直接报错；`gen_audio.py` 缺 wav 也直接失败，不生成全 NULL 的静音表；
+指向固件 C 数组的旧链路（`gen_catalog.py`→`game/catalog.c`、`gen_audio.py`→`main/audio`、`img_to_c.py`→`main/img`、`gen_font.mjs`→`main/font`）已随 2026-10-31 死代码清理删除（tag `firmware-legacy`）。固件数据、字库与设备资源包现由 [build_offline_pack.py](../../tools/build_offline_pack.py) 与 [export_offline_data.mjs](../../tools/export_offline_data.mjs) 生成，操作见 [V1 实现说明](../hardware/offline-v1.md)。
+
+`img_to_c.py` 与 `gen_audio.py` 已删除（见上）；现行固件生成器 `build_offline_pack.py` 缺依赖或输入时报错退出，不生成占位数据；
 所以 2026-10-28 把合成 wav 移出库后，重跑必须先 `gen_synth.py`。
 `tools/web/svg_to_png.mjs` 是显式传入输入/输出目录的独立转换工具，未纳入默认管线，也不参与原型运行。
 

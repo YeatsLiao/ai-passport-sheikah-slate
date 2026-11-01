@@ -37,22 +37,22 @@ python "$env:IDF_PATH\components\esptool_py\esptool\esptool.py" --chip esp32c3 -
 
 ## 固件内部分层
 
-2026-10-30 新的活动构建入口为 `main/offline/`，见 [全离线 V1](offline-v1.md)；下列原五关结构保留为迁移参考，不再全部登记于应用 CMake。本轮未编译。
+2026-10-31 整理后的唯一活动结构：`main/` 下只有 `CMakeLists.txt` 与 `offline/`，登记以 [main/CMakeLists.txt](../../firmware/main/CMakeLists.txt) 为准，见 [全离线 V1](offline-v1.md)。
 
 ```
-firmware/main/
-├── main.c                 # 初始化 + 按键事件队列 + LVGL 定时派发
-├── slate_app.c            # 页面路由（过渡屏 -> 退出旧页 -> 进入新页）
-├── game_view.c            # 场景/物体/特效渲染
-├── sheikah_theme.c        # 配色、通用控件、栏目/页脚
-├── page_*.c               # 待机、符文、试炼、图鉴、记录、设置
-├── game/                  # 纯 C 模型：五关、输入手势、进度、目录、NVS 存储
-├── audio/                 # sfx 队列 + 生成的 PCM 数据
-├── font/                  # Hylia Serif 16/20/28
-└── img/                   # 图片 C 数组（tools/gen/img_to_c.py 生成）
+firmware/main/offline/
+├── main.c                 # 初始化 + 按键事件队列 + LVGL 定时派发 + 截图控制台
+├── input.c/h              # 三键手势识别（短按/长按/连发/组合）
+├── app.c                  # 页面渲染与交互（待机、目录、装备、符文、地图、图鉴、日志、相册、设置）
+├── model.c                # 九项符文游戏纯 C 引擎（事件驱动音效）
+├── state.c / clock.c      # NVS 存档（V2 512B）/ 北京时间与校时
+├── audio.c / resources.c  # 六路 ADPCM 混音 / 资源分区映射与校验
+├── screenshot.c           # USB 截图协议
+├── data.c                 # 生成：图鉴/日志/装备/地点数据与资源索引 CRC
+└── fonts/                 # 生成：10/12/14/16px 中文字库与 28/40/52px 数字字库
 ```
 
-原五关曾登记源码与 `images.cmake`，目录由 `game/catalog.c` 提供；V1 改为 `offline/` 新数据/字库和独立资源包，当前登记以 `main/CMakeLists.txt` 为准。
+原五关演示（main 根的 slate_app/page_*/sheikah_*、game/ 旧模型、audio/、font/、img/ 与 `images.cmake`）已于 2026-10-31 删除，回溯见 tag `firmware-legacy`。
 
 ## 资源与性能约束
 

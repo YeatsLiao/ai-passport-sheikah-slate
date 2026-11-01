@@ -4,13 +4,14 @@
 五个域，按「谁生产、谁消费」切分；依赖方向单向，不允许回指。以下为既有目标分层约定，不等于本轮已逐一验证所有资源引用。
 
 ```
-assets/raw ──tools/assets──> assets/gen ──> firmware/main/img/*.c   （编译期）
+assets/raw ──build_offline_pack.py──> assets/gen/firmware/offline/resources.bin（烧录 0x410000）
+        └──export_offline_data.mjs──> firmware/main/offline/data.c + fonts/（编译期）
                                     └────> prototype/               （运行时相对读取）
 
-firmware/    硬件开发：ESP-IDF 工程，唯一能跑 idf.py 的地方
+firmware/    硬件开发：ESP-IDF 工程，唯一能跑 idf.py 的地方；活动代码仅 main/offline/
 prototype/   模拟页面开发：纯静态站，无构建
 assets/      素材：raw → gen → data/audio 四层
-tools/       管线：把 raw 变成 gen，把 gen 变成固件 C 源码
+tools/       管线：把 raw 变成 gen，把 gen 变成固件数据与资源包
 docs/        文档：不参与构建
 ```
 
@@ -33,7 +34,7 @@ prototype/                 index.html + css/ + js/ + fonts/，无 node_modules
 assets/                    raw/ gen/ data/ audio/ manifest.json README.md
 tools/
 ├── assets/                入库与校验（当前 5 个脚本待恢复）
-├── gen/                   gen_assets、img_to_c、gen_synth、gen_audio
+├── gen/                   gen_assets、gen_synth（img_to_c、gen_audio 已随旧固件管线删除）
 └── web/                   gen_font、svg_to_png（Node）
 docs/                      README（任务索引）、architecture（映射）、context/、原有专题与历史日志
 ```
