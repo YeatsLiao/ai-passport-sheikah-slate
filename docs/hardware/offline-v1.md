@@ -100,6 +100,17 @@ esptool.py --chip esp32c3 merge_bin -o merged-binary.bin --flash_mode dio --flas
 
 合并包必须用**当次构建**的 app 与当前 resources.bin 生成；旧 build 目录里的产物不能代表当前版本。合并成功不等于实机验收。
 
+### 当前构建配套记录（2026-11-01，工作版本，未发布）
+
+| 产物 | 大小 | SHA-256 |
+|---|---|---|
+| app（ai-passport-sheikah-slate.bin） | 1,487,136 B | `d1fc0582bfbe886f1457c81204fc993f1a539dc888ea75264ff475680cbc70eb` |
+| bootloader.bin | 21,024 B | `296e267db5e247252558ca29c66ff48fac77a1eb9e73749ab5599e5400df61e6` |
+| partition-table.bin | 3,072 B | `941e12f471b920f9c5a1283f1edc7d68bedafe4224cc73e351299000218a3aed` |
+| resources.bin（pack 索引 CRC 0xCC6E980F） | 4,068,796 B | `66022124d1c9faaddf97e60a7510ee3725771b811312c3d4c57fee3e34a2ed4e` |
+
+配套关系：app 内嵌 `of_pack_index_crc` 必须等于 resources.bin 头部索引 CRC，否则设备报 RESOURCE PACK ERROR。资源包可复现性已于干净检出演练证实：fresh clone + `npm install` + 自备 40 段音效 → 重建 resources.bin 字节一致。发布时（第六节）以当次构建重新记录。
+
 ## USB 一键校时
 
 先更新配套 app 和资源包，关闭 `idf.py monitor` / 其他串口工具，双击根目录 [sync-time.cmd](../../sync-time.cmd)。它调用 [sync_time.ps1](../../tools/device/sync_time.ps1) 和 [sync_time.py](../../tools/device/sync_time.py)，与截图共用 [serial_connection.ps1](../../tools/device/serial_connection.ps1) 查找已有 Python/pyserial 和选择设备；多设备时仍由用户选端口，不向其他设备重试。也可从根目录执行 `python tools/device/sync_time.py --port COM4`。无联网、复位、烧录或依赖安装；脚本等待成功/失败并保留双击窗口。

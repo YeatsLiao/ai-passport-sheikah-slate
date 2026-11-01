@@ -72,6 +72,8 @@
 
 ## 三、资源、依赖与可复现性
 
+> 2026-11-01 本节全部完成：素材外迁与存放策略（README 对照表）、干净检出演练通过（fresh clone + npm install + 自备音效 → resources.bin 字节一致；缺失依赖/音效均明确报错）、配套哈希记录于 [offline-v1](hardware/offline-v1.md)。仅剩第六节发布时重新记录当次构建哈希。
+
 - [ ] 明确每类素材是否允许入库、随网页公开或随固件分发；代码许可不能替代游戏图像、音频和字体的许可说明。
 - [ ] 将“克隆后已有的内容”和“用户需自备的内容”分开说明，检查对应来源记录与生成入口。
 - [x] 核对未跟踪的音频、设备资源、电芯参数和设计文件，逐项决定提交、独立分发或保持本地。（2026-11-01 执行：素材外迁策略落地——上游原料（raw/01~07 除例外、06_audio 原包 463MB、99_archive、design）外迁至仓库外 `D:\2.Project\游戏素材\塞尔达\` 并 gitignore/解除跟踪；入库补齐复现性必需件 assets/battery、backgrounds、magnet-v5×2、offline sources+standby+manifest；音效 WAV 为 gitignore 投放目录，缺失时报错明确。`git status` 归零。外迁物理搬移由用户执行，见 NOW）
