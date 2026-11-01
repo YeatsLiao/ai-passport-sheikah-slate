@@ -61,7 +61,7 @@
 ### 小步清理
 
 - [x] 先根据当前 CMake 和实际引用列出活动代码、迁移参考、生成物与无引用候选，不直接按文件名删除。（2026-10-31 完成：活动面 = OFFLINE_SRCS 17 文件 + bsp；清单见本节与 [硬件说明](hardware/hardware.md)）
-- [x] 优先整理 `firmware/main/offline/app.c`：可逐步分离设置/待机、页面导航与游戏绘制，保持输入语义和状态行为。（2026-11-01 完成：拆为 ui/pages/settings/game_view + app_internal.h 私有头，app.c 保留核心分发；逐字搬移，行为等价待用户构建确认）
+- [x] 优先整理 `firmware/main/offline/app.c`：可逐步分离设置/待机、页面导航与游戏绘制，保持输入语义和状态行为。（2026-11-01 完成：拆为 ui/pages/settings/game_view + app_internal.h 私有头；用户已构建烧录并确认功能回归全部正常）
 - [ ] 把压缩成单行的关键逻辑展开，重点包括输入、音效、电量初始化和存档；每次只处理一个模块。（2026-11-01：audio.c/state.c 存档块/battery_worker 已展开；input.c 核验后本就可读免改；pages/game_view/ui 的密集代码留待后续轮次逐个展开）
 - [ ] 评估是否仍需要 `-Wno-misleading-indentation`，完成对应整理并有构建证据后再决定移除。（2026-11-01 评估结论：暂不移除——pages/settings/game_view/ui 及生成文件仍为密集风格；移除条件 = 其余手写文件展开完成 + 构建无相关警告，已写入 CMakeLists 注释）
 - [x] 旧 `page_*`、旧五关模型、旧字体/图像数组和旧工具逐项检查引用；有迁移价值的归档，无用途的形成删除清单后执行。（2026-10-31 执行：删除 74 文件约 4.4 万行——main 根 21、game/ 旧模型 13、audio/ 4、font/ 3、img/ 28、images.cmake、tools 死端 img_to_c/gen_audio/gen_font；生成器回归通过，回溯 tag `firmware-legacy`）
