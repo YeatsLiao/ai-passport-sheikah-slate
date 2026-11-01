@@ -14,7 +14,7 @@ assets/
 ├── reference-sensor-shrine.png  原型感应器页引用（gallery 已拍平）
 ├── gen/
 │   └── offline/            资源包生成输入：standby/sources、sources、manifest.json（resources.bin 产物已忽略）
-│   └── prototype/          519 项：场景图集、符文、图鉴照片铺位、装备、背景、inventory（原型与 pack 共用）
+│   └── prototype/          520 项平铺图池：场景图集、符文、图鉴照片、装备、背景、inventory、感应器参考（原型 IMG() 单行解析，按名引用——刻意平铺）
 ├── maps/                   botw-map-base.webp（瓦片源）+ 点位数据源 yml/json/html（gen_map_places.py 输入）
 ├── screenshots/            实机截图（docs 配图；截图工具输出目录 /screenshots/ 仍忽略）
 └── ui/                     希卡字符 SVG、按键/分类/纹章、标题 Logo、电量 HUD 参考

@@ -1,7 +1,7 @@
 /* Referenced game art v2: cell mapping is shared by every rune renderer. */
 const RUNE_ART_READY={scenes:true,sprites:true};
 const RUNE_FALLBACKS=['rune_bomb.png','rune_cube.png','magnesis-bridge-v1.png','cut_talus.png','ability-atlas-v1.png','rune_master_cycle_zero.png','treasure_chest.png','treasure_chest.png','pic_nightshade.png','pic_bass.png','pic_chuchu.png','mat_amber.png','pic_mastersword.png','cp_apple.png','inventory/bg.png'];
-const fallbackRuneImage=cell=>cell===15?'../assets/gallery/reference_sensor_shrine.png':IMG(RUNE_FALLBACKS[cell]);
+const fallbackRuneImage=cell=>cell===15?'../assets/gen/prototype/reference_sensor_shrine.png':IMG(RUNE_FALLBACKS[cell]);
 const RUNE_CLEAN_SPRITES={
   4:{file:'cryonis-pillar-clean-v3.png',image:[1024,1536],box:[197,93,868,1446],foot:.98},
   14:{file:'link-side-clean-v3.png',image:[1024,1536],box:[302,101,710,1477],foot:.95}
