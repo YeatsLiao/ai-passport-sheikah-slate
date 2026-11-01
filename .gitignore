@@ -3,7 +3,7 @@ build/
 build-host/
 .build-tools/
 __pycache__/
-screenshots/
+/screenshots/
 
 # ESP-IDF generated
 sdkconfig
@@ -21,6 +21,7 @@ Thumbs.db
 # Editor
 .vscode/
 .idea/
+.zcode/
 
 # 本地自备美术（原版素材不入库）
 assets/raw/imagegen/import/
@@ -49,4 +50,3 @@ assets/raw/04_equipment/
 assets/raw/05_world/
 assets/raw/07_fonts/
 assets/raw/_index/
-design/
