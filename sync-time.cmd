@@ -1,6 +1,6 @@
 @echo off
 setlocal
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\sync_time.ps1" %*
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\device\sync_time.ps1" %*
 set "sync_exit=%errorlevel%"
 echo.
 pause
