@@ -63,7 +63,7 @@ static void admit(voice_t *voices,const request_t *r,uint32_t *sequence){
     memset(v,0,sizeof(*v));
     v->data=data+12;v->count=count;v->loop=r->loop;v->started=(*sequence)++;
     snprintf(v->name,sizeof(v->name),"%s",r->name);
-    v->gain=(!strcmp(r->name,"audio/move")||!strcmp(r->name,"audio/cursor"))?77:!strcmp(r->name,"audio/boom")?102:154;
+    v->gain=!strcmp(r->name,"audio/bike_engine")?56:(!strcmp(r->name,"audio/move")||!strcmp(r->name,"audio/cursor"))?77:!strcmp(r->name,"audio/boom")?102:154;
 }
 static void worker(void *arg){
     (void)arg;

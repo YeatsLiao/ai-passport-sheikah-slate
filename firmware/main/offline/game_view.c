@@ -202,14 +202,17 @@ void events(void){
  if(ev&OF_EV_RELEASE){if(game.id==2)of_audio_stop_kind("magnet_move");if(game.id==3)of_audio_stop_kind("stasis_timer");
   const char *sound=game.id<2?"boom":game.id==2?"magnet_release":game.id==3?(game.hits<=2?"stasis_release_1":game.hits<=4?"stasis_release_2":"stasis_release_3"):"ok";of_audio_play(sound,false,true);
  }
+ if(ev&OF_EV_BIKE_JUMP)of_audio_play("bike_jump",false,true);
+ if(ev&OF_EV_BIKE_LAND)of_audio_play("bike_land",false,true);
  if(ev&OF_EV_OPEN)of_audio_play("chest_open",false,true);
+ if(ev&OF_EV_REWARD)of_audio_play("item_get",false,true);
  if(ev&OF_EV_BREAK)of_audio_play("ice_break",false,true);
  if(ev&OF_EV_TIMER)of_audio_play("stasis_timer",false,true);
  if(ev&OF_EV_HIT)of_audio_play(game.hits==6?"stasis_hit_end":"stasis_hit",false,true);
  if(ev&OF_EV_DETECT)of_audio_play("detect",false,true);
  if(ev&OF_EV_FOUND)of_audio_play("found",false,true);
  if(ev&OF_EV_SENSOR)of_audio_play("sensor",false,false);
- if(ev&OF_EV_ACTION){const char *sound=game.id<2?"place":game.id==2?"magnet_catch":game.id==3?"stasis_start":game.id==4?"cryonis":game.id==5?"shutter":game.id==7?"amiibo":"ok";of_audio_play(sound,false,true);}
+ if(ev&OF_EV_ACTION){const char *sound=game.id<2?"place":game.id==2?"magnet_catch":game.id==3?"stasis_start":game.id==4?"cryonis":game.id==5?"shutter":game.id==6?"bike_start":game.id==7?"amiibo":"ok";of_audio_play(sound,false,true);}
  if(ev&OF_EV_COLLECT){if(of_state.supplies[game.choice]<UINT16_MAX)of_state.supplies[game.choice]++;of_state_dirty();of_audio_play("ok",false,true);}
  if(ev&OF_EV_FAIL)of_audio_play("invalid",false,true);
  if(ev&OF_EV_WIN){

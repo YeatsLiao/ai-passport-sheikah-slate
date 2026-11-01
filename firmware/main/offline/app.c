@@ -19,7 +19,7 @@ uint32_t generation;
 uint32_t standby_changed_at,standby_entered_at;
 static bool blanked,wake_consumed[3];
 static uint32_t last_activity,diagnostic_at,last_tick,refresh_at,battery_at,held_at;
-static bool repeat_started;
+static bool repeat_started,bike_sounding;
 static int editing_before;
 int battery=-1,battery_millivolts=-1,battery_status=BATTERY_READING;
 static _Atomic int battery_sample=-1,battery_voltage_sample=-1,battery_status_sample=BATTERY_READING;
@@ -61,7 +61,7 @@ static uint8_t scan_pixels[320*2*4];
 static const lv_image_dsc_t scan_image={.header={.magic=LV_IMAGE_HEADER_MAGIC,.cf=LV_COLOR_FORMAT_ARGB8888,.w=320,.h=2,.stride=1280},.data_size=2560,.data=scan_pixels};
 void render(void);
 static void show(page_t next){
- of_audio_stop();of_state_flush();page_selected[page]=selected;page_category[page]=category;
+ of_audio_stop();bike_sounding=false;of_state_flush();page_selected[page]=selected;page_category[page]=category;
  if(page==P_GAME){game.input=0;saved_games[game.id]=game;saved_games[game.id].paused=true;game_saved[game.id]=true;}
  if(page==P_INVENTORY||page==P_COMP||page==P_QUEST)item_selected[item_page()][category]=selected;
  if(next==P_STANDBY){standby_entered_at=standby_changed_at=lv_tick_get();}
@@ -110,20 +110,24 @@ void render(void){
 }
 static void tick(lv_timer_t *timer){
  (void)timer;if(!resource_ok)return;uint32_t now=lv_tick_get(),dt=now-last_tick;last_tick=now;
- if(of_resource_error()){resource_ok=false;of_audio_stop();render();return;}
+ if(of_resource_error()){resource_ok=false;of_audio_stop();bike_sounding=false;render();return;}
  of_state_tick(now);visible(save_warning,of_state_save_error());
  if(now-diagnostic_at>=60000){diagnostic_at=now;ESP_LOGI("offline","heap free=%u min=%u largest=%u",(unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL),(unsigned)heap_caps_get_minimum_free_size(MALLOC_CAP_INTERNAL),(unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL));}
  bool busy=page==P_GAME&&!paused&&game.phase!=OF_WON&&game.phase!=OF_LOST&&game.phase!=OF_CLAIMED&&!(game.id==5&&game.phase==OF_REVEAL);
  if(busy)last_activity=now;
  if(!blanked&&!busy&&!editing&&page!=P_STANDBY&&of_state.standby_delay&&now-last_activity>=standby_seconds[of_state.standby_delay]*1000u){show(P_STANDBY);return;}
  uint32_t idle_since=page==P_STANDBY&&now-standby_entered_at<now-last_activity?standby_entered_at:last_activity;
- if(!blanked&&of_state.idle_timeout&&now-idle_since>=screen_seconds[of_state.idle_timeout]*1000u){of_state_flush();of_audio_stop();bsp_display_backlight(0);blanked=true;held_key=-1;}
+ if(!blanked&&of_state.idle_timeout&&now-idle_since>=screen_seconds[of_state.idle_timeout]*1000u){of_state_flush();of_audio_stop();bike_sounding=false;bsp_display_backlight(0);blanked=true;held_key=-1;}
  if(blanked)return;
  if(now-battery_at>=1000){battery=atomic_load(&battery_sample);battery_millivolts=atomic_load(&battery_voltage_sample);battery_status=atomic_load(&battery_status_sample);battery_at=now;if(page==P_SETTINGS&&settings_battery_row){battery_row_text(message,sizeof(message));text_changed(settings_battery_row,message);}}
  if(held_key>=0&&(page!=P_GAME||paused)&&now-held_at>=(repeat_started?120u:380u)){
   int key=held_key;uint32_t before=generation;of_app_key(key,false);
   if(before==generation){held_at=now;repeat_started=true;}else held_key=-1;
  }
+ bool riding=page==P_GAME&&!paused&&game.id==6&&game.phase==OF_ACTIVE;
+ if(riding&&!bike_sounding)of_audio_play("bike_engine",true,true);
+ if(!riding&&bike_sounding)of_audio_stop_kind("bike_engine");
+ bike_sounding=riding;
  if(page==P_GAME&&!paused){
   of_game_direction(&game,held_key==BSP_BTN_UP?-1:held_key==BSP_BTN_DOWN?1:0);
   uint32_t remaining=dt>200?200:dt;while(remaining){uint32_t step=remaining>40?40:remaining;of_game_step(&game,step);events();remaining-=step;}
@@ -163,7 +167,7 @@ void of_app_key(bsp_btn_t key,bool long_press){
   if(page==P_GAME){
    if(game.id==5&&game.phase==OF_REVEAL&&!paused){of_camera_retake(&game);generation++;render();return;}
    if(paused&&pause_mode){pause_mode=0;of_audio_play("back",false,true);generation++;render();return;}
-   paused=!paused;game.paused=paused;pause_choice=0;of_audio_stop();of_audio_play(paused?"menu":"back",false,true);
+   paused=!paused;game.paused=paused;pause_choice=0;of_audio_stop();bike_sounding=false;of_audio_play(paused?"menu":"back",false,true);
    if(!paused&&game.id==3&&game.phase==OF_ACTIVE&&game.freeze_ms&&game.freeze_ms<=1683)of_audio_play("stasis_timer",false,true); // Warning window re-arms after pause cut the one-shot.
    magnet_sounding=false;generation++;render();return;
   }
@@ -187,7 +191,7 @@ void of_app_key(bsp_btn_t key,bool long_press){
    int action=count==3?(pause_choice==0?0:pause_choice+1):pause_choice;
    if(action==3){show(P_RUNES);of_audio_play("back",false,true);return;}
    if(action==1){if(game.id==3){of_game_release(&game);events();paused=game.paused=false;}else pause_mode=game.id==5?1:2;render();return;}
-   if(action==2){bool tracking=game.tracking_unlocked;unsigned id=game.id;of_audio_stop();of_game_init(&game,id);game.tracking_unlocked=tracking;}
+   if(action==2){bool tracking=game.tracking_unlocked;unsigned id=game.id;of_audio_stop();bike_sounding=false;of_game_init(&game,id);game.tracking_unlocked=tracking;}
    if(!action)of_audio_play("back",false,true); // Resume via menu choice; restart stays silent until the new run acts.
    paused=game.paused=false;generation++;render();return;
   }

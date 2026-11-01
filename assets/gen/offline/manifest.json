@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "bytes": 4068796,
+  "bytes": 4109888,
   "budget": 4128768,
   "entries": [
     {
@@ -164,6 +164,30 @@
       "bytes": 5680,
       "source": "assets\\audio\\botw\\Sys_Cmn_Cancel_01.wav",
       "sha256": "d14d4281cb38f70fb92d7efc77508f1149aa97ffd001082e9d6db197a797d86c"
+    },
+    {
+      "name": "audio/bike_engine",
+      "bytes": 25464,
+      "source": "assets\\audio\\botw\\MotorcycleEngine-loop.wav",
+      "sha256": "e6a841571b359a8f0fadf99df7b4b3e641c34bbe00c7fb0c2eb8d5c90ac0b35f"
+    },
+    {
+      "name": "audio/bike_jump",
+      "bytes": 4998,
+      "source": "assets\\audio\\botw\\Motorcycle_EngineJump00.wav",
+      "sha256": "37e5883ab846de44947a250360d3080aec0db12d6cbc575c68e9af041641d99d"
+    },
+    {
+      "name": "audio/bike_land",
+      "bytes": 4345,
+      "source": "assets\\audio\\botw\\Motorcycle_BodyLand00.wav",
+      "sha256": "8fc2cc092605eebdd680b679e9f0df5ec7ffb033516e6e1c2ed5af89ec33e661"
+    },
+    {
+      "name": "audio/bike_start",
+      "bytes": 5943,
+      "source": "assets\\audio\\botw\\Motorcycle_EngineStart.wav",
+      "sha256": "59596794dc366ec2df74c1dfbcc28461063987e79a70369466b8965d87e80d39"
     },
     {
       "name": "audio/boom",

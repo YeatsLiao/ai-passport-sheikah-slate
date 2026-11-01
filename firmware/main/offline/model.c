@@ -101,7 +101,7 @@ void of_game_key(of_game_t *g,int key){
    if(g->capture_valid)g->seen|=1u<<candidate;g->review=true;g->flash_ms=140;g->events|=OF_EV_ACTION;if(g->capture_valid)g->events|=OF_EV_WIN;phase(g,OF_REVEAL);
   }break;
  case 6:
-  if(g->phase==OF_READY&&key==2){g->speed=82;phase(g,OF_ACTIVE);break;}
+  if(g->phase==OF_READY&&key==2){g->speed=82;phase(g,OF_ACTIVE);g->events|=OF_EV_ACTION;break;}
   if(g->phase==OF_ACTIVE){if(key==1)g->brake_ms=1200;else g->jump_buffer=200;}break;
  case 7:
   if(key!=2&&g->phase==OF_READY)g->choice=(g->choice+3+d)%3;
@@ -172,10 +172,10 @@ void of_game_step(of_game_t *g,uint32_t ms){
  case 6:
   if(g->phase==OF_ACTIVE){
    g->brake_ms=decay(g->brake_ms,ms);g->jump_buffer=decay(g->jump_buffer,ms);g->speed+=((g->brake_ms?58:82)-g->speed)*fminf(1,dt*5);
-   if(g->jump_buffer&&(g->grounded||(g->coyote&&g->air_ms<140))){g->vy=-120;g->grounded=false;g->coyote=false;g->jump_buffer=0;g->air_ms=0;} /* Jump is silent; only starting to ride beeps. */
+   if(g->jump_buffer&&(g->grounded||(g->coyote&&g->air_ms<140))){g->events|=OF_EV_BIKE_JUMP;g->vy=-120;g->grounded=false;g->coyote=false;g->jump_buffer=0;g->air_ms=0;}
    g->world+=g->speed*dt;float floor=136-of_geometry.cycle_height;
    if(g->grounded&&of_cycle_gap(g->world)){g->grounded=false;g->coyote=true;g->air_ms=0;g->vy=0;}
-   if(g->grounded)g->y=floor;else{g->air_ms+=ms;g->vy+=220*dt;g->y+=g->vy*dt;if(!of_cycle_gap(g->world)&&g->y>=floor&&g->vy>0){g->y=floor;g->grounded=true;g->coyote=false;g->air_ms=0;g->vy=0;}}
+   if(g->grounded)g->y=floor;else{g->air_ms+=ms;g->vy+=220*dt;g->y+=g->vy*dt;if(!of_cycle_gap(g->world)&&g->y>=floor&&g->vy>0){g->events|=OF_EV_BIKE_LAND;g->y=floor;g->grounded=true;g->coyote=false;g->air_ms=0;g->vy=0;}}
    bool hit=false;float rock_y=136-of_geometry.rock_ground;
    for(int wheel=-1;wheel<=1;wheel+=2)if(hypotf(g->world+wheel*of_geometry.axle-550,g->y+of_geometry.wheel_y-rock_y)<of_geometry.wheel_radius+of_geometry.rock_radius-2)hit=true;
    if(g->y>166||hit){phase(g,OF_CRASH);g->vy=-28;}
@@ -186,7 +186,7 @@ void of_game_step(of_game_t *g,uint32_t ms){
   else if(g->phase==OF_DROP){g->vy+=260*dt;g->y+=g->vy*dt;if(g->y>=111){g->y=111;phase(g,OF_SETTLE);}}
   else if(g->phase==OF_SETTLE){g->y=111-sinf(PI*fminf(1,g->phase_ms/280.0f))*3;if(g->phase_ms>=280){g->y=111;phase(g,OF_CHEST);}}
   else if(g->phase==OF_APPROACH){g->walker_x=g->old_x+(g->x-44-g->old_x)*ease(g->phase_ms/650.0f);if(g->phase_ms>=650){phase(g,OF_REVEAL);g->events|=OF_EV_OPEN;}}
-  else if(g->phase==OF_REVEAL&&g->phase_ms>=800)phase(g,OF_REWARD);
+  else if(g->phase==OF_REVEAL&&g->phase_ms>=800){phase(g,OF_REWARD);g->events|=OF_EV_REWARD;}
   else if(g->phase==OF_CROSS&&g->phase_ms>=550){phase(g,OF_CLAIMED);g->events|=OF_EV_WIN;}break;
  case 8:{
    if(g->phase==OF_REVEAL){if(g->phase_ms>=3200)finish(g,true);break;}

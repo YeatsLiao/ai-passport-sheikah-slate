@@ -778,4 +778,4 @@ const of_place_t of_places[177]={
 {"密·苏神庙","Misae Suma Shrine","shrine",194,562},
 {"希·塔塔恩科神庙","Shoqa Tatone Shrine","shrine",390,566},
 };
-const uint32_t of_pack_index_crc = 637917208u;
+const uint32_t of_pack_index_crc = 3104790599u;
