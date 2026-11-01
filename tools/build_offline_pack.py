@@ -53,6 +53,11 @@ def main():
   src=ROOT/'assets/raw/02_ui'/filename;im=ImageOps.contain(Image.open(src).convert('RGBA'),size,Image.Resampling.LANCZOS)
   canvas=Image.new('RGBA',size);canvas.alpha_composite(im,((size[0]-im.width)//2,(size[1]-im.height)//2));raster('ui/title_'+lang,canvas,*size,True,str(src.relative_to(ROOT)))
  raster('ui/eye',Image.open(ART/'eye.png'),96,96,True,'assets/gen/prototype/eye.png')
+ # Switchable screen backgrounds: four 160x120 RGB565 plates the app upscales 2x.
+ # Native raster, never JPEG (full-screen decode needs ~150KB contiguous heap the C3 lacks);
+ # half resolution keeps four switchable plates within the budget of one full-res image.
+ for i,src in enumerate(sorted((ROOT/'assets/gen/prototype/backgrounds').glob('bg_*.png'))):
+  raster(f'ui/bg{i}',Image.open(src).convert('RGB'),160,120,False,str(src.relative_to(ROOT)))
  # Six live canvases: five clean JPEG plates and one code-drawn black/gold canvas.
  for i,letter in enumerate('EFGHI'):
   src=OUT/'standby/sources'/f'{letter}.png';size=(320,240) if i<3 else (240,320)
@@ -185,18 +190,18 @@ def main():
   body+=payload;pad=(-len(payload))%4;body+=b'\0'*pad;offset+=len(payload)+pad
  pack=b'SLATEPK1'+struct.pack('<II',len(names),zlib.crc32(index))+index+body
  if len(pack)>0x3f0000:raise ValueError(f'Resource pack {len(pack)} exceeds 0x3f0000; tune asset budget explicitly')
- OUT.mkdir(parents=True,exist_ok=True);CODE.mkdir(exist_ok=True)
+ OUT.mkdir(parents=True,exist_ok=True);CODE.mkdir(exist_ok=True);(CODE/'fonts').mkdir(exist_ok=True)
  (OUT/'resources.bin').write_bytes(pack);(OUT/'manifest.json').write_text(json.dumps(dict(schema=1,bytes=len(pack),budget=0x3f0000,entries=manifest),ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
  (CODE/'data.c').write_text(generated+f'const uint32_t of_pack_index_crc = {zlib.crc32(index)}u;\n',encoding='utf-8')
  if args.fonts:
-  text=generated+'\n'.join(p.read_text(encoding='utf-8') for p in CODE.glob('*.c') if p.name!='data.c')
+  text=generated+'\n'.join(p.read_text(encoding='utf-8') for p in list(CODE.glob('*.c'))+list((CODE/'fonts').glob('*.c')) if p.name!='data.c')
   symbols=''.join(sorted(set(c for c in text if ord(c)>127)))
   cli=ROOT/'tools/node_modules/lv_font_conv/lv_font_conv.js'
   if not cli.exists():cli=ROOT/'tools/web/node_modules/lv_font_conv/lv_font_conv.js'
   if not cli.exists():raise FileNotFoundError('Existing lv_font_conv not found; no automatic install')
   for size in [10,12,14,16,28,40,52]:
    numeric=size>=28
-   font_path=CODE/('font_clock.c' if size==28 else f'font_clock_{size}.c' if numeric else f'font_{size}.c')
+   font_path=CODE/'fonts'/('font_clock.c' if size==28 else f'font_clock_{size}.c' if numeric else f'font_{size}.c')
    command=['node',str(cli),'--size',str(size),'--bpp','4','--format','lvgl','--lv-font-name',f'of_clock_{size}' if numeric else f'of_chinese_{size}','--font',str(ROOT/'prototype/fonts/HyliaSerifBeta-Regular.ttf'),'--range','0x2d,0x30-0x3a' if numeric else '0x20-0x7e']
    if not numeric:command+=['--font',str(ROOT/'assets/raw/07_fonts/SourceHanSansSC-Medium.otf'),'--symbols',symbols]
    subprocess.run(command+['-o',str(font_path)],check=True)

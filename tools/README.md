@@ -28,18 +28,16 @@ tools/
 
 | 脚本 | 读 | 写 |
 |---|---|---|
-| `gen_assets.py` | 无（程序绘制） | `assets/gen/firmware/` |
-| `img_to_c.py` | `assets/gen/firmware/` | `firmware/main/img/*.c`、`img_all.h` |
+| `gen_assets.py` | 无（程序绘制） | `assets/gen/firmware/`（顶层图源 PNG；原型借用，旧固件转换链路已停用） |
 | `gen_synth.py` | 无（合成波形） | `assets/audio/*.wav` |
-| `gen_audio.py` | `assets/audio/*.wav` | `firmware/main/audio/sfx_data.{c,h}` |
 
-`gen_catalog.py`（`assets/data/trial_subjects.json` → `firmware/main/game/catalog.c`）的预期恢复位置在本组；状态见 [R1](../docs/context/RISKS.md#r1)。
+旧固件 C 数组生成器 `img_to_c.py`、`gen_audio.py`（及 web 组的 `gen_font.mjs`、未恢复的 `gen_catalog.py`）已随 2026-10-31 死代码清理删除（tag `firmware-legacy`）；固件数据、字库与资源包由根目录 [build_offline_pack.py](build_offline_pack.py) 和 [export_offline_data.mjs](export_offline_data.mjs) 生成。
 
 ## web
 
 | 脚本 | 说明 |
 |---|---|
-| `gen_font.mjs` | Hylia Serif TTF → `firmware/main/font/hylia_serif_{16,20,28}.c`；使用仓库内 `prototype/fonts/HyliaSerifBeta-Regular.ttf`；依赖 `npm --prefix tools/web install`，按 Node 标准规则查找已安装的 lv_font_conv |
+| `device_svg.mjs` | 设备外观 SVG 生成 |
 | `svg_to_png.mjs` | 独立转换工具，显式传入 SVG 输入目录和 PNG 输出目录；没有默认外部路径，不参与原型运行 |
 
 ## 原型任务数据
