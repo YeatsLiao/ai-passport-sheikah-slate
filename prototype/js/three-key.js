@@ -61,6 +61,19 @@ function inventoryMenu(id){
     {label:L('切换分类','CATEGORY'),action:'ui:categories'},
     {label:L('取消','CANCEL'),action:'ui:close'}],{...inventoryMenuPosition(),hideTitle:true});
 }
+
+function standbyMenu(){
+  const s=state.settings;
+  const sec=(arr,i)=>arr[i]?arr[i]+'s':L('关','OFF');
+  openInputMenu(L('待机 / 背景','STANDBY / BACKGROUND'),[
+    {label:L('进入待机','ENTER STANDBY')+'：'+sec(STANDBY_DELAYS,s.standbyDelay),action:'ui:standby-set:standbydelay'},
+    {label:L('待机后熄屏','SCREEN OFF AFTER')+'：'+sec(SCREEN_TIMEOUTS,s.screenTimeout),action:'ui:standby-set:screentimeout'},
+    {label:L('自动切换画布','CANVAS INTERVAL')+'：'+(STANDBY_CYCLES[s.standbyCycle]?STANDBY_CYCLES[s.standbyCycle]+'s':L('手动','MANUAL')),action:'ui:standby-set:standbycycle'},
+    {label:L('待机风格','STANDBY STYLE')+'：'+STANDBY_STYLES[s.standbyStyle].cn+' · '+STANDBY_STYLES[s.standbyStyle].en,action:'ui:standby-set:standbystyle'},
+    {label:L('背景','BACKGROUND')+'：'+BG_NAMES[s.bg],action:'ui:standby-set:bg'},
+    {label:L('关闭','CLOSE'),action:'ui:close'}
+  ]);
+}
 function inputAction(parts){
   const [kind,arg]=parts;
   if(kind==='choose'){
@@ -72,6 +85,13 @@ function inputAction(parts){
   if(kind==='categories'){openInputMenu(L('装备分类','CATEGORY'),INV_CATS.map(c=>({label:L({weapons:'武器',shields:'盾牌',armors:'防具'}[c.id],c.label),action:'go:#/inventory/'+c.id})),inventoryMenuPosition());return;}
   if(kind==='edit'){
     rememberInputPage();inputUI.edit={key:arg,before:state.settings[arg]};inputUI.dialog={title:t(arg),items:[]};render();return;
+  }
+  if(kind==='standby-menu'){standbyMenu();return;}
+  if(kind==='standby-set'){
+    const cycles={standbydelay:5,screentimeout:6,standbycycle:5,standbystyle:6,bg:4};
+    const keys={standbydelay:'standbyDelay',screentimeout:'screenTimeout',standbycycle:'standbyCycle',standbystyle:'standbyStyle',bg:'bg'};
+    state.settings[keys[arg]]=(state.settings[keys[arg]]+1)%cycles[arg];
+    beep('move');render();standbyMenu();return;
   }
   if(kind==='delete-photo'){
     openInputMenu(L('删除这张照片？','DELETE THIS PHOTO?'),[{label:L('取消','CANCEL'),action:'ui:close'},{label:L('确认删除','DELETE'),action:'ui:confirm-delete:'+arg}]);return;

@@ -57,6 +57,7 @@ const LANG = {
     type: '类型', cooldown: '冷却', use_rune: '使用符文', locked: '未解锁',
     sys_title: '系统', brightness: '亮度', volume: '音量', scanlines: '扫描线', sfx: '按键音',
     standby_enter: '进入待机', screen_off: '待机后熄屏', canvas_cycle: '自动切换画布', standby_style: '待机风格', bg_label: '背景', off: '关', manual: '手动',
+    standby_menu: '待机 / 背景',
     album: '相册', about: '关于', standby: '待机', adjust: '调整 / 切换',
     map_prev: '◀ 上一张', map_next: '下一张 ▶', map_zoom_out: '缩小', map_zoom_in: '+ 放大', map_reset: '复位',
     map_foot_l: '▲▼ 选择　OK 确认', map_foot_r: '→ 切图 · 长按 OK 返回',
@@ -113,6 +114,7 @@ const LANG = {
     type: 'TYPE', cooldown: 'COOLDOWN', use_rune: 'USE RUNE', locked: 'LOCKED',
     sys_title: 'SYSTEM', brightness: 'BRIGHTNESS', volume: 'VOLUME', scanlines: 'SCANLINES', sfx: 'SOUND FX',
     standby_enter: 'ENTER STANDBY', screen_off: 'SCREEN OFF AFTER', canvas_cycle: 'CANVAS INTERVAL', standby_style: 'STANDBY STYLE', bg_label: 'BACKGROUND', off: 'OFF', manual: 'MANUAL',
+    standby_menu: 'STANDBY / BACKGROUND',
     album: 'ALBUM', about: 'ABOUT', standby: 'STANDBY', adjust: 'OK ADJUST / TOGGLE',
     map_prev: '◀ PREV', map_next: 'NEXT ▶', map_zoom_out: 'ZOOM –', map_zoom_in: '+ ZOOM', map_reset: 'RESET',
     map_foot_l: '▲▼ SELECT　OK CONFIRM', map_foot_r: '→ SWITCH · HOLD OK BACK',
@@ -631,23 +633,10 @@ function viewSystem() {
       <span class="lab">${t('lang_label')}</span><span class="muted" style="flex:1;font-size:5.5px">${state.lang === 'cn' ? t('lang_cn') : t('lang_en')}</span>
       <span class="toggle on"><i></i></span>
     </button>
-    <button class="sys-row" data-action="set:standbydelay" data-focus>
-      <span class="lab">${t('standby_enter')}</span><span class="val">${STANDBY_DELAYS[s.standbyDelay] ? STANDBY_DELAYS[s.standbyDelay] + 's' : t('off')}</span>
-    </button>
-    <button class="sys-row" data-action="set:screentimeout" data-focus>
-      <span class="lab">${t('screen_off')}</span><span class="val">${SCREEN_TIMEOUTS[s.screenTimeout] ? SCREEN_TIMEOUTS[s.screenTimeout] + 's' : t('off')}</span>
-    </button>
-    <button class="sys-row" data-action="set:standbycycle" data-focus>
-      <span class="lab">${t('canvas_cycle')}</span><span class="val">${STANDBY_CYCLES[s.standbyCycle] ? STANDBY_CYCLES[s.standbyCycle] + 's' : t('manual')}</span>
-    </button>
-    <button class="sys-row" data-action="set:standbystyle" data-focus>
-      <span class="lab">${t('standby_style')}</span><span class="val">${STANDBY_STYLES[s.standbyStyle].cn} · ${STANDBY_STYLES[s.standbyStyle].en}</span>
-    </button>
-    <button class="sys-row" data-action="set:bg" data-focus>
-      <span class="lab">${t('bg_label')}</span><span class="val">${BG_NAMES[s.bg]}</span>
-    </button>
+
     <div class="sys-actions">
       <button class="chip" data-action="go:#/album" data-focus>${t('album')}</button>
+      <button class="chip" data-action="ui:standby-menu" data-focus>${t('standby_bg_menu')}</button>
       <button class="chip" data-action="sys:about" data-focus>${t('about')}</button>
       <button class="chip" data-action="go:#/standby" data-focus>${t('standby')}</button>
     </div>

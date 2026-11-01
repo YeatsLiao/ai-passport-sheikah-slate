@@ -885,7 +885,6 @@ body.no-scan .scanlines{display:none}
 .standby-brand{position:absolute;text-align:center;font-family:'Source Han Sans SC',sans-serif;font-size:10px;letter-spacing:.08em}
 .standby-toast{position:absolute;font-family:'Source Han Sans SC',sans-serif;font-size:10px}
 .standby-blackout{position:absolute;inset:0;background:#000;z-index:30}
-.sys-body{overflow-y:auto}
 
 /* ---------------- 待机六款背景变体（保留原版布局与元素） ---------------- */
 .sb-plate{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
