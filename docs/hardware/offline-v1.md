@@ -59,7 +59,7 @@
 python -B tools/pack/build_offline_pack.py --fonts
 ```
 
-这只是资源/字体转换，不调用 CMake、编译器或烧录工具。需要现有 Python/Pillow、Node、已安装的 lv_font_conv 与 @resvg/resvg-js；[device_svg.mjs](../../tools/web/device_svg.mjs) 只将已有 SVG 派生为设备图标，不安装依赖。输出：
+这只是资源/字体转换，不调用 CMake、编译器或烧录工具。需要现有 Python/Pillow、Node、已安装的 lv_font_conv 与 @resvg/resvg-js；[device_svg.mjs](../../tools/device_svg.mjs) 只将已有 SVG 派生为设备图标，不安装依赖。输出：
 
 - `assets/gen/firmware/offline/resources.bin`：只读设备资源包，并非 app 固件或完整烧录镜像。
 - 同目录 `manifest.json`：资源名称、来源、转换后 SHA-256 与字节数。

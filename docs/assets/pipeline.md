@@ -49,7 +49,7 @@ python tools/assets/verify_assets.py     # 只读校验
 
 `img_to_c.py` 与 `gen_audio.py` 已删除（见上）；现行固件生成器 `build_offline_pack.py` 缺依赖或输入时报错退出，不生成占位数据；
 所以 2026-10-28 把合成 wav 移出库后，重跑必须先 `gen_synth.py`。
-`tools/web/svg_to_png.mjs` 是显式传入输入/输出目录的独立转换工具，未纳入默认管线，也不参与原型运行。
+`tools/svg_to_png.mjs` 是显式传入输入/输出目录的独立转换工具，未纳入默认管线，也不参与原型运行。
 
 ## 校验与测试
 

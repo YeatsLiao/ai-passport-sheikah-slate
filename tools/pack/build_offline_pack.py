@@ -105,7 +105,7 @@ def main():
  for name,size in kit_sizes.items():
   src=ART/'rune-world-kit-v4.png';raster('world/'+('ground' if name=='road' else name),Image.open(src).crop(data['RUNE_KIT'][name]),*size,True,str(src.relative_to(ROOT)))
  for i,cat in enumerate(data['INV_CATS']):
-  src=ART/cat['icon'];png=subprocess.check_output(['node',str(ROOT/'tools/web/device_svg.mjs'),str(src),'20'])
+  src=ART/cat['icon'];png=subprocess.check_output(['node',str(ROOT/'tools/device_svg.mjs'),str(src),'20'])
   im=ImageOps.contain(Image.open(io.BytesIO(png)).convert('RGBA'),(20,20));canvas=Image.new('RGBA',(20,20));canvas.alpha_composite(im,((20-im.width)//2,(20-im.height)//2));raster(f'ui/category{i}',canvas,20,20,True,str(src.relative_to(ROOT)))
  for i,rune in enumerate(data['RUNES']):
   src=ART/rune['icon'];im=Image.open(src).convert('RGBA') if i!=8 else atlas.crop(regions[15])
@@ -197,7 +197,6 @@ def main():
   text=generated+'\n'.join(p.read_text(encoding='utf-8') for p in list(CODE.glob('*.c'))+list((CODE/'fonts').glob('*.c')) if p.name!='data.c')
   symbols=''.join(sorted(set(c for c in text if ord(c)>127)))
   cli=ROOT/'tools/node_modules/lv_font_conv/lv_font_conv.js'
-  if not cli.exists():cli=ROOT/'tools/web/node_modules/lv_font_conv/lv_font_conv.js'
   if not cli.exists():raise FileNotFoundError('Existing lv_font_conv not found; no automatic install')
   for size in [10,12,14,16,28,40,52]:
    numeric=size>=28

@@ -27,7 +27,7 @@
 | | [`fetch_map_reference.py`](fetch_map_reference.py) | 下载无 HUD 地图原图 |
 | **gen/ 遗留管线** | `gen_assets.py` | 程序绘制旧固件图源 PNG（链路已停用，产物仍被原型借用） |
 | | `gen_synth.py` | 合成希卡风音效 WAV |
-| **web/** | `device_svg.mjs` | 原型 SVG 图标 → PNG（资源包使用） |
+| **web 工具（tools 根）** | `device_svg.mjs` | 原型 SVG 图标 → PNG（资源包使用） |
 | | `svg_to_png.mjs` | 通用 SVG → PNG 转换，显式传参 |
 
 ## 路径约定

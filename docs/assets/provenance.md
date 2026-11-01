@@ -119,7 +119,7 @@ Hylia Serif 字体与希卡之眼沿用此前仓库，其来源声明不能证�
 - `assets/gen/prototype/rune-effects-v4.png`：四阶段炸弹爆炸、召唤光柱、落地阴影、希卡激活波纹、奖励光效；参考同一实机截图的能量颜色和画面风格。
 - `assets/gen/prototype/slate-hud-kit-v4.png`：用户已明确否决，当前原型零引用；恢复此前界面样式。生成内容原为按钮、面板、选中角标、取景框、精力环、装备/加成图标、地图图标、信号。另参考 `assets/raw/02_ui/reference/topbar_ingame.png`。这是参考生成的统一组件，不冒称逐像素复刻原生 HUD。
 - 三图通过实际源区域取样，保留 PNG alpha，不用脚本编辑像素；排版、点击、物理判定和动画时钟仍由代码负责。旧 SVG 与样式未清理，装备图标已按用户要求全部恢复原引用，地图图标使用既有游戏 PNG；HUD 图集不启用。
-- 最终提示词与组件顺序见 [v4 提示词](../../tools/rune-art-v4-prompts.md)。
+- 最终提示词与组件顺序见 [v4 提示词](../../docs/assets/rune-art-v4-prompts.md)。
 
 地图底图 `assets/raw/05_world/maps/botw-map-base.webp` 来自 [ZeldaMods Object Map](https://objmap.zeldamods.org/) 的 [base.png 资源](https://objmap.zeldamods.org/game_files/maptex/base.png)：服务器实际返回 WebP，保存时使用真实格式扩展名，3000×2500、1,204,518 字节，未编辑像素。分段下载后通过 PIL verify 完整校验；下载方法见 [工具说明](../../tools/README.md#地图原图下载)。
 
