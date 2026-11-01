@@ -81,13 +81,13 @@ ADP1：magic、16000Hz、采样数，再接低半字节优先 IMA ADPCM。各声
 资源包已注册进固件 flash 目标（`main/CMakeLists.txt` 末尾的 `esptool_py_flash_target_image`），所以 `idf.py flash` 会自动带上 resources.bin，合并命令也会自动包含它。工程构建成功后：
 
 ```bash
-idf.py merge-bin        # 产出 build/merged-binary.bin（0x0 起含 bootloader/分区表/app/resources）
+idf.py merge-bin        # 产出 build/ai-passport-sheikah-slate-full.bin（0x0 起含 bootloader/分区表/app/resources）
 ```
 
 整包一次写入（可先擦全片）：
 
 ```bash
-esptool.py --chip esp32c3 --port COMx --baud 460800 write_flash 0x0 build/merged-binary.bin
+esptool.py --chip esp32c3 --port COMx --baud 460800 write_flash 0x0 build/ai-passport-sheikah-slate-full.bin
 ```
 
 等价的手工合并（merge-bin 不可用时的 fallback，偏移与 [partitions.csv](../../firmware/partitions.csv) 对应，flash 参数 dio/80m/8MB 与 sdkconfig 一致）：
