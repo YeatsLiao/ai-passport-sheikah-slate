@@ -47,3 +47,6 @@ assets/gen/prototype/battery-sheikah-v1.png
 # 例外（保持跟踪）：01_runes/gallery/reference_sensor_shrine.png、
 # 05_world/maps/{botw-map-base.webp,locations-game-source.yml,location-names-*.json,*.html}、
 # 07_fonts/SourceHanSans*、06_audio/{action,select}.mp3 —— 更新这些文件需 git add -f。
+
+# Pages 本地构建输出
+dist/

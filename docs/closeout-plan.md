@@ -116,6 +116,8 @@
 
 ## 五、GitHub Pages 原型
 
+> 2026-11-01 准备完成：发布组装脚本 [tools/pages/build_site.py](../tools/pages/build_site.py)（白名单组装+思源字体子集 16MB→0.87MB+静音策略）与工作流 [.github/workflows/deploy-pages.yml](../.github/workflows/deploy-pages.yml) 已就绪并本地验证（76MB/643 文件，无音效无固件泄漏）。**待用户决策/操作**：①仓库可见性（公开仓库免费 / 私有需 Pro）；②repo Settings→Pages→Source 选 GitHub Actions；③推送授权（工作流随 push 激活）；④音效公开与否（默认静音演示，`--with-audio` 可切换）。
+
 ### 建议方案
 
 保留原型纯静态站，使用 GitHub Actions 组织一个独立发布目录，再部署到 GitHub Pages。发布物保留 `prototype/` 与其所需 `assets/` 的同级关系；根路径提供进入原型的入口。不要为了上线改变现有源码目录，也不要直接发布整个工作区。
