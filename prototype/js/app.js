@@ -4,7 +4,6 @@
 
 const L = (cn,en) => state.lang === 'cn' ? cn : en;
 const IMG = n => `../assets/gen/prototype/${n}`;   /* 原型贴片 */
-const FW = n => `../assets/gen/firmware/${n}`;     /* 固件图源（程序绘制，原型里只借少数张） */
 const screenEl = document.getElementById('screen');
 const shellEl = document.getElementById('screenShell');
 const railEl = document.getElementById('railNav');
