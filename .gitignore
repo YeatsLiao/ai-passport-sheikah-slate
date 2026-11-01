@@ -38,7 +38,7 @@ assets/raw/06_audio/
 # 停止跟踪的归档美术（用户自行整理保留，工程无读者）
 assets/raw/99_archive/
 # 可重建产物（tools/pack/build_offline_pack.py 重新生成；standby/sources 输入已入库）
-assets/gen/firmware/offline/resources.bin
+assets/gen/offline/resources.bin
 # 已否决/停用素材：本地保留
 assets/gen/prototype/slate-hud-kit-v4.png
 assets/gen/prototype/battery-sheikah-v1.png

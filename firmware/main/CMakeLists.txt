@@ -15,7 +15,7 @@ idf_component_register(SRCS ${OFFLINE_SRCS} INCLUDE_DIRS "." "offline"
 # Register the resource pack so `idf.py flash` and `idf.py merge-bin` include it
 # (offset must match partitions.csv; regenerate with tools/pack/build_offline_pack.py first).
 esptool_py_flash_target_image(flash "resources" "0x410000"
-    "${CMAKE_CURRENT_LIST_DIR}/../../assets/gen/firmware/offline/resources.bin")
+    "${CMAKE_CURRENT_LIST_DIR}/../../assets/gen/offline/resources.bin")
 
 # Offline V1 keeps dense one-statement-per-line code in pages/settings/game_view/ui
 # and the generated data/fonts; the indentation heuristic misfires on it.

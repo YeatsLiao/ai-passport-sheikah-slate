@@ -960,25 +960,25 @@
     {
       "name": "link/0",
       "bytes": 4992,
-      "source": "assets\\gen\\firmware\\offline\\sources\\link-actions-v2.png",
+      "source": "assets\\gen\\offline\\sources\\link-actions-v2.png",
       "sha256": "b8f637bdf1c5dcfcd2ea3b47ea4f442d059d15b2dcb5b63b625d845a7b30445e"
     },
     {
       "name": "link/1",
       "bytes": 4992,
-      "source": "assets\\gen\\firmware\\offline\\sources\\link-actions-v2.png",
+      "source": "assets\\gen\\offline\\sources\\link-actions-v2.png",
       "sha256": "d839252d88f0bf1fe5bcc41792df996111d433376777a523d7cb3cd1af3cf619"
     },
     {
       "name": "link/2",
       "bytes": 4992,
-      "source": "assets\\gen\\firmware\\offline\\sources\\link-actions-v2.png",
+      "source": "assets\\gen\\offline\\sources\\link-actions-v2.png",
       "sha256": "3c08ca9bdb32087b1fa6588d873de99ef8e95a3b1f6d33be230ed9aae5b9dd86"
     },
     {
       "name": "link/3",
       "bytes": 4992,
-      "source": "assets\\gen\\firmware\\offline\\sources\\link-actions-v2.png",
+      "source": "assets\\gen\\offline\\sources\\link-actions-v2.png",
       "sha256": "52d8260e67e28238024fd840801b5281f498b1d681403d08a9932024855c2014"
     },
     {
@@ -7440,31 +7440,31 @@
     {
       "name": "standby/0.jpg",
       "bytes": 4658,
-      "source": "assets\\gen\\firmware\\offline\\standby\\sources\\E.png",
+      "source": "assets\\gen\\offline\\standby\\sources\\E.png",
       "sha256": "0adb42f941daa0edc5fa168427846928d3d20388925982022fa9929f255ba8be"
     },
     {
       "name": "standby/1.jpg",
       "bytes": 20384,
-      "source": "assets\\gen\\firmware\\offline\\standby\\sources\\F.png",
+      "source": "assets\\gen\\offline\\standby\\sources\\F.png",
       "sha256": "a78020eb79b3075e9824d2cbbd8008a8d66fa1f1710ed47592997fde3b64bed7"
     },
     {
       "name": "standby/2.jpg",
       "bytes": 16830,
-      "source": "assets\\gen\\firmware\\offline\\standby\\sources\\G.png",
+      "source": "assets\\gen\\offline\\standby\\sources\\G.png",
       "sha256": "4fca239488325adcefadb10360fe1afd1a59c1a4d74b6c846df1bcd928e92c90"
     },
     {
       "name": "standby/3.jpg",
       "bytes": 16829,
-      "source": "assets\\gen\\firmware\\offline\\standby\\sources\\H.png",
+      "source": "assets\\gen\\offline\\standby\\sources\\H.png",
       "sha256": "a45a7f85caf43c735363a03286a0414d3f537a6efe6c3580759c32336b67c9b4"
     },
     {
       "name": "standby/4.jpg",
       "bytes": 25755,
-      "source": "assets\\gen\\firmware\\offline\\standby\\sources\\I.png",
+      "source": "assets\\gen\\offline\\standby\\sources\\I.png",
       "sha256": "90d01ecb28bef8a6f8cafbbd57005f00e51409b00669685727e84487d66010f5"
     },
     {
@@ -7626,7 +7626,7 @@
     {
       "name": "world/road",
       "bytes": 172032,
-      "source": "assets\\gen\\firmware\\offline\\sources\\cycle-road-v2.png",
+      "source": "assets\\gen\\offline\\sources\\cycle-road-v2.png",
       "sha256": "e015b237514786c4eaebee9ce83415a52e82d9d91210fbaa3f38d14f5999939c"
     },
     {

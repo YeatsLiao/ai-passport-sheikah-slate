@@ -9,11 +9,11 @@ assets/
 ├── audio/
 │   ├── botw/               40 段原作音效（需自备，gitignore 投放目录；缺失时资源包生成报错、原型静音）
 ├── battery/                CW2017 电芯参数记录（manifest.json + 源表）
-├── design/standby-concepts/  待机候选设计稿（docs 配图）
+├── design/                 待机候选设计稿（docs 配图）
 ├── fonts/                  思源黑体 Medium OTF + OFL 许可（字库源 + 原型运行）
-├── gallery/                reference_sensor_shrine.png（原型感应器页引用）
+├── reference-sensor-shrine.png  原型感应器页引用（gallery 已拍平）
 ├── gen/
-│   ├── firmware/offline/   资源包生成输入：standby/sources、sources、manifest.json（resources.bin 产物已忽略）
+│   └── offline/            资源包生成输入：standby/sources、sources、manifest.json（resources.bin 产物已忽略）
 │   └── prototype/          519 项：场景图集、符文、图鉴照片铺位、装备、背景、inventory（原型与 pack 共用）
 ├── maps/                   botw-map-base.webp（瓦片源）+ 点位数据源 yml/json/html（gen_map_places.py 输入）
 ├── screenshots/            实机截图（docs 配图；截图工具输出目录 /screenshots/ 仍忽略）
