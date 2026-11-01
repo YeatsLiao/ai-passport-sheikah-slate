@@ -49,7 +49,8 @@ def main():
     # 叠甲：注入原型页底部（浏览器页面层，不进 320x240 设备画布）
     idx=out/'prototype'/'index.html'
     html=idx.read_text(encoding='utf-8')
-    disclaimer=('<div style="text-align:center;padding:12px 0 26px;color:#3f565d;font-size:12px;'
+    disclaimer=('<div class="site-disclaimer" style="position:fixed;left:0;right:0;bottom:0;z-index:60;'
+                'text-align:center;padding:6px 0;background:rgba(2,7,11,.92);color:#3f565d;font-size:12px;'
                 'font-family:system-ui">非官方粉丝项目，与 Nintendo 无关。《塞尔达传说：旷野之息》相关名称、'
                 '图片与音效版权归 Nintendo 所有，仅作个人演示使用。</div>')
     assert '</body>' in html

@@ -1115,7 +1115,8 @@ function fit() {
   const chromeW = device.offsetWidth - shell.offsetWidth;
   const chromeH = device.offsetHeight - shell.offsetHeight;
   const maxW = window.innerWidth - parseFloat(stage.paddingLeft) - parseFloat(stage.paddingRight) - chromeW - railWidth - (railWidth ? parseFloat(stage.gap) : 0);
-  const maxH = window.innerHeight - parseFloat(stage.paddingTop) - parseFloat(stage.paddingBottom) - chromeH;
+  const disclaimerH = document.querySelector('.site-disclaimer')?.offsetHeight || 0;
+  const maxH = window.innerHeight - parseFloat(stage.paddingTop) - parseFloat(stage.paddingBottom) - chromeH - disclaimerH;
   const scale = Math.max(.4, Math.min(maxW / 320, maxH / 240));
   document.documentElement.style.setProperty('--scale', scale.toFixed(3));
   document.documentElement.style.setProperty('--device-height', device.getBoundingClientRect().height + 'px');
