@@ -174,4 +174,4 @@ Hylia Serif 字体与希卡之眼沿用此前仓库，其来源声明不能证�
 
 2026-10-30：设备专用原件保存在 `assets/gen/offline/sources/`，不替换 Web 原型素材。`cycle-road-v2.png` 参考既有《旷野之息》实机场景 `assets/gen/prototype/rune_scene_cycle.jpg`，由 imagegen 生成透明、水平、连续的草地土层；`link-actions-v2.png` 参考 `link-side-clean-v3.png` 与实机磁力场景，生成站立、两个行走姿态和操作石板的四格透明图。这些是游戏参考生成图，不是官方提取的动画帧。
 
-设备工具仅取 alpha 主体边界、等比缩小和补透明边距：道路派生为 896×64，人物四帧为 32×52、脚底统一对齐。游戏原图、原版立绘、Logo、图标和音频不改动。2026-10-31：新增 E～J 待机设计。选定预览及提示词保存在 `assets/design/`；由内置 imagegen 将 E～I 转为无文字背景，原字节保存于 `assets/gen/offline/standby/sources/`，实际生成文件标识和完整提示词见 [待机来源](../../assets/gen/offline/standby/provenance.json)。J 黑金款由固件原生绘制。它们是参考风格生成图，不是官方游戏截图；实时数字和品牌不固化到背景。每项派生输出的路径与 SHA-256 由设备包 manifest 记录；完整设备功能及未验证范围见 [V1 实现说明](../hardware/offline-v1.md)。
+设备工具仅取 alpha 主体边界、等比缩小和补透明边距：道路派生为 896×64，人物四帧为 32×52、脚底统一对齐。游戏原图、原版立绘、Logo、图标和音频不改动。2026-10-31：新增 E～J 待机设计。选定预览及提示词保存在 `assets/ui/standby/`；由内置 imagegen 将 E～I 转为无文字背景，原字节保存于 `assets/gen/offline/standby/sources/`，实际生成文件标识和完整提示词见 [待机来源](../../assets/gen/offline/standby/provenance.json)。J 黑金款由固件原生绘制。它们是参考风格生成图，不是官方游戏截图；实时数字和品牌不固化到背景。每项派生输出的路径与 SHA-256 由设备包 manifest 记录；完整设备功能及未验证范围见 [V1 实现说明](../hardware/offline-v1.md)。

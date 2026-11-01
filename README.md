@@ -3,7 +3,7 @@
 > 一块真的能玩的希卡石板 —— 基于 ESP32-C3 的《塞尔达传说：旷野之息》
 > 希卡石板复刻。320×240，全离线，开机即玩，不需要网——因为一万年前也没有。
 
-![待机 · 静谧科技](assets/docs/standby-quiet-tech-cn.png)
+![待机 · 静谧科技](assets/screenshots/slate-20261031-213917-4136.png)
 
 ## 这是什么
 
@@ -41,21 +41,21 @@
 
 | 主菜单 | 符文选择 |
 |---|---|
-| ![主菜单](assets/docs/home-cn.png) | ![符文选择](assets/docs/rune-select-cn.png) |
+| ![主菜单](assets/screenshots/slate-20261031-081542-9757.png) | ![符文选择](assets/screenshots/slate-20261031-213730-5006.png) |
 | **装备** | **图鉴** |
-| ![装备](assets/docs/equipment-grid-cn.png) | ![图鉴](assets/docs/compendium-cn.png) |
+| ![装备](assets/screenshots/slate-20261031-213820-0344.png) | ![图鉴](assets/screenshots/slate-20261031-213704-5683.png) |
 | **相机 · 识别成功** | **冒险日志** |
-| ![相机](assets/docs/rune-camera-found-cn.png) | ![日志](assets/docs/quest-main-cn.png) |
+| ![相机](assets/screenshots/slate-20261031-213804-8503.png) | ![日志](assets/screenshots/slate-20261031-213652-8481.png) |
 
 ## 九项符文与能力模拟
 
 | 圆炸弹 | 方形炸弹 | 磁力抓取 |
 |---|---|---|
-| ![圆炸弹](assets/docs/rune-bomb-round-cn.png) | ![方形炸弹](assets/docs/rune-bomb-cube-cn.png) | ![磁力抓取](assets/docs/rune-magnet-cn.png) |
+| ![圆炸弹](assets/screenshots/slate-20261101-181841-6938.png) | ![方形炸弹](assets/screenshots/slate-20261031-113937-3799.png) | ![磁力抓取](assets/screenshots/slate-20261031-081620-9789.png) |
 | **静止器** | **制冰器** | **希卡感应器** |
-| ![静止器](assets/docs/rune-stasis-cn.png) | ![制冰器](assets/docs/rune-cryonis-cn.png) | ![感应器](assets/docs/rune-sensor-cn.png) |
+| ![静止器](assets/screenshots/slate-20261031-081631-4481.png) | ![制冰器](assets/screenshots/slate-20261031-081640-9100.png) | ![感应器](assets/screenshots/slate-20261031-081725-0931.png) |
 | **大师摩托** | **amiibo** | **相机 · 识别成功** |
-| ![大师摩托](assets/docs/rune-moto-cn.png) | ![amiibo](assets/docs/rune-amiibo-cn.png) | ![相机识别](assets/docs/rune-camera-found-cn.png) |
+| ![大师摩托](assets/screenshots/slate-20261031-213745-7300.png) | ![amiibo](assets/screenshots/slate-20261031-081715-0271.png) | ![相机识别](assets/screenshots/slate-20261031-213804-8503.png) |
 
 ## 六款待机画布
 
@@ -63,10 +63,10 @@
 
 | 静谧科技 | 晨光旷野 | 古地图 |
 |---|---|---|
-| ![静谧科技](assets/docs/standby-quiet-tech-cn.png) | ![晨光旷野](assets/docs/standby-dawn-field-cn.png) | ![古地图](assets/docs/standby-antique-map-cn.png) |
+| ![静谧科技](assets/screenshots/slate-20261031-213917-4136.png) | ![晨光旷野](assets/screenshots/slate-20261031-213903-2314.png) | ![古地图](assets/screenshots/slate-20261031-213849-1129.png) |
 
 竖屏款（神庙石碑 / 林间薄雾）与黑金款见
-[assets/docs/MANIFEST.md](assets/docs/MANIFEST.md)。
+[assets/screenshots/MANIFEST.md](assets/screenshots/MANIFEST.md)。
 
 ## 三键操作
 
