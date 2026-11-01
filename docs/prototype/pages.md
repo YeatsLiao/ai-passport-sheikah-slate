@@ -38,12 +38,12 @@
 
 ## 路由（哈希）
 
-`#/home`、`#/standby`、`#/runes`、`#/rune/{bomb,bomb_cube,magnet,stasis,cryonis,camera}`、`#/map`、
+`#/home`、`#/standby`、`#/runes`、`#/rune/{bomb,bomb_cube,magnet,stasis,cryonis,camera,cycle,amiibo,sensor}`、`#/map`、
 `#/inventory/[weapons|shields|armors[/装备ID]]`、`#/compendium/[分类/[条目]]`、`#/log`、
 `#/log/{main|side}/{故事ID}`、`#/system`、`#/album[/照片]`。
 
-- 展示数据在 `prototype/js/data.js`：5 个符文、5 类图鉴共 24 条（编号与照片对齐原版图鉴）、
-  12 张相册；五个符文场景都能从零操作到 `TRIAL COMPLETE`，可重试。地图原图清单在 `app.js`。
+- 展示数据在 `prototype/js/data.js`：9 个符文、5 类图鉴共 394 条（编号与照片对齐原版图鉴）、
+  12 张相册；九个符文场景都能从零操作到 `TRIAL COMPLETE`，可重试。地图原图清单在 `app.js`。
 - 顶栏为纯文字导航，不含图标；图鉴入口显示 `COMPENDIUM`，页内完整名称为 `HYRULE COMPENDIUM`。
 - 日志包含主线、神庙挑战、迷你挑战三类，分类按钮显示各自条数，含全部 DLC 与联动。每条提供中英文标题、地点及自写梗概，不是游戏日志原文；不显示已移除的清单说明提示。
 - 列表分类路由为 `#/log/main`、`#/log/shrine`、`#/log/side`；详情在分类后追加任务 ID。按钮切换同步 URL 与侧栏，详情支持上一条/下一条，首尾禁用越界按钮；返回目录保留当前分类，列表长按返回待机。

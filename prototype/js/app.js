@@ -28,7 +28,6 @@ const state = {
   magnet: { grabbed: false, moved: false, done: false },
   stasis: { frozen: false, hits: 0, remaining: 10, done: false },
   cryonis: { count: 0, done: false },
-  camera: { sel: 0, shots: [false, false, false, false, false], done: false },
   cycle: { phase: 'idle', speed: 0, dist: 0 },
   amiibo: { sel: 0, phase: 'idle', got: null },
   sensor: { phase: 'idle', d: 120, done: false },
@@ -42,7 +41,7 @@ const state = {
   logTab: 'main',
   albumOpen: null,
   albumDeleted: [],
-  albumShots: [],
+  albumShots: [], /* 预留：相机相册另行讨论（NOW）；当前只由相册逻辑读取，恒为空 */
   settings: { brightness: 5, volume: 3, scanlines: true, sfx: true }
 };
 
@@ -270,7 +269,7 @@ function viewRune(id) {
   return viewRuneGame(RUNE_GAMES.has(id) ? id : 'bomb');
 }
 
-/* 相机示例目标；拍照同时更新图鉴登记与相册。 */
+/* 相机示例目标；由 rune-extras.js 的相机小游戏使用。 */
 const CAM_TARGETS = [
   { x: 26, y: 30, img: 'pic_nightshade.png', big: 'cp_blue_nightshade.png', name: 'BLUE NIGHTSHADE', cn: '蓝夜光草' },
   { x: 112, y: 12, img: 'pic_bass.png', big: 'cp_hyrule_bass.png', name: 'HYLIAN BASS', cn: '海拉鲁鲈鱼' },
@@ -278,37 +277,6 @@ const CAM_TARGETS = [
   { x: 58, y: 76, img: 'mat_amber.png', name: 'AMBER', cn: '琥珀' },
   { x: 152, y: 82, img: 'pic_mastersword.png', big: 'cp_master_sword.png', name: 'MASTER SWORD', cn: '大师之剑' }
 ];
-
-function viewCamera(rune) {
-  const c = state.camera;
-  const got = c.shots.filter(Boolean).length;
-  return `<div class="body scene-body">
-    <div class="scene" id="scene" style="background-image:url(${IMG('rune_scene_camera.png')})"></div>
-    <div class="scene-shade"></div>
-    ${sceneTop(rune, state.lang === 'cn' ? `已登记 ${got}/5` : `REGISTERED ${got}/5`)}
-    ${c.done ? `<div class="badge-done">${t('trial_complete')}</div>` : ''}
-    <div class="viewfinder">
-      <span class="vf-corner tr"></span><span class="vf-corner bl"></span>
-      <div class="vf-grid"></div>
-      <span class="vf-reticle"></span>
-      <div class="vf-hud"><span class="rec">REC</span><span>F2.8 · 1/120</span></div>
-      ${CAM_TARGETS.map((t, i) => `
-        <button class="target ${c.shots[i] ? 'shot' : ''} ${c.sel === i ? 'sel' : ''}" data-action="camera:pick:${i}" data-focus style="left:${t.x}px;top:${t.y}px">
-          <img src="${IMG(t.img)}" alt="">
-          <span class="lock"><i></i><i></i><i></i><i></i></span>
-          ${c.shots[i] ? '<span class="mark">✓</span>' : ''}
-        </button>`).join('')}
-    </div>
-    <div class="msg">${c.done ? t('camera_done')
-      : c.shots[c.sel] ? t('camera_shot')
-        : `${t('camera_aim')} ${state.lang === 'cn' ? CAM_TARGETS[c.sel].cn : CAM_TARGETS[c.sel].name}，${t('camera_shoot_note')}`}</div>
-    <div class="chiprow">
-      <button class="chip" data-action="camera:shoot" data-focus data-start ${c.done || c.shots[c.sel] ? 'disabled' : ''}>${t('scene_shoot')}</button>
-      <button class="chip" data-action="camera:next" data-focus>${t('scene_switch')}</button>
-      <button class="chip" data-action="camera:album" data-focus>${t('scene_album')} ${albumItems().length}</button>
-    </div>
-  </div>` + footer(t('camera_foot'));
-}
 
 /* ---------------- inventory ---------------- */
 const INV_CATS = [
@@ -860,8 +828,6 @@ function run(action) {
     case 'enter-rune':
       go('#/rune/' + RUNES[state.runeIndex].id); beep('activate'); break;
 
-    case 'camera': cameraAction(rest[0], rest[1]); break;
-
     case 'inv': if(rest[0]==='equip')inventoryMenu(rest[1]);else inventoryAction(rest[0],rest[1]);break;
     case 'comp': go('#/compendium/' + rest.join(':')); break;
     case 'entry': go(`#/compendium/${rest[0]}/${rest[1]}`); break;
@@ -879,41 +845,6 @@ function run(action) {
     default: break;
   }
 }
-
-function cameraAction(kind, arg) {
-  const c = state.camera;
-  if (kind === 'pick') {
-    c.sel = Number(arg); render(); beep('move'); return;
-  }
-  if (kind === 'next') {
-    c.sel = (c.sel + 1) % CAM_TARGETS.length; render(); beep('move'); return;
-  }
-  if (kind === 'album') { go('#/album'); return; }
-  if (kind === 'shoot') {
-    const idx = c.sel;
-    const t = CAM_TARGETS[idx];
-    if (c.shots[idx]) { toast(L('这个目标已经登记过了。', 'This subject is already registered.'), 'warn'); beep('back'); return; }
-    c.shots[idx] = true;
-    c.done = c.shots.every(Boolean);
-    /* 拍完自动切到下一个未登记目标，连着拍不用来回切换。 */
-    if (!c.done) {
-      const next = c.shots.findIndex(v => !v);
-      if (next >= 0) c.sel = next;
-    }
-    /* 快门会把照片写进相册，相机符文与相册因此是同一个数据流。 */
-    state.albumShots.unshift({
-      id: 'shot' + idx, no: 'NEW', img: t.img, big: t.big || t.img,
-      title: t.name, cn: t.cn, time: 'NOW', place: 'GREAT PLATEAU', fresh: true
-    });
-    render(); beep('shutter');
-    const flash = document.createElement('div');
-    flash.className = 'flash';
-    screenEl.appendChild(flash);
-    setTimeout(() => flash.remove(), 340);
-    if (c.done) setTimeout(() => beep('complete'), 280);
-  }
-}
-
 
 function toggleLang() {
   state.lang = state.lang === 'cn' ? 'en' : 'cn';
