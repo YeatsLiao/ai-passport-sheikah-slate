@@ -70,6 +70,8 @@
 
 `python -B tools/sfx/import_botw_sfx.py ZIP_OR_EXTRACTED_DIRECTORY` 从用户取得的 BotW 音效 ZIP 或解压目录按明确路径选择 27 段必选与 12 段第二包可选原作 WAV，复制到 `assets/audio/botw/` 并生成来源、字节数与 SHA-256 清单；播放映射写到 `prototype/js/sound-files.js`。存在不同文件时停止，不处理未知文件。第二包缺件路径列在 `botw-rune-sfx-pending.json`；后续导入仍使用合并后的 Miscellaneous 目录。来源见 [音效来源](../docs/assets/provenance.md#botw-原版音效)。
 
+摩托原声增量导入：`python -B tools/sfx/import_motorcycle_sfx.py EXTRACTED_GameROMMotorcycle_DIRECTORY`。输入四段启动/引擎/起跳/落地 WAV 与 MotorcycleEngine_LOOP.txt；输出原字节副本、按原循环点截取的引擎循环 WAV，并合并来源清单与播放映射。若先重跑基础导入器，应随后重跑此增量导入器，最后生成设备资源包。原件不修改，已存在不同字节则停止。
+
 ## 资源包（build_offline_pack.py + export_offline_data.mjs）
 
 `python -B tools/pack/build_offline_pack.py --fonts` 使用 `export_offline_data.mjs` 读取原型常量数据，生成设备资源包 resources.bin、394/152/24/177 条数据、固定 12 张相册、10/12/14/16px 双语字库与 28/40/52px 数字字库，不编译不烧录。地图生成三层，照片目标预生成三档；4 张可切换背景取自 `assets/gen/prototype/backgrounds/`。不联网、不装依赖；输出、格式、分区与验证范围见 [V1 实现说明](../docs/hardware/offline-v1.md#资源生成与布局)。只更新图片/音频可省略 `--fonts`；UI 文案或字体字符变化后必须带 `--fonts` 重新生成，app 与 pack 索引 CRC 需匹配。

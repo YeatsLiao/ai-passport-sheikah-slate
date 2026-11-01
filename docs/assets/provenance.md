@@ -159,7 +159,7 @@ Hylia Serif 字体与希卡之眼沿用此前仓库，其来源声明不能证�
 
 已进一步核对：现有第一包 `ExpressionSound/BitaLock_Timer03.wav` 是静止器倒计时音，已原字节导入，最后约 1.683 秒触发，暂停或提前解除会停止；未试听确认混音。
 
-磁力的 SE_MagneCatch_Catch/Moving/Stop/Disappear、静止器 Bitalock_Start_02/Hit_06/End_06/07/08、木质宝箱 TboxFieldWood_Open，以及碎冰 IceMakerBlock_Crush，已在 [Miscellaneous Sounds (2 / 3)](https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/) 文件清单确认。用户已提供第二包，以上 12 段全部原字节导入并接入动作：木质宝箱开盖、碎冰、磁力抓取/移动/停手/解除、静止器启动/逐次击打/第六下满蓄力/分三档释放。磁力移动音循环播放，停手、暂停、返回、重试及失焦时停止。导入状态见 `tools/botw-rune-sfx-pending.json`（保留原路径作为清单）。宝箱落地、摩托实体声音尚未确认对应源文件，未伪造替代。
+磁力的 SE_MagneCatch_Catch/Moving/Stop/Disappear、静止器 Bitalock_Start_02/Hit_06/End_06/07/08、木质宝箱 TboxFieldWood_Open，以及碎冰 IceMakerBlock_Crush，已在 [Miscellaneous Sounds (2 / 3)](https://sounds.spriters-resource.com/nintendo_switch/thelegendofzeldabreathofthewild/asset/405754/) 文件清单确认。用户已提供第二包，以上 12 段全部原字节导入并接入动作：木质宝箱开盖、碎冰、磁力抓取/移动/停手/解除、静止器启动/逐次击打/第六下满蓄力/分三档释放。磁力移动音循环播放，停手、暂停、返回、重试及失焦时停止。导入状态见 `tools/botw-rune-sfx-pending.json`（保留原路径作为清单）。2026-11-01 已从用户补充的 Equipment/GameROMMotorcycle 原件接入 Motorcycle_EngineStart、MotorcycleEngine、Motorcycle_EngineJump00、Motorcycle_BodyLand00 四段。原 WAV 字节不改；引擎另从 LOOP.txt 指定的 PCM [1176,153885) 帧生成 MotorcycleEngine-loop.wav，避免首段非循环采样反复播放。来源相对路径、原件与派生件 SHA-256 见 assets/audio/botw/manifest.json；导入入口见 [音效工具](../../tools/README.md#音效导入import_botw_sfxpy)。同时补触发已存在的 SYS_ItemGet_Common 奖励揭晓音。代码与设备资源已更新，听感及设备循环连续性待用户验收。宝箱落地仍未确认专用源文件，未用关箱/踢箱声代替。
 
 导入器对第二包明确路径作可选识别；将第二包合并到原 Miscellaneous 目录后重新运行导入命令。脚本生成 `prototype/js/sound-files.js`，仅收录本次确实导入的文件，HTML 先加载该映射再加载播放器，兼容 file:// 打开。暂停、返回与重试停止磁力移动/静止器倒计时；隐藏页面停止所有播放。未进行自动化测试或浏览器试听。
 
