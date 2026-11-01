@@ -60,7 +60,7 @@ python -m http.server 8124 --bind 127.0.0.1
 
 ## 已知限制
 
-- 圆炸弹符文暂无实机玩法截图（其余八项与全部页面见 [assets/docs/MANIFEST.md](assets/docs/MANIFEST.md)）
+- 九项符文与全部页面实拍见 [assets/docs/MANIFEST.md](assets/docs/MANIFEST.md)
 - 部分事件音效仍在补齐（宝箱落地、摩托引擎声等，见 [音效来源](docs/assets/provenance.md#botw-原版音效)）
 - 地图缩放档位（1×/2×/4×）少于原型（最高 16×）；部分页面布局与原型仍有差异
 - 音效为需自备素材：克隆后无声，从外部归档复制 `assets/audio/botw/` 即可
