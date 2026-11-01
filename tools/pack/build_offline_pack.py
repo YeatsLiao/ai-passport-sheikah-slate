@@ -50,7 +50,7 @@ def main():
    fmt=1
   add(name,bytes(payload),w,h,fmt,source)
  for lang,filename,size in [('cn','BotW_Simplified_Chinese_Logo.png',(200,72)),('en','BotW_English_Logo.png',(200,72))]:
-  src=ROOT/'assets/raw/02_ui'/filename;im=ImageOps.contain(Image.open(src).convert('RGBA'),size,Image.Resampling.LANCZOS)
+  src=ROOT/'assets/ui'/filename;im=ImageOps.contain(Image.open(src).convert('RGBA'),size,Image.Resampling.LANCZOS)
   canvas=Image.new('RGBA',size);canvas.alpha_composite(im,((size[0]-im.width)//2,(size[1]-im.height)//2));raster('ui/title_'+lang,canvas,*size,True,str(src.relative_to(ROOT)))
  raster('ui/eye',Image.open(ART/'eye.png'),96,96,True,'assets/gen/prototype/eye.png')
  # Switchable screen backgrounds: four 160x120 RGB565 plates the app upscales 2x.
@@ -134,15 +134,15 @@ def main():
    canvas.alpha_composite(icon,((size-icon.width)//2,(size-icon.height)//2))
    raster(f'equip/{size}/{file}',canvas,size,size,True,str(p.relative_to(ROOT)))
  for name,file in [('shrine','BotW_White_Sheikah_Eye_Symbol.png'),('tower','BotW_Main_Quest_Sprite.png'),('place','BotW_Key_Item_Icon.png')]:
-  src=ROOT/'assets/raw/02_ui/glyphs'/file;raster('map/'+name,Image.open(src),12,12,True,str(src.relative_to(ROOT)))
- mapfile=ROOT/'assets/raw/05_world/maps/botw-map-base.webp';im=Image.open(mapfile)
+  src=ROOT/'assets/ui/glyphs'/file;raster('map/'+name,Image.open(src),12,12,True,str(src.relative_to(ROOT)))
+ mapfile=ROOT/'assets/maps/botw-map-base.webp';im=Image.open(mapfile)
  for level,size in enumerate([(384,320),(768,640),(1536,1280)]):
   layer=im.resize(size,Image.Resampling.LANCZOS)
   for y in range(0,size[1],64):
    for x in range(0,size[0],64):
     tile=layer.crop((x,y,x+64,y+64)).convert('RGB');buf=io.BytesIO();tile.save(buf,format='JPEG',quality=62,optimize=True);add(f'map/{level}_{x//64}_{y//64}.jpg',buf.getvalue(),64,64,3,str(mapfile.relative_to(ROOT)))
  # Original wave bytes remain untouched; derive mono16k IMA stream for device.
- audio={kind:ROOT/'assets/audio/prototype/botw'/file for kind,file in data['SFX_FILES'].items()}
+ audio={kind:ROOT/'assets/audio/botw'/file for kind,file in data['SFX_FILES'].items()}
  for kind,p in audio.items():
   if kind in data['SFX_FILES']:
    with wave.open(str(p)) as w:
@@ -203,7 +203,7 @@ def main():
    numeric=size>=28
    font_path=CODE/'fonts'/('font_clock.c' if size==28 else f'font_clock_{size}.c' if numeric else f'font_{size}.c')
    command=['node',str(cli),'--size',str(size),'--bpp','4','--format','lvgl','--lv-font-name',f'of_clock_{size}' if numeric else f'of_chinese_{size}','--font',str(ROOT/'prototype/fonts/HyliaSerifBeta-Regular.ttf'),'--range','0x2d,0x30-0x3a' if numeric else '0x20-0x7e']
-   if not numeric:command+=['--font',str(ROOT/'assets/raw/07_fonts/SourceHanSansSC-Medium.otf'),'--symbols',symbols]
+   if not numeric:command+=['--font',str(ROOT/'assets/fonts/SourceHanSansSC-Medium.otf'),'--symbols',symbols]
    subprocess.run(command+['-o',str(font_path)],check=True)
    font=font_path.read_text(encoding='utf-8')
    start=font.index('#ifdef LV_LVGL_H_INCLUDE_SIMPLE');end=font.index('#endif',start)+len('#endif')

@@ -68,7 +68,7 @@
 
 ### 音效导入（import_botw_sfx.py）
 
-`python -B tools/sfx/import_botw_sfx.py ZIP_OR_EXTRACTED_DIRECTORY` 从用户取得的 BotW 音效 ZIP 或解压目录按明确路径选择 27 段必选与 12 段第二包可选原作 WAV，复制到 `assets/audio/prototype/botw/` 并生成来源、字节数与 SHA-256 清单；播放映射写到 `prototype/js/sound-files.js`。存在不同文件时停止，不处理未知文件。第二包缺件路径列在 `botw-rune-sfx-pending.json`；后续导入仍使用合并后的 Miscellaneous 目录。来源见 [音效来源](../docs/assets/provenance.md#botw-原版音效)。
+`python -B tools/sfx/import_botw_sfx.py ZIP_OR_EXTRACTED_DIRECTORY` 从用户取得的 BotW 音效 ZIP 或解压目录按明确路径选择 27 段必选与 12 段第二包可选原作 WAV，复制到 `assets/audio/botw/` 并生成来源、字节数与 SHA-256 清单；播放映射写到 `prototype/js/sound-files.js`。存在不同文件时停止，不处理未知文件。第二包缺件路径列在 `botw-rune-sfx-pending.json`；后续导入仍使用合并后的 Miscellaneous 目录。来源见 [音效来源](../docs/assets/provenance.md#botw-原版音效)。
 
 ## 资源包（build_offline_pack.py + export_offline_data.mjs）
 

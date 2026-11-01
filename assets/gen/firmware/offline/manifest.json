@@ -150,235 +150,235 @@
     {
       "name": "audio/activate",
       "bytes": 20378,
-      "source": "assets\\audio\\prototype\\botw\\SheikerStoneOpen_04_light.wav",
+      "source": "assets\\audio\\botw\\SheikerStoneOpen_04_light.wav",
       "sha256": "ae1a2e1fb9253ab6f31486d4ee9806aa7063b1f0d795fa090b603257724430b9"
     },
     {
       "name": "audio/amiibo",
       "bytes": 14331,
-      "source": "assets\\audio\\prototype\\botw\\Amiibo_TouchEffect01.wav",
+      "source": "assets\\audio\\botw\\Amiibo_TouchEffect01.wav",
       "sha256": "b8fcd64c8cc204ca3da25dec0ef17baa923c721a958f38fe73e6ae5d08e3e5f8"
     },
     {
       "name": "audio/back",
       "bytes": 5680,
-      "source": "assets\\audio\\prototype\\botw\\Sys_Cmn_Cancel_01.wav",
+      "source": "assets\\audio\\botw\\Sys_Cmn_Cancel_01.wav",
       "sha256": "d14d4281cb38f70fb92d7efc77508f1149aa97ffd001082e9d6db197a797d86c"
     },
     {
       "name": "audio/boom",
       "bytes": 23218,
-      "source": "assets\\audio\\prototype\\botw\\RemoteBomb.wav",
+      "source": "assets\\audio\\botw\\RemoteBomb.wav",
       "sha256": "85188cefb355f4d5f6d570fb22fb023873e690900831540a50ed51f82f1ea46c"
     },
     {
       "name": "audio/chest_open",
       "bytes": 5411,
-      "source": "assets\\audio\\prototype\\botw\\TboxFieldWood_Open.wav",
+      "source": "assets\\audio\\botw\\TboxFieldWood_Open.wav",
       "sha256": "b6f8fbba0a5a8698d9ac366a74f5f06796cbd9e79312d96de97e6199999fa4e7"
     },
     {
       "name": "audio/close",
       "bytes": 5368,
-      "source": "assets\\audio\\prototype\\botw\\SheikerStoneClose_04.wav",
+      "source": "assets\\audio\\botw\\SheikerStoneClose_04.wav",
       "sha256": "83b7faa8b003ba3b953ba38e839e868b387bb6ba726cb0f9276eb7ad54c8140d"
     },
     {
       "name": "audio/complete",
       "bytes": 18939,
-      "source": "assets\\audio\\prototype\\botw\\Sys_Challenge_Complete-audible.wav",
+      "source": "assets\\audio\\botw\\Sys_Challenge_Complete-audible.wav",
       "sha256": "49fe7f3c512f666c406f934e0afc3219bc6df7d4b4bf559d5f43ce1188b57eb0"
     },
     {
       "name": "audio/cryonis",
       "bytes": 10765,
-      "source": "assets\\audio\\prototype\\botw\\Sys_Item_IceMaker_Making.wav",
+      "source": "assets\\audio\\botw\\Sys_Item_IceMaker_Making.wav",
       "sha256": "ca9fa73d45cf0880320e92744b4e886f1e0445cc86eb8828c4f33b67f0be7c73"
     },
     {
       "name": "audio/cursor",
       "bytes": 2672,
-      "source": "assets\\audio\\prototype\\botw\\SYS_CursorMove_Sub.wav",
+      "source": "assets\\audio\\botw\\SYS_CursorMove_Sub.wav",
       "sha256": "0581d289bb8227645903d6e657251c23f9eb04b40d517065184b97937cd615e3"
     },
     {
       "name": "audio/detect",
       "bytes": 8000,
-      "source": "assets\\audio\\prototype\\botw\\Sys_Camera_Detect.wav",
+      "source": "assets\\audio\\botw\\Sys_Camera_Detect.wav",
       "sha256": "6b1a55684cd57657214462b730321c925a915dc5e5ca9e0d6975ea38fe8f206d"
     },
     {
       "name": "audio/equip",
       "bytes": 1335,
-      "source": "assets\\audio\\prototype\\botw\\Sys_ShortCut_EquipDecide.wav",
+      "source": "assets\\audio\\botw\\Sys_ShortCut_EquipDecide.wav",
       "sha256": "bfe45fd4265595e34ca3ccba29cc2c0fbe8f7841b5ad78363cfaa743dbb003d5"
     },
     {
       "name": "audio/found",
       "bytes": 27039,
-      "source": "assets\\audio\\prototype\\botw\\BGM_LocationOpen_S.wav",
+      "source": "assets\\audio\\botw\\BGM_LocationOpen_S.wav",
       "sha256": "419f4e0e30f338a7a7a5c2c5ce633a7df57b3bfec9bae2006406bcb4d43c10d4"
     },
     {
       "name": "audio/ice_break",
       "bytes": 20993,
-      "source": "assets\\audio\\prototype\\botw\\IceMakerBlock_Crush.wav",
+      "source": "assets\\audio\\botw\\IceMakerBlock_Crush.wav",
       "sha256": "fb11e1b2b4c648a7ec2b313fa2442b4380b9ec9308a1ecbdd10e88e790794719"
     },
     {
       "name": "audio/invalid",
       "bytes": 5124,
-      "source": "assets\\audio\\prototype\\botw\\Sys_Do_Invalid.wav",
+      "source": "assets\\audio\\botw\\Sys_Do_Invalid.wav",
       "sha256": "ae0707e2266a7a70f7a3ee6b6fd40f255d0dfae9ebfd2f75664de869b211967e"
     },
     {
       "name": "audio/item_get",
       "bytes": 7891,
-      "source": "assets\\audio\\prototype\\botw\\SYS_ItemGet_Common.wav",
+      "source": "assets\\audio\\botw\\SYS_ItemGet_Common.wav",
       "sha256": "d9606cfe2114723545994880ebf7ce9b61677d49cca8851117bea2b05e2ab3de"
     },
     {
       "name": "audio/lock",
       "bytes": 3429,
-      "source": "assets\\audio\\prototype\\botw\\Sys_MainScreen_Lockon.wav",
+      "source": "assets\\audio\\botw\\Sys_MainScreen_Lockon.wav",
       "sha256": "a72fe59d687008fc6c145af1570f5203d8928fc42f86dc436e962989c033e553"
     },
     {
       "name": "audio/magnet_catch",
       "bytes": 4346,
-      "source": "assets\\audio\\prototype\\botw\\SE_MagneCatch_Catch.wav",
+      "source": "assets\\audio\\botw\\SE_MagneCatch_Catch.wav",
       "sha256": "4c6ae66762731a7a1b05eb5147ac909b94f97249c82a045d0519129eb99a8e7d"
     },
     {
       "name": "audio/magnet_move",
       "bytes": 10766,
-      "source": "assets\\audio\\prototype\\botw\\SE_MagneCatch_Moving.wav",
+      "source": "assets\\audio\\botw\\SE_MagneCatch_Moving.wav",
       "sha256": "5a2f38e01e39fa0fbeda9e24c22a63a295d1302d47f0c7dd694702c592ab8c82"
     },
     {
       "name": "audio/magnet_release",
       "bytes": 4869,
-      "source": "assets\\audio\\prototype\\botw\\SE_MagneCatch_Disappear.wav",
+      "source": "assets\\audio\\botw\\SE_MagneCatch_Disappear.wav",
       "sha256": "7b3571552fb15c28fec813d88bf5501cc9ad2d9ea6f0f68110752604035c5683"
     },
     {
       "name": "audio/magnet_stop",
       "bytes": 7476,
-      "source": "assets\\audio\\prototype\\botw\\SE_MagneCatch_Stop.wav",
+      "source": "assets\\audio\\botw\\SE_MagneCatch_Stop.wav",
       "sha256": "afa4db81f6636d23b055205e757dcdb4a093896c6ccb94fca3feee71e093ac57"
     },
     {
       "name": "audio/menu",
       "bytes": 8012,
-      "source": "assets\\audio\\prototype\\botw\\Sys_Pouch_OpenSubWindow_00.wav",
+      "source": "assets\\audio\\botw\\Sys_Pouch_OpenSubWindow_00.wav",
       "sha256": "a243bb4f900dc174334a1fcf2c02f91f46e9d576806ecc6b6c05642087f55a8f"
     },
     {
       "name": "audio/move",
       "bytes": 1314,
-      "source": "assets\\audio\\prototype\\botw\\Sys_Pouch_CursolMove_03.wav",
+      "source": "assets\\audio\\botw\\Sys_Pouch_CursolMove_03.wav",
       "sha256": "2f81acee151f4f70657a23d98c21f7f4a9542fe3e746b109cfd964d0e41efab1"
     },
     {
       "name": "audio/ok",
       "bytes": 16012,
-      "source": "assets\\audio\\prototype\\botw\\Sys_Cmn_Decide_01.wav",
+      "source": "assets\\audio\\botw\\Sys_Cmn_Decide_01.wav",
       "sha256": "d4e294d80033abc4f4f1f8a254ecad9f6d06631f1452c0fbae2040ad05dce68d"
     },
     {
       "name": "audio/page",
       "bytes": 2013,
-      "source": "assets\\audio\\prototype\\botw\\Sys_PauseMenu_PageSlide.wav",
+      "source": "assets\\audio\\botw\\Sys_PauseMenu_PageSlide.wav",
       "sha256": "e0f678d9afda9568160f7b596623f995dbdb2d40c9d19a0cfb54962709cf4f81"
     },
     {
       "name": "audio/place",
       "bytes": 6404,
-      "source": "assets\\audio\\prototype\\botw\\Bomb_appear01.wav",
+      "source": "assets\\audio\\botw\\Bomb_appear01.wav",
       "sha256": "6b5f780c3b73a68e501c7482330552c4386f82e1ff4de5a2d754832bfd99bd3f"
     },
     {
       "name": "audio/sensor",
       "bytes": 4207,
-      "source": "assets\\audio\\prototype\\botw\\Sys_Item_SheikSensor.wav",
+      "source": "assets\\audio\\botw\\Sys_Item_SheikSensor.wav",
       "sha256": "b58813595035d10240f113976281493b2f68b74fd4ee1b37b9f673dccbcbcb35"
     },
     {
       "name": "audio/shutter",
       "bytes": 3295,
-      "source": "assets\\audio\\prototype\\botw\\Sys_Camera_Shutter.wav",
+      "source": "assets\\audio\\botw\\Sys_Camera_Shutter.wav",
       "sha256": "7aeb2c04f995b4f332744067b41c45381399d58a99273d48b0ccd442b73387f9"
     },
     {
       "name": "audio/startup",
       "bytes": 65548,
-      "source": "assets\\audio\\prototype\\botw\\Sys_GameStart.wav",
+      "source": "assets\\audio\\botw\\Sys_GameStart.wav",
       "sha256": "434f0db555f35028242b5120a808f008f0e2cd525856d32125240fbbe37dbc3f"
     },
     {
       "name": "audio/stasis_hit",
       "bytes": 15430,
-      "source": "assets\\audio\\prototype\\botw\\Bitalock_Hit_06.wav",
+      "source": "assets\\audio\\botw\\Bitalock_Hit_06.wav",
       "sha256": "3951d413e3a4a8d1fb4c958757c3e02287895492fa5a112e722ab763acd60d7b"
     },
     {
       "name": "audio/stasis_hit_end",
       "bytes": 15465,
-      "source": "assets\\audio\\prototype\\botw\\Bitalock_Hitend_06.wav",
+      "source": "assets\\audio\\botw\\Bitalock_Hitend_06.wav",
       "sha256": "21838940b8a769f1d095a3562f0ea1a6693970eebee01cac021ebbb6789bf586"
     },
     {
       "name": "audio/stasis_release_1",
       "bytes": 23377,
-      "source": "assets\\audio\\prototype\\botw\\Bitalock_End_06.wav",
+      "source": "assets\\audio\\botw\\Bitalock_End_06.wav",
       "sha256": "3696fcf0acb851305bc4474ee668a04fc9a113940c262a97c5d53e4534803ed7"
     },
     {
       "name": "audio/stasis_release_2",
       "bytes": 23250,
-      "source": "assets\\audio\\prototype\\botw\\Bitalock_End_07.wav",
+      "source": "assets\\audio\\botw\\Bitalock_End_07.wav",
       "sha256": "d9e34328e5c53387f91262683d7ba4055e8b16bd46e396a7e60cd6891ac26422"
     },
     {
       "name": "audio/stasis_release_3",
       "bytes": 28550,
-      "source": "assets\\audio\\prototype\\botw\\Bitalock_End_08.wav",
+      "source": "assets\\audio\\botw\\Bitalock_End_08.wav",
       "sha256": "10778ffb48867814b2379c3f1c6388aae59d1a7502354a2e3256e58769cfa029"
     },
     {
       "name": "audio/stasis_start",
       "bytes": 17971,
-      "source": "assets\\audio\\prototype\\botw\\Bitalock_Start_02.wav",
+      "source": "assets\\audio\\botw\\Bitalock_Start_02.wav",
       "sha256": "7159c897357cf8c5058bbfbe745f4863ae5a561cd1cc8b106c5ae716d1b58f41"
     },
     {
       "name": "audio/stasis_timer",
       "bytes": 13475,
-      "source": "assets\\audio\\prototype\\botw\\BitaLock_Timer03.wav",
+      "source": "assets\\audio\\botw\\BitaLock_Timer03.wav",
       "sha256": "df9801e4033f32b56fad6a0fb66372d6687ef528db74b203fb616257e4d6e36b"
     },
     {
       "name": "audio/switch_off",
       "bytes": 10935,
-      "source": "assets\\audio\\prototype\\botw\\Sys_SlideSwitch_Off.wav",
+      "source": "assets\\audio\\botw\\Sys_SlideSwitch_Off.wav",
       "sha256": "69397fda3d8405ff9404d6d9cf7a045721c06dce6a9a882d4b7fcd22bd615703"
     },
     {
       "name": "audio/switch_on",
       "bytes": 10935,
-      "source": "assets\\audio\\prototype\\botw\\Sys_SlideSwitch_On.wav",
+      "source": "assets\\audio\\botw\\Sys_SlideSwitch_On.wav",
       "sha256": "f197d148cddbbbfb098bc397bc8c6d63e31388cde6a69e7610395cd8d3107106"
     },
     {
       "name": "audio/unequip",
       "bytes": 3062,
-      "source": "assets\\audio\\prototype\\botw\\Sys_PauseMenu_UnEquip.wav",
+      "source": "assets\\audio\\botw\\Sys_PauseMenu_UnEquip.wav",
       "sha256": "34db4e974c5cabcc2a4ed1f9e83f78dd950986f123bdb908c7e3ce0d62567a03"
     },
     {
       "name": "audio/zoom",
       "bytes": 995,
-      "source": "assets\\audio\\prototype\\botw\\Sys_Camera_ZoomEnd.wav",
+      "source": "assets\\audio\\botw\\Sys_Camera_ZoomEnd.wav",
       "sha256": "4e5383ac31b3ae606022ef454767c36691dd1d1ec6e58bc56b7065d0653ecd16"
     },
     {
@@ -984,3799 +984,3799 @@
     {
       "name": "map/0_0_0.jpg",
       "bytes": 665,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1d8b1352eb6fb52e04f1ca020dc6ba0c33349f65ec847853b097e52c1e0f101b"
     },
     {
       "name": "map/0_0_1.jpg",
       "bytes": 715,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3f34e5934b6338d9f53c863fcb39181f75ee5ee28f8f4893d4561d3855dfe93b"
     },
     {
       "name": "map/0_0_2.jpg",
       "bytes": 770,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5af00206519e65f980511c96a07d3958db2ba8af08d32566acebd4306cb60d72"
     },
     {
       "name": "map/0_0_3.jpg",
       "bytes": 653,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6c269cbff09471a1d7b6e6484aef69af240b34a6520ecc4bd325aeac880e753f"
     },
     {
       "name": "map/0_0_4.jpg",
       "bytes": 444,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e83342c04944b2ac29d13faf29c4a1e92e100301bfc11958785654fb00765939"
     },
     {
       "name": "map/0_1_0.jpg",
       "bytes": 790,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2affd58e9b167905d5e57afd714f03ed17e4035cfdda40fa79538a4f58d13c11"
     },
     {
       "name": "map/0_1_1.jpg",
       "bytes": 888,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "fb20ca9a916ee38ed797a5be20b20a582b827553ac879bc931148b1210b5f7bd"
     },
     {
       "name": "map/0_1_2.jpg",
       "bytes": 828,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c56e9f2f7fd39e315095151d92c2663c3924dded833908bf72baa4b6d0f9d023"
     },
     {
       "name": "map/0_1_3.jpg",
       "bytes": 827,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "474e40d7fb105eabce4423fb290446b5b80be89dd1df8cb9e93db04d652de87e"
     },
     {
       "name": "map/0_1_4.jpg",
       "bytes": 458,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5dd3f89942ba1d3051ba9b6b445049e7a317048aca37d5eb32a7cbb3b4b20ee8"
     },
     {
       "name": "map/0_2_0.jpg",
       "bytes": 637,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b84c8b777ae1f27cfdf75ab318b5f0610a5e504f8b81e6787557cd91b6d6184c"
     },
     {
       "name": "map/0_2_1.jpg",
       "bytes": 747,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "dc85eaaff5ec9b7548b1cbce874c677e641832c20ced845f56544681ed680b75"
     },
     {
       "name": "map/0_2_2.jpg",
       "bytes": 753,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "37714562873947bd8eb6299b46f5f537a4f7ca2d1a7e5c0496c142d6d8ff057c"
     },
     {
       "name": "map/0_2_3.jpg",
       "bytes": 801,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "43e0de41b7ec486290a630f36bf3f180b272111f345c032b0268b5b0fed3b9a5"
     },
     {
       "name": "map/0_2_4.jpg",
       "bytes": 687,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d86e5215a1a7222fd426c349cd62cd83189d9d061b7eb9757d0c5b5530a7ada2"
     },
     {
       "name": "map/0_3_0.jpg",
       "bytes": 694,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a7ffacb8853395025092d466baf0f82f4a26fb162998ee24ac08c62092d4c34c"
     },
     {
       "name": "map/0_3_1.jpg",
       "bytes": 926,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3a5d13eebeba60724478b8e0aa4bc621e68763a955f5199d280ac7cd74b15f0b"
     },
     {
       "name": "map/0_3_2.jpg",
       "bytes": 812,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2e1a3c48ce7388949ccbb26a85baceadb1ca84ee40d4a270b1734d2ed8ffe97d"
     },
     {
       "name": "map/0_3_3.jpg",
       "bytes": 825,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "919bb9e80b82ea4b2192082e0645ca6545272c49abc466358db3e8223bb83208"
     },
     {
       "name": "map/0_3_4.jpg",
       "bytes": 625,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a7e05656d879d5c6d7a10b6682101163eadba37769b3d8951e9127e17f3a2bd1"
     },
     {
       "name": "map/0_4_0.jpg",
       "bytes": 784,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "243642c49c0b3d5f4a47452c18b034cade736da59a0c8a5444eecc88e23609e5"
     },
     {
       "name": "map/0_4_1.jpg",
       "bytes": 1007,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3e50a70a56fea26e2b9b675156c59d0374ab1c29872f6382390333a30191d858"
     },
     {
       "name": "map/0_4_2.jpg",
       "bytes": 895,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "fe1dc889f100db6208838fd38ca452b8838c638d400501d8e2aae276f46de8cd"
     },
     {
       "name": "map/0_4_3.jpg",
       "bytes": 833,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "bb96a0c381cde3820ae223a92275a928885355f467f40367f4ccf27a7b76fcdd"
     },
     {
       "name": "map/0_4_4.jpg",
       "bytes": 634,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "14014f205271ec02e514be7847f97f20a77a4d75c1acad6d7c940d068ba999e9"
     },
     {
       "name": "map/0_5_0.jpg",
       "bytes": 575,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "62ea90ad7cf5f684479dcfd7ed6d848ddd3ec23521cceef43e32286aa4d11dba"
     },
     {
       "name": "map/0_5_1.jpg",
       "bytes": 633,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ff9a232c60814719f1d367a891e65f469d14316f2b9d0e7827d78bd594546309"
     },
     {
       "name": "map/0_5_2.jpg",
       "bytes": 597,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a45de28010280626639458eafebcc484212f406c4c45df0f686c373c5344a418"
     },
     {
       "name": "map/0_5_3.jpg",
       "bytes": 547,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6522e15a039979c45c3fb60d31f403bad7e64458dc6598453c55856b1d4f7631"
     },
     {
       "name": "map/0_5_4.jpg",
       "bytes": 468,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "df8cc4ce12f60214f694fd59e36b5b0b0ebe1a85ca5427aeef8a137c66fa1877"
     },
     {
       "name": "map/1_0_0.jpg",
       "bytes": 530,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f7c7c921c7fc035f9806bb8bf681eb63b1fe827389cc1f436618bb68043f7c97"
     },
     {
       "name": "map/1_0_1.jpg",
       "bytes": 518,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1b2f01aca9aefaa9a54be6a4637e240da5778942d81a8a5767033b9689087451"
     },
     {
       "name": "map/1_0_2.jpg",
       "bytes": 566,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1cd96a618c2bfee6f6211db4df8e02f56d08bd075cfc1f5e5fb45981c82138a7"
     },
     {
       "name": "map/1_0_3.jpg",
       "bytes": 476,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f0249b3d1ddd147cf7173b8060435c2157dfd4ba861a820fa4f37832e9c2e11c"
     },
     {
       "name": "map/1_0_4.jpg",
       "bytes": 548,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "503cf9505f613fdea541520766581ad8c2183eef3c4575b520ec026dbc4d3a31"
     },
     {
       "name": "map/1_0_5.jpg",
       "bytes": 617,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6aafe4ad02a5e567a7b4502ea33a0e6b94168dc7936b604112dbdf770f77cb32"
     },
     {
       "name": "map/1_0_6.jpg",
       "bytes": 628,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c77ca931779a67970fc923e683c1b915612067bf1bf3e39559576d80ff8f046a"
     },
     {
       "name": "map/1_0_7.jpg",
       "bytes": 430,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f88896045a9842df159326251c036322d33cca24283ea4c39cd51d53095b268c"
     },
     {
       "name": "map/1_0_8.jpg",
       "bytes": 405,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8bf00120972a3d76a8353af7a7f3d914ab5d22d1c1690ecb4dc0c3604c01dd5f"
     },
     {
       "name": "map/1_0_9.jpg",
       "bytes": 416,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d7c79edcc4d6f8de253b1be8eb9101020a722dec277f1f0428a6e6ed3542a83f"
     },
     {
       "name": "map/1_10_0.jpg",
       "bytes": 487,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e194dd4062818e6df7717d57fbdc9b934e6fc62182d9588f80a9cf4bec7b675b"
     },
     {
       "name": "map/1_10_1.jpg",
       "bytes": 713,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2ecc37cbfbeff7708fac42b2f1515eb92cd3137cbcbfb5094fb1907e0b70d921"
     },
     {
       "name": "map/1_10_2.jpg",
       "bytes": 848,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "102206ae46605508d5e9dd17beb41b2d8a2184f902d7aa59c9df67e5e1fd5b86"
     },
     {
       "name": "map/1_10_3.jpg",
       "bytes": 730,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3ce1170f0f88f04f72bee04cb29248fc3079fdd6352b1d59c9a939ef5ec90314"
     },
     {
       "name": "map/1_10_4.jpg",
       "bytes": 770,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "aa0679ef8c2f9c61e565e57a9a9569ec8e863c961567981de3c93d863bb4a256"
     },
     {
       "name": "map/1_10_5.jpg",
       "bytes": 634,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "bf3829b45073dc95129af0dd8b059efe3637bd0d1f7d1bc3cf8d4c9e08df8bb7"
     },
     {
       "name": "map/1_10_6.jpg",
       "bytes": 619,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "45093cb27308cf85bd5645ba2e85dcd5a30663dd8244d4d197a8935e23736c36"
     },
     {
       "name": "map/1_10_7.jpg",
       "bytes": 567,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1953af4129b5cc8655dd87240b6fdc8ef243648101dcac84ebf8e932e8153531"
     },
     {
       "name": "map/1_10_8.jpg",
       "bytes": 546,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3dc1ab570dcf5430a6213b2dca662cc20151bb7760cafe6315e384bd9f185048"
     },
     {
       "name": "map/1_10_9.jpg",
       "bytes": 357,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2209c4357968f49cb7bed44086ee173138dab2825b66f0245a1fbb113ab92470"
     },
     {
       "name": "map/1_11_0.jpg",
       "bytes": 392,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8d85bf0bd38f9135dfbed5817c9d441a127cca2e89f55f6528118bdab2adf6c4"
     },
     {
       "name": "map/1_11_1.jpg",
       "bytes": 387,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "59942b8c215fd64fb0a38164a4381103f62597b2b9496aaa5193622a76da52cc"
     },
     {
       "name": "map/1_11_2.jpg",
       "bytes": 391,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0973cf415c0418cf64445dde4a51d41b1f779f515a71f3c4e79c4ccb515671e1"
     },
     {
       "name": "map/1_11_3.jpg",
       "bytes": 391,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0973cf415c0418cf64445dde4a51d41b1f779f515a71f3c4e79c4ccb515671e1"
     },
     {
       "name": "map/1_11_4.jpg",
       "bytes": 391,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0973cf415c0418cf64445dde4a51d41b1f779f515a71f3c4e79c4ccb515671e1"
     },
     {
       "name": "map/1_11_5.jpg",
       "bytes": 391,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0973cf415c0418cf64445dde4a51d41b1f779f515a71f3c4e79c4ccb515671e1"
     },
     {
       "name": "map/1_11_6.jpg",
       "bytes": 391,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0973cf415c0418cf64445dde4a51d41b1f779f515a71f3c4e79c4ccb515671e1"
     },
     {
       "name": "map/1_11_7.jpg",
       "bytes": 391,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0973cf415c0418cf64445dde4a51d41b1f779f515a71f3c4e79c4ccb515671e1"
     },
     {
       "name": "map/1_11_8.jpg",
       "bytes": 390,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "fed28ee4289fcffe074c85cd69ed2205d667e263113fe29d546f9f0f233f0912"
     },
     {
       "name": "map/1_11_9.jpg",
       "bytes": 373,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "fd4c04e39afb16b0f411a9b63e1fb4fc8a69cdf29afb74785eadea9a746c5749"
     },
     {
       "name": "map/1_1_0.jpg",
       "bytes": 491,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "acd6a4c8feecf65ab80afa5b0d51dc04eaf643b63b466cebb95c5db7272427d6"
     },
     {
       "name": "map/1_1_1.jpg",
       "bytes": 621,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6cf5c7a85473393cc117cdef278df2bac3281609ed15ed9829d0a1d02836f1c9"
     },
     {
       "name": "map/1_1_2.jpg",
       "bytes": 642,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "27311eff9ea21f282ca30019d85dd6fa0159a955132352d3f12e69ecb370464e"
     },
     {
       "name": "map/1_1_3.jpg",
       "bytes": 684,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0fa99ee0e83871962572b25166f075c6374e65c8f5a94952795f97f1cc50800e"
     },
     {
       "name": "map/1_1_4.jpg",
       "bytes": 567,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b438c9361c7f4d08058fd18329a17e5330b8bc0231a4711c8da20194ee8420ab"
     },
     {
       "name": "map/1_1_5.jpg",
       "bytes": 876,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b5cf32bd07f8592f9f0ef0c95fbee96d1793244be27e1fc9663041920d2f1085"
     },
     {
       "name": "map/1_1_6.jpg",
       "bytes": 809,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a5734c1b2da0647f3e604e2d6546f64f3bc72b492f8ac903277da111acc6ebfb"
     },
     {
       "name": "map/1_1_7.jpg",
       "bytes": 389,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "715a8188d46fee5e244a85ecd96be61c8fe361cd9d6285c96516368a31010687"
     },
     {
       "name": "map/1_1_8.jpg",
       "bytes": 355,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6f9ec693cefb5800291b60ca57a1ce202d7cb087c007f6e30e9bba38eab07e79"
     },
     {
       "name": "map/1_1_9.jpg",
       "bytes": 391,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9bfad5fe70793578718f13149b9c2cac6970436825d6964444af906880ac5de6"
     },
     {
       "name": "map/1_2_0.jpg",
       "bytes": 555,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "691c4b3e39d366524b244d5d3c1728e4a9e7b086db1de07e1ced606df9c64588"
     },
     {
       "name": "map/1_2_1.jpg",
       "bytes": 827,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "106f92f2f994f40ff385d0141833df14ab38c9886838e86ff96c972a9b116cb3"
     },
     {
       "name": "map/1_2_2.jpg",
       "bytes": 849,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "33328724048459d3dc48519b295d6a86f4d066f72074e894977fb93780f23cfb"
     },
     {
       "name": "map/1_2_3.jpg",
       "bytes": 879,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "63825c294ba64062f3adbd0c55e4c5bb375411d79157e0e9cce92f85eaa1549e"
     },
     {
       "name": "map/1_2_4.jpg",
       "bytes": 739,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "06677633bac2e073f501222cd82fa37cbd405e791eaa80ec2f345f7f36ebbef1"
     },
     {
       "name": "map/1_2_5.jpg",
       "bytes": 810,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "7bc44e6dfc41bf4845cd9c8e4d039098f400eabcc128c38bee8038bb78b6a185"
     },
     {
       "name": "map/1_2_6.jpg",
       "bytes": 903,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c2ab4b5f85da0e172b3c001b01f75228a6878e74bb50f9c1535ce107732b17b8"
     },
     {
       "name": "map/1_2_7.jpg",
       "bytes": 595,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b8fd9f4fd1d366a8826fd75155bd01a6c7b9ab91ba06daa075d2f5f3a66fecb0"
     },
     {
       "name": "map/1_2_8.jpg",
       "bytes": 354,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f7eed8139dd05cd570af3b59ea45ba74fc891a14dbe6407558e4f2f239cec1b8"
     },
     {
       "name": "map/1_2_9.jpg",
       "bytes": 389,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "13cec4df04ce024b9b17861ae53c623e38dc99a3f0933b4d1fef4f0c47084fc1"
     },
     {
       "name": "map/1_3_0.jpg",
       "bytes": 549,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6d7348ad06588fd1da268764ef1011655dd3f6f5831f8a55fbaa77fd02d09535"
     },
     {
       "name": "map/1_3_1.jpg",
       "bytes": 767,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f212488f7a53b625f7b33a33377ed9c04a3d861ae259eee2b1a052e6e3a0a8f9"
     },
     {
       "name": "map/1_3_2.jpg",
       "bytes": 813,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e92848b0f903b95345e4f567d978c217bae0c781c9907e33fae6a7b51562660a"
     },
     {
       "name": "map/1_3_3.jpg",
       "bytes": 811,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "06d9ff8e721a2ef07d84c3dfaf054cfe8511542d818d7dcc6db3dc9994e870b5"
     },
     {
       "name": "map/1_3_4.jpg",
       "bytes": 779,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ed17ecf2f08283a42454b0f8c1074c81d6be086fe6c190a0dc40f13aa88e8352"
     },
     {
       "name": "map/1_3_5.jpg",
       "bytes": 839,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d23b2c9ba833181c9c61342c6e44d0b690a075e2cac4a72f982f02ec4cbcafa2"
     },
     {
       "name": "map/1_3_6.jpg",
       "bytes": 864,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1780b2bab1c2dcd38e29c4cc4b06f161feee140bb2b27cadbfd6d2fc71563248"
     },
     {
       "name": "map/1_3_7.jpg",
       "bytes": 747,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c77e8d1d9d94d25f019993f9d8bcf567357c1523246dfeb09604e72b74900d46"
     },
     {
       "name": "map/1_3_8.jpg",
       "bytes": 467,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "eaf7aacfdcab7fa31df2c18d5294cf31e22499ce988e7dd219a241814c5e04c9"
     },
     {
       "name": "map/1_3_9.jpg",
       "bytes": 443,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "dc4a84b16b4ab4e0e67c8212bd58eae25625dc15632d4e14ff7a71654d214a41"
     },
     {
       "name": "map/1_4_0.jpg",
       "bytes": 475,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ca0fb37d446783c5fa6c37e4066ffab5e732b822f18edf5871535df1581b0551"
     },
     {
       "name": "map/1_4_1.jpg",
       "bytes": 573,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ede212b4b0237ef9e83e4456024fd82049e682a0a6656c0eb7225d954bdbaf41"
     },
     {
       "name": "map/1_4_2.jpg",
       "bytes": 710,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "985d878e3f9159a5a1ccdc91a6b639a6121edec4b5c23c06efb13e0339d0521c"
     },
     {
       "name": "map/1_4_3.jpg",
       "bytes": 688,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "083151ea7f15cc4a9a3cd940eb710c3a3c23b3a667c2a585853d7657c3ec5346"
     },
     {
       "name": "map/1_4_4.jpg",
       "bytes": 736,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "83efe672f38055adf5622a7f128c15043ba4d5b549c15dd9d51631030176e89c"
     },
     {
       "name": "map/1_4_5.jpg",
       "bytes": 755,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "cbee71e732f8dd70957401921ed56f34f569388374cd271481a7a6b9fbf628de"
     },
     {
       "name": "map/1_4_6.jpg",
       "bytes": 841,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "88606333435671481ada0c994e9c085751923f0c5a4506c2ec42338b3a8705ad"
     },
     {
       "name": "map/1_4_7.jpg",
       "bytes": 770,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b33f029cf00d120520aab6fdc9012497b85df95d38fa19ccd53cd739a7466b4e"
     },
     {
       "name": "map/1_4_8.jpg",
       "bytes": 758,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a9ff2b02ecb002318cd97b0143f3d7a1c8b14872b45484a2876655f34df81c51"
     },
     {
       "name": "map/1_4_9.jpg",
       "bytes": 492,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "7367ea8e9d4cdceaf1e9597540d40e5b880672f7014b0f233367d95832543bf5"
     },
     {
       "name": "map/1_5_0.jpg",
       "bytes": 485,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "647a8c640d6f98989ec032d869247afba88da554dc7fc99816345846aa392b1b"
     },
     {
       "name": "map/1_5_1.jpg",
       "bytes": 590,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "24add7acf6c89a336cdb47b0eac6971309aa21ebcbc165ae05944cfa5b44da53"
     },
     {
       "name": "map/1_5_2.jpg",
       "bytes": 710,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "51de3529ff5ccaf96371c04be12ef22610ae38167ae7a3bb66776c7893126e2c"
     },
     {
       "name": "map/1_5_3.jpg",
       "bytes": 652,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "fb54aadd5715cff0cc8fc97c7d0b21da04e898006f52b3d4430fd87bf533d191"
     },
     {
       "name": "map/1_5_4.jpg",
       "bytes": 900,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "16cd9139737aacc21cb9375337e8fd25ded36ace707d378e87b714089aaf60dc"
     },
     {
       "name": "map/1_5_5.jpg",
       "bytes": 710,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3137bd851fe457cdec43a1cbf24d1044b5b244f728b3e121a192175dd2e7d688"
     },
     {
       "name": "map/1_5_6.jpg",
       "bytes": 837,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ddf0c8bbcf2cdfef9b15f1318783c51899240bd1a2b895ecc8fcfa0bc2d50a56"
     },
     {
       "name": "map/1_5_7.jpg",
       "bytes": 689,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5eb01ddb99ecbaa3a87496d8ba68b14c29bc31b6cb622b19221718fb2ce24e35"
     },
     {
       "name": "map/1_5_8.jpg",
       "bytes": 676,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5336686796b50d4f67519720ee53ed5e41e58960d76177f7438c8a72e7c07960"
     },
     {
       "name": "map/1_5_9.jpg",
       "bytes": 486,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6e9af6a4a3ffdcaa63f85e6c4a7949a4cf3b30f348b4c78ad3355e7e3bf6276d"
     },
     {
       "name": "map/1_6_0.jpg",
       "bytes": 480,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9148c859bab84145c8cd53620823dfc29d11446dfcaf2c99e1a675fee19aa3f3"
     },
     {
       "name": "map/1_6_1.jpg",
       "bytes": 631,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1f9b61323a41df4c6017cd756a30e9fff554158c7d0f53f19a9d2c088eb329a2"
     },
     {
       "name": "map/1_6_2.jpg",
       "bytes": 771,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b73cabe2f231a20536b08d68f8d597556467efc8158256c43aae1541c5610b4c"
     },
     {
       "name": "map/1_6_3.jpg",
       "bytes": 806,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9938bb749639dc0716f5eac993a91365afba728c0c107b6fa302241c6b80aa90"
     },
     {
       "name": "map/1_6_4.jpg",
       "bytes": 809,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a80bbda6ab1dea3e5c8de5c2cec754535033a6561d338f9a277c31e2a8953a0f"
     },
     {
       "name": "map/1_6_5.jpg",
       "bytes": 787,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "99a1aa853540f786d7f3d44c75e21791ee63dc74bebda84a8e5e13539df5eb23"
     },
     {
       "name": "map/1_6_6.jpg",
       "bytes": 840,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1e3875104776dd200501ec18ec0c2b125c216d36c7180dcbbe17006521832c3c"
     },
     {
       "name": "map/1_6_7.jpg",
       "bytes": 733,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0263bba2177d96602ef9000e25600bd84376c0b750a2c07380d91ea6254d6885"
     },
     {
       "name": "map/1_6_8.jpg",
       "bytes": 810,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ada4e5245a95fd989a0432b523702dce32419920d3989e857087ab95487c1162"
     },
     {
       "name": "map/1_6_9.jpg",
       "bytes": 357,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2209c4357968f49cb7bed44086ee173138dab2825b66f0245a1fbb113ab92470"
     },
     {
       "name": "map/1_7_0.jpg",
       "bytes": 500,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "687e04167a152f8180b739bd5e2ead8bbfc8f9b42cff1d0756b7c5a6c23b59e4"
     },
     {
       "name": "map/1_7_1.jpg",
       "bytes": 745,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1c8faf1cc96fe76b7ab48d37dfa5142e9ef4acd68fa4cb2f0162016d2a066cd2"
     },
     {
       "name": "map/1_7_2.jpg",
       "bytes": 1045,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "eb5f5cb8dd9f36b61decb75e0aab3dca767dd9416a8659ade546552bcc0f7824"
     },
     {
       "name": "map/1_7_3.jpg",
       "bytes": 845,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "487243ed9b77c6976b2ba684ade547c7b1256876d93483df5164accfaa2c0004"
     },
     {
       "name": "map/1_7_4.jpg",
       "bytes": 780,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "94b6e40ef7377587b3538cb6a19b77c60264de9cd3f2d88428d9aee84a577d53"
     },
     {
       "name": "map/1_7_5.jpg",
       "bytes": 873,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1199a06734c0b3ed3a1fd2367c8b482bbeb21cc399a7be3a3a72458a5e713390"
     },
     {
       "name": "map/1_7_6.jpg",
       "bytes": 838,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3bfde8be3c57fa99778b968f5f5a7540483d30e616a3ea5782565f90213b66a1"
     },
     {
       "name": "map/1_7_7.jpg",
       "bytes": 779,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f1ae5e0a408947673068cd7e9b5eda7dafbe1bd232ae8db52ec4d06f6c07c939"
     },
     {
       "name": "map/1_7_8.jpg",
       "bytes": 897,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ffbf63847c557751736186bc1f3f5ac4b32694b638f2f1a186a7fb7a55852007"
     },
     {
       "name": "map/1_7_9.jpg",
       "bytes": 357,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2209c4357968f49cb7bed44086ee173138dab2825b66f0245a1fbb113ab92470"
     },
     {
       "name": "map/1_8_0.jpg",
       "bytes": 543,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "298245a9d9d2ae4617b72d824b72b34f5a373fe736ed4a1b9d62a65b2bac5320"
     },
     {
       "name": "map/1_8_1.jpg",
       "bytes": 808,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "7f978b97c096be1b82ebe6d06f2ef9776642aa9e3c5559a6534fc265bec1201a"
     },
     {
       "name": "map/1_8_2.jpg",
       "bytes": 1358,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5e9bc2ca03f9afe10ec4b1560606f80595a9e78fbafa3f532d9aa07528d77013"
     },
     {
       "name": "map/1_8_3.jpg",
       "bytes": 836,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "908e2ae7994576ef5529a91ee125a0671aed12e1f7c557a335c6c18f084f15f7"
     },
     {
       "name": "map/1_8_4.jpg",
       "bytes": 807,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2d70c04e4e94cb97f86f62a30caae56f7dcf60050133879dbaa6b172d1a2a803"
     },
     {
       "name": "map/1_8_5.jpg",
       "bytes": 766,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d90a27da0bd877a518dc973eb06a07736980116c2aad0e5d9eefcd67fa238fae"
     },
     {
       "name": "map/1_8_6.jpg",
       "bytes": 839,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "844ebd44860a30f7ac8004075ef615053b23acc0db25af37eb907f100a542b28"
     },
     {
       "name": "map/1_8_7.jpg",
       "bytes": 837,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f7176f76d05b2d82c147548ba11c9d2a058eb0ced6ff8934df97077cc15ded56"
     },
     {
       "name": "map/1_8_8.jpg",
       "bytes": 867,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8b03199eeb68c9aa4d93050a91cf7180dec7a92ccbb71c5838d058914128e3c3"
     },
     {
       "name": "map/1_8_9.jpg",
       "bytes": 357,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2209c4357968f49cb7bed44086ee173138dab2825b66f0245a1fbb113ab92470"
     },
     {
       "name": "map/1_9_0.jpg",
       "bytes": 554,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2c9515b0ad65b516d682823e0b6d3870ab103886abe814ea9b4a001fafa375a5"
     },
     {
       "name": "map/1_9_1.jpg",
       "bytes": 683,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c4634600e5b3f7f2827a56154a9950870df751c959dfe8fb9667a7c8aa78fd0a"
     },
     {
       "name": "map/1_9_2.jpg",
       "bytes": 717,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3b457c1b9714c48908eeb99d10854cd15a6ff1455cd85544effd13b8a94000e0"
     },
     {
       "name": "map/1_9_3.jpg",
       "bytes": 894,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8980c3383dc400c73ce191c237c941e8734ee5ff158e6e4beafe4dfe7dd3cbd6"
     },
     {
       "name": "map/1_9_4.jpg",
       "bytes": 1004,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e6c59910ab95c2f55b07cb1810589cd07fcfec71f6923483e5f649bb5dfaaee0"
     },
     {
       "name": "map/1_9_5.jpg",
       "bytes": 811,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c47e4ca82d58e2820ad2bcc250ef096a77de506e5595e64cb98894d01991ee29"
     },
     {
       "name": "map/1_9_6.jpg",
       "bytes": 734,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3cdbec9d83d98583d447ae84aae60c636d9c41a4a3d0a8f423a143dcd6ec9760"
     },
     {
       "name": "map/1_9_7.jpg",
       "bytes": 806,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8f1e413c0ae694c90645203049d426fb509e3d11fa63ebbc62f008e05792a7b4"
     },
     {
       "name": "map/1_9_8.jpg",
       "bytes": 727,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d7057f82fd7299ba2057b05b394e23cb4b6c1e7260b992a10e87544fe126b1e1"
     },
     {
       "name": "map/1_9_9.jpg",
       "bytes": 357,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2209c4357968f49cb7bed44086ee173138dab2825b66f0245a1fbb113ab92470"
     },
     {
       "name": "map/2_0_0.jpg",
       "bytes": 353,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f21e4650ab178e44c01d7504430009c573d4ccd3d910177fbf57ffe7219e4d2c"
     },
     {
       "name": "map/2_0_1.jpg",
       "bytes": 431,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "851732e40b18111162d66d762eda0b171f3725b2b079a29d21c322252963f201"
     },
     {
       "name": "map/2_0_10.jpg",
       "bytes": 466,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9b15859301652d0230399552109c33e3a218aaa653d7c1dc1bf19103054c6691"
     },
     {
       "name": "map/2_0_11.jpg",
       "bytes": 397,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ce8d046b9a16c477e1fd09abc26305ea24d7dbe591f7ebf2fca6b5eed0c389fc"
     },
     {
       "name": "map/2_0_12.jpg",
       "bytes": 451,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9df332dc8cfd9e0762bbee09819e400c88a7e2657de64225e5e0c833e622a4b4"
     },
     {
       "name": "map/2_0_13.jpg",
       "bytes": 438,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c1ad8614310d34c30a177e4e2aa4ae94cd74095c26a40f80a95a3fd77d14bc55"
     },
     {
       "name": "map/2_0_14.jpg",
       "bytes": 392,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "db5867d21a90b7497e94cd17eaed2988c48c2a71cf6491c9b8e4f4e11e57f71a"
     },
     {
       "name": "map/2_0_15.jpg",
       "bytes": 375,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "4cd94802b3dddb6cb766464afddebc5b9eb89c585f38b60b85131dc492194546"
     },
     {
       "name": "map/2_0_16.jpg",
       "bytes": 378,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1fdacb5b554a234fc4db6ed118322d875e9d2664c309cbded440bc34ad7119ad"
     },
     {
       "name": "map/2_0_17.jpg",
       "bytes": 372,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "732a615f85eeecf9b300eeeccab89b8a4fd8ff5644ba63af874ac634f49c4e9c"
     },
     {
       "name": "map/2_0_18.jpg",
       "bytes": 381,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "71fbe86ea118a8cacef1da34b94a589f798a41b630e54e78e406154ddacd9428"
     },
     {
       "name": "map/2_0_19.jpg",
       "bytes": 335,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "4213da74ed2884b306387f76ee0fc706a81e0c8da49d3ed8a427afccfd4d4342"
     },
     {
       "name": "map/2_0_2.jpg",
       "bytes": 435,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "beac49607bb0e57d19c477a1450260ea2f10ede06f0e3b60d0dab635a2902585"
     },
     {
       "name": "map/2_0_3.jpg",
       "bytes": 436,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "340dea5383cd331b203f3c0de1450deae14e50cbfc74b6109f4ce6b79350f7cb"
     },
     {
       "name": "map/2_0_4.jpg",
       "bytes": 433,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0609530cd6fbd7ea7ad1364d02183175f0ed88190881dd9ed5b020e70df68be6"
     },
     {
       "name": "map/2_0_5.jpg",
       "bytes": 413,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ef1b45eea82e96dc7c3a5800636b306d1f1b1ee5f865135105b2a5304b9a5d50"
     },
     {
       "name": "map/2_0_6.jpg",
       "bytes": 421,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "21274fcbcacbc0ea1c88fbfcf6cb99c437ba9814e1e44076f044d2ffc4b147c4"
     },
     {
       "name": "map/2_0_7.jpg",
       "bytes": 424,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9c3bdde18e4732417477bf2751c2c63b9e3bc619b08db79dd063010bf84c3bc1"
     },
     {
       "name": "map/2_0_8.jpg",
       "bytes": 433,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0d71dffb38f0413731395558435364925463cab2e0fb6c724fc61e16092f5802"
     },
     {
       "name": "map/2_0_9.jpg",
       "bytes": 428,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "df6561acbef08725cafc727766b965cc9d1d5b1810d38a07cdee6b4df0764068"
     },
     {
       "name": "map/2_10_0.jpg",
       "bytes": 384,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2662cc982a47f1a6349ea75a70d93ef18a08fb6c6f6df9f0276e8d28bf947abd"
     },
     {
       "name": "map/2_10_1.jpg",
       "bytes": 493,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9871992282882769dc042423386e8d8056d0a89984c4136041fe42d37c1dfd20"
     },
     {
       "name": "map/2_10_10.jpg",
       "bytes": 522,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "fbb90f5e0fd5f6f1781894a82278ec95ec940c66a73bd721a6a9a9db072f8f67"
     },
     {
       "name": "map/2_10_11.jpg",
       "bytes": 817,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b98009033f4d50d94c17beb239d0ceac2425097e885f3c15733e1049e024090d"
     },
     {
       "name": "map/2_10_12.jpg",
       "bytes": 893,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "06c0d446b42fb6a1ba5d8c8b50f3d9733d621f841a02d133b5f9ece87b55dc5f"
     },
     {
       "name": "map/2_10_13.jpg",
       "bytes": 683,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "96027a623990dffa797457e9bb834fcc0e230b58f380ed7bda1de973003a53ca"
     },
     {
       "name": "map/2_10_14.jpg",
       "bytes": 648,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0113e97eaf561b03b3ef889a22af835543370680704d7bdf942d538a63a30fdd"
     },
     {
       "name": "map/2_10_15.jpg",
       "bytes": 608,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b5393ecec160a9b0eb4334fa8a87cc3265034f0d6f7b308104cb003baf9f52a0"
     },
     {
       "name": "map/2_10_16.jpg",
       "bytes": 563,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "bcec71c7af8c81af00a6c18704210788893b39d0424931d4409f25e6999dcce5"
     },
     {
       "name": "map/2_10_17.jpg",
       "bytes": 669,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9c414a34adf20074e86922e18cb1f96f9e1d1c81bcd5b725667c0602197736f2"
     },
     {
       "name": "map/2_10_18.jpg",
       "bytes": 553,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6f86f82f257edcb56082109443aeea1248dbf601e9915acdf8b815ec88ff5c4e"
     },
     {
       "name": "map/2_10_19.jpg",
       "bytes": 345,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d5744cf1c3452eb28c4915838a61133187d5d2aad3e2acdf9ff1baff68dfc985"
     },
     {
       "name": "map/2_10_2.jpg",
       "bytes": 609,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1ac76e40bab8831ebf256dc09c61654b112c14916c0e81ca2ae5e1e39386b3a5"
     },
     {
       "name": "map/2_10_3.jpg",
       "bytes": 602,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "69a98781c33ecf40b4f16d52eb1fe541da282716037a1d190b15050c3aa97ba8"
     },
     {
       "name": "map/2_10_4.jpg",
       "bytes": 625,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6de0503710f139b81a97fcc42cb8c365d3c7d71b1cac47a810cf9b92c55eb004"
     },
     {
       "name": "map/2_10_5.jpg",
       "bytes": 543,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5b83ab9b9f7c35081cca09ddec0e8ad80e93878a6a6f1f78d267b439a2f06904"
     },
     {
       "name": "map/2_10_6.jpg",
       "bytes": 512,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "aef0639516f4793dbe80cd787372ffa2f85b107a99b94fffc6534874699e444a"
     },
     {
       "name": "map/2_10_7.jpg",
       "bytes": 590,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "fc1fcc9286ca59fd80ded0779c2a08d00a31946d67fbf14fc80a5fde8190ce76"
     },
     {
       "name": "map/2_10_8.jpg",
       "bytes": 747,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "52985ebd0c440b82047ed3ea73ecc4c41387f1f0bbe0c60f141046f4f49c102a"
     },
     {
       "name": "map/2_10_9.jpg",
       "bytes": 742,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "bff96d3cda15a28a9aa29def91c4fc1a7f7703febb9aa02881f59f97506da6ab"
     },
     {
       "name": "map/2_11_0.jpg",
       "bytes": 393,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "cc4956f1a661b15731c199bbd87532575de89ef2aab418a9e4c5d0c10456e903"
     },
     {
       "name": "map/2_11_1.jpg",
       "bytes": 473,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "02304ae4160cab9ea05bc08499d024a52981c08abbc9e291a746739f4ce711f7"
     },
     {
       "name": "map/2_11_10.jpg",
       "bytes": 580,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "714c80d4c81d9f8d5b98f2aa0d5038472ca26fd11e465090ec8b28e4ff1112bc"
     },
     {
       "name": "map/2_11_11.jpg",
       "bytes": 626,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "39cfb745fe4264e18c2b2898c39dcd88d9fea0a156b9728033b1c06187c4c4d7"
     },
     {
       "name": "map/2_11_12.jpg",
       "bytes": 747,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "dd8989a91b74fe0ce7049070c915f987737545fa717a5812ec75b3ef3da67ea1"
     },
     {
       "name": "map/2_11_13.jpg",
       "bytes": 712,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6c021ef8ddab25d34102d1d3cd55e556dc72ec8bf9781d5ee2290d7e53950035"
     },
     {
       "name": "map/2_11_14.jpg",
       "bytes": 587,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5cc8b05cf0edf8cde950c276c85fa7a8f90e6a4aeab56faab5137ec3ef4f9f3c"
     },
     {
       "name": "map/2_11_15.jpg",
       "bytes": 631,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "37e593c2dc3b751018c15b50b98cbc5c7a146401d3f52871153c0c2c87c17d15"
     },
     {
       "name": "map/2_11_16.jpg",
       "bytes": 595,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "de9ccf70baaaaeab84fe62ea8eaf1349c6a3905c1875ed01adba1ac743bfcf70"
     },
     {
       "name": "map/2_11_17.jpg",
       "bytes": 590,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "02ad6662147a02580bf324c9dcf60ac3fbef02f02351ead0d4e2e7e8ee78a197"
     },
     {
       "name": "map/2_11_18.jpg",
       "bytes": 390,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "4b6f6429cb0021a696e76e0a870ec8a727cf13050bdd02e4c6a3a2f43e02f23f"
     },
     {
       "name": "map/2_11_19.jpg",
       "bytes": 345,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "70458bc65fa4ade54e4cfd89cfc69c8fc54cfc917d82f9b825e51679047d71c3"
     },
     {
       "name": "map/2_11_2.jpg",
       "bytes": 337,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a5f53de83b0611f11c2b35878471a8d996751267c9a3779a88b68dc8053cc984"
     },
     {
       "name": "map/2_11_3.jpg",
       "bytes": 496,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8935f5f82947e76050cd0d501514e72772bc7ed616abb0ecf3881e34956f1b31"
     },
     {
       "name": "map/2_11_4.jpg",
       "bytes": 659,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "264851ea462e930955d4afcf4be96b88582d215f1905d87c469ec68d5d0f5d24"
     },
     {
       "name": "map/2_11_5.jpg",
       "bytes": 712,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "90c9d008929f774f3cbf14368c058d895b1f0b5fa36c9a06bd1fa84c503f065f"
     },
     {
       "name": "map/2_11_6.jpg",
       "bytes": 698,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "62c4cab975ebf15b1b4ec179b9fb487918433656ca5b071ee971477adbcd9fd2"
     },
     {
       "name": "map/2_11_7.jpg",
       "bytes": 676,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "08a14b9307b23ad100bdd530202b97026aae5a455fb2124f94fd3233ba9fbe95"
     },
     {
       "name": "map/2_11_8.jpg",
       "bytes": 778,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5a87241f22996df7c87f1ad0ce800f3e41fda87df48be748214835840f9f07b0"
     },
     {
       "name": "map/2_11_9.jpg",
       "bytes": 1056,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c01b4894e605b4b666d558e1841c470f6c49876edd25c7f9e4e2f20c997434bc"
     },
     {
       "name": "map/2_12_0.jpg",
       "bytes": 390,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8c4914423aee85dbe909a6f6cb466d2617c4bab4a8e46b9d0d018196c1c1cc1c"
     },
     {
       "name": "map/2_12_1.jpg",
       "bytes": 452,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "eb1c0b7f0751c6807043d0d1e09c648a79112b01850b397dcf92edf3f1e447b5"
     },
     {
       "name": "map/2_12_10.jpg",
       "bytes": 725,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "08560ac4befbe655b0ee07c145fbbc7c5bc8b519081dacfeaaeb055e8f874053"
     },
     {
       "name": "map/2_12_11.jpg",
       "bytes": 690,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e34b99b2abd01b0c3ca4aa78a7c6cceca3edc33ad09129b7e3c23282ac8e437a"
     },
     {
       "name": "map/2_12_12.jpg",
       "bytes": 777,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5508da0ad706a802acc8d63eea3c4fbcdbc0b53195af73e204a8232944b2df2a"
     },
     {
       "name": "map/2_12_13.jpg",
       "bytes": 779,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5d2349d434bf2c88c0c06ac8f9ecb263e7b838080ce7395b906fdfaf2e28e4f6"
     },
     {
       "name": "map/2_12_14.jpg",
       "bytes": 657,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "720701edf406862be9568bcf7f83de333531d4d233081e960d9e83bd954bc34e"
     },
     {
       "name": "map/2_12_15.jpg",
       "bytes": 702,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c9e11d09f91bbed79cae34b6c899a1dd40d00b2799204d37091782070fbb623b"
     },
     {
       "name": "map/2_12_16.jpg",
       "bytes": 787,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "76e4ab73cc9c57c91c885146416f0b57d16a25e2095c10306ed3e9c7b3845544"
     },
     {
       "name": "map/2_12_17.jpg",
       "bytes": 781,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8083401287eba2fd08a8176f4b6f6a16dfa66c299fc081cd378b238f36f8b6e2"
     },
     {
       "name": "map/2_12_18.jpg",
       "bytes": 343,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f2c14902a8c61912f731fc0e1e39c860f21f6cfe8d106f9db59286d7ff85935e"
     },
     {
       "name": "map/2_12_19.jpg",
       "bytes": 344,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b743282208d2d221f838a517ffca30e89ff8bb9be8e8603822d9ca9f5cd51831"
     },
     {
       "name": "map/2_12_2.jpg",
       "bytes": 468,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "29eb38dcd8253193f08991c7a530069bd6a0642ab7cee0b78a63b6925f4c8909"
     },
     {
       "name": "map/2_12_3.jpg",
       "bytes": 672,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "74376b1c86fe5d521c15e294aa6b5b4da402847fdef24cbec0327a70e618250e"
     },
     {
       "name": "map/2_12_4.jpg",
       "bytes": 771,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8a17df2f736f1a32592bf65b256d73700f48b12b76b28b2700f07bc018f48fb6"
     },
     {
       "name": "map/2_12_5.jpg",
       "bytes": 670,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "70c820f0b96ef9bfc3daa54856c472392e2c857386cc9cbf8ad5d270eb568e52"
     },
     {
       "name": "map/2_12_6.jpg",
       "bytes": 756,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3ea91eb23058f3b9214f8b110a025c1d6279ea452fa37973ea24cc4c507d38b7"
     },
     {
       "name": "map/2_12_7.jpg",
       "bytes": 661,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b6f72eaca4899bc9e3de512c21565d8d46f02666d19315a48952857f2b179bb2"
     },
     {
       "name": "map/2_12_8.jpg",
       "bytes": 845,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "246309b139b8b023737522125359f5e2b33851e5a3e4af1fd414552d916be9e0"
     },
     {
       "name": "map/2_12_9.jpg",
       "bytes": 821,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9c527475af71786ac7a27c3a7e8cdb447778a2afba0a8da276fd52b3054330ef"
     },
     {
       "name": "map/2_13_0.jpg",
       "bytes": 387,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1a1cbeabad7dc68a499ebacd923adfd6fe0e485c967113cc1b233acacca4e18d"
     },
     {
       "name": "map/2_13_1.jpg",
       "bytes": 452,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c6f4f6cbd7d9a19b3474ce22304a8fea23c2d1ce116efeb7918a166c26326c6f"
     },
     {
       "name": "map/2_13_10.jpg",
       "bytes": 700,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "21c69c8dd5c140a0dad82ed427a49a245664a730e623b852ddfdba7ded50c2df"
     },
     {
       "name": "map/2_13_11.jpg",
       "bytes": 753,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d5509a45d5c24b885a26129f602560e8c594a61f12a11890657697f7c040d99a"
     },
     {
       "name": "map/2_13_12.jpg",
       "bytes": 761,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "bd28c92147620ba80848fadb5fe45fc39cc1aecba4a6b000ef0457f38b5eac55"
     },
     {
       "name": "map/2_13_13.jpg",
       "bytes": 786,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "dba9ea7eb38f604165838f9695f9fa44e349e9a35251f14b6c176caebb16d80f"
     },
     {
       "name": "map/2_13_14.jpg",
       "bytes": 641,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "39bad2a18d64eab1808a9f0aa0a5a8b5de1777554e0ff107729573dab7214503"
     },
     {
       "name": "map/2_13_15.jpg",
       "bytes": 643,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8e4f6a259061d0e721e27b7a503bff28be0b4e572390d0a66b2e753398531a88"
     },
     {
       "name": "map/2_13_16.jpg",
       "bytes": 699,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "496eba04f547923ffd6e58d5fb6ab70bb6ba8ee5a2aed336ee9eeb3358ce64f6"
     },
     {
       "name": "map/2_13_17.jpg",
       "bytes": 769,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f84c1839156c0c747fa5f70af6043c251109452f241b482140a0fc509a8b70e5"
     },
     {
       "name": "map/2_13_18.jpg",
       "bytes": 343,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0966bde9fa4397779832c95d2ae084657efd4dbfb9fcf8179bfa85a25400a7e1"
     },
     {
       "name": "map/2_13_19.jpg",
       "bytes": 344,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b743282208d2d221f838a517ffca30e89ff8bb9be8e8603822d9ca9f5cd51831"
     },
     {
       "name": "map/2_13_2.jpg",
       "bytes": 475,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6e9432d75f9dc9e41e65cfac2bf572f42ad753201dfb1b140892cc9b3e5c066b"
     },
     {
       "name": "map/2_13_3.jpg",
       "bytes": 647,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "09573d34712d70b2b28d7d3d14330a0b658a34d1771e8bfffc716e436f04d2a9"
     },
     {
       "name": "map/2_13_4.jpg",
       "bytes": 671,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "444fd59bc640a82aa5f6357caf0ea0afeaccf161110c0e9329ad3c7adecc2cfb"
     },
     {
       "name": "map/2_13_5.jpg",
       "bytes": 764,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "baf021026678ca5116f0c029f2d9d3350d74d4a7cd8da98981e245474eeedda3"
     },
     {
       "name": "map/2_13_6.jpg",
       "bytes": 788,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ac595aa28088279708562ab12377797dd78229b5d7a51ba3a400a9dc466d31bc"
     },
     {
       "name": "map/2_13_7.jpg",
       "bytes": 760,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b9da8bf17dd1cc878628c11da07abca4bfc5246a6843a8c312914a4f77b4fc18"
     },
     {
       "name": "map/2_13_8.jpg",
       "bytes": 546,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "7f85361253c8e2373058d11f97ab8acf587f936591029d03ceb175493ff7eac1"
     },
     {
       "name": "map/2_13_9.jpg",
       "bytes": 711,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "868c04589c7d41ab2810b4af0da5362beb4127e01d090414fadd4e283350410c"
     },
     {
       "name": "map/2_14_0.jpg",
       "bytes": 390,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "67f418ed8dd67eceb9679521a991a26019e57fb321598e1a9f9841b17bf280d8"
     },
     {
       "name": "map/2_14_1.jpg",
       "bytes": 492,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e464d960e86350c1c0a9c7837f18b5ce73eb7afc6d4659013bc9cbf1a487753c"
     },
     {
       "name": "map/2_14_10.jpg",
       "bytes": 871,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5f1d467558ec0e4a9b2e232aa532775489b6b70e45f7fbcceffa38862f00d952"
     },
     {
       "name": "map/2_14_11.jpg",
       "bytes": 731,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "14091c20bf1d8d5711b6d3b9cf9b6213547f74c29e37ffba57c66e7d1bbf20c1"
     },
     {
       "name": "map/2_14_12.jpg",
       "bytes": 644,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "172544d21530214eeee4d8e5305d84828384d3b537afaedd18b0f571fb135585"
     },
     {
       "name": "map/2_14_13.jpg",
       "bytes": 815,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "dd702bf461fa1dc2b6436246c7df0c5f2276bab426a22a55516bdb85c113365f"
     },
     {
       "name": "map/2_14_14.jpg",
       "bytes": 650,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ac57ec620e34e39682fc84a2ce4aea70ac6e22bb4766750bcd4f82d2877d1eaa"
     },
     {
       "name": "map/2_14_15.jpg",
       "bytes": 665,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1a64afc7146e0ffa3c069d9db657235a4f38a07b2d0c228d5b8d637020478afb"
     },
     {
       "name": "map/2_14_16.jpg",
       "bytes": 909,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "47e59b1e95a3f56601af2d4a74722ea52b44b720259526403c46a2f635dcefd7"
     },
     {
       "name": "map/2_14_17.jpg",
       "bytes": 665,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e89a34de23188a5e6b68203f031a843020cc6fc1508aaf660d593bc82cbf166d"
     },
     {
       "name": "map/2_14_18.jpg",
       "bytes": 342,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8a30514e91914b98fa9bf65dfd2ef361e2dc4946ff1ee84ae05e76715b36547d"
     },
     {
       "name": "map/2_14_19.jpg",
       "bytes": 344,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b743282208d2d221f838a517ffca30e89ff8bb9be8e8603822d9ca9f5cd51831"
     },
     {
       "name": "map/2_14_2.jpg",
       "bytes": 505,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "985cde57d90ee19eb3670878cfd5df335d13ac4c56d9ebaee4b9206619ad523b"
     },
     {
       "name": "map/2_14_3.jpg",
       "bytes": 763,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e1bbdd2dc23023d8547b0d9f67ff5764df839258383cf058e3dddff070c87306"
     },
     {
       "name": "map/2_14_4.jpg",
       "bytes": 799,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d5a9b8f496ae9fc95b26aecdb664ccf0adacce3bfa7eb6e2e6dec0e3e8e1b1be"
     },
     {
       "name": "map/2_14_5.jpg",
       "bytes": 829,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c232f94131b97f8a665cb768aea08bd29ecfddffd6707707a7c7475e0e7b4fb8"
     },
     {
       "name": "map/2_14_6.jpg",
       "bytes": 759,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8e8788af93ef505ab2cf754572a4b7a895cf1162c8c9725e522b63989319476d"
     },
     {
       "name": "map/2_14_7.jpg",
       "bytes": 863,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "4b6b3786599f80f84cb51b8b369fca09980b7273a42c706565da0eb6bbd39e19"
     },
     {
       "name": "map/2_14_8.jpg",
       "bytes": 804,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b7253b13514c1cb2d66c9d3fc33984b5e2d0c12d77db8f6f58077fe051a01c60"
     },
     {
       "name": "map/2_14_9.jpg",
       "bytes": 653,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "4c88cd793e1d79a42febdf77b51a1d22e33186b9de9b96be7107c9d28056f03e"
     },
     {
       "name": "map/2_15_0.jpg",
       "bytes": 388,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c8dd227731a82aa05f7ac1df1e8563128f81a8529ff9893cb6822ad7557b9078"
     },
     {
       "name": "map/2_15_1.jpg",
       "bytes": 501,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5a5835b4377a0ed96a21fd114dc83f19a745c2924513498fb7121ee93dcc36c6"
     },
     {
       "name": "map/2_15_10.jpg",
       "bytes": 839,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "75fa44474ef1d155c7124217dcdcb676ab5ad53d959d8be74246903903f8ddef"
     },
     {
       "name": "map/2_15_11.jpg",
       "bytes": 801,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "106133ad50f5ef978b81c213cd5dc84917360a0afdc31633b91b27b39a7a9227"
     },
     {
       "name": "map/2_15_12.jpg",
       "bytes": 856,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "4ecc7a782b19fe008c2197507a1c9906167ff9ad54699d25a4bb2076cbce9bc3"
     },
     {
       "name": "map/2_15_13.jpg",
       "bytes": 801,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "180e070e6b284d62a9a90a8bd994e0d89ee2b00a15a876d8fda700882f808773"
     },
     {
       "name": "map/2_15_14.jpg",
       "bytes": 760,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b9d17fab62d65e4cb4af22c22c26be6a309df7463cbc2870634ffd0c261eb760"
     },
     {
       "name": "map/2_15_15.jpg",
       "bytes": 890,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "452e8f6c8997f899f682f0df5c14abe302cc9e32902aeaed03bc24475228a6c2"
     },
     {
       "name": "map/2_15_16.jpg",
       "bytes": 890,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6f1429fcf389ac504f180a41af543c066de0d45c7d0677a67dc2fc1348ae361b"
     },
     {
       "name": "map/2_15_17.jpg",
       "bytes": 813,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9bc6a4128923d6c87b348641f311900f0ce7e3ac27564f423d1969c0972efb9e"
     },
     {
       "name": "map/2_15_18.jpg",
       "bytes": 342,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "64e29e73482937c0a275c1328b90af91eaf07e79c7a1b198fa459f98071e1852"
     },
     {
       "name": "map/2_15_19.jpg",
       "bytes": 344,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b743282208d2d221f838a517ffca30e89ff8bb9be8e8603822d9ca9f5cd51831"
     },
     {
       "name": "map/2_15_2.jpg",
       "bytes": 491,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "87e1eba65c0fa228035ee300c5dcc2337b9642612db6b3b0b249d1bbdd4957bb"
     },
     {
       "name": "map/2_15_3.jpg",
       "bytes": 915,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "4efc1c48014be9f1617d435a40cc961129aa844dc3f7afda8e3459ae71eb656b"
     },
     {
       "name": "map/2_15_4.jpg",
       "bytes": 1164,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8e4d7225c38da97884054e8c24c237a2f1a18b88d954fbf762ea6e2e7cfb45e1"
     },
     {
       "name": "map/2_15_5.jpg",
       "bytes": 1082,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5d476fedc99d002029fc96f5cce8a47cb1c01007060bd482e294b579e2c702a7"
     },
     {
       "name": "map/2_15_6.jpg",
       "bytes": 936,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "4583396bbbd77a53090a527c25783f174933b3a5fa9442d1b108ec9117a79287"
     },
     {
       "name": "map/2_15_7.jpg",
       "bytes": 638,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c973a23722633019a44b328b98347bcff82218c4cb03608ffa187b4d35d40354"
     },
     {
       "name": "map/2_15_8.jpg",
       "bytes": 595,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5528bc927c64fc8f1747699b5e5faddf30387b6d52830c317be259936ad25b4e"
     },
     {
       "name": "map/2_15_9.jpg",
       "bytes": 807,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9d9dd2119ed92e51bcc22105c275824c9e75b16562e734ce5fb527f57c1bdd79"
     },
     {
       "name": "map/2_16_0.jpg",
       "bytes": 407,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2a3a8811afefecc442082b3b2839711ad4eb4037792151bfc3d95c243efda037"
     },
     {
       "name": "map/2_16_1.jpg",
       "bytes": 499,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "53d629efc6a42535daf59ea7c6e3bd12d694625839ee5349faa543241020bbb5"
     },
     {
       "name": "map/2_16_10.jpg",
       "bytes": 691,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "37084925d51bd32b6196fea1a8067cdeab7b06e770999b6c1a6760b98c4d2b01"
     },
     {
       "name": "map/2_16_11.jpg",
       "bytes": 691,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "07ebfd1b7c6cc6089a044bcdff60f17a0b85a38fc437398be544f5f4d2ebacb3"
     },
     {
       "name": "map/2_16_12.jpg",
       "bytes": 797,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "21e427b4af79e2f471f88955bbcd197164048082f0afc1fa7c15e739b04342e7"
     },
     {
       "name": "map/2_16_13.jpg",
       "bytes": 733,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "acc944072f9199d9bafa6e9c907e085d0da6142b5df4613bc9dfed682a5fdaaf"
     },
     {
       "name": "map/2_16_14.jpg",
       "bytes": 698,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2cac504e61f36bb43d804bdef71b1669aeef5961e9d2aa2be8384b66feff7e7b"
     },
     {
       "name": "map/2_16_15.jpg",
       "bytes": 773,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6f1638718730345e6e5cabb1da022d1cdde4be349b2dabb50715f81f5f19a2eb"
     },
     {
       "name": "map/2_16_16.jpg",
       "bytes": 789,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "892541c7d705a5dd46adbf30b028ff00067c0e559293ceb97a5449ff9d5546c2"
     },
     {
       "name": "map/2_16_17.jpg",
       "bytes": 831,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "80330854befc828422e8f22e9de1d9aa7db01f650b8d7a24a5a91c9fb5e3f1c2"
     },
     {
       "name": "map/2_16_18.jpg",
       "bytes": 343,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "cc583bb13887f5961e07c7af412e0b7a343470256157e58f2691d6878ecedf11"
     },
     {
       "name": "map/2_16_19.jpg",
       "bytes": 344,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b743282208d2d221f838a517ffca30e89ff8bb9be8e8603822d9ca9f5cd51831"
     },
     {
       "name": "map/2_16_2.jpg",
       "bytes": 569,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8c2a4e0ce94d15f65548d2d3ead2dda4232305d7911f1861d05412d37aa089a5"
     },
     {
       "name": "map/2_16_3.jpg",
       "bytes": 958,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e8d7e563bba13891a23a9548b69e3827bed6d4860fa602582b879da3d2110f2c"
     },
     {
       "name": "map/2_16_4.jpg",
       "bytes": 1339,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ab208efbfe48db90261d25ee41ca7e2752629fbd2fefce43715e3da196876812"
     },
     {
       "name": "map/2_16_5.jpg",
       "bytes": 1214,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "7bd8726e889ff89c9a7781e5c4aecdb8a83d882ef921b56aa13f84ec62cdefe4"
     },
     {
       "name": "map/2_16_6.jpg",
       "bytes": 893,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5912d5dc1bd1afeb5f15fac16b7c37133fc71fa2f4c998b0170d9c3089f9be86"
     },
     {
       "name": "map/2_16_7.jpg",
       "bytes": 762,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c19d36d3dffd212c2ec1b8c30da0f7d13e19012d541d498b6659fb4874915fe8"
     },
     {
       "name": "map/2_16_8.jpg",
       "bytes": 514,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a7048c627795d70af372a044ec857d30c857c8828e12028ab37046c27ff2b4d7"
     },
     {
       "name": "map/2_16_9.jpg",
       "bytes": 833,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "16b715278c6dc5ad062f6ea43a6bb50be2233478a59c52272eb376b22a33abac"
     },
     {
       "name": "map/2_17_0.jpg",
       "bytes": 423,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d918e732d46585002274eab3906afdeeca1c60f6944a7c6eb3de80e074e0eae6"
     },
     {
       "name": "map/2_17_1.jpg",
       "bytes": 565,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3f81dd406734e7bcc922fc0940cfb5fa2c778547ac337e05ee5472cee3f0b6c2"
     },
     {
       "name": "map/2_17_10.jpg",
       "bytes": 819,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ff7cbfc3ac94642ee76a5b89cdf0f81d2c1bcd823776461cfabe1f4db938c10d"
     },
     {
       "name": "map/2_17_11.jpg",
       "bytes": 589,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b04638fcf2e66e6b9562adcc83bd73bf1fbbb357acb8b5c4e20bfd6a096c1f6e"
     },
     {
       "name": "map/2_17_12.jpg",
       "bytes": 746,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a2135137f4ce03c5f291c592ea08b97a2d175679693fb5e8513b78693390b144"
     },
     {
       "name": "map/2_17_13.jpg",
       "bytes": 806,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "4d9a76a3d92f7be2ba0e4ba1618b1e78aa807ba4fc03731a4c33102cf3b52f2c"
     },
     {
       "name": "map/2_17_14.jpg",
       "bytes": 930,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f3004f4306d70aac7e10b08d8e457d17c20152a365c2d9339afb9fd2ed08b71a"
     },
     {
       "name": "map/2_17_15.jpg",
       "bytes": 750,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "716880d4ea6a7f9e6a9801f15cab83581b67cfd2c9221f403b7e68b3f65afa4d"
     },
     {
       "name": "map/2_17_16.jpg",
       "bytes": 739,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "20c01b7a9c8a0f41b4b893c4e55e4bd48c9119c510bcb121bde8276f78b1f8b6"
     },
     {
       "name": "map/2_17_17.jpg",
       "bytes": 732,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2c5ff6e986ac1fb52e48c04b7511b6ab24fbdc4c22b2ebec31ec522e13ca4fdf"
     },
     {
       "name": "map/2_17_18.jpg",
       "bytes": 343,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "86820e3016612e63552900e5750ad15b56c7b5e6743c8898c62c91a7d7ef572c"
     },
     {
       "name": "map/2_17_19.jpg",
       "bytes": 344,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b743282208d2d221f838a517ffca30e89ff8bb9be8e8603822d9ca9f5cd51831"
     },
     {
       "name": "map/2_17_2.jpg",
       "bytes": 628,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0bdf3d2e34ea6c14f1c6819b401424487015e0c8eb8901d510374f0abf1c5148"
     },
     {
       "name": "map/2_17_3.jpg",
       "bytes": 864,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a5c3a1ca847edae07a591b044dffc00b2ececbb9a6fffcac6e95f9768fb706d8"
     },
     {
       "name": "map/2_17_4.jpg",
       "bytes": 1278,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5738523b887fd48e375efffa25f0fd1a2b0d02a627e728e1dbfd50813836f9ae"
     },
     {
       "name": "map/2_17_5.jpg",
       "bytes": 1092,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "467b1c2eb57c0612a4fc8c799860d74e91596dddaa2b968cc945af82c9bcb907"
     },
     {
       "name": "map/2_17_6.jpg",
       "bytes": 756,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c1c3539f44751dbe8392e2057d762a6b0229a7d45c20e8a80208e0b43ea10b61"
     },
     {
       "name": "map/2_17_7.jpg",
       "bytes": 758,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "405c03db7726e941b9a788aa008dec96587e1e57000760434117d7df48ce99f4"
     },
     {
       "name": "map/2_17_8.jpg",
       "bytes": 897,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "bfc344ee46063374f2e77632f5f72acd5f7ca65d1e2469878b51a278037479bf"
     },
     {
       "name": "map/2_17_9.jpg",
       "bytes": 927,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f5c3cfbb5c517d4c83d87a5b7eef78b95a4f2fad25ff84e45fb16dd5bb3f6d65"
     },
     {
       "name": "map/2_18_0.jpg",
       "bytes": 402,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "788338e29925894800aec65413d7acd4cf195450b2e6baa7303e7e1ebaa5d8e2"
     },
     {
       "name": "map/2_18_1.jpg",
       "bytes": 568,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "302123548ea1119d5656869a0d0edfa2517f0290c03cce21f91d77025020d418"
     },
     {
       "name": "map/2_18_10.jpg",
       "bytes": 823,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "cdf3a158d1011fa72f82870c4e32f1992f2770243bf3c0c296a891ede13240e2"
     },
     {
       "name": "map/2_18_11.jpg",
       "bytes": 654,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "96c9fb1d9d2396ea9972e47d72ed690ccc71e7f5921b61f556a84e31c927eda4"
     },
     {
       "name": "map/2_18_12.jpg",
       "bytes": 724,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "161b638ec66428c48da6e8638c4f0abd3843b127c27a48a8794eab5fac43cd55"
     },
     {
       "name": "map/2_18_13.jpg",
       "bytes": 676,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f9d633f2fcda99e5712da93de46b58e967645fce8a01b8ecfcd0b6039c986162"
     },
     {
       "name": "map/2_18_14.jpg",
       "bytes": 868,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5d7e72963bb46536c865a7ef27b3533a7d82ebc8006c83307828dbd18b18d722"
     },
     {
       "name": "map/2_18_15.jpg",
       "bytes": 755,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8cbd10005126e0fe8846da1fdd763ec939f15153b9cdc92981344aeb5874400e"
     },
     {
       "name": "map/2_18_16.jpg",
       "bytes": 674,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c35db1b0ee02143a9fce1aa391c885c38b4dfaf39e1bb4c3dff2a917da90ea4e"
     },
     {
       "name": "map/2_18_17.jpg",
       "bytes": 640,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0f01b867066b6e8dba63714008495fa81d6fb0abdfde2936c9a6fbc2d3e4f70a"
     },
     {
       "name": "map/2_18_18.jpg",
       "bytes": 342,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2abf85930cee096d13f5649dc62a82081b639d4ba60bff63f726f921b3538517"
     },
     {
       "name": "map/2_18_19.jpg",
       "bytes": 344,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b743282208d2d221f838a517ffca30e89ff8bb9be8e8603822d9ca9f5cd51831"
     },
     {
       "name": "map/2_18_2.jpg",
       "bytes": 593,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "7636a40c77fefe2f3c28d60c7fc6eccfc2b474db37ff04ffa3e0393e402c6d4b"
     },
     {
       "name": "map/2_18_3.jpg",
       "bytes": 680,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6c9b78c52c9db75c77e1ce000f9af4eaa8e6ca3dab5614de48fa1a8d32a6a16c"
     },
     {
       "name": "map/2_18_4.jpg",
       "bytes": 720,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ef6a282732d69ced5617a6ca5c184fb73614338501527655fff14fb80e741319"
     },
     {
       "name": "map/2_18_5.jpg",
       "bytes": 850,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3095537cc55a1396b71cd406a57a851bceb93df6a781854f73a6b9c29bbe5e55"
     },
     {
       "name": "map/2_18_6.jpg",
       "bytes": 794,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "80757d8787b1b64303b3c21c426179d2ad64fa4896e2cca5007f93f647299ff6"
     },
     {
       "name": "map/2_18_7.jpg",
       "bytes": 934,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "29eeb51843fcb5bffea2f786ee77970caf1500de68617e2c2b900ee5c0d023f2"
     },
     {
       "name": "map/2_18_8.jpg",
       "bytes": 945,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "206d4d0767c4c81369c6337a249ef3bb426d7deedb841bbbd6fa62786062afee"
     },
     {
       "name": "map/2_18_9.jpg",
       "bytes": 870,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "738c608da0f8604c7f6b137c90f8e9427fac082c7c4423a18f9613f67937da13"
     },
     {
       "name": "map/2_19_0.jpg",
       "bytes": 412,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d23a1b6aae1b3a4b361b69d34dd15255bacef7fa169b11ad5ccda65189714d6e"
     },
     {
       "name": "map/2_19_1.jpg",
       "bytes": 522,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a2477f7938a5206e86f6c7c9159b4732971bb8d1b99ec5a809f64be1e32eb8fe"
     },
     {
       "name": "map/2_19_10.jpg",
       "bytes": 711,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8d2e40eafc5aab0b36ea1444253e2bab54134e47549771ad3b471234dc8eac3a"
     },
     {
       "name": "map/2_19_11.jpg",
       "bytes": 679,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "90202824cde3d51bc2c479938ec6b047c529dd55084584a8d7e994a64b78ae2b"
     },
     {
       "name": "map/2_19_12.jpg",
       "bytes": 818,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9c2b6c439d0b0e0a65f629f6f523cd31cd6367b8caf8b7b75906cc1a73ccc6db"
     },
     {
       "name": "map/2_19_13.jpg",
       "bytes": 682,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "193ccee5b5201e19eba498f38e0afcbe0d97559afb7f3378a40cbc166b002ed6"
     },
     {
       "name": "map/2_19_14.jpg",
       "bytes": 924,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "075681d9fd0f23cb265b99e57233d757b508869382e91acf09499368f1af0462"
     },
     {
       "name": "map/2_19_15.jpg",
       "bytes": 456,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "88a8e4f5262f8bb6b528fa9139da642bdbfe5c22e59ea86f7e9d1961ff13a9a1"
     },
     {
       "name": "map/2_19_16.jpg",
       "bytes": 542,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5fb0ac04704622526647b1df666fbf130101fb3a77c24a755e860f00b208697c"
     },
     {
       "name": "map/2_19_17.jpg",
       "bytes": 575,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "18117bcbfec751351fbb0d2f7c8245097edc95ee37b3ac7577385140b76cbbdd"
     },
     {
       "name": "map/2_19_18.jpg",
       "bytes": 343,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ddbe4095869bf944cc931014603be5c05d47fc94623bf12b83302b4764ab63af"
     },
     {
       "name": "map/2_19_19.jpg",
       "bytes": 344,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b743282208d2d221f838a517ffca30e89ff8bb9be8e8603822d9ca9f5cd51831"
     },
     {
       "name": "map/2_19_2.jpg",
       "bytes": 491,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b54ecf2cb086951d0fe134ca02981ad46c223734f358d763f36d45d564ce0be4"
     },
     {
       "name": "map/2_19_3.jpg",
       "bytes": 628,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "92982f8ac427fad593b198c96e8fe0d2422e2565c992bbadb127006e58b3b5d1"
     },
     {
       "name": "map/2_19_4.jpg",
       "bytes": 572,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b2b70fa0539a5aabdbad0fd60e9259efcc143aa5937f5d4a96582c87fa158142"
     },
     {
       "name": "map/2_19_5.jpg",
       "bytes": 616,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d808175f98a659fff623abd0cdf4ef58344190fad10b5cd4ef511b12f32b7996"
     },
     {
       "name": "map/2_19_6.jpg",
       "bytes": 779,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e9c08d0a158a4e947d0d8d8b60e7a6f434ee123ed17d6487510bdda38f7cb149"
     },
     {
       "name": "map/2_19_7.jpg",
       "bytes": 829,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ca96386f4bbe1e35103eca32c08f578159e0811b4a773878e8a065e0012a4ac1"
     },
     {
       "name": "map/2_19_8.jpg",
       "bytes": 999,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e77b5bd3089b19ae90164de8bef5d840590b9dcd2db4dbb4b5bdc91cc0fdcb68"
     },
     {
       "name": "map/2_19_9.jpg",
       "bytes": 876,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "91e83af78561d812cfd5bd5536612a53cc16b974cbc4ac3825ff7b5b433e690a"
     },
     {
       "name": "map/2_1_0.jpg",
       "bytes": 420,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "96ffef6fd45804fac0a6eed8a42110965711ee2f1baf217c8f7749acc3f29747"
     },
     {
       "name": "map/2_1_1.jpg",
       "bytes": 608,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "faecc2c6ef82d8ecdfa8bb4dac8daee3eaa3a2b077ab9d3bb6bad426d55c2fc0"
     },
     {
       "name": "map/2_1_10.jpg",
       "bytes": 540,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d0d6f5fe2846b0ad2cb19c365eb976c1749b3c2bfc7f2d18bd783d1697e82680"
     },
     {
       "name": "map/2_1_11.jpg",
       "bytes": 691,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0bef137e01838a574fe7ef0dfb15f8241670140eb5a8be321488898b760b5b87"
     },
     {
       "name": "map/2_1_12.jpg",
       "bytes": 704,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "373e4fef4f80ddfe3bb618f12d6e03e8b7d7175d86d5d7b25ed371ab2f3ae246"
     },
     {
       "name": "map/2_1_13.jpg",
       "bytes": 623,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "94841da9f476db2786ecee0d216432bb06587b900b9642fbbaac8fa7e7453e6a"
     },
     {
       "name": "map/2_1_14.jpg",
       "bytes": 416,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d893671c57b856f22b9fab1b0c2e2b02178906bd34c6f0b83b64ed399a32bf0b"
     },
     {
       "name": "map/2_1_15.jpg",
       "bytes": 385,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6c9413c76558a0f2e60c012d59f1fd86722ddde7705b2850b33c3e9856c8f4c8"
     },
     {
       "name": "map/2_1_16.jpg",
       "bytes": 381,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0f86cda9608804022c6a07baf8224de6ec93a70d3fc1a8095379768be72a0017"
     },
     {
       "name": "map/2_1_17.jpg",
       "bytes": 374,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "20b7cd7de4cb3012835bc3887fef784c10e56d5f95effb24a08cbda64333fc75"
     },
     {
       "name": "map/2_1_18.jpg",
       "bytes": 385,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "29b807852b82e455dc4b06c8541bd6f43d4d4c6e89b3ea96fb364bb1c878cbca"
     },
     {
       "name": "map/2_1_19.jpg",
       "bytes": 379,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c638267ced920e42bd6563101756047427c412c98619b3443f576f967ab76ea2"
     },
     {
       "name": "map/2_1_2.jpg",
       "bytes": 498,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "7a66f8870aa2df8d3657530cdf01ac04e19470e52fbc9ff44413624435574a00"
     },
     {
       "name": "map/2_1_3.jpg",
       "bytes": 501,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0f124d0e0532a3c7dadf9ea5cc1cfb0d178a89c45af79c5b701cc470968b1976"
     },
     {
       "name": "map/2_1_4.jpg",
       "bytes": 582,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "900d125b85add09b07cfd7aed4eb7bc33569e9ae17aa236a99087f5e95dd98ec"
     },
     {
       "name": "map/2_1_5.jpg",
       "bytes": 620,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5bd6e039e2936e2ee0ad8d78e2b6e09dacc33465a129b68788288786b8346355"
     },
     {
       "name": "map/2_1_6.jpg",
       "bytes": 530,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "4b9f0d8f83f458cedc7559194ff71d0666afb1ade77e6996fdb06bd10b24667b"
     },
     {
       "name": "map/2_1_7.jpg",
       "bytes": 538,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "bbd4f09289b275c8bb413794eea381c49473fb3d70498652480dc6b69d612ea6"
     },
     {
       "name": "map/2_1_8.jpg",
       "bytes": 523,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "38267aa962a428f0756480f629ef1cd3a48a3c9ea1a6cf0ed67bf160ea7b415a"
     },
     {
       "name": "map/2_1_9.jpg",
       "bytes": 632,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "356367f6b0eb4bcaa5f0c442b1ca2a4e628c1abee9ad234facf2bfc10e993c2a"
     },
     {
       "name": "map/2_20_0.jpg",
       "bytes": 456,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "25e87fde4a6cd1e606ec5c80fd0a2e63a9e0cb2ed61b82d16852a2e5c3aaac11"
     },
     {
       "name": "map/2_20_1.jpg",
       "bytes": 408,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "215c16f1a256de06e7ebb2d046f63e25b440cd55d3279b41ceed6c5e42becd4e"
     },
     {
       "name": "map/2_20_10.jpg",
       "bytes": 711,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b4f4c0574b4c6bc12aa36a588063d4c080b25edbf80fb476a3a21c0e48011cb9"
     },
     {
       "name": "map/2_20_11.jpg",
       "bytes": 706,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8e7e10ecf04a6810ee4e9f8a68c86675edd8b21fad2207c4a1e98529900fbbb4"
     },
     {
       "name": "map/2_20_12.jpg",
       "bytes": 738,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "fb5f6b304c1f67fc7dd28d692227217aedf8018788bad4f337b7aabe2775ae19"
     },
     {
       "name": "map/2_20_13.jpg",
       "bytes": 592,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "78fc8e2316218d0ed31634ece280648fd5207bd78a5b9332715f6ee9e55df135"
     },
     {
       "name": "map/2_20_14.jpg",
       "bytes": 640,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f2e2a6e36ffc83abd0cf6bfaf57766dc0db82a9b743e6098e9731620f60144cb"
     },
     {
       "name": "map/2_20_15.jpg",
       "bytes": 438,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d6ba69eceb2403d9299e3121bea8e087a68d667dff59a656607570765648a013"
     },
     {
       "name": "map/2_20_16.jpg",
       "bytes": 396,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0eaefa1f4f11a72ff93b800be10ec6f156c6ba2fbd8fa8980a022eb1991bbd59"
     },
     {
       "name": "map/2_20_17.jpg",
       "bytes": 478,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b93ec2cd5171f442b573cb86ba08279236d8175323e9ad9b8488c00eed22299e"
     },
     {
       "name": "map/2_20_18.jpg",
       "bytes": 343,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ddbe4095869bf944cc931014603be5c05d47fc94623bf12b83302b4764ab63af"
     },
     {
       "name": "map/2_20_19.jpg",
       "bytes": 344,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b743282208d2d221f838a517ffca30e89ff8bb9be8e8603822d9ca9f5cd51831"
     },
     {
       "name": "map/2_20_2.jpg",
       "bytes": 427,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "15172c7f643695475dc02b528f291eed5ab55c2f97a3b961fc5bfe953367a526"
     },
     {
       "name": "map/2_20_3.jpg",
       "bytes": 889,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "179e1040d487b727dbabe207f99fe0a7144332655b215a44edf19263cb0dc93c"
     },
     {
       "name": "map/2_20_4.jpg",
       "bytes": 855,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3452999650cda140536199d7db9514663ac67bf004ea9f06f7060cf7ab347513"
     },
     {
       "name": "map/2_20_5.jpg",
       "bytes": 781,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3f12172bf5886e1e1fd76abd22b89091174c16abed4644c339e519f9074b5e62"
     },
     {
       "name": "map/2_20_6.jpg",
       "bytes": 755,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "46d03e1546522dfc2dd34a9721a55fe03d316a68e24444a70d0c1fcccc71a972"
     },
     {
       "name": "map/2_20_7.jpg",
       "bytes": 678,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0ccd07edb2e8a3e308ac04b25df93aa62ecc210b3be5d2767c835e16db01bb50"
     },
     {
       "name": "map/2_20_8.jpg",
       "bytes": 977,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1df0d38e73fe927835c06f582c333d57a1be309c52ad560bcd208b39a6a3303f"
     },
     {
       "name": "map/2_20_9.jpg",
       "bytes": 762,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ee35cf3f3eb48af70b703bcb9f59dc8895ae715bf68263f444143eb23e3f8e18"
     },
     {
       "name": "map/2_21_0.jpg",
       "bytes": 348,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "cc080d39403f6e9768315c3271330472d764c8f4918a43541511c6020f0550dd"
     },
     {
       "name": "map/2_21_1.jpg",
       "bytes": 447,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "61ffc4c5138c3db9dac282bc008cdf88646805bc4b6a33afca279a7f97bde38a"
     },
     {
       "name": "map/2_21_10.jpg",
       "bytes": 394,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "53967d746f2c08d6f46558c7115d4cfae22f21d2c3e035b199a4015d6db50386"
     },
     {
       "name": "map/2_21_11.jpg",
       "bytes": 436,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1c76a3c5892ef9e5e3a2f5e97e5111aa97efc5e5edb02725ad2a9f7f5cecf987"
     },
     {
       "name": "map/2_21_12.jpg",
       "bytes": 336,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "fca457e3dc79bd3892a6ba63c13b3594bdfc9c1285f19e6bc5dfa29036092989"
     },
     {
       "name": "map/2_21_13.jpg",
       "bytes": 482,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f15337dbef0820084cadde9a75191103b0f577706210e5fdb38a0143aa0d87f7"
     },
     {
       "name": "map/2_21_14.jpg",
       "bytes": 486,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5fc1ee58f745822734e5ae023615868561bb9ffeed442f29f88d6f1d14f54bd4"
     },
     {
       "name": "map/2_21_15.jpg",
       "bytes": 384,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3651e5de056202a7447a7075c93ba5b01499d4fb7d0cdd5df564c127514ddc39"
     },
     {
       "name": "map/2_21_16.jpg",
       "bytes": 416,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b1d47927754db14f0b078d85b4a93aaa8d80337d445439ce6bb9685363ce6b9e"
     },
     {
       "name": "map/2_21_17.jpg",
       "bytes": 576,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f0f03284c13f744819d54c839ba5cb99ea2bb90264cebe8739ff974be31e4e07"
     },
     {
       "name": "map/2_21_18.jpg",
       "bytes": 343,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "37d1605c9e61db289c81b065fdb40ec64d3e2632b11e04afeb7bf79d2ceae99d"
     },
     {
       "name": "map/2_21_19.jpg",
       "bytes": 345,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c832177325c4c61c37107625fb0d1893c84d700c37a4095e2fbcc241010d5dad"
     },
     {
       "name": "map/2_21_2.jpg",
       "bytes": 530,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d3cd583e532dab4e8b1e95f22e9161a3cfcd5aee352cc51f2eda1ddf04d35934"
     },
     {
       "name": "map/2_21_3.jpg",
       "bytes": 633,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2439ffe391458e95a344b0feaed7853bd329de152f241dd1153d8f9e1e9a31fa"
     },
     {
       "name": "map/2_21_4.jpg",
       "bytes": 539,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "67ebc1dfd8ada491d94055adf4656786ef3f6ff39663a99d51ae784d99be3c48"
     },
     {
       "name": "map/2_21_5.jpg",
       "bytes": 723,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "88bb284476d3ec8c5f56940a8901112d33e2762be3888649cc1549cdff19b43c"
     },
     {
       "name": "map/2_21_6.jpg",
       "bytes": 564,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "457dac18f4f90d34a8542da48cd7a903aaf2cfab956d6ce64ae6a5ff315afd12"
     },
     {
       "name": "map/2_21_7.jpg",
       "bytes": 602,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b4629c515a4ff2a16dfaf7ea1e34ae36d41077879f1f1bcd8a9dd16c00eef9c6"
     },
     {
       "name": "map/2_21_8.jpg",
       "bytes": 652,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "faaa04d279f07ca0dc43ffca32894203c58a607877dc75169a7182bd443df5d1"
     },
     {
       "name": "map/2_21_9.jpg",
       "bytes": 309,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a64d1d33cd80406dc799e3d26f406797241566615e5482baa800b2eb64c4e80b"
     },
     {
       "name": "map/2_22_0.jpg",
       "bytes": 379,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "bdf79b2562c1463cb8fb9ee3c677debaf498ce1d1ac8e0c734b60d15b6d69d9e"
     },
     {
       "name": "map/2_22_1.jpg",
       "bytes": 357,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8ff1e11654a48b1f26fb444aaffd41c7038f98638e7935e6e7b99208f18000c8"
     },
     {
       "name": "map/2_22_10.jpg",
       "bytes": 360,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e023c10c655aa991c902ed22120d595e008e5cda8023f1b0647d11220240beeb"
     },
     {
       "name": "map/2_22_11.jpg",
       "bytes": 360,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e023c10c655aa991c902ed22120d595e008e5cda8023f1b0647d11220240beeb"
     },
     {
       "name": "map/2_22_12.jpg",
       "bytes": 360,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e023c10c655aa991c902ed22120d595e008e5cda8023f1b0647d11220240beeb"
     },
     {
       "name": "map/2_22_13.jpg",
       "bytes": 360,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "523132abab330f2527b2d3fdc53e99bca10193b9620f6d1560dcf7a1be2c6cc9"
     },
     {
       "name": "map/2_22_14.jpg",
       "bytes": 359,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0f2a8b3df9b03bda5f7fe3f390e9ae06defed92dfe781f67f291cce976f17f8c"
     },
     {
       "name": "map/2_22_15.jpg",
       "bytes": 359,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f7ba211da4030bd9724227d05234abad8e1a1417b9ae92293ac937d67125c1bb"
     },
     {
       "name": "map/2_22_16.jpg",
       "bytes": 360,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e58c0a095f1e10706eb1b4b9e886b37526fffc5967bb3b205d1e4278ea3fc835"
     },
     {
       "name": "map/2_22_17.jpg",
       "bytes": 358,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d169332e065779f00ad0ad17125be93aa192d97ab7f925f5d1ac6723c7f11e47"
     },
     {
       "name": "map/2_22_18.jpg",
       "bytes": 354,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2ce72b6cbd856f6bdf683d560071f81065cda4327e695f60e77e6b89745d2598"
     },
     {
       "name": "map/2_22_19.jpg",
       "bytes": 341,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "276c02ec43baa09432ec107864b69b68d0b9df33c97fd5a1acf6e0e1639b4188"
     },
     {
       "name": "map/2_22_2.jpg",
       "bytes": 362,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9bfbf6804d1e4ac60ea1c47b4c9780fee5017611461bbd80fb491314e6756569"
     },
     {
       "name": "map/2_22_3.jpg",
       "bytes": 362,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3fc292e5b45a3178fde1f0663d2a38ab8f8a116ac61108855df849a391792d7c"
     },
     {
       "name": "map/2_22_4.jpg",
       "bytes": 360,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f9de6d039784661ccde8db722c7a85a002f505cea19e2c3041d8e973ec200988"
     },
     {
       "name": "map/2_22_5.jpg",
       "bytes": 360,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e58c0a095f1e10706eb1b4b9e886b37526fffc5967bb3b205d1e4278ea3fc835"
     },
     {
       "name": "map/2_22_6.jpg",
       "bytes": 359,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "68914d8c16ebb81ef81633a54e323e9306b811b8cb6b591af0b7fdba61e45432"
     },
     {
       "name": "map/2_22_7.jpg",
       "bytes": 359,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "152bfc0e3ac7701b978385f68fff5c6b749204b85092aa26e5bdcd9819f0c2ff"
     },
     {
       "name": "map/2_22_8.jpg",
       "bytes": 360,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8b2764d0bdc63c5518b22f0046e29ba4ef7a7c81f92c09d3cb7a79416dbd111c"
     },
     {
       "name": "map/2_22_9.jpg",
       "bytes": 360,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "030be965547c06ac65c254e8c94f9ff6bf77fdf01dae3f6c69292c6ffe201b55"
     },
     {
       "name": "map/2_23_0.jpg",
       "bytes": 326,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "634c22ceb09492e7044617c3435ede09881c5c55971662a1784f0bc5b0c9662a"
     },
     {
       "name": "map/2_23_1.jpg",
       "bytes": 356,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5ad655c2536b3b162b12598673131d9e94c3f944ae01c1dfdc18366ca6cdfaa2"
     },
     {
       "name": "map/2_23_10.jpg",
       "bytes": 362,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9b19493b62adfc25f0cc392df4b6ed022f62f4015ebdec024434ec9a9e62f973"
     },
     {
       "name": "map/2_23_11.jpg",
       "bytes": 363,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "95fce50e8cfff17936b54685b101c64fa42fb4ac7852798e6a28bb123079f4bf"
     },
     {
       "name": "map/2_23_12.jpg",
       "bytes": 363,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1373ad89c2cd1a25b82fbdc68ad81a02d806cb4faae126abffe044fb813a1c00"
     },
     {
       "name": "map/2_23_13.jpg",
       "bytes": 362,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9e267f2d201d72234ec5e6de31cc03b96b827a3f149650a53ba56b4b6f77c5c2"
     },
     {
       "name": "map/2_23_14.jpg",
       "bytes": 362,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b64e90da317a50827735fb0a9c84c76c788892a9b34f41d26bd39661df3b0100"
     },
     {
       "name": "map/2_23_15.jpg",
       "bytes": 362,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f88986b64accb561d9b872c390165de4a3a4863cbf6f1b69fe5a6e0a20880fa3"
     },
     {
       "name": "map/2_23_16.jpg",
       "bytes": 362,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "460298dc179fc550943c070d99924e45f0e24ba6178f085a234125b47c41b588"
     },
     {
       "name": "map/2_23_17.jpg",
       "bytes": 362,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "63f341283de66cfb479ed1cf5af3414b8cc316245baab97dba565700cf1b5b32"
     },
     {
       "name": "map/2_23_18.jpg",
       "bytes": 353,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "4debea269c96dacf41a26bdfe6471d5651ac23aa08f875d8e35534cfcbde09c6"
     },
     {
       "name": "map/2_23_19.jpg",
       "bytes": 321,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "61f1f43b367c19ed7682fee470eefea5c5768cf1ef33d522ee003eff3ed19498"
     },
     {
       "name": "map/2_23_2.jpg",
       "bytes": 363,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "594c21ab1b98dd43d4fe61a71c644abc3af96160723647312e5c65e0fc496909"
     },
     {
       "name": "map/2_23_3.jpg",
       "bytes": 363,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e5561df6442fbc1be9efcc26c0d08702671cc55dae890ac445201cb53e0f132b"
     },
     {
       "name": "map/2_23_4.jpg",
       "bytes": 361,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "addd188172ee1f2fea1ad657598c018d774ebd5c6ab431411add88f47e06b875"
     },
     {
       "name": "map/2_23_5.jpg",
       "bytes": 363,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3b207d618be4353e98917eb11dae9e9062036b0de925aded311246d589538d8d"
     },
     {
       "name": "map/2_23_6.jpg",
       "bytes": 363,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "65787e9b568b0623ac9018947393ee15fe843b709312927271627e0fdf45c2cb"
     },
     {
       "name": "map/2_23_7.jpg",
       "bytes": 362,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0b7752f61af7f04bfdcd3cbb316253b74cae9b590ebbd7df3ed5adaa626fa44c"
     },
     {
       "name": "map/2_23_8.jpg",
       "bytes": 363,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5ba2327c195f0ccbd62ed84fe1442fca62af676d9507f2d277a16d1c1b5d1dfb"
     },
     {
       "name": "map/2_23_9.jpg",
       "bytes": 362,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "27a086562a244c48bbe450cb1c0435319fb96d552bff72fbf7e740a4f0f850c9"
     },
     {
       "name": "map/2_2_0.jpg",
       "bytes": 491,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "7e7f5c8dedee9231df08cbd7d8f30c61ac233832b25589fd3f92e23c1f3cdec7"
     },
     {
       "name": "map/2_2_1.jpg",
       "bytes": 401,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c342217ff30c0abe0d64d6cbfdbe3fa88b18fadc4933efd52e4d5dd801a9099a"
     },
     {
       "name": "map/2_2_10.jpg",
       "bytes": 845,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e0c5111ff189b98857a995644be43565ec58de2f616a39f4d1f526923c903c4d"
     },
     {
       "name": "map/2_2_11.jpg",
       "bytes": 778,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c82f4ca06274a8e97cb0f6b67c8750e41e83f77814e2b6a21ef768e8c78614a5"
     },
     {
       "name": "map/2_2_12.jpg",
       "bytes": 806,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "59b62697e8556f6939b9714a5ebe2dd2067b6b30857d0b463cff240aa1c41957"
     },
     {
       "name": "map/2_2_13.jpg",
       "bytes": 633,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a116e330529a21efdf233813db29e52378b49a257e9fc3ace3410f561a3d5fb3"
     },
     {
       "name": "map/2_2_14.jpg",
       "bytes": 392,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1d0f484e6e3027e73ba0f9dfe0c923a6d5e027c1f193b78fb726d709714380cd"
     },
     {
       "name": "map/2_2_15.jpg",
       "bytes": 347,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0f594451b1ac0704bbb0cb9bcac3659a5328c3666a61528f447e7d9a5ff114c5"
     },
     {
       "name": "map/2_2_16.jpg",
       "bytes": 340,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "21a3305ba29bd69987f419bd534f7c865cfdfbbb69982b4c35ac6645d8b1b178"
     },
     {
       "name": "map/2_2_17.jpg",
       "bytes": 349,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f4992835e29219417dbde2dc9c08237c963f29cd95e367f9a41365a19a7584e6"
     },
     {
       "name": "map/2_2_18.jpg",
       "bytes": 366,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2848afed615da5c001e6bbe9c1bca36c94e5c8236fced84ca3da84fd9e6ee89d"
     },
     {
       "name": "map/2_2_19.jpg",
       "bytes": 360,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a8d3dea8cdf913142680f9b364025d546475679dad540eed05a7afb55049ecfd"
     },
     {
       "name": "map/2_2_2.jpg",
       "bytes": 379,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "13ab019f4377252c87ee945986d38a85bfb13d4b85a7236cc572622851bd555d"
     },
     {
       "name": "map/2_2_3.jpg",
       "bytes": 519,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a55d75f72c0b85f364fa01d24cd19d503ec78e337d66fc99e8b8553d2e71c169"
     },
     {
       "name": "map/2_2_4.jpg",
       "bytes": 496,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f1b9b48525556853758aac41d58c6aaced8b606ae08c9e4e3d42f08bfe9554c8"
     },
     {
       "name": "map/2_2_5.jpg",
       "bytes": 429,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d9db778e15da3060cafea71aefb641341e82e10bb7bff8483d96602500d5f2a2"
     },
     {
       "name": "map/2_2_6.jpg",
       "bytes": 669,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "fd490ee2f50cef01eac6efbcd707aa991b095e8fce7ec084f3bb6ba62c3c7ae4"
     },
     {
       "name": "map/2_2_7.jpg",
       "bytes": 653,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "19f2532e6fabf78fc890e3189b5548eec7f951b54d04c4694c08593618c29d11"
     },
     {
       "name": "map/2_2_8.jpg",
       "bytes": 657,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "7e483321cac1ba804f04cf68edea508754524093398380135c313e92f3df06b2"
     },
     {
       "name": "map/2_2_9.jpg",
       "bytes": 442,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6c66912b67f80a48dc86847b100ae7e9a56a34c9328fe24456264bd3a37e1b62"
     },
     {
       "name": "map/2_3_0.jpg",
       "bytes": 497,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "845aa70be4c85f2146cb5cdee4d03ec82f6315633e35f67da9019666cadc434e"
     },
     {
       "name": "map/2_3_1.jpg",
       "bytes": 372,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8428094a586cd426bd26dd5c7dc8b3c4c9aa9f5913eecd32f8a5f4588a533beb"
     },
     {
       "name": "map/2_3_10.jpg",
       "bytes": 793,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e74ceb29df3792d7256605f226984ac7082a826ee0ab0f85999438c2ece24b4d"
     },
     {
       "name": "map/2_3_11.jpg",
       "bytes": 826,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2e0c31091bf4ca77ced214067de5a4158f513cdeadea9a3097f31678a3d0b43d"
     },
     {
       "name": "map/2_3_12.jpg",
       "bytes": 873,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "48b8b287bd658a6af1a1ca9ac16ce08b87f1bb48827f0f915056c9d66dba7a1a"
     },
     {
       "name": "map/2_3_13.jpg",
       "bytes": 695,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3de81397f41c606a1d5eec3b04a79d621fa89d43f590714fd52958c2ca665fd4"
     },
     {
       "name": "map/2_3_14.jpg",
       "bytes": 423,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b40df3abd7600faa4b1592b02683493374d449eb0b667f7c533b56e47b8ba46b"
     },
     {
       "name": "map/2_3_15.jpg",
       "bytes": 351,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b27915025ff6d3703cdd126ba103ff0b12fd8c70b98385a10447e486ba73e31e"
     },
     {
       "name": "map/2_3_16.jpg",
       "bytes": 354,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f009ff0ed7d239b2eb216137068122fe8210bee19773ba919e2618a5a611578e"
     },
     {
       "name": "map/2_3_17.jpg",
       "bytes": 338,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "dce278f91eebe8ce803cd5c4d9c9f73ad91f1ff221800185de8ee0e7590a406d"
     },
     {
       "name": "map/2_3_18.jpg",
       "bytes": 364,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a76d86b33df7a63f50a1eb7629e0cbfdaf736f628a5447112313490fa730f6d7"
     },
     {
       "name": "map/2_3_19.jpg",
       "bytes": 363,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1c3418bb7bf06c55382b1f1e34c65d4bd3cd2d181f4a2532a823512bc8abae07"
     },
     {
       "name": "map/2_3_2.jpg",
       "bytes": 712,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a2b2cbb3fc20503a9a8e17fae8093f3da1195a207e20dc7ba8eb167d70e24d0a"
     },
     {
       "name": "map/2_3_3.jpg",
       "bytes": 727,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a98947fc41a6ce68e068b3323e10aab308da8d6c556ca57b7336b725eb52af31"
     },
     {
       "name": "map/2_3_4.jpg",
       "bytes": 689,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d46ec07f68dc2bcecb5084031333b0fe5867f78729b0f2cc86973113eabbb172"
     },
     {
       "name": "map/2_3_5.jpg",
       "bytes": 696,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "be2905a5e99414544b543f4793d0f5fcb6eef55caf6ed9a30d1ffda19a1b2f12"
     },
     {
       "name": "map/2_3_6.jpg",
       "bytes": 629,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d0d23c7d920663a6d201522c735aa102221ba9cde6bcfe8a316d23641a3232f1"
     },
     {
       "name": "map/2_3_7.jpg",
       "bytes": 414,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a3441c72616cc5a82a57f716024a10996d0f303ba24ae2b13781e5d8c899e768"
     },
     {
       "name": "map/2_3_8.jpg",
       "bytes": 428,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0cb0edaadc5a4cbd77bac36be5eb4846ae99425d782866645fa4772da7096b55"
     },
     {
       "name": "map/2_3_9.jpg",
       "bytes": 471,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d240b6171d76d2fd739289ee5a8c9468c040ed892958ba19408ad0680a7b7fea"
     },
     {
       "name": "map/2_4_0.jpg",
       "bytes": 455,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a71b3d6cfa59c3ffba59d0541bdb170111fdeb88d61c9263e9d2aed83810079b"
     },
     {
       "name": "map/2_4_1.jpg",
       "bytes": 462,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a6308e6337206c18ca7c9437dabf88e069e3e48b3830056451017b3ac23c57b3"
     },
     {
       "name": "map/2_4_10.jpg",
       "bytes": 677,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6d3e38545b6b1406cb61921612a67e519520f71e4aed2f1887b960dbc8c0d140"
     },
     {
       "name": "map/2_4_11.jpg",
       "bytes": 978,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "21cb2850d26077ce7bac68188900eb4f4e6add505bba22dc1a7634845d2e65e9"
     },
     {
       "name": "map/2_4_12.jpg",
       "bytes": 840,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1b718d1a03ee4a7941d322cd937ee0f9890505f530d61b32815e5bb1f0421927"
     },
     {
       "name": "map/2_4_13.jpg",
       "bytes": 838,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "09d842ee6ba9d41b8306a64ff43a2375264871e42a4b13f63d0a0ae98398512f"
     },
     {
       "name": "map/2_4_14.jpg",
       "bytes": 590,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2c00a776c3f73b715a56e0fda1fce30f10bd12d67193c6319c7a6b6a66ae54ad"
     },
     {
       "name": "map/2_4_15.jpg",
       "bytes": 535,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "016e635ccf2bfdbb5d578147e656050cf634eabec57a0bc348c683094c802ef1"
     },
     {
       "name": "map/2_4_16.jpg",
       "bytes": 369,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8ab6797285ba5f3e1508ac5c8027f6fff973621c59b1080bd56645c7740013bd"
     },
     {
       "name": "map/2_4_17.jpg",
       "bytes": 356,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "da70cb08bd4a5964191ddcca79191307baef3959ddcee2eb2f3e32d128b91df1"
     },
     {
       "name": "map/2_4_18.jpg",
       "bytes": 360,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ba22f7e67dbc1c7ee74b0e339c48f7cb06ecd7ea915a5cfdede199b91ce86af3"
     },
     {
       "name": "map/2_4_19.jpg",
       "bytes": 370,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "aec74c5829509eae9d4f8c8a01eb50549d15e45f70d2ea89fa36296f90d9ec9e"
     },
     {
       "name": "map/2_4_2.jpg",
       "bytes": 759,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c63569309e7ef1185a99289551a403d1e3600d5d0196527dce76133da50ff983"
     },
     {
       "name": "map/2_4_3.jpg",
       "bytes": 800,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1f8096ff486eb4fb29b183fcede11b19591fdea2d5332d0a32d8611d19b517b7"
     },
     {
       "name": "map/2_4_4.jpg",
       "bytes": 806,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "7fed3e5e123f7137dadc2739a05ffd69e4aaca7b63350bf1a922c2e9df8b18b1"
     },
     {
       "name": "map/2_4_5.jpg",
       "bytes": 837,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c63caec6cd462e93045c4876895652e73b236ad5b73acebfef8bf30ec9d9a569"
     },
     {
       "name": "map/2_4_6.jpg",
       "bytes": 914,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6db56cf352862e3c6ce9e9b448cd488973bf1635c815b05b616e5f4254be0c1b"
     },
     {
       "name": "map/2_4_7.jpg",
       "bytes": 638,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "705234d0e76e92cedc180ad6ad1adbbd6da9d7d3b8de017b1c90693b55dfab8a"
     },
     {
       "name": "map/2_4_8.jpg",
       "bytes": 745,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "500a53ef9e1bc34308382304b61111a14c6776dc183f7c65eecda3d572049a96"
     },
     {
       "name": "map/2_4_9.jpg",
       "bytes": 632,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "347f73d9563da6bd55c2740341518afd5a9a07ddc20815bfe09fe2949651bcd1"
     },
     {
       "name": "map/2_5_0.jpg",
       "bytes": 423,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "60106792c4505eff22eefb7a4fb4c89b2c1cd9a7ec9bd9a1208add08fec39728"
     },
     {
       "name": "map/2_5_1.jpg",
       "bytes": 635,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c8dfe0b32c1dbc16debac36b28e483945cd2bb4d49bc97ae5a8c0848ea8a60e0"
     },
     {
       "name": "map/2_5_10.jpg",
       "bytes": 568,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6ab925e1b08231879f17eaeea2357f0a34082d0898ed9cb031b33965e45e960b"
     },
     {
       "name": "map/2_5_11.jpg",
       "bytes": 796,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "93676d24a9f4aefa9c86b39b70b345ef455c51b0e1a5d847e5a3a01764c33e1a"
     },
     {
       "name": "map/2_5_12.jpg",
       "bytes": 892,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "bf6f1e2c52663a3f49f3649665704e5ae4dc26ba45cb751ff66646f36fb08b8a"
     },
     {
       "name": "map/2_5_13.jpg",
       "bytes": 829,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3e3291b34b1ca021bb783e9b01e039ca8b1ff92ee1fc4732aff0863cfcf1ca8b"
     },
     {
       "name": "map/2_5_14.jpg",
       "bytes": 612,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "525ccc6fd108ca3feb3254df992d2c9e736aeb753a5527d2cc293a60f32df32e"
     },
     {
       "name": "map/2_5_15.jpg",
       "bytes": 495,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b7616d524dc25b8d8ec61aacbbf2c0563e3a7d252ebbc38b39b890e7d1be8cd4"
     },
     {
       "name": "map/2_5_16.jpg",
       "bytes": 361,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "33377ed76757edc7aed7ec78ba7a8dccfcd90e456b1d24113736760a91225eef"
     },
     {
       "name": "map/2_5_17.jpg",
       "bytes": 359,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "022498c40d5aed7a092198df63b445d23a04b6e5bd14ec8ca8505dd1541e327e"
     },
     {
       "name": "map/2_5_18.jpg",
       "bytes": 371,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "160ce339ab0ee3c763528c4ec3b97ef8f14ef410fe18bbd6dfb005a86a3b4663"
     },
     {
       "name": "map/2_5_19.jpg",
       "bytes": 366,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a8d78be67780ec7a93cb354b8c57ae66e61f62d5cad63a360de00be92cfd0601"
     },
     {
       "name": "map/2_5_2.jpg",
       "bytes": 724,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "66b6832b2f880aee7b2f0df64fc0fbdfab4614c767c2da785aa503d7efef2397"
     },
     {
       "name": "map/2_5_3.jpg",
       "bytes": 889,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e73a41db8e91b2d9e14ffd200b686ed794429b7131416c23e0c49f44198ddfe5"
     },
     {
       "name": "map/2_5_4.jpg",
       "bytes": 885,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "859edc16edaad2b7e8b43a3aa5509af11c99629385a4ccc1791070d9dd175dda"
     },
     {
       "name": "map/2_5_5.jpg",
       "bytes": 773,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "75c09e92aeb5f3057a21bbf13ef9c4dbe1d21b0cc879ca151c059b64de861d44"
     },
     {
       "name": "map/2_5_6.jpg",
       "bytes": 916,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "4c75a49d55032c2d1222fbf8c202ba7202ef2f8e83987cdb4155317db5527700"
     },
     {
       "name": "map/2_5_7.jpg",
       "bytes": 777,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "03991af8e40525752178af26b0dd6f2f9900e4878d19dbd5bfdb1b72ddc6516f"
     },
     {
       "name": "map/2_5_8.jpg",
       "bytes": 697,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d1daf48bc7f847d758cb39d609f0cb0c52dd53dc232281eaafe839e23b434f80"
     },
     {
       "name": "map/2_5_9.jpg",
       "bytes": 602,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5505b804df45b71b18a67e78c101993f9d0626a40044411a338eb67d8caac766"
     },
     {
       "name": "map/2_6_0.jpg",
       "bytes": 417,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "330dc977ddc5bd3dfa824e0e25deb453ec83ead24ea9842a55fb9d7e471d3cc5"
     },
     {
       "name": "map/2_6_1.jpg",
       "bytes": 557,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "32fcffd5731ea58d4d882d9e96893ca5a0268ed4d84d7a2501f2d203828c5a8f"
     },
     {
       "name": "map/2_6_10.jpg",
       "bytes": 684,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "31c5cf386b361661f10815ffed505c06f6f57050f414cebdebc283571b0876a5"
     },
     {
       "name": "map/2_6_11.jpg",
       "bytes": 798,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e4b2078a8511a90282bfb60f7efa3254915a084932610a0907e467f31799ef96"
     },
     {
       "name": "map/2_6_12.jpg",
       "bytes": 916,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f28b118e644e456d4faf8ef0d104f0d3c8d117cec76e62c0978e928e765be2cc"
     },
     {
       "name": "map/2_6_13.jpg",
       "bytes": 812,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d5c4d96966b5eb6843cfa37e582bdaceb109ed77c89884d6dc50b1fc74a143af"
     },
     {
       "name": "map/2_6_14.jpg",
       "bytes": 778,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "58276ab3c2ed1c5941fad57e72e71c46341a12f30dbc95077481c05e106c64fe"
     },
     {
       "name": "map/2_6_15.jpg",
       "bytes": 523,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b81120fdf20ee5e9293f03ad7376b10fd808315ffa5d7e586c7b64e7ed75dcec"
     },
     {
       "name": "map/2_6_16.jpg",
       "bytes": 403,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2c5df4945a1dd08e0ad80531f3602daf1667a110c47f86b8a24e3aabdcb5acf2"
     },
     {
       "name": "map/2_6_17.jpg",
       "bytes": 329,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5d758376f92a1f01334b36dcf898c2811c8ed7ae7614538868d10b307c64f60e"
     },
     {
       "name": "map/2_6_18.jpg",
       "bytes": 347,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9ba50834adb4053b2c36bf25fb67b26cae42482ce9a9ae923bc89cd26696f57d"
     },
     {
       "name": "map/2_6_19.jpg",
       "bytes": 367,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "7c730de36e8e9d21b7ded0dde8b9e14f8aabfdf778ab0eb1b60ea38d145736a4"
     },
     {
       "name": "map/2_6_2.jpg",
       "bytes": 568,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "34e1f6827debfb5975db168535c067aa4436b567da6a3074cb9faa9b21271608"
     },
     {
       "name": "map/2_6_3.jpg",
       "bytes": 906,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8324329b3e29af436dc64d4a613cafc5b777b98c7b0519c87b945f2f210e3842"
     },
     {
       "name": "map/2_6_4.jpg",
       "bytes": 842,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ab5b7e20b19c34377e3e283f57772cd0c59dce6984184ca8335bfe60459f355d"
     },
     {
       "name": "map/2_6_5.jpg",
       "bytes": 962,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c82b2b9c26d0b987c1db7c12da25c9b1652a1332588af9761a6972abbf15104d"
     },
     {
       "name": "map/2_6_6.jpg",
       "bytes": 820,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "4f1036adfcf5183a5c55e975a309a801400c81cb1018a0058831ede7b375b022"
     },
     {
       "name": "map/2_6_7.jpg",
       "bytes": 632,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d51a8d50899122e597ee6a10285d4afb64e40167faa429af47461799c9fd022c"
     },
     {
       "name": "map/2_6_8.jpg",
       "bytes": 702,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "65c61c93fec08efd8902c9bb938d2c9cde23f13ba1cd121abb03858e4442d637"
     },
     {
       "name": "map/2_6_9.jpg",
       "bytes": 703,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "665e3763370a41b2a8ee6d860a5ba4804c6c1293267f00e39c13e98fb182a675"
     },
     {
       "name": "map/2_7_0.jpg",
       "bytes": 422,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "bfe8d6d2044aac91cc4a7a4678a5731688c6e0afd90ec7c5855c5582c5450eb7"
     },
     {
       "name": "map/2_7_1.jpg",
       "bytes": 600,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5e9dde5a7aa8bb7a2214e4f2aac9fbbc4bcfa745e1d9bc9207b993746f09df7a"
     },
     {
       "name": "map/2_7_10.jpg",
       "bytes": 845,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "68ea719f2fc0df611a88033b911db3cf8cbe712f32ef9ea1f9d401ef57436ed7"
     },
     {
       "name": "map/2_7_11.jpg",
       "bytes": 821,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "296a9bb2923bf940e2ed4428b4f5268d8681d43533333588eed1ae372171bf46"
     },
     {
       "name": "map/2_7_12.jpg",
       "bytes": 748,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2dda1e4b97c675c87fc018242263501553250f50f3b615433721b571c295e4af"
     },
     {
       "name": "map/2_7_13.jpg",
       "bytes": 805,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "94686aa7145f39377e131fd90e17543b45c24321a9524a8c41f7319b83007de7"
     },
     {
       "name": "map/2_7_14.jpg",
       "bytes": 838,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "52b6d4c449a40e31d60feb6d605ac39d44807b525ee6f74052396dd7d3450d96"
     },
     {
       "name": "map/2_7_15.jpg",
       "bytes": 653,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "067c7335adb9b64da19354e884cf1d0f39ccf5a7c472264f6c683051f3538f6d"
     },
     {
       "name": "map/2_7_16.jpg",
       "bytes": 548,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "03790d1a46ce197e93f9e40b0bc4da8afc8b66ac64afaeaedf36bc835e536940"
     },
     {
       "name": "map/2_7_17.jpg",
       "bytes": 457,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "7c656a3f3e5afc03f75dad659e9d573e61c1db450a127567bc5480b747e63da2"
     },
     {
       "name": "map/2_7_18.jpg",
       "bytes": 474,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "e83c0be040039c5d79c0f6411d437e4acbc566c9664302ae2d99e7d90d7d681f"
     },
     {
       "name": "map/2_7_19.jpg",
       "bytes": 365,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6ffbfb11f57e40656cc24b7c5c4868bc5abef7af19e765fd8052c71aa8909b1d"
     },
     {
       "name": "map/2_7_2.jpg",
       "bytes": 644,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "88ebec4db88f922a4c9e637cddc27e26cf3133becf86b8b5c327acbf5bd3f22c"
     },
     {
       "name": "map/2_7_3.jpg",
       "bytes": 744,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "3ed255406717134309ada63070d6ed870e1897873bde12c2f29cf57ffe1ca339"
     },
     {
       "name": "map/2_7_4.jpg",
       "bytes": 712,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a2c73809d56c2cd2d4d4bcb985ef705279221b9a825e891982402a3eabbb67c5"
     },
     {
       "name": "map/2_7_5.jpg",
       "bytes": 771,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "107b37db8a7c1ae0d0c7d161579a3228e6ee3ad79c42bd03cbf6b8a720737786"
     },
     {
       "name": "map/2_7_6.jpg",
       "bytes": 735,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d5588241ae171135dba87a84da08cc1c761c6b7aef7042b390f4039e8f7dc17c"
     },
     {
       "name": "map/2_7_7.jpg",
       "bytes": 739,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "fbb9c197f75a6474d95474b74c544a7114a999eeb213362245c17d5a8584adb9"
     },
     {
       "name": "map/2_7_8.jpg",
       "bytes": 794,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "a35d1d67a5d5a81fc4810bf64af93db77b3e1da4724a60a60b6a63b3385965eb"
     },
     {
       "name": "map/2_7_9.jpg",
       "bytes": 787,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "0aeaec64faec7842822fc52791efac499fb47de4c6a31b2230811a89f5bcdd5b"
     },
     {
       "name": "map/2_8_0.jpg",
       "bytes": 398,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "1c4079699a364395d8dc6711f9cecf37e56ca39b3957d2875b3c7b7459a437e2"
     },
     {
       "name": "map/2_8_1.jpg",
       "bytes": 436,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5e8797a77879faeedad6457ea9023ddfe164c17bfe17a60202b859f373dee2a1"
     },
     {
       "name": "map/2_8_10.jpg",
       "bytes": 761,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "7a77cb37c0760c93c254b723574e757c1633f054492a8647f3f9dbc933f18858"
     },
     {
       "name": "map/2_8_11.jpg",
       "bytes": 654,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5d5a3a8050de17dda1dbe690e73ea3015d0d903fd214141bc38bcd48031062c7"
     },
     {
       "name": "map/2_8_12.jpg",
       "bytes": 816,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "ddbef9b8cffcbb82ad4ef38b762812d810adf082a71b43720c7cc95936a597df"
     },
     {
       "name": "map/2_8_13.jpg",
       "bytes": 723,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "562c3f2fc19d0f4a0684ec7073f082ddba9d54296e894c0306f7f8422d02b80e"
     },
     {
       "name": "map/2_8_14.jpg",
       "bytes": 798,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9095fd0732d59e72226afb3793d4692c388f1a1d5562b073f349fe3ccf853308"
     },
     {
       "name": "map/2_8_15.jpg",
       "bytes": 721,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b90d1207be7104d4e882d6ac879e6d7585408bbe2d1e355df9ed23b9f6269919"
     },
     {
       "name": "map/2_8_16.jpg",
       "bytes": 678,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "dae58a7c4b2d9ef9af85d025e16a196da28db53ed84ec4f592dcefac1c7eab3d"
     },
     {
       "name": "map/2_8_17.jpg",
       "bytes": 685,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "05e22e6a38ab15c93db0a88da56a4b0f55f84afba844b88d59f48521738ee670"
     },
     {
       "name": "map/2_8_18.jpg",
       "bytes": 489,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "afba06396ebd2d970c1c3c42dac61ec90f973ee639af6d87ef6bb8e79428df13"
     },
     {
       "name": "map/2_8_19.jpg",
       "bytes": 432,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2aaca3ff703b2aa39da06a1c458a996c6934ab7c6bdc65388904f5dc64b1ca9a"
     },
     {
       "name": "map/2_8_2.jpg",
       "bytes": 490,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "7ba0c12952229f3991f81b54954748c35f35df61c1be5ef8531f83042f56febe"
     },
     {
       "name": "map/2_8_3.jpg",
       "bytes": 503,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "b729b33ef46278c6c8b1f8086685f7db0e92e777eff0857764b2379a0a1581fa"
     },
     {
       "name": "map/2_8_4.jpg",
       "bytes": 598,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "d860db8f322c7a08079462e9deefeeac2df704ed6c95542e7b257b83dac7e16a"
     },
     {
       "name": "map/2_8_5.jpg",
       "bytes": 749,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "48447f6c35e0648aff220c291cb3281c7649e88355471d417603920edce2baa2"
     },
     {
       "name": "map/2_8_6.jpg",
       "bytes": 611,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "12baa745ddc16e96508c3a1b50db39b22a2fe514cd6c414c56dd7398227e195e"
     },
     {
       "name": "map/2_8_7.jpg",
       "bytes": 720,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "2a0ecdcf28dec847122c4690370f09b077185c5fdf7ac21c02a2287ab8fdf5b6"
     },
     {
       "name": "map/2_8_8.jpg",
       "bytes": 749,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "326d8256f022e0d6b35d18d6ee83e63009190aa08122fa957f75200ebfd6eec9"
     },
     {
       "name": "map/2_8_9.jpg",
       "bytes": 792,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "c70e048f40cfb97f77d23a3b36426e99ad9b7ab2220e7ecca736a3acb890af9e"
     },
     {
       "name": "map/2_9_0.jpg",
       "bytes": 400,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5e7986420244478307d75240ea39157b526ec496f68133b23e1e588a7139d2df"
     },
     {
       "name": "map/2_9_1.jpg",
       "bytes": 470,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "473333541050a7e5df3206dd2f47443bc968f515781ca718ebcbf7411996e1ad"
     },
     {
       "name": "map/2_9_10.jpg",
       "bytes": 711,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "825ffeed50f73b88d6edfd4524d180617ada6a2ddaad8ee06c9150002e6ddd6d"
     },
     {
       "name": "map/2_9_11.jpg",
       "bytes": 641,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "f0669b223f484c97a3fe41bca037a6fb8100a21a7aa7038b863dcd8165934904"
     },
     {
       "name": "map/2_9_12.jpg",
       "bytes": 853,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "9419a8d659799e08d8debbf5f13828baee820dc6cdf27b8b3f31ca1788ec2662"
     },
     {
       "name": "map/2_9_13.jpg",
       "bytes": 793,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "19d857ddce1e9ea6ed11040baecc92fa36547ce250b0060080648de99a1e8d0e"
     },
     {
       "name": "map/2_9_14.jpg",
       "bytes": 706,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "07c7a5474de3bc962ac1e73cab8af3f4ea3db494a4cfc34fb87fcfb6e03c9612"
     },
     {
       "name": "map/2_9_15.jpg",
       "bytes": 645,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "6b33136bec0a362f0ad778ae904f1bfbd4166191983ad5dcc68bfe76cffc3963"
     },
     {
       "name": "map/2_9_16.jpg",
       "bytes": 755,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "875f8902c9c280c452db55f2e3bdc7bf27f8a96857131e060522b7be075bb682"
     },
     {
       "name": "map/2_9_17.jpg",
       "bytes": 764,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "79b6d7fc70b3d8e4ddff51bc4e9376fe493a7a6b5c3b4e2a3546e76fdc0b1b83"
     },
     {
       "name": "map/2_9_18.jpg",
       "bytes": 498,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "49cce6d5f5aef7e522bd68306f479b7d2aab1fca15c8771220fbe6ffe8c3a4c7"
     },
     {
       "name": "map/2_9_19.jpg",
       "bytes": 426,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "090c7d81712df0e557580ff1cb866b466075cfc15d36fff58f01e2849b0d1d95"
     },
     {
       "name": "map/2_9_2.jpg",
       "bytes": 518,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "64ce89f67cb4b2355ec19e9d645f6c12e83324969ebc4f9f82c1722d74c7a74b"
     },
     {
       "name": "map/2_9_3.jpg",
       "bytes": 658,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "cc427b714b6835b3c7616cccfe34b734cfb50ed73b6eca7ccd2c756558cc948a"
     },
     {
       "name": "map/2_9_4.jpg",
       "bytes": 707,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "51a29fb7a6ae28439b29dfd1c41cdb12d65fb90ed849dbc803bc3dbd2c6269fe"
     },
     {
       "name": "map/2_9_5.jpg",
       "bytes": 577,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "7cba48707822432235402e999477fc089497a2c44e1fec7c47aacdcea5ed8261"
     },
     {
       "name": "map/2_9_6.jpg",
       "bytes": 635,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "939eeee318dc7d22d657359560812ee2ed6733129fa8b6378b9d2c83a19b5c64"
     },
     {
       "name": "map/2_9_7.jpg",
       "bytes": 601,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "bbe2980ceea5d6692ec12d741908708df05cc9559d2550667b27edc7e3c60dbb"
     },
     {
       "name": "map/2_9_8.jpg",
       "bytes": 597,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "8c49bc2fd21f62174d95eba6d4d7e80ac188c66766438be273618605c5099687"
     },
     {
       "name": "map/2_9_9.jpg",
       "bytes": 694,
-      "source": "assets\\raw\\05_world\\maps\\botw-map-base.webp",
+      "source": "assets\\maps\\botw-map-base.webp",
       "sha256": "5dc8f0d63063ea09f5d9810c0ab9260d4aa4da702575e2cd1ea7ba9fea61c900"
     },
     {
       "name": "map/place",
       "bytes": 432,
-      "source": "assets\\raw\\02_ui\\glyphs\\BotW_Key_Item_Icon.png",
+      "source": "assets\\ui\\glyphs\\BotW_Key_Item_Icon.png",
       "sha256": "286c0f7450fc25b6acc21ba06b58726eb98457a2a5b54b88492186023357d08e"
     },
     {
       "name": "map/shrine",
       "bytes": 432,
-      "source": "assets\\raw\\02_ui\\glyphs\\BotW_White_Sheikah_Eye_Symbol.png",
+      "source": "assets\\ui\\glyphs\\BotW_White_Sheikah_Eye_Symbol.png",
       "sha256": "922c4dc091e4e3d514e8a6f5626bcdea065b514309868663c23824fc98401d69"
     },
     {
       "name": "map/tower",
       "bytes": 432,
-      "source": "assets\\raw\\02_ui\\glyphs\\BotW_Main_Quest_Sprite.png",
+      "source": "assets\\ui\\glyphs\\BotW_Main_Quest_Sprite.png",
       "sha256": "0e74d32c93b381613e6939ccc259e2d5a3ee348f17c224ff2534d30cf64e5564"
     },
     {
@@ -7578,13 +7578,13 @@
     {
       "name": "ui/title_cn",
       "bytes": 43200,
-      "source": "assets\\raw\\02_ui\\BotW_Simplified_Chinese_Logo.png",
+      "source": "assets\\ui\\BotW_Simplified_Chinese_Logo.png",
       "sha256": "d2e3d24c90b31f1b835259f0a875a0a86092f403d3293e25df0034426842759d"
     },
     {
       "name": "ui/title_en",
       "bytes": 43200,
-      "source": "assets\\raw\\02_ui\\BotW_English_Logo.png",
+      "source": "assets\\ui\\BotW_English_Logo.png",
       "sha256": "ba6da6f4a5e671cbd398432a48c53ee333c9fbe500c6bf1889f5bcc728e4b2c2"
     },
     {

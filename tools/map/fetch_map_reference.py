@@ -13,7 +13,7 @@ from PIL import Image
 URL = 'https://objmap.zeldamods.org/game_files/maptex/base.png'
 TOTAL = 1204518
 CHUNK = 65536
-DEST = Path(__file__).resolve().parents[2] / 'assets/raw/05_world/maps/botw-map-base.webp'
+DEST = Path(__file__).resolve().parents[2] / 'assets/maps/botw-map-base.webp'
 CACHE = Path(tempfile.gettempdir()) / 'sheikah-map-reference'
 
 def fetch(start):

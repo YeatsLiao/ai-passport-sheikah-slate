@@ -5,7 +5,7 @@ from html.parser import HTMLParser
 import yaml
 
 ROOT=Path(__file__).resolve().parents[2]
-RAW=ROOT/'assets/raw/05_world/maps'
+RAW=ROOT/'assets/maps'
 
 class TextRows(HTMLParser):
     def __init__(self):

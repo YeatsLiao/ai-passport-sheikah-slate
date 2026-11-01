@@ -30,7 +30,10 @@ assets/raw/imagegen/import/
 .zcode/
 
 # 用户自备版权素材（原作解包）：不入库，按 tools/README「音效导入」自备导入
-assets/audio/prototype/botw/
+assets/audio/botw/
+assets/data/
+assets/manifest.json
+
 assets/raw/06_audio/
 # 停止跟踪的归档美术（用户自行整理保留，工程无读者）
 assets/raw/99_archive/
@@ -44,9 +47,3 @@ assets/gen/prototype/battery-sheikah-v1.png
 # 例外（保持跟踪）：01_runes/gallery/reference_sensor_shrine.png、
 # 05_world/maps/{botw-map-base.webp,locations-game-source.yml,location-names-*.json,*.html}、
 # 07_fonts/SourceHanSans*、06_audio/{action,select}.mp3 —— 更新这些文件需 git add -f。
-assets/raw/01_runes/
-assets/raw/03_compendium/
-assets/raw/04_equipment/
-assets/raw/05_world/
-assets/raw/07_fonts/
-assets/raw/_index/

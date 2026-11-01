@@ -230,7 +230,7 @@ function viewStandby() {
   return `<div class="standby">
     <img class="sb-puppet a" src="${IMG('cut_skywatcher.png')}" alt="">
     <img class="sb-slate" src="${IMG('cut_slate.png')}" alt="">
-    <img class="sb-title ${state.lang === 'cn' ? 'cn' : 'en'}" src="../assets/raw/02_ui/${state.lang === 'cn' ? 'BotW_Simplified_Chinese_Logo.png' : 'BotW_English_Logo.png'}" alt="${state.lang === 'cn' ? '塞尔达传说 旷野之息' : 'The Legend of Zelda: Breath of the Wild'}">
+    <img class="sb-title ${state.lang === 'cn' ? 'cn' : 'en'}" src="../assets/ui/${state.lang === 'cn' ? 'BotW_Simplified_Chinese_Logo.png' : 'BotW_English_Logo.png'}" alt="${state.lang === 'cn' ? '塞尔达传说 旷野之息' : 'The Legend of Zelda: Breath of the Wild'}">
     <img class="sb-eye" src="${IMG('eye.png')}" alt="">
     <div class="sb-clock">09:41</div>
     <div class="sb-date">${state.lang === 'cn' ? '周六 · 10.26 · 海拉鲁' : 'SAT · 10.26 · HYRULE'}</div>
