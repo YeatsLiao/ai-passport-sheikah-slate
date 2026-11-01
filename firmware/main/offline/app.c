@@ -25,24 +25,37 @@ int battery=-1,battery_millivolts=-1,battery_status=BATTERY_READING;
 static _Atomic int battery_sample=-1,battery_voltage_sample=-1,battery_status_sample=BATTERY_READING;
 // Only this worker accesses the gauge; UI consumes a cached snapshot.
 static void battery_worker(void *arg){
- (void)arg;bool ready=false;int previous_state=-1,previous_percent=-2;
- for(;;){
-  esp_err_t init_error=ready?ESP_OK:bsp_battery_init();
-  bsp_battery_reading_t reading;bsp_battery_read_status(&reading);
-  int status;
-  if(reading.soc_error==ESP_ERR_INVALID_STATE)status=BATTERY_NO_DEVICE;
-  else if(reading.soc_error!=ESP_OK||reading.voltage_error!=ESP_OK||reading.config_error!=ESP_OK||reading.profile_error!=ESP_OK)status=BATTERY_READ_ERROR;
-  else if(init_error!=ESP_OK||!bsp_battery_reading_valid(&reading))status=BATTERY_NOT_READY;
-  else status=BATTERY_READY;
-  ready=status==BATTERY_READY;int percent=ready?reading.percent:-1;
-  atomic_store(&battery_sample,percent);atomic_store(&battery_voltage_sample,reading.millivolts);atomic_store(&battery_status_sample,status);
-  if(status!=previous_state||status!=BATTERY_READY||percent!=previous_percent){
-   ESP_LOGI("bsp_batt","sample: state=%d init=%s SOC_read=%s raw=0x%04X percent=%d voltage=%d mV V_read=%s config=0x%02X C_read=%s profile=0x%02X P_read=%s",
-            status,esp_err_to_name(init_error),esp_err_to_name(reading.soc_error),(unsigned)reading.raw_soc,percent,reading.millivolts,
-            esp_err_to_name(reading.voltage_error),(unsigned)reading.config,esp_err_to_name(reading.config_error),(unsigned)reading.profile_status,esp_err_to_name(reading.profile_error));
-  }
-  previous_state=status;previous_percent=percent;vTaskDelay(pdMS_TO_TICKS(10000));
- }
+    (void)arg;
+    bool ready=false;
+    int previous_state=-1,previous_percent=-2;
+    for(;;){
+        esp_err_t init_error=ready?ESP_OK:bsp_battery_init();
+        bsp_battery_reading_t reading;
+        bsp_battery_read_status(&reading);
+        int status;
+        if(reading.soc_error==ESP_ERR_INVALID_STATE){
+            status=BATTERY_NO_DEVICE;
+        }else if(reading.soc_error!=ESP_OK||reading.voltage_error!=ESP_OK||reading.config_error!=ESP_OK||reading.profile_error!=ESP_OK){
+            status=BATTERY_READ_ERROR;
+        }else if(init_error!=ESP_OK||!bsp_battery_reading_valid(&reading)){
+            status=BATTERY_NOT_READY;
+        }else{
+            status=BATTERY_READY;
+        }
+        ready=status==BATTERY_READY;
+        int percent=ready?reading.percent:-1;
+        atomic_store(&battery_sample,percent);
+        atomic_store(&battery_voltage_sample,reading.millivolts);
+        atomic_store(&battery_status_sample,status);
+        if(status!=previous_state||status!=BATTERY_READY||percent!=previous_percent){
+            ESP_LOGI("bsp_batt","sample: state=%d init=%s SOC_read=%s raw=0x%04X percent=%d voltage=%d mV V_read=%s config=0x%02X C_read=%s profile=0x%02X P_read=%s",
+                     status,esp_err_to_name(init_error),esp_err_to_name(reading.soc_error),(unsigned)reading.raw_soc,percent,reading.millivolts,
+                     esp_err_to_name(reading.voltage_error),(unsigned)reading.config,esp_err_to_name(reading.config_error),(unsigned)reading.profile_status,esp_err_to_name(reading.profile_error));
+        }
+        previous_state=status;
+        previous_percent=percent;
+        vTaskDelay(pdMS_TO_TICKS(10000));
+    }
 }
 static uint8_t scan_pixels[320*2*4];
 static const lv_image_dsc_t scan_image={.header={.magic=LV_IMAGE_HEADER_MAGIC,.cf=LV_COLOR_FORMAT_ARGB8888,.w=320,.h=2,.stride=1280},.data_size=2560,.data=scan_pixels};
