@@ -230,16 +230,17 @@ function sceneTop(rune, stat) {
 /* ---------------- standby ---------------- */
 const STANDBY_DELAYS=[0,30,60,120,300],SCREEN_TIMEOUTS=[0,30,60,120,300,600],STANDBY_CYCLES=[0,15,30,60,300];
 const STANDBY_STYLES=[
-  {cn:'静谧科技',en:'QUIET TECH',plate:'E',portrait:false},
-  {cn:'晨光旷野',en:'DAWN FIELD',plate:'F',portrait:false},
-  {cn:'古地图',en:'ANTIQUE MAP',plate:'G',portrait:false},
-  {cn:'神庙石碑',en:'SHRINE STELE',plate:'H',portrait:true},
-  {cn:'林间薄雾',en:'MISTY FOREST',plate:'I',portrait:true},
-  {cn:'极简黑金',en:'BLACK & GOLD',plate:null,portrait:true},
+  {cn:'静谧科技',en:'QUIET TECH',plate:'E',dark:false},
+  {cn:'晨光旷野',en:'DAWN FIELD',plate:'F',dark:false},
+  {cn:'古地图',en:'ANTIQUE MAP',plate:'G',dark:false},
+  {cn:'神庙石碑',en:'SHRINE STELE',plate:'H',dark:false},
+  {cn:'林间薄雾',en:'MISTY FOREST',plate:'I',dark:false},
+  {cn:'极简黑金',en:'BLACK & GOLD',plate:null,dark:true},
 ];
 const BG_NAMES=['眼纹','石材','眼角','字符环'];
-let standbyBlackout=false,standbyStyleAt=Date.now(),idleSince=Date.now();
+let standbyBlackout=false,standbyStyleAt=Date.now(),idleSince=Date.now(),wakeAt=0;
 function standbyShift(dir){
+  if(Date.now()-wakeAt<300)return;
   state.settings.standbyStyle=(state.settings.standbyStyle+6+dir)%6;
   standbyStyleAt=Date.now();render();
 }
@@ -251,33 +252,21 @@ function standbyClockText(){
 }
 function viewStandby() {
   const st=STANDBY_STYLES[state.settings.standbyStyle];
-  const w=st.portrait?240:320,h=st.portrait?320:240;
-  const left=st.portrait?(320-w)/2:0,top=st.portrait?(240-h)/2:0;
-  const ink=state.settings.standbyStyle===2,gold=state.settings.standbyStyle===5;
-  const fg=ink?'#4b2c0d':'#e5e6d3',accent=ink?'#654419':gold?'#e1c37b':'#56cbe0';
-  const clockFs=[52,40,40,52,40,52][state.settings.standbyStyle];
-  const logoY=[20,22,20,26,66,28][state.settings.standbyStyle],logoW=[128,154,136,158,148,156][state.settings.standbyStyle];
-  const eyeY=[78,86,84,110,126,110][state.settings.standbyStyle],eyeS=[52,42,48,64,46,58][state.settings.standbyStyle];
-  const clockY=[139,141,146,208,216,190][state.settings.standbyStyle],dateY=[195,187,194,265,263,249][state.settings.standbyStyle];
   const {clock,date}=standbyClockText();
   const fresh=Date.now()-standbyStyleAt<3500;
-  const plate=st.plate?`<img class="standby-plate" src="../assets/gen/offline/standby/sources/${st.plate}.png" alt="">`:'';
-  const corners=st.plate?'':[[8,8],[w-32,8],[8,h-9],[w-32,h-9]].map(([x,y])=>
-    `<div style="position:absolute;left:${x}px;top:${y}px;width:24px;height:1px;background:#66502d"></div>`).join('')+
-    [[8,8],[w-15,8],[8,h-15],[w-15,h-15]].map(([x,y])=>`<div style="position:absolute;left:${x}px;top:${y}px;width:7px;height:7px;border:1px solid #91713c;border-radius:4px"></div>`).join('');
-  const recolor=ink||gold?`filter:sepia(.5) saturate(1.6) hue-rotate(${gold?-10:170}deg) brightness(${ink?1.1:.9});`:'';
-  return `<div class="standby">
-    <div class="standby-canvas" style="left:${left}px;top:${top}px;width:${w}px;height:${h}px">
-      ${plate||`<div style="position:absolute;inset:0;background:#060604">${corners}</div>`}
-      <img class="standby-logo" src="../assets/ui/${state.lang === 'cn' ? 'BotW_Simplified_Chinese_Logo.png' : 'BotW_English_Logo.png'}" style="left:${(w-logoW)/2}px;top:${logoY}px;width:${logoW}px;${ink?`filter:brightness(.6) sepia(.6);`:''}${gold?`filter:sepia(.7) saturate(1.4);`:''}" alt="">
-      <img class="standby-eye" src="${IMG('eye.png')}" style="left:${(w-eyeS)/2}px;top:${eyeY}px;width:${eyeS}px;${recolor}" alt="">
-      <div class="standby-clock" id="standbyClock" style="left:8px;top:${clockY}px;width:${w-16}px;font-size:${clockFs}px;color:#eafcff">${clock}</div>
-      <div class="standby-date" style="left:8px;top:${dateY}px;width:${w-16}px;color:${accent}">${date}</div>
-      <div class="standby-brand" style="left:8px;top:${h-20}px;width:${w-16}px;color:${ink?'#6b5029':gold?'#e1c37b':'#91b0b8'}">AI PASSPORT · SHEIKAH SLATE</div>
-      <button class="sb-prompt" data-action="go:#/home" data-focus data-start>${t('press_ok')}</button>
-      ${fresh?`<div class="standby-toast" style="left:8px;top:3px;color:${accent}">${'EFGHIJ'[state.settings.standbyStyle]} · ${state.lang==='cn'?st.cn:st.en} ${state.settings.standbyStyle+1}/6</div>`:''}
-      ${standbyBlackout?'<div class="standby-blackout"></div>':''}
-    </div>
+  return `<div class="standby ${st.dark?'st-dark':''}" style="background:${st.dark?'#060604':'#04121a'}">
+    ${st.plate?`<img class="sb-plate" src="../assets/gen/offline/standby/sources/${st.plate}.png" alt="">`:''}
+    <img class="sb-puppet a" src="${IMG('cut_skywatcher.png')}" alt="">
+    <img class="sb-slate" src="${IMG('cut_slate.png')}" alt="">
+    <img class="sb-title ${state.lang === 'cn' ? 'cn' : 'en'}" src="../assets/ui/${state.lang === 'cn' ? 'BotW_Simplified_Chinese_Logo.png' : 'BotW_English_Logo.png'}" alt="${state.lang === 'cn' ? '塞尔达传说 旷野之息' : 'The Legend of Zelda: Breath of the Wild'}">
+    <img class="sb-eye" src="${IMG('eye.png')}" alt="">
+    <div class="sb-clock" id="standbyClock">${clock}</div>
+    <div class="sb-date" id="standbyDate">${date}</div>
+    <div class="sb-battery" role="img" aria-label="${t('sys_battery')} 99%"><span class="sb-battery-art" aria-hidden="true"></span><span aria-hidden="true">99%</span></div>
+    <button class="sb-prompt" data-action="go:#/home" data-focus data-start>${t('press_ok')}</button>
+    <div class="sb-brand">AI PASSPORT · SHEIKAH SLATE</div>
+    ${fresh?`<div class="sb-toast">${'EFGHIJ'[state.settings.standbyStyle]} · ${state.lang==='cn'?st.cn:st.en} ${state.settings.standbyStyle+1}/6</div>`:''}
+    ${standbyBlackout?'<div class="standby-blackout"></div>':''}
   </div>`;
 }
 
@@ -1077,7 +1066,7 @@ function okUp() {
   clearTimeout(holdTimer);
   holdTimer = null;
   stopHoldBar();
-  if (!longFired && pressedRoute===routeHash()) { if(routeParts()[0]==='standby'){go('#/home');return;} if(inputPrimary()){} else if (mapBrowseActive()) mapAction('control'); else if (gameInputActive()) gamePrimary(); else activateFocused(); }
+  if (!longFired && pressedRoute===routeHash()) { if(routeParts()[0]==='standby'){if(standbyBlackout||Date.now()-wakeAt<300)return;go('#/home');return;} if(inputPrimary()){} else if (mapBrowseActive()) mapAction('control'); else if (gameInputActive()) gamePrimary(); else activateFocused(); }
   longFired = false;
 }
 
@@ -1087,7 +1076,7 @@ let navTimer = null;
 function startNav(dir) {
   stopNav();
   document.querySelector(`[data-key="${dir < 0 ? 'UP' : 'DOWN'}"]`).classList.add('pressed');
-  if(routeParts()[0]==='standby'){if(standbyBlackout)return;standbyShift(dir);return;}
+  if(routeParts()[0]==='standby'){if(standbyBlackout||Date.now()-wakeAt<300)return;standbyShift(dir);return;}
   if(inputNavigate(dir)){navDelay=setTimeout(()=>{navTimer=setInterval(()=>inputNavigate(dir),120);},380);return;}
   if (mapBrowseActive()) { mapNavigate(dir);navDelay=setTimeout(()=>{navTimer=setInterval(()=>mapNavigate(dir),96);},380);return; }
   if (gameInputActive()) { gameSetDirection(dir); return; }

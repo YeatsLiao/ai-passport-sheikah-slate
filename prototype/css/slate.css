@@ -886,3 +886,12 @@ body.no-scan .scanlines{display:none}
 .standby-toast{position:absolute;font-family:'Source Han Sans SC',sans-serif;font-size:10px}
 .standby-blackout{position:absolute;inset:0;background:#000;z-index:30}
 .sys-body{overflow-y:auto}
+
+/* ---------------- 待机六款背景变体（保留原版布局与元素） ---------------- */
+.sb-plate{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.standby.st-dark .sb-clock{color:#e1c37b;text-shadow:0 0 18px rgba(225,195,123,.35),0 2px 6px #000}
+.standby.st-dark .sb-eye{filter:sepia(.6) saturate(1.4) drop-shadow(0 0 10px rgba(225,195,123,.35))}
+.standby.st-dark .sb-brand{color:#e1c37b}
+.standby.st-dark .sb-date{color:#c9a75f}
+.standby.st-dark .sb-prompt{border-color:#91713c;color:#e1c37b}
+.sb-toast{position:absolute;left:10px;bottom:12px;z-index:6;font-size:10px;letter-spacing:.06em;color:rgba(234,252,255,.85);text-shadow:0 1px 3px #000}
