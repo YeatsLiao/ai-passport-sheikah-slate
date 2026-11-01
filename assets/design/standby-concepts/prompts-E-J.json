@@ -1,0 +1,65 @@
+{
+  "tool": "image_gen.imagegen",
+  "status": "concept previews; not firmware assets",
+  "retained": [
+    "B-clock-original.png",
+    "C-split-original.png",
+    "D-ambient-original.png"
+  ],
+  "variants": [
+    {
+      "label": "E 横屏 静谧科技",
+      "file": "E-landscape-quiet-tech.png",
+      "width": 1448,
+      "height": 1086,
+      "reference": "B-clock-original.png",
+      "generated_file": "exec-76bbf48a-cde4-46e3-b688-9df4fc4b5421.png",
+      "prompt": "Use case: ui-mockup. Generate ONE high-quality alternative ambient standby screen for the user's Zelda-inspired Sheikah Slate device. The supplied reference is for logo identity, UI vocabulary, and previous approved look, NOT a rigid layout. Screen UI only, perfectly straight-on, no device, no room, no hands, no surrounding presentation board, no comparison collage. Preserve the recognizable Chinese gold Zelda Breath of the Wild title logo and small English subtitle, cyan/antique-gold Sheikah eye where requested. The device is only 320x240 landscape or 240x320 portrait: use a few large legible elements and ample breathing room, no dense dashboard. Illustrative exact time \"09:41\"; date \"周六 · 10.31 · 海拉鲁\". Mandatory tiny footer text \"AI PASSPORT · SHEIKAH SLATE\" must be horizontally CENTERED on the entire screen near the bottom with equal margins, never left aligned. No OK button, no A button glyph, no navigation hints, no settings menu, no battery icon or percentage, no calibration message, no additional slogans. All navigation controls remain physical and invisible. Avoid overlapping clock, logo, eye, and date. Beautiful practical screensaver, not a poster with lots of text.\nLandscape 4:3. A distinct very minimalist near-black cyan technology style, less ornate than the reference. Small gold logo high centered, quiet oversized dim cyan incomplete ancient circular pattern off to the right edge. Medium cyan Sheikah eye centered upper-middle, large crisp ivory serif 09:41 centered lower-middle, date below. Mostly uninterrupted near-black negative space, razor-clean visual hierarchy, controlled faint cyan glow, no dense glyph wall. Centered muted footer."
+    },
+    {
+      "label": "F 横屏 晨光旷野",
+      "file": "F-landscape-dawn-field.png",
+      "width": 1448,
+      "height": 1086,
+      "reference": "D-ambient-original.png",
+      "generated_file": "exec-e8a55ad5-dc7e-450d-815a-dff495914001.png",
+      "prompt": "Use case: ui-mockup. Generate ONE high-quality alternative ambient standby screen for the user's Zelda-inspired Sheikah Slate device. The supplied reference is for logo identity, UI vocabulary, and previous approved look, NOT a rigid layout. Screen UI only, perfectly straight-on, no device, no room, no hands, no surrounding presentation board, no comparison collage. Preserve the recognizable Chinese gold Zelda Breath of the Wild title logo and small English subtitle, cyan/antique-gold Sheikah eye where requested. The device is only 320x240 landscape or 240x320 portrait: use a few large legible elements and ample breathing room, no dense dashboard. Illustrative exact time \"09:41\"; date \"周六 · 10.31 · 海拉鲁\". Mandatory tiny footer text \"AI PASSPORT · SHEIKAH SLATE\" must be horizontally CENTERED on the entire screen near the bottom with equal margins, never left aligned. No OK button, no A button glyph, no navigation hints, no settings menu, no battery icon or percentage, no calibration message, no additional slogans. All navigation controls remain physical and invisible. Avoid overlapping clock, logo, eye, and date. Beautiful practical screensaver, not a poster with lots of text.\nLandscape 4:3. A completely different atmospheric Zelda-inspired hand-painted cel-shaded Hyrule landscape: distant layered mountains, grassy rolling plains, soft dawn sky, warm sunlight and airy painterly green-blue palette. No characters. Keep detailed landscape primarily around sides and lower third so it never competes with UI. Gold title logo compact top center with enough darkened sky contrast. A tiny subdued Sheikah eye accent below logo. Large ivory 09:41 centered, date underneath. Selectively darken central scenery just enough for superb readability without a large opaque rectangle. Centered tiny footer at bottom. An ambient landscape clock, calm and adventurous."
+    },
+    {
+      "label": "G 横屏 古地图",
+      "file": "G-landscape-antique-map.png",
+      "width": 1448,
+      "height": 1086,
+      "reference": "C-split-original.png",
+      "generated_file": "exec-8db5f5f8-5cdf-464d-a4f4-005f69c663e9.png",
+      "prompt": "Use case: ui-mockup. Generate ONE high-quality alternative ambient standby screen for the user's Zelda-inspired Sheikah Slate device. The supplied reference is for logo identity, UI vocabulary, and previous approved look, NOT a rigid layout. Screen UI only, perfectly straight-on, no device, no room, no hands, no surrounding presentation board, no comparison collage. Preserve the recognizable Chinese gold Zelda Breath of the Wild title logo and small English subtitle, cyan/antique-gold Sheikah eye where requested. The device is only 320x240 landscape or 240x320 portrait: use a few large legible elements and ample breathing room, no dense dashboard. Illustrative exact time \"09:41\"; date \"周六 · 10.31 · 海拉鲁\". Mandatory tiny footer text \"AI PASSPORT · SHEIKAH SLATE\" must be horizontally CENTERED on the entire screen near the bottom with equal margins, never left aligned. No OK button, no A button glyph, no navigation hints, no settings menu, no battery icon or percentage, no calibration message, no additional slogans. All navigation controls remain physical and invisible. Avoid overlapping clock, logo, eye, and date. Beautiful practical screensaver, not a poster with lots of text.\nLandscape 4:3. Antique Sheikah explorer-map style, warm aged parchment background with faint desaturated terrain contours and very subtle cartographic coastlines, decorative corners in dark brown, no readable map place labels. Distinct warm cream, sepia, dark ink and antique gold palette; avoid cyan light effects. Compact original title logo rendered in rich dark sepia-gold near top center. Small dark-ink Sheikah eye below it. Big refined dark brown serif 09:41 centered as primary information, small date below. Broad clean central parchment area, map lines stay at edges. Centered dark sepia tiny footer at bottom. Warm tactile paper feel but still a usable small-screen UI."
+    },
+    {
+      "label": "H 竖屏 神庙石碑",
+      "file": "H-portrait-shrine-stele.png",
+      "width": 1086,
+      "height": 1448,
+      "reference": "D-ambient-original.png",
+      "generated_file": "exec-eba424ce-b5c5-4f3f-a5b4-b4e69099c850.png",
+      "prompt": "Use case: ui-mockup. Generate ONE high-quality alternative ambient standby screen for the user's Zelda-inspired Sheikah Slate device. The supplied reference is for logo identity, UI vocabulary, and previous approved look, NOT a rigid layout. Screen UI only, perfectly straight-on, no device, no room, no hands, no surrounding presentation board, no comparison collage. Preserve the recognizable Chinese gold Zelda Breath of the Wild title logo and small English subtitle, cyan/antique-gold Sheikah eye where requested. The device is only 320x240 landscape or 240x320 portrait: use a few large legible elements and ample breathing room, no dense dashboard. Illustrative exact time \"09:41\"; date \"周六 · 10.31 · 海拉鲁\". Mandatory tiny footer text \"AI PASSPORT · SHEIKAH SLATE\" must be horizontally CENTERED on the entire screen near the bottom with equal margins, never left aligned. No OK button, no A button glyph, no navigation hints, no settings menu, no battery icon or percentage, no calibration message, no additional slogans. All navigation controls remain physical and invisible. Avoid overlapping clock, logo, eye, and date. Beautiful practical screensaver, not a poster with lots of text.\nPORTRAIT 3:4 aspect ratio, intended for physically rotated 240x320 screen. Redesign the full composition for vertical, do not crop a landscape layout. A tall ancient Sheikah stone stele with deep dark blue stone texture and muted blue/gold patterns near the edges. Small original gold title logo centered in upper 15 percent, glowing cyan eye centered around 40 percent as the primary ornament, large ivory serif 09:41 centered around 66 percent, date around 77 percent. Delicate cyan light at lower edge, subtle depth. Quiet clean spacing between all sections. Mandatory footer centered around 95 percent. No controls."
+    },
+    {
+      "label": "I 竖屏 林间薄雾",
+      "file": "I-portrait-misty-forest.png",
+      "width": 1086,
+      "height": 1448,
+      "reference": "D-ambient-original.png",
+      "generated_file": "exec-76c7b707-3fbf-4057-a677-641b743a16a9.png",
+      "prompt": "Use case: ui-mockup. Generate ONE high-quality alternative ambient standby screen for the user's Zelda-inspired Sheikah Slate device. The supplied reference is for logo identity, UI vocabulary, and previous approved look, NOT a rigid layout. Screen UI only, perfectly straight-on, no device, no room, no hands, no surrounding presentation board, no comparison collage. Preserve the recognizable Chinese gold Zelda Breath of the Wild title logo and small English subtitle, cyan/antique-gold Sheikah eye where requested. The device is only 320x240 landscape or 240x320 portrait: use a few large legible elements and ample breathing room, no dense dashboard. Illustrative exact time \"09:41\"; date \"周六 · 10.31 · 海拉鲁\". Mandatory tiny footer text \"AI PASSPORT · SHEIKAH SLATE\" must be horizontally CENTERED on the entire screen near the bottom with equal margins, never left aligned. No OK button, no A button glyph, no navigation hints, no settings menu, no battery icon or percentage, no calibration message, no additional slogans. All navigation controls remain physical and invisible. Avoid overlapping clock, logo, eye, and date. Beautiful practical screensaver, not a poster with lots of text.\nPORTRAIT 3:4, genuinely designed for 240x320 vertical screen. A distinct soft atmospheric hand-painted Zelda-like woodland: tall mossy tree trunks at far sides, gentle green fog and shafts of pale morning light, still clearing in the center. No characters or creatures. Muted sage green, deep forest teal and soft ivory with restrained antique gold. Compact gold title logo centered near top, tiny cyan eye accent below it. Big readable ivory serif 09:41 centered in the lower-middle, date underneath. Keep center dark and uncluttered behind time; foliage frames edges without obscuring UI. Centered footer small and pale at bottom. Peaceful ambient nature clock."
+    },
+    {
+      "label": "J 竖屏 极简黑金",
+      "file": "J-portrait-minimal-gold.png",
+      "width": 1086,
+      "height": 1448,
+      "reference": "B-clock-original.png",
+      "generated_file": "exec-556d5e5f-bd2f-4fda-afaf-76854886cc21.png",
+      "prompt": "Use case: ui-mockup. Generate ONE high-quality alternative ambient standby screen for the user's Zelda-inspired Sheikah Slate device. The supplied reference is for logo identity, UI vocabulary, and previous approved look, NOT a rigid layout. Screen UI only, perfectly straight-on, no device, no room, no hands, no surrounding presentation board, no comparison collage. Preserve the recognizable Chinese gold Zelda Breath of the Wild title logo and small English subtitle, cyan/antique-gold Sheikah eye where requested. The device is only 320x240 landscape or 240x320 portrait: use a few large legible elements and ample breathing room, no dense dashboard. Illustrative exact time \"09:41\"; date \"周六 · 10.31 · 海拉鲁\". Mandatory tiny footer text \"AI PASSPORT · SHEIKAH SLATE\" must be horizontally CENTERED on the entire screen near the bottom with equal margins, never left aligned. No OK button, no A button glyph, no navigation hints, no settings menu, no battery icon or percentage, no calibration message, no additional slogans. All navigation controls remain physical and invisible. Avoid overlapping clock, logo, eye, and date. Beautiful practical screensaver, not a poster with lots of text.\nPORTRAIT 3:4, designed for vertical 240x320. Extremely restrained black-and-gold collector's edition style. Nearly solid warm-black background, a few very faint gold ancient lines only at the outside corners. Compact recognizable original gold Zelda title logo centered near top. A small antique-gold Sheikah eye around one-third height, no cyan. Very large elegant warm ivory 09:41 around 58 percent height, small gold date beneath. Spacious and symmetrical, no rings behind clock, no busy stone scenery, no excessive decorative frames. Tiny centered muted-gold footer along bottom. Premium quiet typography and generous negative space."
+    }
+  ]
+}

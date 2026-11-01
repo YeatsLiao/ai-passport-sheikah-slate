@@ -5,9 +5,9 @@
 
 | 开机 | 主菜单 |
 |---|---|
-| ![开机画面](screenshots/slate-20261031-002653-7286.png) | ![主菜单](screenshots/slate-20261031-081542-9757.png) |
+| ![开机画面](assets/screenshots/slate-20261031-002653-7286.png) | ![主菜单](assets/screenshots/slate-20261031-081542-9757.png) |
 | *符文小游戏* | *大师摩托* |
-| ![方形炸弹](screenshots/slate-20261031-081606-4563.png) | ![大师摩托](screenshots/slate-20261031-081703-6342.png) |
+| ![方形炸弹](assets/screenshots/slate-20261031-081606-4563.png) | ![大师摩托](assets/screenshots/slate-20261031-081703-6342.png) |
 
 ## 这是什么
 
