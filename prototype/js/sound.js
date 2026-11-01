@@ -13,14 +13,18 @@ function beep(kind){
   if(!sfxCache.has(file)){const a=new Audio('../assets/audio/botw/'+file);a.preload='auto';sfxCache.set(file,a);}
   if(['move','cursor','zoom','sensor'].includes(name))for(const a of activeSfx)if(a.dataset.sound===name){a.pause();activeSfx.delete(a);}
   while(activeSfx.size>=6){const a=activeSfx.values().next().value;a.pause();activeSfx.delete(a);}
-  const node=sfxCache.get(file).cloneNode();node.dataset.sound=name;node.loop=name==='magnet_move';
-  node.volume=Math.min(1,state.settings.volume/5*(['move','cursor'].includes(name)?.3:name==='boom'?.4:.6));
+  const node=sfxCache.get(file).cloneNode();node.dataset.sound=name;node.loop=['magnet_move','bike_engine'].includes(name);
+  node.volume=Math.min(1,state.settings.volume/5*(name==='bike_engine'?.22:['move','cursor'].includes(name)?.3:name==='boom'?.4:.6));
   activeSfx.add(node);const done=()=>activeSfx.delete(node);
   node.addEventListener('ended',done,{once:true});node.addEventListener('error',done,{once:true});
   const promise=node.play();if(promise?.catch)promise.catch(done);
 }
 function runeSoundFeedback(g){
   const e=g.extra,previous=g.soundState;
+  const riding=g.id==='cycle'&&g.phase==='riding'&&!g.paused&&!g.tool;
+  const engine=[...activeSfx].some(a=>a.dataset.sound==='bike_engine');
+  if(riding&&!engine)beep('bike_engine');
+  if(!riding&&engine)stopSfxKind('bike_engine');
   const current={phase:g.phase,blast:g.flash>0,ice:e?.ice.length||0,focus:e?.focus>=.7,target:e?.focusTarget,hits:g.hits||0,moving:g.id==='magnet'&&g.held&&!g.paused&&!g.tool&&(g.lifting||runeGameDirection!==0),warning:g.id==='stasis'&&g.phase==='frozen'&&g.freeze<=1.683&&!g.paused&&!g.tool};
   g.soundState=current;if(!previous)return;
   if(current.warning&&!previous.warning)beep('stasis_timer');
@@ -42,6 +46,7 @@ function runeSoundFeedback(g){
   }
   if(g.id==='amiibo'){
     if(current.phase==='opening')beep('chest_open');
+    if(current.phase==='reward')beep('item_get');
     if(current.phase==='collecting')beep('ok');
   }
   if(current.phase==='lost')beep('invalid');

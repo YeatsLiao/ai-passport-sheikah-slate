@@ -28,7 +28,7 @@ function getRuneGame(id) {
   });
   return runeGames.get(id);
 }
-function resetRuneGame(id) { stopSfxKind('stasis_timer');stopSfxKind('magnet_move');beep('back');runeGames.delete(id); runeGameDirection=0; render(); }
+function resetRuneGame(id) { stopSfxKind('stasis_timer');stopSfxKind('magnet_move');stopSfxKind('bike_engine');beep('back');runeGames.delete(id); runeGameDirection=0; render(); }
 function pauseRuneGame() {
   const id=currentRuneGame(); if(!id) return;
   const g=getRuneGame(id);
@@ -252,7 +252,7 @@ function paintRuneGame(g) {
 function syncRuneGame() {
   const id=currentRuneGame();runeGameDirection=0;
   if (runeGameRoute !== id) {
-    if (runeGameRoute) {getRuneGame(runeGameRoute).paused=true;stopSfxKind('stasis_timer');stopSfxKind('magnet_move');}
+    if (runeGameRoute) {getRuneGame(runeGameRoute).paused=true;stopSfxKind('stasis_timer');stopSfxKind('magnet_move');stopSfxKind('bike_engine');}
     runeGameRoute=id;
     runeGameLast=0;
   }

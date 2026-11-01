@@ -19,7 +19,7 @@ function closeInputMenu(){
 }
 function inputDialogHTML(){
   const d=inputUI.dialog;if(!d)return '';
-  return `<div class="input-dialog ${d.kind==='inventory'?'inventory-context':''}" role="dialog" aria-modal="true" aria-label="${esc(d.title)}"><div class="game-pause-card" ${d.kind==='inventory'?`style="left:${d.x}px;top:${d.y}px"`:''}>${d.hideTitle?'':`<h2>${esc(d.title)}</h2>`}${inputUI.edit?`<p>${L('▲▼ 调整数值 · OK 保存 · 长按取消','▲▼ adjust · OK save · hold cancel')}</p><strong>${state.settings[inputUI.edit.key]*20}%</strong>`:d.items.map((item,i)=>`<button class="chip" data-action="ui:choose:${i}" ${i===0?'data-start':''}>${esc(item.label)}</button>`).join('')}</div></div>`;
+  return `<div class="input-dialog ${d.kind==='inventory'?'inventory-context':d.kind==='settings'?'settings':''}" role="dialog" aria-modal="true" aria-label="${esc(d.title)}"><div class="game-pause-card" ${d.kind==='inventory'?`style="left:${d.x}px;top:${d.y}px"`:''}>${d.hideTitle?'':`<h2>${esc(d.title)}</h2>`}${inputUI.edit?`<p>${L('▲▼ 调整数值 · OK 保存 · 长按取消','▲▼ adjust · OK save · hold cancel')}</p><strong>${state.settings[inputUI.edit.key]*20}%</strong>`:d.items.map((item,i)=>`<button class="chip" data-action="ui:choose:${i}" ${i===0?'data-start':''}>${esc(item.label)}</button>`).join('')}${d.hint?`<p>${esc(d.hint)}</p>`:''}</div></div>`;
 }
 function inputReadingNode(){
   if(inputUI.dialog)return null;
@@ -62,20 +62,30 @@ function inventoryMenu(id){
     {label:L('取消','CANCEL'),action:'ui:close'}],{...inventoryMenuPosition(),hideTitle:true});
 }
 
-function standbyMenu(){
+function standbyMenu(selected=0){
   const s=state.settings;
   const sec=(arr,i)=>arr[i]?arr[i]+'s':L('关','OFF');
   openInputMenu(L('待机 / 背景','STANDBY / BACKGROUND'),[
-    {label:L('进入待机','ENTER STANDBY')+'：'+sec(STANDBY_DELAYS,s.standbyDelay),action:'ui:standby-set:standbydelay'},
-    {label:L('待机后熄屏','SCREEN OFF AFTER')+'：'+sec(SCREEN_TIMEOUTS,s.screenTimeout),action:'ui:standby-set:screentimeout'},
-    {label:L('自动切换画布','CANVAS INTERVAL')+'：'+(STANDBY_CYCLES[s.standbyCycle]?STANDBY_CYCLES[s.standbyCycle]+'s':L('手动','MANUAL')),action:'ui:standby-set:standbycycle'},
-    {label:L('待机风格','STANDBY STYLE')+'：'+STANDBY_STYLES[s.standbyStyle].cn+' · '+STANDBY_STYLES[s.standbyStyle].en,action:'ui:standby-set:standbystyle'},
-    {label:L('背景','BACKGROUND')+'：'+BG_NAMES[s.bg],action:'ui:standby-set:bg'},
+    {label:t('standby_enter')+'：'+sec(STANDBY_DELAYS,s.standbyDelay),action:'ui:standby-option:standbyDelay'},
+    {label:t('screen_off')+'：'+sec(SCREEN_TIMEOUTS,s.screenTimeout),action:'ui:standby-option:screenTimeout'},
+    {label:t('canvas_cycle')+'：'+(STANDBY_CYCLES[s.standbyCycle]?STANDBY_CYCLES[s.standbyCycle]+'s':L('手动','MANUAL')),action:'ui:standby-option:standbyCycle'},
+    {label:t('standby_style')+'：'+L(STANDBY_STYLES[s.standbyStyle].cn,STANDBY_STYLES[s.standbyStyle].en),action:'ui:standby-option:standbyStyle'},
+    {label:t('bg_label')+'：'+L(...BG_NAMES[s.bg]),action:'ui:standby-option:bg'},
     {label:L('关闭','CLOSE'),action:'ui:close'}
-  ]);
+  ],{kind:'settings',focusAction:'ui:choose:'+selected,hint:L('待机：▲▼ 切换风格 · OK 进入目录','Standby: UP/DN styles · OK opens menu')});
+}
+function standbyOptionMenu(key){
+  const arrays={standbyDelay:STANDBY_DELAYS,screenTimeout:SCREEN_TIMEOUTS,standbyCycle:STANDBY_CYCLES};
+  const titles={standbyDelay:'standby_enter',screenTimeout:'screen_off',standbyCycle:'canvas_cycle',standbyStyle:'standby_style',bg:'bg_label'};
+  if(!titles[key])return;
+  const labels=key==='standbyStyle'?STANDBY_STYLES.map((s,i)=>'EFGHIJ'[i]+' · '+L(s.cn,s.en)):
+    key==='bg'?BG_NAMES.map(n=>L(...n)):arrays[key].map(n=>n?n+'s':t(key==='standbyCycle'?'manual':'off'));
+  openInputMenu(t(titles[key]),labels.map((label,i)=>({
+    label:(state.settings[key]===i?'✓ ':'')+label,action:'ui:standby-apply:'+key+':'+i
+  })).concat({label:t('back'),action:'ui:standby-menu'}),{kind:'settings',focusAction:'ui:choose:'+state.settings[key]});
 }
 function inputAction(parts){
-  const [kind,arg]=parts;
+  const [kind,arg,value]=parts;
   if(kind==='choose'){
     const item=inputUI.dialog?.items[Number(arg)];if(!item)return;
     inputUI.dialog=null;render();run(item.action);return;
@@ -87,11 +97,13 @@ function inputAction(parts){
     rememberInputPage();inputUI.edit={key:arg,before:state.settings[arg]};inputUI.dialog={title:t(arg),items:[]};render();return;
   }
   if(kind==='standby-menu'){standbyMenu();return;}
-  if(kind==='standby-set'){
-    const cycles={standbydelay:5,screentimeout:6,standbycycle:5,standbystyle:6,bg:4};
-    const keys={standbydelay:'standbyDelay',screentimeout:'screenTimeout',standbycycle:'standbyCycle',standbystyle:'standbyStyle',bg:'bg'};
-    state.settings[keys[arg]]=(state.settings[keys[arg]]+1)%cycles[arg];
-    beep('move');render();standbyMenu();return;
+  if(kind==='standby-option'){standbyOptionMenu(arg);return;}
+  if(kind==='standby-apply'){
+    const keys=['standbyDelay','screenTimeout','standbyCycle','standbyStyle','bg'],counts=[5,6,5,6,4];
+    const index=keys.indexOf(arg),n=Number(value);
+    if(index<0||!Number.isInteger(n)||n<0||n>=counts[index])return;
+    state.settings[arg]=n;saveDisplaySettings();standbyStyleAt=Date.now();idleSince=Date.now();
+    standbyMenu(index);return;
   }
   if(kind==='delete-photo'){
     openInputMenu(L('删除这张照片？','DELETE THIS PHOTO?'),[{label:L('取消','CANCEL'),action:'ui:close'},{label:L('确认删除','DELETE'),action:'ui:confirm-delete:'+arg}]);return;

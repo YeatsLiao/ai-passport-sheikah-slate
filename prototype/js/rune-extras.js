@@ -85,7 +85,7 @@ function extraPrimary(g) {
     if(target && !e.seen.includes(target.index)) e.seen.push(target.index);
     g.phase='preview';g.tool=true;render();return;
   } else if(g.id==='cycle') {
-    if(g.phase==='ready') {g.phase='riding';e.speed=82;extraMessage(g,'自动前进，遇到沟或岩石按 OK 跳过。','Auto-riding. Press OK to jump over gaps and rocks.');}
+    if(g.phase==='ready') {g.phase='riding';e.speed=82;beep('bike_start');extraMessage(g,'自动前进，遇到沟或岩石按 OK 跳过。','Auto-riding. Press OK to jump over gaps and rocks.');}
     else cycleJump(e);
   } else if(g.id==='amiibo') {
     if(g.phase==='ready') {
@@ -105,7 +105,7 @@ function extraPrimary(g) {
     e.routeFrom={x:e.px,y:e.py};e.routeTo=branch;e.routeTravel=0;e.walking=true;
     extraMessage(g,'沿选定方向前进，留意信号是否增强。','Following the chosen path. Listen for a stronger signal.');
   }
-  if(!g.flash && !['bomb_cube','cryonis','amiibo'].includes(g.id))beep('ok');paintExtra(g);
+  if(!g.flash&&!['bomb_cube','cryonis','amiibo','cycle'].includes(g.id))beep('ok');paintExtra(g);
 }
 function extraAction(g,action) {
   if(action==='sensor-map' && g.id==='sensor' && g.phase==='won' && !initExtra(g).target) {showSensorMap();return true;}
@@ -163,12 +163,12 @@ function stepExtra(g,dt) {
   } else if(g.id==='cycle' && g.phase==='riding') {
     e.brake=Math.max(0,e.brake-dt);e.jumpBuffer=Math.max(0,e.jumpBuffer-dt);
     e.speed+=((e.brake>0?58:82)-e.speed)*Math.min(1,dt*5);
-    if(e.jumpBuffer>0 && (e.grounded || (e.canCoyote && e.airTime<.14))) {e.rideVY=-120;e.grounded=false;e.canCoyote=false;e.jumpBuffer=0;e.airTime=0;}
+    if(e.jumpBuffer>0 && (e.grounded || (e.canCoyote && e.airTime<.14))) {beep('bike_jump');e.rideVY=-120;e.grounded=false;e.canCoyote=false;e.jumpBuffer=0;e.airTime=0;}
     e.rideX+=e.speed*dt;
     const floor=cycleFloor(e.rideX)-CYCLE_CONTACT.height;
     if(e.grounded && cycleGap(e.rideX)) {e.grounded=false;e.canCoyote=true;e.airTime=0;e.rideVY=0;}
     if(e.grounded) e.rideY=floor;
-    else {e.airTime+=dt;e.rideVY+=220*dt;e.rideY+=e.rideVY*dt;if(!cycleGap(e.rideX)&&e.rideY>=floor&&e.rideVY>0){e.rideY=floor;e.grounded=true;e.canCoyote=false;e.airTime=0;e.rideVY=0;}}
+    else {e.airTime+=dt;e.rideVY+=220*dt;e.rideY+=e.rideVY*dt;if(!cycleGap(e.rideX)&&e.rideY>=floor&&e.rideVY>0){beep('bike_land');e.rideY=floor;e.grounded=true;e.canCoyote=false;e.airTime=0;e.rideVY=0;}}
     const rockY=cycleFloor(550)-CYCLE_CONTACT.rockGround;
     const wheelHit=[-CYCLE_CONTACT.axle,CYCLE_CONTACT.axle].some(offset=>Math.hypot(e.rideX+offset-550,e.rideY+CYCLE_CONTACT.wheelY-rockY)<CYCLE_CONTACT.wheelRadius+CYCLE_CONTACT.rockRadius-2);
     if(e.rideY>166 || wheelHit) {g.phase='crashing';e.animTime=0;e.rideVY=-28;extraMessage(g,wheelHit?'轮子碰到了石头。下次提前一点起跳。':'掉进沟里了。下次在沟边起跳。',wheelHit?'A wheel hit the rock. Jump a little earlier.':'Fell into the gap. Jump near its edge.');}

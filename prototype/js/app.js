@@ -1,5 +1,5 @@
 /* Sheikah Slate · AI Passport 可点击原型
-   纯静态：哈希路由 + 示例进度。没有运行时 API 请求，没有持久化。
+   纯静态：哈希路由 + 示例进度。没有运行时 API 请求；语言与显示偏好保存在本机。
    装备元数据由本地归档生成；展示外部名称与描述时统一转义。 */
 
 const L = (cn,en) => state.lang === 'cn' ? cn : en;
@@ -239,12 +239,24 @@ const STANDBY_STYLES=[
   {cn:'林间薄雾',en:'MISTY FOREST',plate:'I',dark:false},
   {cn:'极简黑金',en:'BLACK & GOLD',plate:null,dark:true},
 ];
-const BG_NAMES=['眼纹','石材','眼角','字符环'];
+const BG_NAMES=[['眼纹','CREST'],['石材','STONE'],['眼角','CORNER'],['字符环','GLYPHS']];
 let standbyBlackout=false,standbyStyleAt=Date.now(),idleSince=Date.now(),wakeAt=0;
-function standbyShift(dir){
-  if(Date.now()-wakeAt<300)return;
+function standbyShift(dir,automatic=false){
   state.settings.standbyStyle=(state.settings.standbyStyle+6+dir)%6;
-  standbyStyleAt=Date.now();render();
+  standbyStyleAt=Date.now();
+  if(!automatic){idleSince=Date.now();saveDisplaySettings();beep('move');}
+  render();
+}
+function saveDisplaySettings(){
+  try{localStorage.setItem('slate-display',JSON.stringify(state.settings));}catch(e){/* Storage is optional. */}
+}
+function loadDisplaySettings(){
+  try{
+    const saved=JSON.parse(localStorage.getItem('slate-display')||'{}');
+    for(const [key,max] of Object.entries({standbyDelay:5,screenTimeout:6,standbyCycle:5,standbyStyle:6,bg:4})){
+      if(Number.isInteger(saved[key])&&saved[key]>=0&&saved[key]<max)state.settings[key]=saved[key];
+    }
+  }catch(e){/* Invalid storage keeps defaults. */}
 }
 function standbyClockText(){
   const d=new Date(),p=n=>String(n).padStart(2,'0');
@@ -253,21 +265,23 @@ function standbyClockText(){
       ' · '+p(d.getMonth()+1)+'.'+p(d.getDate())+' · '+(state.lang==='cn'?'海拉鲁':'HYRULE')};
 }
 function viewStandby() {
-  const st=STANDBY_STYLES[state.settings.standbyStyle];
+  const i=state.settings.standbyStyle,st=STANDBY_STYLES[i],w=i>=3?240:320,h=i>=3?320:240;
+  // Geometry follows firmware settings.c, including its padded 200x72 title image.
+  const logoY=[20,22,20,26,66,28][i],logoW=[128,154,136,158,148,156][i];
+  const eyeY=[78,86,84,110,126,110][i],eyeSize=[52,42,48,64,46,58][i];
+  const clockY=[139,141,146,208,216,190][i],dateY=[195,187,194,265,263,249][i];
   const {clock,date}=standbyClockText();
   const fresh=Date.now()-standbyStyleAt<3500;
-  return `<div class="standby ${st.dark?'st-dark':''}" style="background:${st.dark?'#060604':'#04121a'}">
+  return `<div class="standby ${i===2?'st-ink':st.dark?'st-dark':''}" aria-label="${L(st.cn,st.en)}">
     ${st.plate?`<img class="sb-plate" src="../assets/gen/offline/standby/sources/${st.plate}.png" alt="">`:''}
-    <img class="sb-puppet a" src="${IMG('cut_skywatcher.png')}" alt="">
-    <img class="sb-slate" src="${IMG('cut_slate.png')}" alt="">
-    <img class="sb-title ${state.lang === 'cn' ? 'cn' : 'en'}" src="../assets/ui/${state.lang === 'cn' ? 'BotW_Simplified_Chinese_Logo.png' : 'BotW_English_Logo.png'}" alt="${state.lang === 'cn' ? '塞尔达传说 旷野之息' : 'The Legend of Zelda: Breath of the Wild'}">
-    <img class="sb-eye" src="${IMG('eye.png')}" alt="">
-    <div class="sb-clock" id="standbyClock">${clock}</div>
-    <div class="sb-date" id="standbyDate">${date}</div>
-    <div class="sb-battery" role="img" aria-label="${t('sys_battery')} 99%"><span class="sb-battery-art" aria-hidden="true"></span><span aria-hidden="true">99%</span></div>
-    <button class="sb-prompt" data-action="go:#/home" data-focus data-start>${t('press_ok')}</button>
-    <div class="sb-brand">AI PASSPORT · SHEIKAH SLATE</div>
-    ${fresh?`<div class="sb-toast">${'EFGHIJ'[state.settings.standbyStyle]} · ${state.lang==='cn'?st.cn:st.en} ${state.settings.standbyStyle+1}/6</div>`:''}
+    ${i===1||i===4?'<div class="sb-shade"></div>':''}
+    ${i===5?'<i class="sb-corner tl"></i><i class="sb-corner tr"></i><i class="sb-corner bl"></i><i class="sb-corner br"></i>':''}
+    <img class="sb-title" style="left:${(w-logoW)/2}px;top:${logoY}px;width:${logoW}px;height:${logoW*72/200}px" src="../assets/ui/${state.lang==='cn'?'BotW_Simplified_Chinese_Logo.png':'BotW_English_Logo.png'}" alt="${L('塞尔达传说 旷野之息','The Legend of Zelda: Breath of the Wild')}">
+    <img class="sb-eye" style="left:${(w-eyeSize)/2}px;top:${eyeY}px;width:${eyeSize}px;height:${eyeSize}px" src="${IMG('eye.png')}" alt="">
+    <div class="sb-clock" id="standbyClock" style="top:${clockY}px;font-size:${[0,3,5].includes(i)?52:40}px">${clock}</div>
+    <div class="sb-date" id="standbyDate" style="top:${dateY}px">${date}</div>
+    <div class="sb-brand" style="top:${h-20}px">AI PASSPORT · SHEIKAH SLATE</div>
+    <div class="sb-toast" ${fresh?'':'hidden'}>${'EFGHIJ'[i]} · ${L(st.cn,st.en)} ${i+1}/6</div>
     ${standbyBlackout?'<div class="standby-blackout"></div>':''}
   </div>`;
 }
@@ -636,7 +650,7 @@ function viewSystem() {
 
     <div class="sys-actions">
       <button class="chip" data-action="go:#/album" data-focus>${t('album')}</button>
-      <button class="chip" data-action="ui:standby-menu" data-focus>${t('standby_bg_menu')}</button>
+      <button class="chip" data-action="ui:standby-menu" data-focus>${t('standby_menu')}</button>
       <button class="chip" data-action="sys:about" data-focus>${t('about')}</button>
       <button class="chip" data-action="go:#/standby" data-focus>${t('standby')}</button>
     </div>
@@ -703,6 +717,11 @@ function render() {
   const hash = routeHash();
   if(prevHash&&prevHash!==hash){if(inputUI.edit)state.settings[inputUI.edit.key]=inputUI.edit.before;inputUI.edit=null;inputUI.dialog=null;}
   const sameRoute = prevHash === hash;
+  if(!sameRoute){idleSince=Date.now();standbyBlackout=false;if(p[0]==='standby')standbyStyleAt=Date.now();}
+  const portrait=p[0]==='standby'&&state.settings.standbyStyle>=3;
+  const orientationChanged=document.body.classList.contains('portrait')!==portrait;
+  document.body.classList.toggle('portrait',portrait);
+  document.body.classList.toggle('screen-off',standbyBlackout);
   const isMap = p[0] === 'map';
   if (mapDrag) endMapDrag({ pointerId: mapDrag.id });
   document.body.classList.toggle('map-mode', isMap);
@@ -737,7 +756,7 @@ function render() {
   if (isMap) updateMapView();
   document.body.classList.toggle('no-scan', !state.settings.scanlines);
   /* 同一页内重绘（调亮度、切换目标等）时把选中位置留在原处，不要跳回顶部。 */
-  initFocus(inputUI.dialog?null:(sameRoute ? focusKey : inputUI.memory.get(hash)?.key));
+  initFocus(inputUI.dialog?.focusAction||(inputUI.dialog?null:(sameRoute ? focusKey : inputUI.memory.get(hash)?.key)));
   restoreInputPage();
   updateInputHint();
   updateRail();
@@ -751,6 +770,7 @@ function render() {
     if (p[0] === 'rune' && from !== 'rune') flashBoot();
   }
   prevHash = hash;
+  if(orientationChanged)fit();
 }
 
 function runWipe() {
@@ -894,11 +914,6 @@ function sysAction(kind) {
   if (kind === 'volume') s.volume = s.volume >= 5 ? 0 : s.volume + 1;
   if (kind === 'scanlines') s.scanlines = !s.scanlines;
   if (kind === 'sfx') s.sfx = !s.sfx;
-  if (kind === 'standbydelay') s.standbyDelay = (s.standbyDelay + 1) % 5;
-  if (kind === 'screentimeout') s.screenTimeout = (s.screenTimeout + 1) % 6;
-  if (kind === 'standbycycle') s.standbyCycle = (s.standbyCycle + 1) % 5;
-  if (kind === 'standbystyle') s.standbyStyle = (s.standbyStyle + 1) % 6;
-  if (kind === 'bg') s.bg = (s.bg + 1) % 4;
   if(!s.sfx||!s.volume)stopSfx();
   render();beep(['scanlines','sfx'].includes(kind)?(s[kind]?'switch_on':'switch_off'):['standbystyle','bg'].includes(kind)?'move':'ok');
 }
@@ -1001,6 +1016,7 @@ screenEl.addEventListener('pointerover', e => {
 });
 
 screenEl.addEventListener('click', e => {
+  if(Date.now()<wakeAt)return;
   const el = e.target.closest('[data-action]');
   if (!el || el.disabled) return;
   const els = focusables();
@@ -1043,6 +1059,7 @@ function stopHoldBar() {
 }
 
 function okDown() {
+  if(Date.now()<wakeAt)return;
   if (holdTimer !== null) return;
   longFired = false;
   pressedRoute = routeHash();
@@ -1055,7 +1072,7 @@ function okUp() {
   clearTimeout(holdTimer);
   holdTimer = null;
   stopHoldBar();
-  if (!longFired && pressedRoute===routeHash()) { if(routeParts()[0]==='standby'){if(standbyBlackout||Date.now()-wakeAt<300)return;go('#/home');return;} if(inputPrimary()){} else if (mapBrowseActive()) mapAction('control'); else if (gameInputActive()) gamePrimary(); else activateFocused(); }
+  if (!longFired && pressedRoute===routeHash()) { if(routeParts()[0]==='standby'){if(standbyBlackout||Date.now()<wakeAt)return;beep('startup');go('#/home');return;} if(inputPrimary()){} else if (mapBrowseActive()) mapAction('control'); else if (gameInputActive()) gamePrimary(); else activateFocused(); }
   longFired = false;
 }
 
@@ -1064,8 +1081,9 @@ let navDelay = null;
 let navTimer = null;
 function startNav(dir) {
   stopNav();
+  if(Date.now()<wakeAt)return;
   document.querySelector(`[data-key="${dir < 0 ? 'UP' : 'DOWN'}"]`).classList.add('pressed');
-  if(routeParts()[0]==='standby'){if(standbyBlackout||Date.now()-wakeAt<300)return;standbyShift(dir);return;}
+  if(routeParts()[0]==='standby'){if(standbyBlackout)return;standbyShift(dir);return;}
   if(inputNavigate(dir)){navDelay=setTimeout(()=>{navTimer=setInterval(()=>inputNavigate(dir),120);},380);return;}
   if (mapBrowseActive()) { mapNavigate(dir);navDelay=setTimeout(()=>{navTimer=setInterval(()=>mapNavigate(dir),96);},380);return; }
   if (gameInputActive()) { gameSetDirection(dir); return; }
@@ -1130,24 +1148,30 @@ document.querySelectorAll('.key').forEach(btn => {
 });
 
 /* ---------------- standby idle system ---------------- */
-function activityReset(){
+function activityReset(e){
   idleSince=Date.now();
-  if(standbyBlackout){standbyBlackout=false;render();}
+  if(standbyBlackout){
+    standbyBlackout=false;wakeAt=Date.now()+350;render();
+    e.preventDefault();e.stopImmediatePropagation();
+  }else if(Date.now()<wakeAt){e.preventDefault();e.stopImmediatePropagation();}
 }
 document.addEventListener('pointerdown',activityReset,{capture:true});
 document.addEventListener('keydown',activityReset,{capture:true});
 setInterval(()=>{
   const s=state.settings,now=Date.now();
+  if(document.hidden)return;
   if(routeParts()[0]==='standby'){
     if(standbyBlackout)return;
-    if(s.screenTimeout&&now-idleSince>=SCREEN_TIMEOUTS[s.screenTimeout]*1000){standbyBlackout=true;render();return;}
-    if(s.standbyCycle&&now-standbyStyleAt>=STANDBY_CYCLES[s.standbyCycle]*1000){standbyShift(1);return;}
+    if(s.screenTimeout&&now-idleSince>=SCREEN_TIMEOUTS[s.screenTimeout]*1000){standbyBlackout=true;stopSfx();render();return;}
+    if(s.standbyCycle&&now-standbyStyleAt>=STANDBY_CYCLES[s.standbyCycle]*1000){standbyShift(1,true);return;}
     const el=document.getElementById('standbyClock');
-    if(el){const t=standbyClockText();el.textContent=t.clock;const d=document.querySelector('.standby-date');if(d)d.textContent=t.date;}
+    if(el){const t=standbyClockText();el.textContent=t.clock;const d=document.getElementById('standbyDate');if(d)d.textContent=t.date;}
+    const toast=screenEl.querySelector('.sb-toast');if(toast)toast.hidden=now-standbyStyleAt>=3500;
     return;
   }
   if(standbyBlackout){standbyBlackout=false;render();}
-  if(inputUI.dialog||inputUI.edit||gameInputActive()||!s.standbyDelay)return;
+  if(gameInputActive()){idleSince=now;return;}
+  if(inputUI.dialog||inputUI.edit||!s.standbyDelay)return;
   if(now-idleSince>=STANDBY_DELAYS[s.standbyDelay]*1000){go('#/standby');}
 },1000);
 
@@ -1182,7 +1206,8 @@ function fit() {
   const maxW = window.innerWidth - parseFloat(stage.paddingLeft) - parseFloat(stage.paddingRight) - chromeW - railWidth - (railWidth ? parseFloat(stage.gap) : 0);
   const disclaimerH = document.querySelector('.site-disclaimer')?.offsetHeight || 0;
   const maxH = window.innerHeight - parseFloat(stage.paddingTop) - parseFloat(stage.paddingBottom) - chromeH - disclaimerH;
-  const scale = Math.max(.4, Math.min(maxW / 320, maxH / 240));
+  const portrait=document.body.classList.contains('portrait');
+  const scale = Math.max(.4, Math.min(maxW / (portrait?240:320), maxH / (portrait?320:240)));
   document.documentElement.style.setProperty('--scale', scale.toFixed(3));
   document.documentElement.style.setProperty('--device-height', device.getBoundingClientRect().height + 'px');
   placeFocus(false);
@@ -1191,6 +1216,7 @@ function fit() {
 window.addEventListener('hashchange', render);
 window.addEventListener('resize', fit);
 
+loadDisplaySettings();
 buildRail();
 fit();
 render();

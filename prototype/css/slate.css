@@ -218,45 +218,29 @@ body.no-scan .scanlines{display:none}
 .rule{height:1px;background:linear-gradient(90deg,rgba(126,232,255,.42),rgba(126,232,255,0));margin:5px 0}
 .muted{color:var(--muted)}
 
-/* ---------------- standby ---------------- */
-.standby{
-  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
-  background:url(../../assets/gen/prototype/bg_ancient.png) center 40%/cover no-repeat,#04121a;
-}
-.standby::before{
-  content:"";position:absolute;inset:0;
-  background:
-    radial-gradient(70% 55% at 50% 42%,rgba(21,104,126,.22),transparent 70%),
-    linear-gradient(180deg,rgba(2,8,12,.62),rgba(2,8,12,.84));
-}
-.sb-puppet{position:absolute;z-index:0;pointer-events:none;filter:drop-shadow(0 4px 10px rgba(0,0,0,.6));animation:puppetDrift 11s ease-in-out infinite;translate:calc(var(--mx,0) * 3px) calc(var(--my,0) * 2px)}
-.sb-puppet.a{right:-30px;top:18px;width:132px;opacity:.6;filter:brightness(.58) saturate(.3) blur(.45px) drop-shadow(0 6px 14px rgba(0,0,0,.65))}
-/* 待机近景：石板原色、贴着右下角被画框裁切，文字统一压在上层。 */
-.sb-slate{position:absolute;z-index:1;right:-56px;bottom:-62px;width:146px;opacity:.86;pointer-events:none;transform:rotate(14deg);filter:brightness(.72) saturate(.92) blur(.3px) drop-shadow(0 16px 26px rgba(0,0,0,.8));translate:calc(var(--mx,0) * 10px) calc(var(--my,0) * 6px)}
-.sb-eye{
-  position:relative;width:66px;height:66px;object-fit:contain;margin-top:42px;opacity:.95;
-  filter:drop-shadow(0 0 14px rgba(127,233,255,.55));
-  animation:eyePulse 3.6s ease-in-out infinite;
-}
+/* ---------------- standby: same plates and geometry as firmware ---------------- */
+.standby{position:absolute;inset:0;overflow:hidden;background:#04121a;color:#eafcff}
+.sb-plate,.sb-shade{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.sb-shade{background:linear-gradient(180deg,transparent,rgba(0,0,0,.51))}
+.standby .sb-title,.standby .sb-eye{position:absolute;object-fit:contain;pointer-events:none}
+.standby .sb-clock,.standby .sb-date,.standby .sb-brand{position:absolute;left:8px;right:8px;text-align:center;line-height:1;letter-spacing:0}
+.sb-clock{font-family:var(--font-display);white-space:nowrap}
+.sb-date{font-family:var(--font-ui);font-size:10px;color:var(--cyan);line-height:14px!important}
+.sb-brand{font-family:var(--font-ui);font-size:10px;color:#91b0b8;line-height:14px!important;white-space:nowrap}
+.sb-toast{position:absolute;left:8px;right:8px;top:3px;font-size:10px;line-height:14px;color:var(--cyan);white-space:nowrap;overflow:hidden}
+.sb-toast[hidden]{display:none}
+.standby.st-ink{color:#4b2c0d}
+.st-ink .sb-title,.st-ink .sb-eye{filter:brightness(0) saturate(100%) invert(26%) sepia(38%) saturate(860%) hue-rotate(355deg)}
+.st-ink .sb-date,.st-ink .sb-toast{color:#654419}.st-ink .sb-brand{color:#6b5029}
+.standby.st-dark{background:#060604}.st-dark .sb-date,.st-dark .sb-brand,.st-dark .sb-toast{color:var(--gold)}
+.st-dark .sb-eye{filter:brightness(0) saturate(100%) invert(79%) sepia(38%) saturate(480%) hue-rotate(2deg)}
+.sb-corner{position:absolute;width:24px;height:24px;border:solid #66502d;border-width:1px 0 0 1px;left:8px;top:8px}
+.sb-corner.tr{left:auto;right:8px;transform:rotate(90deg)}.sb-corner.bl{top:auto;bottom:8px;transform:rotate(-90deg)}.sb-corner.br{left:auto;right:8px;top:auto;bottom:8px;transform:rotate(180deg)}
+.standby-blackout{position:absolute;inset:0;background:#000;z-index:60}
+body.screen-off .scanlines,body.screen-off .glass{visibility:hidden}
+body.portrait .screen-shell{width:calc(240px * var(--scale));height:calc(320px * var(--scale))}
+body.portrait .screen{width:240px;height:320px}
 @keyframes eyePulse{0%,100%{opacity:.82;transform:scale(1)}50%{opacity:1;transform:scale(1.035)}}
-.sb-clock{position:relative;z-index:2;margin-top:6px;font-family:var(--font-display);font-size:30px;letter-spacing:.1em;color:#eafcff;text-shadow:0 0 18px rgba(127,233,255,.5),0 2px 6px rgba(0,0,0,.8)}
-.sb-date{position:relative;z-index:2;margin-top:1px;font-size:6.5px;letter-spacing:.36em;color:#8fc3cd;text-shadow:0 1px 3px #000}
-.sb-battery{position:absolute;z-index:3;right:11px;top:10px;display:flex;align-items:center;gap:3px;font-size:5px;line-height:9px;letter-spacing:.02em;color:#a5c8cc;opacity:.85}
-/* Actual TotK HUD frame from the archived 640 × 249 reference, displayed without redrawing. */
-.sb-battery-art{display:block;width:17px;height:9px;flex-shrink:0;background:url(../../assets/ui/totk_battery_hud_reference.jpg) -48.71154px -61.66667px/209.23077px 83px no-repeat;clip-path:inset(0)}
-.sb-title{position:absolute;z-index:2;left:50%;transform:translateX(-50%);object-fit:contain;pointer-events:none}
-.sb-title.cn{top:24px;width:154px;height:55px}
-.sb-title.en{top:13px;width:90px;height:71px}
-.standby .sb-eye{width:36px;height:36px;margin-top:88px}
-
-.sb-prompt{
-  position:relative;z-index:3;margin-top:auto;margin-bottom:34px;padding:5px 12px;
-  font-family:var(--font-display);font-size:7px;letter-spacing:.3em;color:#c8f2fb;
-  border:1px solid rgba(126,232,255,.32);background:rgba(5,20,27,.55);
-  animation:prompt 2.2s ease-in-out infinite;
-}
-@keyframes prompt{0%,100%{opacity:.55}50%{opacity:1;box-shadow:0 0 14px rgba(127,233,255,.25)}}
-.sb-brand{position:absolute;z-index:2;left:8px;bottom:7px;font-size:5.5px;letter-spacing:.22em;color:#4c6d76}
 
 /* ---------------- runes list ---------------- */
 .runes-body{display:flex;gap:4px;padding:6px 5px 4px;position:relative;background:url(../../assets/gen/prototype/bg_shrine.png) center 42%/cover}
@@ -874,23 +858,3 @@ body.no-scan .scanlines{display:none}
 #sensorRevealRing{position:absolute;left:112px;top:53px;width:96px;height:96px;border:1px solid #8ceeff88;border-radius:50%;box-shadow:0 0 18px #7fe9ff44,inset 0 0 15px #7fe9ff33;opacity:0}
 .cycle-cue{position:absolute;left:80px;right:30px;top:51px;z-index:7;font-size:7px;color:var(--gold);text-align:center;text-shadow:0 1px 4px #000}
 .extra-game [hidden]{display:none!important}
-
-/* ---------------- standby 六款画布（对齐固件 E~J） ---------------- */
-.standby{position:absolute;inset:0;overflow:hidden;background:#04121a}
-.standby-canvas{position:absolute;background:#04121a}
-.standby-plate{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.standby-logo,.standby-eye{position:absolute}
-.standby-clock{position:absolute;text-align:center;font-family:'Hylia Serif',serif;line-height:1;color:#eafcff;text-shadow:0 0 18px rgba(127,233,255,.5),0 2px 6px #000}
-.standby-date{position:absolute;text-align:center;font-family:'Source Han Sans SC',sans-serif;font-size:10px;line-height:1.2}
-.standby-brand{position:absolute;text-align:center;font-family:'Source Han Sans SC',sans-serif;font-size:10px;letter-spacing:.08em}
-.standby-toast{position:absolute;font-family:'Source Han Sans SC',sans-serif;font-size:10px}
-.standby-blackout{position:absolute;inset:0;background:#000;z-index:30}
-
-/* ---------------- 待机六款背景变体（保留原版布局与元素） ---------------- */
-.sb-plate{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-.standby.st-dark .sb-clock{color:#e1c37b;text-shadow:0 0 18px rgba(225,195,123,.35),0 2px 6px #000}
-.standby.st-dark .sb-eye{filter:sepia(.6) saturate(1.4) drop-shadow(0 0 10px rgba(225,195,123,.35))}
-.standby.st-dark .sb-brand{color:#e1c37b}
-.standby.st-dark .sb-date{color:#c9a75f}
-.standby.st-dark .sb-prompt{border-color:#91713c;color:#e1c37b}
-.sb-toast{position:absolute;left:10px;bottom:12px;z-index:6;font-size:10px;letter-spacing:.06em;color:rgba(234,252,255,.85);text-shadow:0 1px 3px #000}
