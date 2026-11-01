@@ -17,6 +17,9 @@ idf_component_register(SRCS ${OFFLINE_SRCS} INCLUDE_DIRS "." "offline"
 esptool_py_flash_target_image(flash "resources" "0x410000"
     "${CMAKE_CURRENT_LIST_DIR}/../../assets/gen/firmware/offline/resources.bin")
 
-# Offline V1 is intentionally written in a dense, one-statement-per-line style;
-# the indentation heuristic misfires on it, so disable only that check here.
+# Offline V1 keeps dense one-statement-per-line code in pages/settings/game_view/ui
+# and the generated data/fonts; the indentation heuristic misfires on it.
+# audio.c/state.c/input.c are expanded and no longer need this, but the flag is
+# per-component. Remove it once the remaining hand-written files are expanded AND
+# a build shows no misleading-indentation warnings (see docs/closeout-plan.md).
 target_compile_options(${COMPONENT_LIB} PRIVATE -Wno-misleading-indentation)

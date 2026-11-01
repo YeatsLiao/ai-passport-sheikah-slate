@@ -43,7 +43,12 @@ python "$env:IDF_PATH\components\esptool_py\esptool\esptool.py" --chip esp32c3 -
 firmware/main/offline/
 ├── main.c                 # 初始化 + 按键事件队列 + LVGL 定时派发 + 截图控制台
 ├── input.c/h              # 三键手势识别（短按/长按/连发/组合）
-├── app.c                  # 页面渲染与交互（待机、目录、装备、符文、地图、图鉴、日志、相册、设置）
+├── app_internal.h         # 私有头：跨模块共享状态与函数声明
+├── app.c                  # 核心：render 分发、show、tick、输入处理、电量 worker
+├── ui.c                   # LVGL 工具（box/label/picture/滚动文本）与控件指针
+├── pages.c                # 页面渲染：目录/符文/装备/图鉴/日志/地图/相册 + 页面状态
+├── settings.c             # 设置页、待机画布、电量行
+├── game_view.c            # 游戏渲染/暂停菜单/事件音效分发
 ├── model.c                # 九项符文游戏纯 C 引擎（事件驱动音效）
 ├── state.c / clock.c      # NVS 存档（V2 512B）/ 北京时间与校时
 ├── audio.c / resources.c  # 六路 ADPCM 混音 / 资源分区映射与校验
