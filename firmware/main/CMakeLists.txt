@@ -1,6 +1,6 @@
 # Offline V1. Generate data/fonts/resources with tools/pack/build_offline_pack.py --fonts first.
 set(OFFLINE_SRCS
-    "offline/main.c" "offline/app.c" "offline/model.c" "offline/state.c"
+    "offline/main.c" "offline/app.c" "offline/ui.c" "offline/pages.c" "offline/settings.c" "offline/game_view.c" "offline/model.c" "offline/state.c"
     "offline/resources.c" "offline/audio.c" "offline/clock.c" "offline/data.c"
     "offline/fonts/font_10.c" "offline/fonts/font_12.c" "offline/fonts/font_14.c" "offline/fonts/font_16.c" "offline/fonts/font_clock.c" "offline/fonts/font_clock_40.c" "offline/fonts/font_clock_52.c" "offline/screenshot.c" "offline/input.c"
 )
