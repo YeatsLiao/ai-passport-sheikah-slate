@@ -2,7 +2,7 @@
 set(OFFLINE_SRCS
     "offline/main.c" "offline/app.c" "offline/model.c" "offline/state.c"
     "offline/resources.c" "offline/audio.c" "offline/clock.c" "offline/data.c"
-    "offline/font_10.c" "offline/font_12.c" "offline/font_14.c" "offline/font_16.c" "offline/font_clock.c" "offline/font_clock_40.c" "offline/font_clock_52.c" "offline/screenshot.c" "game/input.c"
+    "offline/fonts/font_10.c" "offline/fonts/font_12.c" "offline/fonts/font_14.c" "offline/fonts/font_16.c" "offline/fonts/font_clock.c" "offline/fonts/font_clock_40.c" "offline/fonts/font_clock_52.c" "offline/screenshot.c" "offline/input.c"
 )
 foreach(source IN LISTS OFFLINE_SRCS)
     if(NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/${source}")

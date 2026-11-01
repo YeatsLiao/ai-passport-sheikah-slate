@@ -1,6 +1,6 @@
 #include "offline.h"
 #include "screenshot.h"
-#include "game/input.h"
+#include "input.h"
 #include "bsp_display.h"
 #include "bsp_i2c.h"
 #include "bsp_battery.h"
